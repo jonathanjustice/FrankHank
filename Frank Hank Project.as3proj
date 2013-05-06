@@ -4,7 +4,7 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="bin\EngineProject.swf" />
+    <movie path="bin\FrankHank.swf" />
     <movie fps="30" />
     <movie width="800" />
     <movie height="600" />

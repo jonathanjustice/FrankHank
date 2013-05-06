@@ -100,7 +100,8 @@
 			Main.returnFocusToGampelay();
 		}
 		
-		public static function enableMasterLoop():void{
+		public static function enableMasterLoop():void {
+			trace("master loop");
 			gamePaused=false;
 			gameContainer.addEventListener(Event.ENTER_FRAME, masterLoop);
 		}
@@ -190,6 +191,7 @@
 				updateLootManager();
 				//updateCombatManager();
 				updateUIManager();
+			//	updateLevelManager();
 			}else{
 				//can use this section for when the game is paused but I still need to update UI stuff
 			}
@@ -209,6 +211,10 @@
 		
 		private static function updateLootManager():void{
 			lootManager.updateLoop();
+		}
+		
+		private static function updateLevelManager():void{
+			levelManager.updateLoop();
 		}
 		
 		//for when you need to communicate things to the UI manager

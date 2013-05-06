@@ -53,7 +53,7 @@ package utilities.Engine.Combat{
 		public static function if_shooting_create_a_new_bullet():void {
 			currentDelay ++;
 			if(Main.keyInputManager.getRightBracket() == true){
-				
+				Game.resumeGame();
 				if (currentDelay >= delay) {
 					if(bullets.length == 0){//one bullet at a time mode
 						currentDelay = 0;

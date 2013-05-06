@@ -2,6 +2,11 @@
 	import flash.display.MovieClip;
 	import utilities.Actors.SelectableActor;
 	import utilities.Engine.DefaultManager;
+	import utilities.Engine.Combat.EnemyManager;
+	import utilities.Engine.Combat.BulletManager;
+	import utilities.Engine.Combat.AvatarManager;
+	import utilities.Engine.Combat.PowerupManager;
+	import utilities.Engine.Builders.LootManager;
 	import utilities.Actors.GameBoardPieces.Level;
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Actors.GameBoardPieces.Terrain;
@@ -10,6 +15,7 @@
 		private var tempArray:Array = new Array();
 		public static var level:MovieClip;
 		public static var levels:Array;
+		private var isLevelComplete:Boolean = false;
 		public function LevelManager(){
 			setUp();
 		}
@@ -31,7 +37,6 @@
 				wall.y=theY;
 				levels.push(wall);
 				wall.setPreviousPosition();
-				
 			}
 		}
 		
@@ -39,9 +44,40 @@
 			return levels[0].getLevelLocation();
 		}
 		
+		//this doesn't run for now, may never need to.....
 		public override function updateLoop():void{
-			for each(var level:Level in levels){
+			/*for each(var level:Level in levels){
 				level.updateLoop();
+			}*/
+			//checkLevelObjectives();
+			checkForLevelComplete();
+		}
+		
+		private function checkLevelObjectives():void {
+			//trace("check level objectives");
+			//check each level objective to see if its complete
+			
+			//if all objectives are complete, then stop the level, destroy everything in it, and create a new one
+			if (getIsLevelComplete() == true) {
+				
+			}
+		}
+		
+			private function checkForLevelComplete():void {
+			if (EnemyManager.enemies.length == 0) {
+				//trace("enemy manager: no enemies left");
+				//trace("EnemyManager.enemies", EnemyManager.enemies);
+				Game.disableMasterLoop();
+				destroyArray(LootManager.lootDrops);
+				destroyArray(LootManager.treasureChests);
+				destroyArray(EnemyManager.enemies);
+				destroyArray(PowerupManager.powerups);
+				destroyArray(BulletManager.bullets);
+				destroyArray(AvatarManager.avatars);
+				//BulletManager.destroyArray(getArray());
+				//AvatarManager.destroyArray(getArray());
+				//PowerupManager.destroyArray(getArray());
+				
 			}
 		}
 		
@@ -62,6 +98,14 @@
 		}
 		public function getLevel():Object{
 			return levels[0];
+		}
+		
+		public function getIsLevelComplete():Boolean{
+			return isLevelComplete;
+		}
+		
+		public function setIsLevelComplete(completeState:Boolean):void{
+			isLevelComplete = completeState;
 		}
 	}
 }

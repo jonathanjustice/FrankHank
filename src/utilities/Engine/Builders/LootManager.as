@@ -31,7 +31,7 @@
 		public function setUp():void{
 			treasureChests = [];
 			lootDrops = [];
-			createNewTreasureChest(200,300);
+			//createNewTreasureChest(200,300);
 		}
 		
 		public override function updateLoop():void{

@@ -92,7 +92,7 @@
 		
 		public function getRotationFromKeyInputManager():void{
 			//trace(KeyInputManager.getMyRotation());
-			trace(this.rotation);
+			//trace(this.rotation);
 			this.rotation += Main.keyInputManager.getMyRotation();
 		}
 		

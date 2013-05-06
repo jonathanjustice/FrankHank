@@ -24,16 +24,13 @@
 		public function setUp():void{
 			numnum = 0;
 			powerups = [];
-			createNewPowerup();
+			//createNewPowerup();
 		}
 		
-	
 		public override function updateLoop():void{
 			
 			
 		}
-		
-		
 		
 		public function deselectActors():void {
 			//trace("enenmyManager: deselectActors");

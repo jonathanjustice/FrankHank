@@ -3,8 +3,18 @@
 	import flash.display.Graphics;
 	import flash.display.Sprite; 
 	import flash.display.MovieClip;
+	import utilities.Actors.AFSEnemy;
+	import utilities.Actors.Avatar;
 	import utilities.Actors.GameBoardPieces.Wall;
+	import utilities.Actors.GoonEnemy;
+	import utilities.Actors.Powerup_shoot;
+	import utilities.Actors.Powerup_doubleJump;
+	import utilities.Actors.Powerup_invincible;
 	import utilities.Actors.SelectableActor;
+	import utilities.Actors.TankEnemy;
+	import utilities.Engine.Combat.AvatarManager;
+	import utilities.Engine.Combat.EnemyManager;
+	import utilities.Engine.Combat.PowerupManager;
 	import utilities.GraphicsElements.Test_rect;
 	import utilities.GraphicsElements.Test_square;
 	import utilities.Saving_And_Loading.swfLoader;
@@ -29,7 +39,7 @@
 		
 		//levels
 		private var lvl_02:String = new String("../src/assets/swf_lvl_02.swf");
-		//private var wall:String = new String("../src/assets/swf_wall.swf");
+		private var wall:String = new String("../src/assets/swf_wall.swf");
 		
 		/*
 		 * Everything else
@@ -52,7 +62,9 @@
 			ch.x = 0;
 			ch.y = 0;
 			ch.parent.removeChild(ch);
-			par.addChild(ch);
+			if (par is Wall) {
+				par.addChild(ch);
+			}
 			par.setUp();
 			if (currentParent is SelectableActor) {
 				currentParent.addClickability_onLoadComplete(par);
@@ -68,10 +80,51 @@
 					tempArray.push(assignedGraphics[0].swf_child.getChildAt(i));
 				}
 				for (var j:int = 0; j < tempArray.length; j++) {
-					trace(currentParent);
-					var wall:Wall = new Wall();
-					alignmentOfParentChildGraphics(wall,tempArray[j]);
-					LevelManager.levels.push(wall);
+					
+					if(tempArray[j].name == "wall"){
+						var wall:Wall = new Wall();
+						//wall.defineBounds(tempArray[j].width,tempArray[j].height);
+						alignmentOfParentChildGraphics(wall,tempArray[j]);
+						LevelManager.levels.push(wall);
+					}
+					if(tempArray[j].name == "goon"){
+						var goon:GoonEnemy = new GoonEnemy();
+						alignmentOfParentChildGraphics(goon,tempArray[j]);
+						EnemyManager.enemies.push(goon);
+					}
+					if(tempArray[j].name == "tank"){
+						var tank:TankEnemy = new TankEnemy();
+						alignmentOfParentChildGraphics(tank,tempArray[j]);
+						EnemyManager.enemies.push(tank);
+					}
+					if(tempArray[j].name == "avatar"){
+						var avatar:Avatar  = new Avatar;
+						alignmentOfParentChildGraphics(avatar,tempArray[j]);
+						AvatarManager.avatars.push(avatar);
+					}
+					if(tempArray[j].name == "afs"){
+						var afs:AFSEnemy = new AFSEnemy;
+						alignmentOfParentChildGraphics(afs,tempArray[j]);
+						EnemyManager.enemies.push(afs);
+					}
+					
+					if(tempArray[j].name == "p_shoot"){
+						var shootPowerup:Powerup_shoot = new Powerup_shoot;
+						alignmentOfParentChildGraphics(shootPowerup,tempArray[j]);
+						PowerupManager.powerups.push(shootPowerup);
+					}
+					
+					if(tempArray[j].name == "p_doubleJump"){
+						var doubleJumpPowerup:Powerup_doubleJump = new Powerup_doubleJump;
+						alignmentOfParentChildGraphics(doubleJumpPowerup,tempArray[j]);
+						PowerupManager.powerups.push(doubleJumpPowerup);
+					}
+					
+					if(tempArray[j].name == "p_inv"){
+						var invinviblePowerup:Powerup_invincible = new Powerup_invincible;
+						alignmentOfParentChildGraphics(invinviblePowerup,tempArray[j]);
+						PowerupManager.powerups.push(invinviblePowerup);
+					}
 				}
 			}else{
 				parent.addChild(graphic);
@@ -104,7 +157,7 @@
 					filePath = tank;
 					break;
 				case "wall":
-					//filePath = wall;
+					filePath = wall;
 					break;
 				case "powerup_doubleJump":
 					filePath = powerup_doubleJump;

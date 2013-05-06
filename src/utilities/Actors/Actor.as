@@ -68,7 +68,6 @@
 					
 		*/
 		public function applyGravity(isGravitySystemEnabled:Boolean):int {
-			//trace("isGravitySystemEnabled:",isGravitySystemEnabled);
 			if (isGravitySystemEnabled) {
 				currentGravity += gravityModifier;
 					//if at max gravity, do not increase velocity exponentially anymore
@@ -134,7 +133,6 @@
 		}
 		
 		public function removeActorFromGameEngine(actor:MovieClip, array:Array):void {
-			trace("removeActorFromGameEngine");
 			actor.availableForTargeting=false;
 			var index:int = array.indexOf(actor);
 			array.splice(index,1);
@@ -145,21 +143,18 @@
 		public function takeDamage(amount:Number):void{
 			this.health -= amount;
 			checkForDamage();
-			trace("Actor: takeDamage: actor:", this, "health",health );
+			
 			
 		}
 		
 		public function checkForDamage():void {
-			//trace("Actor: checkForDamage: actor:",this);
 			if(health <= 0){
 				markDeathFlag();
-				trace("marked for death");
 			}
 		}
 		
 		//flag actor for deletion, normally on death, collision or time out
 		public function markDeathFlag():void {
-			trace("markeded for deletion");
 			markedForDeletion = true;
 			availableForTargeting = false;//prevent null reference errors
 		}
@@ -404,7 +399,6 @@
 		}
 		
 		public function setInvincibilityEnabled(invincibility:Boolean):void {
-			trace("set invincible");
 			invincibilityTimer
 			isInvincible = invincibility;
 			if (isInvincible == true) {

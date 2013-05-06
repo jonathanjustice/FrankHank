@@ -10,7 +10,7 @@
 		
 		public function setUp():void{
 			//trace("fuck yeah it worked");
-			//defineGraphicsDefaultRectangle();
+			//defineGraphics("wall",false);
 			addActorToGameEngine();
 			setPreviousPosition();
 		}
@@ -21,6 +21,11 @@
 		
 		public function wallTest():void {
 			trace("fuck yeah it worked");
+		}
+		
+		public function defineBounds(newWidth:Number,newHeight:Number):void {
+			this.width = newWidth;
+			this.width = newHeight;
 		}
 	}
 }

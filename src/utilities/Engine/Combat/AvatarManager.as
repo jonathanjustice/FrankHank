@@ -16,7 +16,7 @@
 		
 		private function setUp():void{
 			avatars =[];
-			createAvatar();
+			//createAvatar();
 		}
 		
 		public function getAvatarLocation():Point{
@@ -73,7 +73,6 @@
 							myAvatar.jumpingEnded();
 							myAvatar.jump();
 							EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
-							trace("enemies[j].takeDamage",j)
 						}
 					}
 				}

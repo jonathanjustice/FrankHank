@@ -1,5 +1,6 @@
 ﻿package utilities.Engine.Combat{
 	
+	import utilities.Actors.Actor;
 	import utilities.Engine.DefaultManager;
 	import flash.display.MovieClip;
 	import flash.geom.Point;
@@ -31,7 +32,7 @@
 			numnum = 0;
 			enemies =[];
 			placeholderValues();
-			createNewEnemy();
+			//createNewEnemy();
 		}
 		
 		private function placeholderValues():void{
@@ -53,6 +54,14 @@
 			
 			checkForCollisionWithBullets();
 			checkForCollisionWithWall();
+			//checkForLevelComplete();
+		}
+		
+		private function checkForLevelComplete():void {
+			if (enemies.length == 0) {
+				trace("enemy manager: no enemies left");
+				destroyArray(enemies);
+			}
 		}
 		
 		//this could possibly be better abstracted by generalizing the colliding objects, i.e. pass in both arrays rather than hard code them
@@ -124,17 +133,17 @@
 		
 		//shitty placeholder enemy creation
 		public static function createNewEnemy():void {
-			var AFSenemy:AFSEnemy = new AFSEnemy();
-			var goonEnemy:GoonEnemy = new GoonEnemy();
+			//var AFSenemy:AFSEnemy = new AFSEnemy();
+			//var goonEnemy:GoonEnemy = new GoonEnemy();
 			var tankEnemy:TankEnemy = new TankEnemy();
-			enemies.push(AFSenemy);
-			enemies.push(goonEnemy);
+			//enemies.push(AFSenemy);
+			//enemies.push(goonEnemy);
 			enemies.push(tankEnemy);
 			//give the enemy some placeholder properties
-			AFSenemy.x = 375;
-			AFSenemy.y = 5;
-			goonEnemy.x = 500;
-			goonEnemy.y = -25;
+			//AFSenemy.x = 375;
+			//AFSenemy.y = 5;
+			//goonEnemy.x = 500;
+			//goonEnemy.y = -25;
 			tankEnemy.x = 600;
 			tankEnemy.y = -25;
 			//var enemyGraphics = enemyFactory.GenerateBody();
@@ -155,5 +164,7 @@
 			//placeholder debug var
 			numnum+=1;
 		}
+		
+		
 	}
 }
