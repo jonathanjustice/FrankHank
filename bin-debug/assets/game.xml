@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+	<levelSets>
+		<levelSet id="levelSet0">
+			<xmlUrl>assets/levelSets/set_0/levels.xml</xmlUrl>
+			<starReq>0</starReq>
+		</levelSet>
+	</levelSets>
+
+	<levelSets>
+		<levelSet id="levelSet1">
+			<xmlUrl>assets/levelSets/set_0/levels.xml</xmlUrl>
+			<starReq>2</starReq>
+		</levelSet>
+	</levelSets>
+</game>

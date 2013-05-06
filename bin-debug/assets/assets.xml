@@ -1,0 +1,21 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<BulkLoader >
+    <name>assets</name>
+    <numConnections>5</numConnections>
+    <logLevel>10</logLevel>
+    <stringSubstitutions>
+        <base_path>assets/</base_path>
+    </stringSubstitutions>
+
+    <files>
+
+        <file>
+            <url>{base_path}assets.swf</url>
+            <id>assets</id>
+			<maxTries>5</maxTries>
+        </file>
+		
+		
+    </files>
+</BulkLoader>
