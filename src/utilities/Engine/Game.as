@@ -2,6 +2,7 @@
 	import flash.events.Event;
 	import flash.display.MovieClip;
 	import flash.geom.Point;
+	import utilities.Actors.CameraWindow;
 	import utilities.Engine.Combat.PowerupManager;
 	import utilities.GraphicsElements.Animation;
 	import utilities.Screens.GameContainer;
@@ -34,7 +35,8 @@
 		public static var saveDataManager:SaveDataManager;
 		public static var avatar:Avatar;
 		private static var quadTree:QuadTree;
-		private static var gamePaused:Boolean=true;
+		private static var gamePaused:Boolean = true;
+		private static var cameraWindow:CameraWindow;
 		
 		//public var player:Player;
 		public var hero:MovieClip;
@@ -45,7 +47,9 @@
 		public function Game():void{
 			theGame = this;
 			createGameContainer();
+			setUpCameraWindow();
 			createQuadTree();
+			
 			//startGame("debug");
 		//	createHero();
 		}
@@ -62,6 +66,11 @@
 			gameContainer = new utilities.Screens.GameContainer();
 			Main.theStage.addChild(gameContainer);
 			
+		}
+		
+		private static function setUpCameraWindow():void {
+			cameraWindow = new CameraWindow();
+			Main.theStage.addChild(cameraWindow);
 		}
 		
 		private static function createQuadTree():void{
@@ -181,46 +190,55 @@
 			saveDataManager = new SaveDataManager();
 		}
 		
+		public function moveGameContainer(avatar:MovieClip):void {
+			var avatarPoint:Point = new Point();
+			avatarPoint.x = avatar.x;
+			avatarPoint.y = avatar.y;
+			avatarPoint = avatar.parent.localToGlobal(avatarPoint);
+			//avatarPoint = globalToLocal(avatarPoint);
+			
+			trace("X:",avatarPoint.x);
+			trace("Y",avatarPoint.y);
+			if (avatarPoint.x < cameraWindow.x) {
+				gameContainer.x -= avatar.getVelocity().x;
+				trace("1");
+			}
+			if (avatarPoint.x + avatar.width > cameraWindow.x + cameraWindow.width) {
+				gameContainer.x -= avatar.getVelocity().x;
+				trace("2");
+			}
+			if (avatarPoint.y < cameraWindow.y) {
+				gameContainer.y -= avatar.getVelocity().y;
+				trace("3");
+			}
+			if (avatarPoint.y + avatar.height> cameraWindow.y + cameraWindow.height) {
+				gameContainer.y -= avatar.getVelocity().y;
+				trace("4");
+			}
+			
+			
+			
+			/*if (Math.abs(deltaY) > 6) {
+				gameContainer.x -= deltaX;
+				gameContainer.y += deltaY;
+			}*/
+		}
 	
 		
 		private static function masterLoop(event:Event):void{
 			if(!gamePaused){
-				updateAvatarManager();
-				updateBulletManager();
-				updateEnemyManager();
-				updateLootManager();
+				avatarManager.updateLoop();
+				bulletManager.updateLoop();
+				enemyManager.updateLoop();
+				lootManager.updateLoop();
 				//updateCombatManager();
-				updateUIManager();
-			//	updateLevelManager();
+				Main.uiManager.updateLoop();
+			//levelManager.updateLoop();
 			}else{
 				//can use this section for when the game is paused but I still need to update UI stuff
 			}
 		}
 		
-		private static function updateAvatarManager():void{
-			avatarManager.updateLoop();
-		}
-		
-		private static function updateBulletManager():void{
-			bulletManager.updateLoop();
-		}
-			
-		private static function updateEnemyManager():void{
-			enemyManager.updateLoop();
-		}
-		
-		private static function updateLootManager():void{
-			lootManager.updateLoop();
-		}
-		
-		private static function updateLevelManager():void{
-			levelManager.updateLoop();
-		}
-		
-		//for when you need to communicate things to the UI manager
-		private static function updateUIManager():void{
-			Main.uiManager.updateLoop();
-		}
 		
 		//pause the update loops
 		//pause any other specific things like, spawnTimes, decayRates etc. that are dependent on getTimer

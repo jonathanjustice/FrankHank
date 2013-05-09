@@ -13,7 +13,7 @@
 		private var lifeSpan:Number = 2;//3 seconds
 		//private var xVelocity:Number=0;//velocity
 		//private var yVelocity:Number = 0;
-		private var jumpSpeed:Number = 12;
+		private var jumpSpeed:Number = 10;
 		private var maxJumpCount:Number = 1;
 		private var currentJumpCount:Number = 0;
 		private var isJumpingEnabled:Boolean = true;

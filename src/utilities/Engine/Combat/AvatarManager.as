@@ -58,8 +58,7 @@
 						//resolves the collision & returns if this touched the top of the other object
 						if (utilities.Mathematics.RectangleCollision.resolveCollisionBetweenMovingAndStationaryRectangles(myAvatar, LevelManager.levels[i]) == "top") {
 							myAvatar.jumpingEnded();
-							myAvatar.resetGravity();
-						}
+							myAvatar.resetGravity();}
 					}
 				}
 				for (var j:int = 0; j < EnemyManager.enemies.length;j++){

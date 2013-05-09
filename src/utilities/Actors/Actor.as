@@ -16,6 +16,7 @@
 	import flash.geom.Point;
 	
 	public class Actor extends MovieClip {
+		private var isFalling:Boolean = false;
 		private var idleImpatientTime:int = 0;
 		private var idleTime:int = 0;
 		private var maxIdleTime:int = 90;
@@ -39,7 +40,7 @@
 		private var originalGravity:Number = 0;
 		private var currentGravity:Number=0;
 		private var gravityModifier:Number = 2;
-		private var maxGravity:Number = 15;
+		private var maxGravity:Number = 2;
 		private var hitBoxWidth:Number = 0;
 		private var hitBoxHeight:Number = 0;
 		private var isInvincible:Boolean = false;
@@ -88,6 +89,7 @@
 			currentGravity = originalGravity;
 			yVelocity = currentGravity;
 		}
+		
 		
 		/*
 		------------BEHAVIOR
@@ -437,6 +439,14 @@
 			return collisionDamage;
 		}
 		
+		public function getIsFalling(): Boolean {
+			return isFalling;
+		}
+		
+		public function setIsFalling(fallingState:Boolean):void {
+			isFalling = fallingState;
+		}
+		
 		public function traceProperties():void {
 			trace("health:",health);
 			trace("actorGraphic.assignedGraphic",actorGraphic.assignedGraphic);
@@ -455,6 +465,11 @@
 		
 		public function getIsSwfLoaded():Boolean {
 			return isSwfLoaded;
+		}
+		
+		public function getVelocity():Point {
+			var velocityPoint:Point = new Point(xVelocity,yVelocity);
+			return velocityPoint;
 		}
 	}
 }

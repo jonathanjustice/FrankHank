@@ -34,8 +34,8 @@
 		public function setUp():void{
 			addActorToGameEngine();
 			defineGraphics("frank",false);
-			this.x = 750;
-			this.y = 25;
+			//this.x = 750;
+			//this.y = 250;
 			setHitBoxWidth(100);
 			setHitBoxHeight(100);
 		}
@@ -48,7 +48,9 @@
 		public function updateLoop():void {
 			if (getIsSwfLoaded() == true) {
 				idleLogic();
+				//setIsFalling(true);
 				getisJumpingFromInputManager();
+				applyVelocities();
 				applyGravity(getIsGravitySystemEnabled());
 				
 				setQuadTreeNode();
@@ -58,7 +60,7 @@
 				getVelocityFromKeyInputManager();
 				//getRotationFromKeyInputManager();
 				//apply the velocities to the avatar
-				applyVelocities();
+				
 				var myPoint:Point = new Point(mouseX,mouseY);
 				myPoint = Main.getMouseCoordinates();
 				//Point_Actor_At_Target(myPoint);
@@ -96,9 +98,11 @@
 			this.rotation += Main.keyInputManager.getMyRotation();
 		}
 		
-		public function applyVelocities():void{
+		public function applyVelocities():void {
+			
 			this.x += xVelocity;
 			this.y += yVelocity;
+			Main.game.moveGameContainer(this);
 		}
 
 		//don't set this every frame

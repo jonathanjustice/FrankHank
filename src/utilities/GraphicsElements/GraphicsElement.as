@@ -29,7 +29,7 @@
 		
 		//private var avatar:String = new String("../lib/avatar_swf.swf");
 		private var bullet:String = new String("../src/assets/swf_bullet.swf");
-		private var avatar:String = new String("../src/assets/swf_frank.swf");
+		private var frank:String = new String("../src/assets/swf_frank.swf");
 		private var goon:String = new String("../src/assets/swf_goon.swf");
 		private var afs:String = new String("../src/assets/swf_afs.swf");
 		private var tank:String = new String("../src/assets/swf_tank.swf");
@@ -145,7 +145,7 @@
 			}
 			switch(filePath) {
 				case "frank":
-					filePath = avatar;
+					filePath = frank;
 					break;
 				case "goon":
 					filePath = goon;

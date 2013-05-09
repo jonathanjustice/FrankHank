@@ -28,7 +28,7 @@
 		
 		public function create_a_bunch_of_walls_forTesting():void{
 			var theX:Number = 25;
-			var theY:Number = 25;
+			var theY:Number = 225;
 			for(var i:int=0;i<1;i++){
 				theX+=200;
 				theY+=100;

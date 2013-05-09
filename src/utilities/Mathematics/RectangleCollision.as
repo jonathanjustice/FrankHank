@@ -30,7 +30,7 @@ package utilities.Mathematics{
 		//please update this to handle 2 moving rectangles, if desired
 		//resolves collision between a stationary rectangle and a moving rectangle
 		 public static function resolveCollisionBetweenMovingAndStationaryRectangles(movable:MovieClip, stationary:MovieClip):String {
-			var collisionEjectDistance:Number = .01;//don't get stuck in the other rectangle
+			var collisionEjectDistance:Number = 1;//don't get stuck in the other rectangle
 			var collidedWithTop:Boolean = false;
 			var collisionSide:String = "";
 		
