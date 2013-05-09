@@ -191,29 +191,63 @@
 		}
 		
 		public function moveGameContainer(avatar:MovieClip):void {
+			var cameraBuffer:int = 25;
+			var cameraSpeed:int = 12;
+			var avatarVels:Point = new Point();
+			avatarVels = avatar.getVelocity();
 			var avatarPoint:Point = new Point();
 			avatarPoint.x = avatar.x;
 			avatarPoint.y = avatar.y;
 			avatarPoint = avatar.parent.localToGlobal(avatarPoint);
 			//avatarPoint = globalToLocal(avatarPoint);
 			
-			trace("X:",avatarPoint.x);
-			trace("Y",avatarPoint.y);
-			if (avatarPoint.x < cameraWindow.x) {
-				gameContainer.x -= avatar.getVelocity().x;
-				trace("1");
+			//trace("X:",avatarPoint.x);
+			//trace("Y", avatarPoint.y);
+			if(avatarVels.x > 0){
+				cameraWindow.scaleToMotion("right");
 			}
-			if (avatarPoint.x + avatar.width > cameraWindow.x + cameraWindow.width) {
+			if(avatarVels.x < 0){
+				cameraWindow.scaleToMotion("left");
+			}
+			//running left
+			if (avatarPoint.x < cameraWindow.x) {
+				
+				if (avatarPoint.x < cameraWindow.x - cameraBuffer) {
+					if (avatarVels.x >= 0) {
+						trace("standing still");
+						gameContainer.x += cameraBuffer/10;
+					}else {
+						trace("moving left");
+						gameContainer.x += cameraSpeed;
+					}
+					//
+				}
 				gameContainer.x -= avatar.getVelocity().x;
-				trace("2");
+				
+			}
+			//running right
+			if (avatarPoint.x + avatar.width > cameraWindow.x + cameraWindow.width ) {
+				if (avatarPoint.x + avatar.width > cameraWindow.x + cameraWindow.width + cameraBuffer) {
+					if (avatarVels.x <= 0) {
+						trace("standing still");
+						gameContainer.x -= cameraBuffer/10;
+					}else {
+						trace("moving right");
+						gameContainer.x -= cameraSpeed;
+					}
+				}
+				gameContainer.x -= avatar.getVelocity().x;
+				
 			}
 			if (avatarPoint.y < cameraWindow.y) {
+				//gameContainer.y -= cameraSpeed;
 				gameContainer.y -= avatar.getVelocity().y;
-				trace("3");
+				
 			}
-			if (avatarPoint.y + avatar.height> cameraWindow.y + cameraWindow.height) {
+			if (avatarPoint.y + avatar.height > cameraWindow.y + cameraWindow.height) {
+				//gameContainer.y -= cameraSpeed;
 				gameContainer.y -= avatar.getVelocity().y;
-				trace("4");
+				
 			}
 			
 			

@@ -19,12 +19,32 @@
 		
 		public function CameraWindow() {
 			defineGraphicsDefaultRectangle();
-			this.x = 150;
+			this.x = 175;
 			this.y = 50;
-			this.width = 600;
-			this.height = 350;
-			this.visible = true;
+			this.width = 500;
+			this.height = 500;
+			this.visible = false;
 			this.alpha = .25;
+		}
+		
+		public function scaleToMotion(motion:String):void {
+			switch(motion) {
+				case "up":
+					//this.height = 300;
+					break;
+				case "down":
+					//this.width = 300;
+					break;
+				case "left":
+					this.width = 300;
+					this.x = 575;
+					break;
+				case "right":
+					this.width = 300;
+					this.x = -50;
+					break;
+			}
+			
 		}
 		
 	}
