@@ -50,18 +50,7 @@
 			createGameContainer();
 			setUpCameraWindow();
 			createQuadTree();
-			
-			//startGame("debug");
-		//	createHero();
 		}
-		
-		/*public function createHero():void{
-			hero = new MovieClip();
-			var mc:MovieClip = Main.getClassFromSWF("assets","hero");
-			
-			//hero.setPosition(new Point(3*gridSize,3*gridSize));
-			gameContainer.addChild(hero);
-		}*/
 		
 		private static function createGameContainer():void{
 			gameContainer = new utilities.Screens.GameContainer();
@@ -154,10 +143,7 @@
 			avatarPoint.x = avatar.x;
 			avatarPoint.y = avatar.y;
 			avatarPoint = avatar.parent.localToGlobal(avatarPoint);
-			//avatarPoint = globalToLocal(avatarPoint);
 			
-			//trace("X:",avatarPoint.x);
-			//trace("Y", avatarPoint.y);
 			if(avatarVels.x > 0){
 				cameraWindow.scaleToMotion("right");
 			}
@@ -169,10 +155,10 @@
 				
 				if (avatarPoint.x < cameraWindow.x - cameraBuffer) {
 					if (avatarVels.x >= 0) {
-						trace("standing still");
+						//trace("standing still");
 						gameContainer.x += cameraBuffer/10;
 					}else {
-						trace("moving left");
+						//trace("moving left");
 						gameContainer.x += cameraSpeed;
 					}
 					//
@@ -184,10 +170,10 @@
 			if (avatarPoint.x + avatar.width > cameraWindow.x + cameraWindow.width ) {
 				if (avatarPoint.x + avatar.width > cameraWindow.x + cameraWindow.width + cameraBuffer) {
 					if (avatarVels.x <= 0) {
-						trace("standing still");
+						//trace("standing still");
 						gameContainer.x -= cameraBuffer/10;
 					}else {
-						trace("moving right");
+						//trace("moving right");
 						gameContainer.x -= cameraSpeed;
 					}
 				}
@@ -203,7 +189,6 @@
 				
 			}
 		}
-	
 		
 		private static function masterLoop(event:Event):void{
 			if(!gamePaused){
@@ -218,7 +203,6 @@
 				//can use this section for when the game is paused but I still need to update UI stuff
 			}
 		}
-		
 		
 		//pause the update loops
 		//pause any other specific things like, spawnTimes, decayRates etc. that are dependent on getTimer

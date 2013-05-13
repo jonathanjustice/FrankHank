@@ -26,7 +26,6 @@
 		
 		private function setUp():void{
 			avatars =[];
-			//createAvatar();
 		}
 		
 		public function getAvatarLocation():Point{
@@ -49,10 +48,7 @@
 				
 				for (var a:int = 0; a < PowerupManager.powerups.length; a++) {
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, PowerupManager.powerups[a]) == true) {
-						
 						myAvatar.toggleDoubleJump(true);
-						//trace("1111111111111",PowerupManager.powerups[a]);
-						//trace("22222222222222",PowerupManager.powerups[a].getPowerupType());
 						myAvatar.applyPowerup(PowerupManager.powerups[a].getPowerupType());
 						PowerupManager.powerups[a].takeDamage(1);
 						PowerupManager.powerups[a].checkForDeathFlag();

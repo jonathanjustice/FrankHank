@@ -4,7 +4,7 @@ package utilities.Engine{
 	import utilities.Actors.Actor;
 	import utilities.Actors.SelectableActor;
 	import flash.geom.Point;
-	public class BasicManager extends MovieClip{
+	public class BasicManager {
 		private static var newSelectedItems:Array = new Array();
 		
 		public function BasicManager(){
