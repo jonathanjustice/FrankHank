@@ -195,22 +195,13 @@
 				
 			}
 			if (avatarPoint.y < cameraWindow.y) {
-				//gameContainer.y -= cameraSpeed;
 				gameContainer.y -= avatar.getVelocity().y;
 				
 			}
 			if (avatarPoint.y + avatar.height > cameraWindow.y + cameraWindow.height) {
-				//gameContainer.y -= cameraSpeed;
 				gameContainer.y -= avatar.getVelocity().y;
 				
 			}
-			
-			
-			
-			/*if (Math.abs(deltaY) > 6) {
-				gameContainer.x -= deltaX;
-				gameContainer.y += deltaY;
-			}*/
 		}
 	
 		
