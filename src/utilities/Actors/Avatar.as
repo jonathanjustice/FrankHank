@@ -2,7 +2,6 @@
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Mathematics.QuadTree;
 	import utilities.Engine.Game;
-	import utilities.Engine.Combat.AnimationManager;
 	import utilities.Actors.Actor;
 	import utilities.Input.KeyInputManager;
 	import utilities.Input.MouseInputManager;
@@ -11,6 +10,7 @@
 	import flash.geom.Point;
 	import flash.display.Sprite;
 	import flash.text.*;
+	import utilities.Engine.Combat.AnimationManager
 
 	public class Avatar extends JumpingActor{
 		//private var mySprite:Sprite = new Sprite();
@@ -83,11 +83,11 @@
 		}
 		
 		public function getVelocityFromKeyInputManager():void{
-			Main.keyInputManager.setSimpleVelocityViaKeys();
+			KeyInputManager.setSimpleVelocityViaKeys();
 			
-			xVelocity = Main.keyInputManager.getMyVelocityX() * velocityIncrease;
-			yVelocity += Main.keyInputManager.getMyVelocityY() * velocityIncrease;
-			if (Main.keyInputManager.getMyVelocityX() == 0) {
+			xVelocity = KeyInputManager.getMyVelocityX() * velocityIncrease;
+			yVelocity += KeyInputManager.getMyVelocityY() * velocityIncrease;
+			if (KeyInputManager.getMyVelocityX() == 0) {
 				xVelocity = 0;
 			}
 		}
@@ -95,11 +95,10 @@
 		public function getRotationFromKeyInputManager():void{
 			//trace(KeyInputManager.getMyRotation());
 			//trace(this.rotation);
-			this.rotation += Main.keyInputManager.getMyRotation();
+			this.rotation += KeyInputManager.getMyRotation();
 		}
 		
 		public function applyVelocities():void {
-			
 			this.x += xVelocity;
 			this.y += yVelocity;
 			Main.game.moveGameContainer(this);
@@ -143,10 +142,10 @@
 			if (xVelocity != 0 && yVelocity == 0) {
 				setIsIdle(false);
 				setIdleTime(0);
-				utilities.Engine.Game.getAnimationManager().updateAnimationState(this, "run");
+				//AnimationManager().updateAnimationState(this, "run");
 				//if you are not moving and have not already started idleing, then idle
 			}else if (xVelocity == 0 && yVelocity == 0 && isJumping == false && getIdleTime() == 0) {
-				utilities.Engine.Game.animationManager.updateAnimationState(this, "idle");
+				AnimationManager.getInstance().updateAnimationState(this, "idle");
 				setIsIdle(true);
 			}
 			//If idleing, increment idle timer
@@ -158,11 +157,12 @@
 				//if over max idle time, switch to impatient idle
 				setIdleImpatientTime((getIdleImpatientTime() + 1));
 				if (getIdleImpatientTime() == 1) {
-					utilities.Engine.Game.getAnimationManager().updateAnimationState(this,"idleImpatient");
+					//AnimationManager.getInstance();
+					AnimationManager.getInstance().updateAnimationState(this,"idleImpatient");
 				}
 				//if over max idle time, switch to idle
 				if (getIdleImpatientTime() == getMaxIdleTime()) {
-					utilities.Engine.Game.getAnimationManager().updateAnimationState(this, "idle");
+					AnimationManager.getInstance().updateAnimationState(this, "idle");
 					setIdleImpatientTime(0);
 					setIdleTime(0);
 				}

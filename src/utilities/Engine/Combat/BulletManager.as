@@ -8,7 +8,7 @@ access other managers:Game.manager name
 
 
 package utilities.Engine.Combat{
-	
+	import utilities.Input.KeyInputManager;
 	import utilities.Engine.DefaultManager;
 	import utilities.Actors.Actor;
 	import utilities.Actors.Avatar;
@@ -18,16 +18,25 @@ package utilities.Engine.Combat{
 	import flash.geom.Point;
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
-	public class BulletManager extends utilities.Engine.DefaultManager{
+	public class BulletManager {
 		
 		public static var bullets:Array;
 		public static var enemyBullets:Array;
 		private var gameTimer:Timer = new Timer(0,0);
 		private static var currentDelay:int = 0;
 		private static var delay:int = 10;
+		private static var _instance:BulletManager;
 		
-		public function BulletManager(){
+		public function BulletManager(singletonEnforcer:SingletonEnforcer){
 			setUp();			
+		}
+		
+		public static function getInstance():BulletManager {
+			if(BulletManager._instance == null){
+				BulletManager._instance = new BulletManager(new SingletonEnforcer());
+				//setUp();
+			}
+			return _instance;
 		}
 		
 		public function setUp():void{
@@ -39,7 +48,7 @@ package utilities.Engine.Combat{
 			
 		}
 		
-		public override function updateLoop():void{
+		public static function updateLoop():void{
 			
 			for each(var bullet:Bullet in bullets){
 				bullet.updateLoop();
@@ -52,7 +61,7 @@ package utilities.Engine.Combat{
 		
 		public static function if_shooting_create_a_new_bullet():void {
 			currentDelay ++;
-			if(Main.keyInputManager.getRightBracket() == true){
+			if(KeyInputManager.getRightBracket() == true){
 				Game.resumeGame();
 				if (currentDelay >= delay) {
 					if(bullets.length == 0){//one bullet at a time mode
@@ -83,15 +92,15 @@ package utilities.Engine.Combat{
 			}
 		}
 		
-		public override function getArrayLength():int{
+		public function getArrayLength():int{
 			return bullets.length-1;
 		}
 		
-		public override function getArray():Array{
+		public static function getArray():Array{
 			return bullets;
 		}
 		
-		public override function testFunction():void{
+		public function testFunction():void{
 			trace("BulletManager: testFunction");
 		}
 		
@@ -104,3 +113,4 @@ package utilities.Engine.Combat{
 		
 	}
 }
+class SingletonEnforcer{}

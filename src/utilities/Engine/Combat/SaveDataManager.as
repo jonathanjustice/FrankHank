@@ -6,13 +6,24 @@
 	import utilities.Engine.DefaultManager;
 	import utilities.GraphicsElements.BitmapDataObject;
 	import flash.display.*;
-	public class SaveDataManager extends utilities.Engine.DefaultManager {
+	public class SaveDataManager {
 		private var sharedObjects:SharedObjects = new SharedObjects();
 		//private var imageSaver:ImageSaver = new ImageSaver();
-		public function SaveDataManager(){
+		private static var _instance:SaveDataManager;
+		public function SaveDataManager(singletonEnforcer:SingletonEnforcer){
 		//	newSaveInstance();
 		//	getSaveData();
 		}
+		
+		
+		public static function getInstance():SaveDataManager {
+			if(SaveDataManager._instance == null){
+				SaveDataManager._instance = new SaveDataManager(new SingletonEnforcer());
+				//setUp();
+			}
+			return _instance;
+		}
+		
 		
 		private function newSaveInstance():void {
 			var bitmapDataObject:BitmapDataObject = new BitmapDataObject();
@@ -33,3 +44,4 @@
 		}
 	}
 }
+class SingletonEnforcer{}

@@ -11,12 +11,13 @@
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Actors.GameBoardPieces.Terrain;
 	import flash.geom.Point;
-	public class LevelManager extends utilities.Engine.DefaultManager{
+	public class LevelManager extends BasicManager implements IManager{
 		private var tempArray:Array = new Array();
 		public static var level:MovieClip;
 		public static var levels:Array;
 		private var isLevelComplete:Boolean = false;
-		public function LevelManager(){
+		private static var _instance:LevelManager;
+		public function LevelManager(singletonEnforcer:SingletonEnforcer){
 			setUp();
 		}
 		
@@ -25,6 +26,14 @@
 			createLevel();
 			//create_a_bunch_of_walls_forTesting();
 		}
+		
+		public static function getInstance():LevelManager {
+			if(LevelManager._instance == null){
+				LevelManager._instance = new LevelManager(new SingletonEnforcer());
+			}
+			return _instance;
+		}
+		
 		
 		public function create_a_bunch_of_walls_forTesting():void{
 			var theX:Number = 25;
@@ -45,7 +54,7 @@
 		}
 		
 		//this doesn't run for now, may never need to.....
-		public override function updateLoop():void{
+		public function updateLoop():void{
 			/*for each(var level:Level in levels){
 				level.updateLoop();
 			}*/
@@ -68,12 +77,12 @@
 				//trace("enemy manager: no enemies left");
 				//trace("EnemyManager.enemies", EnemyManager.enemies);
 				Game.disableMasterLoop();
-				destroyArray(LootManager.lootDrops);
-				destroyArray(LootManager.treasureChests);
-				destroyArray(EnemyManager.enemies);
-				destroyArray(PowerupManager.powerups);
-				destroyArray(BulletManager.bullets);
-				destroyArray(AvatarManager.avatars);
+				LootManager.getInstance().destroyArray(LootManager.lootDrops);
+				LootManager.getInstance().destroyArray(LootManager.treasureChests);
+				EnemyManager.getInstance().destroyArray(EnemyManager.enemies);
+				//PowerupManager.getInstance().destroyArray(PowerupManager.powerups);
+				//BulletManager.getInstance().destroyArray(BulletManager.bullets);
+				//AvatarManager.getInstance().destroyArray(AvatarManager.avatars);
 				//BulletManager.destroyArray(getArray());
 				//AvatarManager.destroyArray(getArray());
 				//PowerupManager.destroyArray(getArray());
@@ -93,7 +102,7 @@
 			}
 		}
 		
-		public override function getArray():Array{
+		public function getArray():Array{
 			return levels;
 		}
 		public function getLevel():Object{
@@ -109,3 +118,5 @@
 		}
 	}
 }
+
+class SingletonEnforcer{}

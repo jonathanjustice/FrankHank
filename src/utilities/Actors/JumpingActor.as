@@ -2,6 +2,7 @@
 	import utilities.Engine.Game;
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Input.KeyInputManager;
+	import utilities.Engine.Combat.AnimationManager;
 	import flash.utils.getTimer;
 	public class JumpingActor extends SelectableActor{
 		
@@ -27,13 +28,13 @@
 		
 		public function getisJumpingFromInputManager():void {
 			if (!isJumpingEnabled) {
-				if (Main.keyInputManager.getSpace() == false) {
+				if (KeyInputManager.getSpace() == false) {
 					isJumpingEnabled = true;
 					//trace("NO")
 				}
 			}
 			if(isJumpingEnabled){
-				if (Main.keyInputManager.getSpace() == true) {
+				if (KeyInputManager.getSpace() == true) {
 					checkCurrentjumpCount();
 					isJumpingEnabled = false;
 					//trace("jump is enabled");
@@ -63,9 +64,9 @@
 			setIsIdle(false);
 			currentJumpCount++;
 			if (currentJumpCount == 1) {
-				utilities.Engine.Game.getAnimationManager().updateAnimationState(this,"jump");
+				//AnimationManager().updateAnimationState(this,"jump");
 			}else if (currentJumpCount == 2) {
-				utilities.Engine.Game.getAnimationManager().updateAnimationState(this,"jumpDouble");
+				//AnimationManager().updateAnimationState(this,"jumpDouble");
 			}
 			yVelocity = 0;
 			resetGravity();

@@ -5,21 +5,34 @@
 	import utilities.Actors.Powerup_shoot;
 	import utilities.Actors.Powerup_invincible;
 	import utilities.Engine.DefaultManager;
+	import utilities.Engine.BasicManager;
 	import flash.display.MovieClip;
 	import flash.geom.Point;
+	import utilities.Engine.IManager;
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Engine.LevelManager;
-	public class PowerupManager extends utilities.Engine.DefaultManager{
+	public class PowerupManager extends BasicManager{
 		public static var powerups:Array;
 		
 		private var avatar:Point = new Point();
-		public static var shittyTimer:int = 0;
 		
-		private static var numnum:Number=0;
 		
-		public function PowerupManager(){
+		private static var numnum:Number = 0;
+		private static var _instance:PowerupManager;
+		
+		public function PowerupManager(singletonEnforcer:SingletonEnforcer){
 			setUp();
 		}
+		
+		public static function getInstance():PowerupManager {
+			if(PowerupManager._instance == null){
+				PowerupManager._instance = new PowerupManager(new SingletonEnforcer());
+				//setUp();
+			}
+			return _instance;
+		}
+		
+	
 		
 		public function setUp():void{
 			numnum = 0;
@@ -27,7 +40,7 @@
 			//createNewPowerup();
 		}
 		
-		public override function updateLoop():void{
+		public function updateLoop():void{
 			
 			
 		}
@@ -40,7 +53,7 @@
 			}
 		}
 		
-		public override function getArrayLength():int{
+		public function getArrayLength():int{
 			return powerups.length;
 		}
 		
@@ -48,7 +61,7 @@
 			return powerups[index];
 		}
 		
-		public override function getArray():Array{
+		public static function getArray():Array{
 			return powerups;
 		}
 		
@@ -74,3 +87,4 @@
 		}
 	}
 }
+class SingletonEnforcer{}

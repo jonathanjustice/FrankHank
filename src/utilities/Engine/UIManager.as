@@ -6,15 +6,24 @@
 	import utilities.Engine.DefaultManager;
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
-	public class UIManager extends utilities.Engine.DefaultManager{
+	public class UIManager {
 		public static var uiContainer:MovieClip = new utilities.Screens.UIContainer();
 		private var padding:int=11;
 		private var screen_LevelUp:MovieClip;
 		
-		private var screenStart:MovieClip;
+		private static var screenStart:MovieClip;
+		private static var _instance:UIManager;
 		
-		public function UIManager(){
+		public function UIManager(singletonEnforcer:SingletonEnforcer){
 			setUp();
+		}
+		
+		public static function getInstance():UIManager {
+			if(UIManager._instance == null){
+				UIManager._instance = new UIManager(new SingletonEnforcer());
+				//setUp();
+			}
+			return _instance;
 		}
 		
 		public function setUp():void{
@@ -29,7 +38,7 @@
 			return uiContainer;
 		}
 		
-		public function openStartScreen():void{
+		public static function openStartScreen():void{
 			screenStart = new ScreenStart();
 			//trace("start");
 		}
@@ -49,7 +58,7 @@
 			
 		}
 		
-		public override function updateLoop():void{
+		public static function updateLoop():void{
 			/*xpBar.txt_xp.text = xpBarSystem.get_CurrentXP() + " / " + xpBarSystem.get_Next_Levels_Required_XP();//update the text display
 			//xpBar.inner_bar.scaleX = xpBarSystem.get_percent_xp_to_level();//update the xp bar graphic
 			
@@ -110,3 +119,4 @@
 		}*/
 	}
 }
+class SingletonEnforcer{}

@@ -4,11 +4,19 @@
 	import utilities.Engine.DefaultManager;
 	import flash.display.MovieClip;
 
-	public class AnimationManager extends utilities.Engine.DefaultManager{
-	
+	public class AnimationManager {
+		private static var _instance:AnimationManager;
 		
-		public function AnimationManager(){
+		public function AnimationManager(singletonEnforcer:SingletonEnforcer){
 			setUp();
+		}
+		
+		public static function getInstance():AnimationManager {
+			if(AnimationManager._instance == null){
+				AnimationManager._instance = new AnimationManager(new SingletonEnforcer());
+				//setUp();
+			}
+			return _instance;
 		}
 		
 		public function setUp():void{
@@ -21,8 +29,10 @@
 		}
 		
 		//update animations based on current state
-		public override function updateLoop():void{
+		public function updateLoop():void{
 			//idleLogic();
 		}
 	}
 }
+
+class SingletonEnforcer{}

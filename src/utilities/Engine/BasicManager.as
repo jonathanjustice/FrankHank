@@ -2,42 +2,20 @@
 package utilities.Engine{
 	import flash.display.MovieClip;
 	import utilities.Actors.Actor;
-	import flash.geom.Point;
 	import utilities.Actors.SelectableActor;
-	public class DefaultManager extends MovieClip{
-		private var newSelectedItems:Array = new Array();
-
-		public function DefaultManager(){
-			
-		}
-	
+	import flash.geom.Point;
+	public class BasicManager extends MovieClip{
+		private static var newSelectedItems:Array = new Array();
 		
-		public function testFunction():void{
-			trace(this,"class exists, probably means you fucked up somewhere else")
-		}
-		
-		public function updateLoop():void{
+		public function BasicManager(){
 			
 		}
 		
-		public function getArray():Array{
-			var array:Array = new Array();
-			return array;
-		}
-		
-		public function get_Index_of_actor_in_array(actor:MovieClip,array:Array):int{
-			array = getArray();
-			var index:int = array.indexOf(actor);
-			return index;
-		}
-		
-		public function getArrayLength():int{
-			var array:Array = new Array(); 
-			return array.length-1;
-		}
-		
-		public function deslectAll():void {
-			
+		public function destroyArray(array:Array):void {
+			for(var i:int = array.length-1; i>-1;i--){
+				trace("array:",array,"i:",i);
+				array[i].removeActorFromGameEngine(array[i], array);
+			}
 		}
 		
 		//gives you all the items that touch the mouse
@@ -57,7 +35,7 @@ package utilities.Engine{
 		
 		//gives you all the selected items except the one the mouse 
 		//is colliding with and is on the top of the z order
-		public function all_items_selected_except_the_one_that_was_just_clicked(array:Array):Array {
+		public static function all_items_selected_except_the_one_that_was_just_clicked(array:Array):Array {
 			newSelectedItems = [];
 			var oldSelectedItems:Array = new Array();
 			var mousePoint:Point = Main.getMouseCoordinates();
@@ -73,18 +51,6 @@ package utilities.Engine{
 				}
 			}
 			return oldSelectedItems;
-		}
-		
-		//get all the selected actors
-		public function getNewSelectedItems():Array {
-			return newSelectedItems;
-		}
-		
-		public function destroyArray(array:Array):void {
-			for(var i:int = array.length-1; i>-1;i--){
-				trace("array:",array,"i:",i);
-				array[i].removeActorFromGameEngine(array[i], array);
-			}
 		}
 	}
 }

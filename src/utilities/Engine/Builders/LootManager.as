@@ -4,13 +4,14 @@
 	import utilities.Actors.TreasureChest;
 	import utilities.Actors.LootDrops.LootDrop;
 	import utilities.Engine.Combat.AvatarManager;
+	import utilities.Engine.IManager;
 	import utilities.Input.KeyInputManager;
 	import utilities.Engine.DefaultManager;
 	import utilities.Engine.Game;
+	import utilities.Engine.BasicManager;
 	import utilities.Actors.LootDrops.*;
 	import utilities.Actors.LootDrops.LootDrop_Coin;
 	import utilities.Actors.LootDrops.LootDrop_Premium;
-	
 	import utilities.Actors.LootDrops.LootDrop_Card;
 	import utilities.Actors.LootDrops.LootDrop_Bomb;
 	import utilities.Actors.LootDrops.LootDrop_DNA;
@@ -19,14 +20,25 @@
 	//import lootDrops.CardBoost;
 	//import lootDrops.Health;
 	
-	public class LootManager extends utilities.Engine.DefaultManager{
+	public class LootManager extends BasicManager {
 		public static var lootDrops:Array;
 		public static var treasureChests:Array;
 		public static var lootFactory:Factory_Loot = new Factory_Loot();
-		public function LootManager(){
+		private static var _instance:LootManager;
+		
+		public function LootManager(singletonEnforcer:SingletonEnforcer){
 			//trace("loot manager");
 			setUp();
 		}
+		
+		public static function getInstance():LootManager {
+			if(LootManager._instance == null){
+				LootManager._instance = new LootManager(new SingletonEnforcer());
+				
+			}
+			return _instance;
+		}
+	
 		
 		public function setUp():void{
 			treasureChests = [];
@@ -34,7 +46,7 @@
 			//createNewTreasureChest(200,300);
 		}
 		
-		public override function updateLoop():void{
+		public static function updateLoop():void{
 			updateLootDrops();
 			updateTreasureChests();
 		}
@@ -165,3 +177,4 @@
 	premium
 	coin
 */
+class SingletonEnforcer{}

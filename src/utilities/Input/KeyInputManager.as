@@ -4,30 +4,40 @@
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Input.KeyCodes;
 	import utilities.Engine.DefaultManager;
-	public class KeyInputManager extends utilities.Engine.DefaultManager{
-		private var isKeysEnabled:Boolean = false;
-		private var Key_right_2:Boolean = false;
-		private var Key_left_2:Boolean = false;
-		private var Key_up_2:Boolean = false;
-		private var Key_down_2:Boolean = false;
-		private var Key_right:Boolean = false;
-		private var Key_left:Boolean = false;
-		private var Key_up:Boolean = false;
-		private var Key_down:Boolean = false;
-		private var Key_space:Boolean = false;
-		private var Key_rightBracket:Boolean = false;//we're using right bracket now, because my keyboard is a jerk
+	public class KeyInputManager{
+		private static var isKeysEnabled:Boolean = false;
+		private static var Key_right_2:Boolean = false;
+		private static var Key_left_2:Boolean = false;
+		private static var Key_up_2:Boolean = false;
+		private static var Key_down_2:Boolean = false;
+		private static var Key_right:Boolean = false;
+		private static var Key_left:Boolean = false;
+		private static var Key_up:Boolean = false;
+		private static var Key_down:Boolean = false;
+		private static var Key_space:Boolean = false;
+		private static var Key_rightBracket:Boolean = false;//we're using right bracket now, because my keyboard is a jerk
 		private var keys:Array = new Array();
-		private var aimAngle:Number = 90;
-		public var myAngle:Number=0;
-		private var myVelocityX:Number=0;
-		private var myVelocityY:Number=0;
-		private var myRotation:Number=0;
-		private var Key_rotRight:Boolean = false;
-		private var Key_rotLeft:Boolean = false;
+		private static var aimAngle:Number = 90;
+		public static var myAngle:Number=0;
+		private static var myVelocityX:Number=0;
+		private static var myVelocityY:Number=0;
+		private static var myRotation:Number=0;
+		private static var Key_rotRight:Boolean = false;
+		private static var Key_rotLeft:Boolean = false;
+		private static var _instance:KeyInputManager;
 		
-		public function KeyInputManager():void{
-			//keys = [];
+		public function KeyInputManager(singletonEnforcer:SingletonEnforcer):void{
 			setUp();
+			//keys = [];
+			
+		}
+		
+		public static function getInstance():KeyInputManager {
+			if(KeyInputManager._instance == null){
+				KeyInputManager._instance = new KeyInputManager(new SingletonEnforcer());
+				//setUp();
+			}
+			return _instance;
 		}
 		
 		public function setUp():void{
@@ -146,7 +156,7 @@
 			//trace("myRotation",myRotation);
 		}
 		
-		public function setSimpleVelocityViaKeys():void{
+		public static function setSimpleVelocityViaKeys():void{
 			
 			if(Key_up_2 == false && Key_down_2 == false){
 				myVelocityY = 0;
@@ -170,7 +180,7 @@
 			}
 		}
 		
-		public function setSimpleAngleViaKeys():void{
+		public static function setSimpleAngleViaKeys():void{
 			
 			if(Key_up && Key_right){
 				myAngle = 45;
@@ -198,34 +208,35 @@
 			}
 		}
 		
-		public function getAimAngle():Number {
+		public static function getAimAngle():Number {
 			return aimAngle;
 		}
 		
-		public function getMyAngle():Number{
+		public static function getMyAngle():Number{
 			//trace(myAngle);
 			return myAngle;
 		}
 		
-		public function getMyVelocityX():Number{
+		public static function getMyVelocityX():Number{
 			return myVelocityX;
 		}
-		public function getMyRotation():Number{
+		public static function getMyRotation():Number{
 			return myRotation;
 		}
-		public function getMyVelocityY():Number{
+		public static function getMyVelocityY():Number{
 			return myVelocityY;
 		}
 		
-		public function getRightBracket():Boolean{
+		public static function getRightBracket():Boolean{
 			//trace("space" + Key_space);
 			return Key_rightBracket;
 		}
 		
-		public function getSpace():Boolean{
+		public static function getSpace():Boolean{
 			//trace("space" + Key_space);
 			return Key_space;
 		}
 	}
 }
 
+class SingletonEnforcer{}

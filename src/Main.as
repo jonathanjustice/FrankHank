@@ -54,36 +54,18 @@
 		//set up a some important managers
 		private function initialSetup():void{
 			stage.stageFocusRect = false;
-			defineTheStage();
-			createUIManager();
-			createTheGameEngine();
-			openStartScreen();
-			createKeyInputManager();
-		}
-		
-		//make sure to get rid of this eventually
-		private function defineTheStage():void{
-			//trace("the stage exists")
 			theStage = this.stage;
-		}
-		
-		private function createKeyInputManager():void{
-			//trace("the input manager exists")
-			keyInputManager = new utilities.Input.KeyInputManager();
-			mouseInputManager = new utilities.Input.MouseInputManager();
-			
-		}
-		
-		private static function createUIManager():void{
-			uiManager = new UIManager()
-		}
-		
-		private function createTheGameEngine():void{
+			UIManager.getInstance();
 			game = new utilities.Engine.Game();
+			openStartScreen();
+			KeyInputManager.getInstance();
+			MouseInputManager.getInstance();
 		}
+		
+		
 		
 		private function openStartScreen():void{
-			uiManager.openStartScreen();
+			UIManager.openStartScreen();
 		}
 		
 		//If you lose focus, you can use this to regain it to the stage

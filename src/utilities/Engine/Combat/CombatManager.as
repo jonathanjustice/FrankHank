@@ -11,10 +11,20 @@
 	import utilities.Input.KeyInputManager;
 	import utilities.Input.KeyCodes;
 	import flash.geom.Point;
-	public class CombatManager extends utilities.Engine.DefaultManager{
-		public function CombatManager(){
+	public class CombatManager {
+		private static var _instance:CombatManager;
+		public function CombatManager(singletonEnforcer:SingletonEnforcer){
 			setUp();			
 		}
+		
+		public static function getInstance():CombatManager {
+			if(CombatManager._instance == null){
+				CombatManager._instance = new CombatManager(new SingletonEnforcer());
+				//setUp();
+			}
+			return _instance;
+		}
+		
 		
 		public function setUp():void{
 			
@@ -49,3 +59,5 @@
 		
 	}
 }
+
+class SingletonEnforcer{}

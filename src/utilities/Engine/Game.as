@@ -33,6 +33,7 @@
 		public static var levelManager:LevelManager;
 		public static var soundManager:SoundManager;
 		public static var saveDataManager:SaveDataManager;
+		import utilities.Engine.Combat.AnimationManager;
 		public static var avatar:Avatar;
 		private static var quadTree:QuadTree;
 		private static var gamePaused:Boolean = true;
@@ -127,68 +128,22 @@
 		}
 		
 		private static function createManagersAndControllers():void {
-			createPowerupManager();
-			createAnimationManager();
-			createResourceManager();
-			createLevelManager();
-			createLevelBuilder();
-			createAvatarManager();
-			createBulletManager();
-			createEnemyManager();
-			createCombatManager();
-			createLootManager();
-			createSoundManager();
-			createSaveDataManager();
+			PowerupManager.getInstance();
+			AnimationManager.getInstance();
+			ResourceManager.getInstance();
+			LevelManager.getInstance();
+			LevelBuilder.getInstance();
+			AvatarManager.getInstance();
+			BulletManager.getInstance();
+			EnemyManager.getInstance();
+			CombatManager.getInstance();
+			LootManager.getInstance();
+			SoundManager.getInstance();
+			SaveDataManager.getInstance();
+			AnimationManager.getInstance();
 			
 		}
 		
-		private static function createPowerupManager():void {
-			powerupManager = new PowerupManager();
-		}
-		
-		private static function createAnimationManager():void{
-			animationManager = new AnimationManager();
-		}
-		
-		private static function createResourceManager():void {
-			resourceManager = new ResourceManager();
-		}
-		
-		private static function createLevelManager():void{
-			levelManager = new LevelManager();
-		}
-		
-		private static function createLevelBuilder():void{
-			levelBuilder = new utilities.Engine.Builders.LevelBuilder();
-		}
-		
-		private static function createAvatarManager():void{
-			avatarManager = new AvatarManager();
-		}
-		
-		private static function createBulletManager():void{
-			bulletManager = new BulletManager();
-		}
-		
-		private static function createEnemyManager():void{
-			enemyManager = new EnemyManager();
-		}
-		
-		private static function createCombatManager():void{
-			combatManager = new CombatManager();
-		}
-		
-		private static function createLootManager():void{
-			lootManager = new LootManager();
-		}
-		
-		private static function createSoundManager():void {
-			soundManager = new SoundManager();
-		}
-		
-		private static function createSaveDataManager():void{
-			saveDataManager = new SaveDataManager();
-		}
 		
 		public function moveGameContainer(avatar:MovieClip):void {
 			var cameraBuffer:int = 25;
@@ -261,13 +216,13 @@
 		
 		private static function masterLoop(event:Event):void{
 			if(!gamePaused){
-				avatarManager.updateLoop();
-				bulletManager.updateLoop();
-				enemyManager.updateLoop();
-				lootManager.updateLoop();
+				AvatarManager.updateLoop();
+				BulletManager.updateLoop();
+				EnemyManager.updateLoop();
+				LootManager.updateLoop();
 				//updateCombatManager();
-				Main.uiManager.updateLoop();
-			//levelManager.updateLoop();
+				UIManager.updateLoop();
+				//LevelManager.updateLoop();
 			}else{
 				//can use this section for when the game is paused but I still need to update UI stuff
 			}
@@ -301,8 +256,8 @@
 		
 		public static function deselectAllActors():void {
 			trace("Game: deselectAllActors");
-			avatarManager.deselectActors();
-			enemyManager.deselectActors();
+			AvatarManager.deselectActors();
+			EnemyManager.deselectActors();
 		}
 		
 		public static function getAnimationManager():AnimationManager {

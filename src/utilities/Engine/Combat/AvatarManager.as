@@ -1,17 +1,28 @@
 ﻿package utilities.Engine.Combat{
 	import flash.display.MovieClip;
+	import utilities.Engine.BasicManager;
 	import utilities.Engine.DefaultManager;
 	import utilities.Actors.Avatar;
+	import utilities.Engine.IManager;
 	import utilities.Engine.LevelManager;
 	import utilities.Engine.Combat.PowerupManager;
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Mathematics.RectangleCollision;
 	import flash.geom.Point;
-	public class AvatarManager extends utilities.Engine.DefaultManager{
+	public class AvatarManager extends BasicManager implements IManager {
+		private static var _instance:AvatarManager;
 		public static var avatar:MovieClip;
 		public static var avatars:Array;
-		public function AvatarManager(){
+		public function AvatarManager(singletonEnforcer:SingletonEnforcer){
 			setUp();			
+		}
+		
+		public static function getInstance():AvatarManager {
+			if(AvatarManager._instance == null){
+				AvatarManager._instance = new AvatarManager(new SingletonEnforcer());
+			}
+			trace(_instance);
+			return _instance;
 		}
 		
 		private function setUp():void{
@@ -27,13 +38,13 @@
 			return avatars[0].getAngle();
 		}
 		
-		public function deselectActors():void {
+		public static function deselectActors():void {
 			for each(var myAvatar:Avatar in avatars) {
 				myAvatar.deselectActor();
 			}
 		}
 	
-		public override function updateLoop():void{
+		public static function updateLoop():void{
 			for each(var myAvatar:Avatar in avatars){
 				myAvatar.updateLoop();
 				
@@ -84,7 +95,7 @@
 			avatars.push(avatar);
 		}
 		
-		public override function getArray():Array{
+		public function getArray():Array{
 			return avatars;
 		}
 		
@@ -93,3 +104,4 @@
 		}
 	}
 }
+class SingletonEnforcer{}

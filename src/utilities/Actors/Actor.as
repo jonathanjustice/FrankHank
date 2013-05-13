@@ -14,6 +14,8 @@
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Mathematics.QuadTree;
 	import flash.geom.Point;
+	import utilities.Input.KeyInputManager;
+	import utilities.Engine.Combat.AnimationManager;
 	
 	public class Actor extends MovieClip {
 		private var isFalling:Boolean = false;
@@ -111,7 +113,7 @@
 		public function fireProjectile():void {
 			//if the key is down 
 			fireProjectileTimer++;
-			if (Main.keyInputManager.getRightBracket() == true) {
+			if (KeyInputManager.getRightBracket() == true) {
 				//if the delay has been reached
 				if (fireProjectileTimer >= fireProjectileDelay) {
 					fireProjectileTimer = 0;
@@ -168,17 +170,17 @@
 			if(markedForDeletion){
 				//delete it
 				if(this is Bullet){
-					removeActorFromGameEngine(this,Game.bulletManager.getArray());
+					removeActorFromGameEngine(this,BulletManager.getArray());
 				}else if(this is Enemy){
 					//delete it
-					removeActorFromGameEngine(this,Game.enemyManager.getArray());
+					removeActorFromGameEngine(this,EnemyManager.getArray());
 				}else if(this is LootDrop){
-					removeActorFromGameEngine(this,Game.lootManager.getTreasureChestArray());
+					//removeActorFromGameEngine(this,LootManager.getTreasureChestArray());
 				}
 				else if(this is TreasureChest){
-					removeActorFromGameEngine(this,Game.lootManager.getTreasureChestArray());
+					//removeActorFromGameEngine(this,LootManager.getTreasureChestArray());
 				}else if(this is Powerup_default){
-					removeActorFromGameEngine(this,Game.powerupManager.getArray());
+					removeActorFromGameEngine(this,PowerupManager.getArray());
 				}/*
 				else if(this == CardDrop){
 					//removeActorFromGameEngine(this,Game.lootManager.getArray());;

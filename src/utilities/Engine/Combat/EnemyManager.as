@@ -4,6 +4,8 @@
 	import utilities.Engine.DefaultManager;
 	import flash.display.MovieClip;
 	import flash.geom.Point;
+	import utilities.Engine.IManager;
+	import utilities.Engine.BasicManager;
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Screens.xpBarSystem;
 	import utilities.Actors.Enemy;
@@ -12,7 +14,7 @@
 	import utilities.Actors.TankEnemy;
 	import utilities.Actors.Bullet;
 	import utilities.Engine.LevelManager;
-	public class EnemyManager extends utilities.Engine.DefaultManager{
+	public class EnemyManager extends BasicManager {
 		public static var enemies:Array;
 		private var xVelocity:Number;
 		private var yVelocity:Number;
@@ -22,10 +24,19 @@
 		//private static var enemyFactory = new Factory_Enemy();
 		public static var shittyTimer:int = 0;
 		
-		private static var numnum:Number=0;
+		private static var numnum:Number = 0;
+		private static var _instance:EnemyManager;
 		
-		public function EnemyManager(){
+		public function EnemyManager(singletonEnforcer:SingletonEnforcer){
 			setUp();
+		}
+		
+		public static function getInstance():EnemyManager {
+			if(EnemyManager._instance == null){
+				EnemyManager._instance = new EnemyManager(new SingletonEnforcer());
+				//setUp();
+			}
+			return _instance;
 		}
 		
 		public function setUp():void{
@@ -43,7 +54,7 @@
 		
 		//FPO way to create enemies
 		//check the enemies for collisions with bullets
-		public override function updateLoop():void{
+		public static function updateLoop():void{
 			/*if(numnum < 0){
 				shittyTimer++;
 				if(shittyTimer ==25){
@@ -111,7 +122,7 @@
 			}
 		}
 		
-		public function deselectActors():void {
+		public static function deselectActors():void {
 			//trace("enenmyManager: deselectActors");
 			for each(var myEnemy:MovieClip in enemies) {
 				//trace("enemy to deselect:",myEnemy);
@@ -119,7 +130,7 @@
 			}
 		}
 		
-		public override function getArrayLength():int{
+		public function getArrayLength():int{
 			return enemies.length;
 		}
 		
@@ -127,7 +138,7 @@
 			return enemies[index];
 		}
 		
-		public override function getArray():Array{
+		public static function getArray():Array{
 			return enemies;
 		}
 		
@@ -168,3 +179,5 @@
 		
 	}
 }
+
+class SingletonEnforcer{}
