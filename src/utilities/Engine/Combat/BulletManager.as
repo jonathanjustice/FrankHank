@@ -96,7 +96,7 @@ package utilities.Engine.Combat{
 			return bullets.length-1;
 		}
 		
-		public static function getArray():Array{
+		public function getArray():Array{
 			return bullets;
 		}
 		

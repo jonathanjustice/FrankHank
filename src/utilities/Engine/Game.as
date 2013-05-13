@@ -256,8 +256,9 @@
 		
 		public static function deselectAllActors():void {
 			trace("Game: deselectAllActors");
-			AvatarManager.deselectActors();
-			EnemyManager.deselectActors();
+			AvatarManager.getInstance().deselectActors();
+			trace("EnemyManager:",EnemyManager);
+			//EnemyManager.getInstance().deselectActors();
 		}
 		
 		public static function getAnimationManager():AnimationManager {

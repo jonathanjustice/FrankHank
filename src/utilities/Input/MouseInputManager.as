@@ -23,8 +23,8 @@
 		private var delta:Point = new Point;
 		private var oldMouse:Point = new Point;
 		private var maximumEase:Number = 30;
-		private var lastClickedActors:Array = new Array();
-		private var lastClickedCoordinates:Point = new Point;
+		private static var lastClickedActors:Array = new Array();
+		private static var lastClickedCoordinates:Point = new Point;
 		private static var _instance:MouseInputManager;
 		
 		public function MouseInputManager(singletonEnforcer:SingletonEnforcer){
@@ -54,13 +54,13 @@
 		
 		
 		private function clickedStage(event:MouseEvent):void {
-			//runSelectionLogic(event);
+			runSelectionLogic(event);
 		}
-		/*
+		
 		//determine what to select and unselect	by:
 		//get an array of each of the types objects that the mouse is touching,
 		//take action based on the number of actors being touched	
-		public function runSelectionLogic(event:MouseEvent):void {
+		public static function runSelectionLogic(event:MouseEvent):void {
 			
 			//mouse is not touching any avatars
 			if (AvatarManager.getInstance().all_items_colliding_with_mouse(AvatarManager.getInstance().getArray()).length == 0) {
@@ -75,11 +75,11 @@
 			}
 			
 			//mouse is not touching any enemies
-			if(EnemyManager.all_items_colliding_with_mouse(EnemyManager.getInstance().getArray()).length == 0) {
+			if(EnemyManager.getInstance().all_items_colliding_with_mouse(EnemyManager.getInstance().getArray()).length == 0) {
 				EnemyManager.getInstance().deselectActors();
 				//trace("Not touching any enemies");
 			}
-			
+			/*
 			//mouse is touching more than 1 avatar
 			if (AvatarManager.all_items_selected_except_the_one_that_was_just_clicked(AvatarManager.getArray()).length == 1) {
 				var avatarsToDeselect:Array = new Array();
@@ -106,12 +106,12 @@
 				for each(var actor2:SelectableActor in wallsToDeselect) {
 					actor2.deselectActor();
 				}
-			}
+			}*/
 			lastClickedActors.push(event.target);
 			lastClickedCoordinates = Main.getMouseCoordinates();
 			//trace("MouseInputManager: lastClickedCoordinates",lastClickedCoordinates);
 		}
-		*/
+		
 		//drag the game container with the mouse
 		//when you stop dragging it, it eases to a stop
 		//limit the maximum ease speed

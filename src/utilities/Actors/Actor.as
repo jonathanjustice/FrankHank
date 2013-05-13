@@ -170,20 +170,20 @@
 			if(markedForDeletion){
 				//delete it
 				if(this is Bullet){
-					removeActorFromGameEngine(this,BulletManager.getArray());
+					removeActorFromGameEngine(this,BulletManager.getInstance().getArray());
 				}else if(this is Enemy){
 					//delete it
-					removeActorFromGameEngine(this,EnemyManager.getArray());
+					removeActorFromGameEngine(this,EnemyManager.getInstance().getArray());
 				}else if(this is LootDrop){
-					//removeActorFromGameEngine(this,LootManager.getTreasureChestArray());
+					//removeActorFromGameEngine(this,LootManager.getInstance()..getTreasureChestArray());
 				}
 				else if(this is TreasureChest){
-					//removeActorFromGameEngine(this,LootManager.getTreasureChestArray());
+					//removeActorFromGameEngine(this,LootManager.getInstance().getTreasureChestArray());
 				}else if(this is Powerup_default){
-					removeActorFromGameEngine(this,PowerupManager.getArray());
+					removeActorFromGameEngine(this,PowerupManager.getInstance().getArray());
 				}/*
 				else if(this == CardDrop){
-					//removeActorFromGameEngine(this,Game.lootManager.getArray());;
+					//removeActorFromGameEngine(this,Game.lootManager.getInstance().getArray());;
 				}*/
 			}
 		}

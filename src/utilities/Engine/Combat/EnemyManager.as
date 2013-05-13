@@ -14,7 +14,7 @@
 	import utilities.Actors.TankEnemy;
 	import utilities.Actors.Bullet;
 	import utilities.Engine.LevelManager;
-	public class EnemyManager extends BasicManager {
+	public class EnemyManager extends BasicManager implements IManager{
 		public static var enemies:Array;
 		private var xVelocity:Number;
 		private var yVelocity:Number;
@@ -122,7 +122,7 @@
 			}
 		}
 		
-		public static function deselectActors():void {
+		public function deselectActors():void {
 			//trace("enenmyManager: deselectActors");
 			for each(var myEnemy:MovieClip in enemies) {
 				//trace("enemy to deselect:",myEnemy);
@@ -138,7 +138,7 @@
 			return enemies[index];
 		}
 		
-		public static function getArray():Array{
+		public function getArray():Array{
 			return enemies;
 		}
 		

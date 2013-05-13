@@ -21,7 +21,6 @@
 			if(AvatarManager._instance == null){
 				AvatarManager._instance = new AvatarManager(new SingletonEnforcer());
 			}
-			trace(_instance);
 			return _instance;
 		}
 		
@@ -38,7 +37,7 @@
 			return avatars[0].getAngle();
 		}
 		
-		public static function deselectActors():void {
+		public function deselectActors():void {
 			for each(var myAvatar:Avatar in avatars) {
 				myAvatar.deselectActor();
 			}

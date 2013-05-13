@@ -24,7 +24,7 @@
 		}
 		
 		private function clickedActor(event:MouseEvent):void {
-			Main.mouseInputManager.runSelectionLogic(event);
+			MouseInputManager.runSelectionLogic(event);
 			//trace("clicked")
 			if (isSelected) {
 				deselectActor();

@@ -61,7 +61,7 @@
 			return powerups[index];
 		}
 		
-		public static function getArray():Array{
+		public function getArray():Array{
 			return powerups;
 		}
 		
