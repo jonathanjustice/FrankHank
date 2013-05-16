@@ -5,6 +5,7 @@
 	import flash.display.MovieClip;
 	import flash.geom.Point;
 	import utilities.Engine.IManager;
+	import utilities.Engine.Game;
 	import utilities.Engine.BasicManager;
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Screens.xpBarSystem;
@@ -15,7 +16,7 @@
 	import utilities.Actors.Bullet;
 	import utilities.Engine.LevelManager;
 	public class EnemyManager extends BasicManager implements IManager{
-		public static var enemies:Array;
+		
 		private var xVelocity:Number;
 		private var yVelocity:Number;
 		private var velocityMultiplier:Number;
@@ -23,10 +24,11 @@
 		public var numEnemies:Number=0;
 		//private static var enemyFactory = new Factory_Enemy();
 		public static var shittyTimer:int = 0;
-		
+		public static var enemies:Array;
 		private static var numnum:Number = 0;
 		private static var _instance:EnemyManager;
 		
+		//Design Pattern Features
 		public function EnemyManager(singletonEnforcer:SingletonEnforcer){
 			setUp();
 		}
@@ -34,9 +36,21 @@
 		public static function getInstance():EnemyManager {
 			if(EnemyManager._instance == null){
 				EnemyManager._instance = new EnemyManager(new SingletonEnforcer());
-				//setUp();
 			}
 			return _instance;
+		}
+		
+		//Interface Features
+		public function getArray():Array{
+			return enemies;
+		}
+		
+		public function getArrayLength():int{
+			return enemies.length;
+		}
+		
+		public function getObjectAtIndex(index:int):Object{
+			return enemies[index];
 		}
 		
 		public function setUp():void{
@@ -65,13 +79,15 @@
 			
 			checkForCollisionWithBullets();
 			checkForCollisionWithWall();
-			//checkForLevelComplete();
+			aaa();
 		}
 		
-		private function checkForLevelComplete():void {
-			if (enemies.length == 0) {
+		public static function aaa():void {
+			trace(Game.getIsGameStarted());
+			if (enemies.length == 0 && Game.getIsGameStarted() >= 2) {
 				trace("enemy manager: no enemies left");
-				destroyArray(enemies);
+				LevelManager.getInstance().setIsLevelComplete(true);
+				LevelManager.getInstance().checkLevelObjectives();
 			}
 		}
 		
@@ -130,17 +146,7 @@
 			}
 		}
 		
-		public function getArrayLength():int{
-			return enemies.length;
-		}
 		
-		public function getObjectAtIndex(index:int):Object{
-			return enemies[index];
-		}
-		
-		public function getArray():Array{
-			return enemies;
-		}
 		
 		//shitty placeholder enemy creation
 		public static function createNewEnemy():void {

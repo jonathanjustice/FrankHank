@@ -37,6 +37,7 @@
 		public static var avatar:Avatar;
 		private static var quadTree:QuadTree;
 		private static var gamePaused:Boolean = true;
+		private static var isGameStarted:int = 0;
 		private static var cameraWindow:CameraWindow;
 		
 		//public var player:Player;
@@ -96,7 +97,12 @@
 					enableMasterLoop();
 					break;
 			}
+			
 			Main.returnFocusToGampelay();
+		}
+		
+		public static function getIsGameStarted():int {
+			return isGameStarted;
 		}
 		
 		public static function enableMasterLoop():void {
@@ -191,7 +197,8 @@
 		}
 		
 		private static function masterLoop(event:Event):void{
-			if(!gamePaused){
+			if (!gamePaused) {
+				isGameStarted ++;
 				AvatarManager.updateLoop();
 				BulletManager.updateLoop();
 				EnemyManager.updateLoop();

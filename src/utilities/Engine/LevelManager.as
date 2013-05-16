@@ -17,6 +17,8 @@
 		public static var levels:Array;
 		private var isLevelComplete:Boolean = false;
 		private static var _instance:LevelManager;
+		
+		//Singleton Design Pattern features
 		public function LevelManager(singletonEnforcer:SingletonEnforcer){
 			setUp();
 		}
@@ -33,6 +35,12 @@
 			}
 			return _instance;
 		}
+		
+		//Interface features
+		public function getArray():Array{
+			return levels;
+		}
+		
 		
 		
 		public function create_a_bunch_of_walls_forTesting():void{
@@ -59,23 +67,25 @@
 				level.updateLoop();
 			}*/
 			//checkLevelObjectives();
-			checkForLevelComplete();
+			LevelManager._instance.checkLevelObjectives();
 		}
 		
-		private function checkLevelObjectives():void {
+		public function checkLevelObjectives():void {
+			trace("shit broke");
 			//trace("check level objectives");
 			//check each level objective to see if its complete
 			
 			//if all objectives are complete, then stop the level, destroy everything in it, and create a new one
-			if (getIsLevelComplete() == true) {
-				
+			if (LevelManager._instance.getIsLevelComplete() == true) {
+				LevelManager._instance.levelCompleted();
 			}
 		}
 		
-			private function checkForLevelComplete():void {
+		private function levelCompleted():void {
+			trace("EnemyManager.enemies", EnemyManager.enemies);
 			if (EnemyManager.enemies.length == 0) {
-				//trace("enemy manager: no enemies left");
-				//trace("EnemyManager.enemies", EnemyManager.enemies);
+				trace("enemy manager: no enemies left");
+				trace("EnemyManager.enemies", EnemyManager.enemies);
 				Game.disableMasterLoop();
 				LootManager.getInstance().destroyArray(LootManager.lootDrops);
 				LootManager.getInstance().destroyArray(LootManager.treasureChests);
@@ -102,9 +112,6 @@
 			}
 		}
 		
-		public function getArray():Array{
-			return levels;
-		}
 		public function getLevel():Object{
 			return levels[0];
 		}

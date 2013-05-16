@@ -11,11 +11,22 @@ package utilities.Engine{
 			
 		}
 		
+		private function getArray():Array{
+			var array:Array = new Array();
+			return array;
+		}
+		
 		public function destroyArray(array:Array):void {
 			for(var i:int = array.length-1; i>-1;i--){
 				trace("array:",array,"i:",i);
 				array[i].removeActorFromGameEngine(array[i], array);
 			}
+		}
+		
+		public function get_Index_of_actor_in_array(actor:MovieClip,array:Array):int{
+			array = getArray();
+			var index:int = array.indexOf(actor);
+			return index;
 		}
 		
 		//gives you all the items that touch the mouse
@@ -51,6 +62,10 @@ package utilities.Engine{
 				}
 			}
 			return oldSelectedItems;
+		}
+		//get all the selected actors
+		public function getNewSelectedItems():Array {
+			return newSelectedItems;
 		}
 	}
 }
