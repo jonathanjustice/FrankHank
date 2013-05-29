@@ -37,7 +37,7 @@
 		public static var avatar:Avatar;
 		private static var quadTree:QuadTree;
 		private static var gamePaused:Boolean = true;
-		private static var isGameStarted:int = 0;
+		private static var framesSinceGameStart:int = 0;
 		private static var cameraWindow:CameraWindow;
 		
 		//public var player:Player;
@@ -75,12 +75,14 @@
 				
 					trace("Started Game: From debug method");
 					createManagersAndControllers();
+					LevelManager.getInstance().createLevel("lvl_02");
 					enableMasterLoop();
 					break;
 				case "start":
-				
 					trace("Started Game: From the Start Screen");
 					createManagersAndControllers();
+					trace(LevelManager.getInstance());
+					LevelManager.getInstance().createLevel("lvl_02");
 					enableMasterLoop();
 					break;
 				case "pause":
@@ -92,7 +94,6 @@
 					//clear everything so it can be resetup
 					clearGame();
 					//recreate everything
-					
 					//restart the loop
 					enableMasterLoop();
 					break;
@@ -101,8 +102,12 @@
 			Main.returnFocusToGampelay();
 		}
 		
-		public static function getIsGameStarted():int {
-			return isGameStarted;
+		public static function getFramesSinceGameStart():int {
+			return framesSinceGameStart;
+		}
+		
+		public static function setFramesSinceGameStart():void {
+			framesSinceGameStart = 0;
 		}
 		
 		public static function enableMasterLoop():void {
@@ -136,7 +141,6 @@
 			SoundManager.getInstance();
 			SaveDataManager.getInstance();
 			AnimationManager.getInstance();
-			
 		}
 		
 		
@@ -161,8 +165,7 @@
 				
 				if (avatarPoint.x < cameraWindow.x - cameraBuffer) {
 					if (avatarVels.x >= 0) {
-						//trace("standing still");
-						gameContainer.x += cameraBuffer/10;
+						//do nothing
 					}else {
 						//trace("moving left");
 						gameContainer.x += cameraSpeed;
@@ -170,21 +173,18 @@
 					//
 				}
 				gameContainer.x -= avatar.getVelocity().x;
-				
 			}
 			//running right
 			if (avatarPoint.x + avatar.width > cameraWindow.x + cameraWindow.width ) {
 				if (avatarPoint.x + avatar.width > cameraWindow.x + cameraWindow.width + cameraBuffer) {
 					if (avatarVels.x <= 0) {
-						//trace("standing still");
-						gameContainer.x -= cameraBuffer/10;
+						//do nothing
 					}else {
 						//trace("moving right");
 						gameContainer.x -= cameraSpeed;
 					}
 				}
 				gameContainer.x -= avatar.getVelocity().x;
-				
 			}
 			if (avatarPoint.y < cameraWindow.y) {
 				gameContainer.y -= avatar.getVelocity().y;
@@ -196,9 +196,14 @@
 			}
 		}
 		
+		public static function resetGameContainerCoordinates():void {
+			gameContainer.x = 0;
+			gameContainer.y = 0;
+		}
+		
 		private static function masterLoop(event:Event):void{
 			if (!gamePaused) {
-				isGameStarted ++;
+				framesSinceGameStart ++;
 				AvatarManager.updateLoop();
 				BulletManager.updateLoop();
 				EnemyManager.updateLoop();

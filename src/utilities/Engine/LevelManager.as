@@ -15,6 +15,7 @@
 		private var tempArray:Array = new Array();
 		public static var level:MovieClip;
 		public static var levels:Array;
+		public static var arts:Array;
 		private var isLevelComplete:Boolean = false;
 		private static var _instance:LevelManager;
 		
@@ -24,9 +25,8 @@
 		}
 		
 		public function setUp():void{
-			levels =[];
-			createLevel();
-			//create_a_bunch_of_walls_forTesting();
+			levels = [];
+			arts = [];
 		}
 		
 		public static function getInstance():LevelManager {
@@ -39,22 +39,6 @@
 		//Interface features
 		public function getArray():Array{
 			return levels;
-		}
-		
-		
-		
-		public function create_a_bunch_of_walls_forTesting():void{
-			var theX:Number = 25;
-			var theY:Number = 225;
-			for(var i:int=0;i<1;i++){
-				theX+=200;
-				theY+=100;
-				var wall:Wall = new Wall();
-				wall.x=theX;
-				wall.y=theY;
-				levels.push(wall);
-				wall.setPreviousPosition();
-			}
 		}
 		
 		public function getLevelLocation():Point{
@@ -71,7 +55,6 @@
 		}
 		
 		public function checkLevelObjectives():void {
-			trace("shit broke");
 			//trace("check level objectives");
 			//check each level objective to see if its complete
 			
@@ -82,26 +65,28 @@
 		}
 		
 		private function levelCompleted():void {
-			trace("EnemyManager.enemies", EnemyManager.enemies);
+			//trace("EnemyManager.enemies", EnemyManager.enemies);
 			if (EnemyManager.enemies.length == 0) {
-				trace("enemy manager: no enemies left");
-				trace("EnemyManager.enemies", EnemyManager.enemies);
+				//trace("enemy manager: no enemies left");
+				//trace("EnemyManager.enemies", EnemyManager.enemies);
 				Game.disableMasterLoop();
 				LootManager.getInstance().destroyArray(LootManager.lootDrops);
 				LootManager.getInstance().destroyArray(LootManager.treasureChests);
 				EnemyManager.getInstance().destroyArray(EnemyManager.enemies);
-				//PowerupManager.getInstance().destroyArray(PowerupManager.powerups);
-				//BulletManager.getInstance().destroyArray(BulletManager.bullets);
-				//AvatarManager.getInstance().destroyArray(AvatarManager.avatars);
-				//BulletManager.destroyArray(getArray());
-				//AvatarManager.destroyArray(getArray());
-				//PowerupManager.destroyArray(getArray());
-				
+				LevelManager.getInstance().destroyArray(LevelManager.levels);
+				LevelManager.getInstance().destroyArray(LevelManager.arts);
+				PowerupManager.getInstance().destroyArray(PowerupManager.powerups);
+				BulletManager.getInstance().destroyArray(BulletManager.bullets);
+				AvatarManager.getInstance().destroyArray(AvatarManager.avatars);
+				Game.resetGameContainerCoordinates();
+				createLevel("lvl_03");
+				Game.enableMasterLoop();
+				Game.setFramesSinceGameStart();
 			}
 		}
 		
-		private static function createLevel():void{
-			level = new utilities.Actors.GameBoardPieces.Level();
+		public function createLevel(levelName:String):void{
+			level = new utilities.Actors.GameBoardPieces.Level(levelName);
 			levels.push(level);
 		}
 		

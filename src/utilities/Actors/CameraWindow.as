@@ -36,11 +36,11 @@
 					//this.width = 300;
 					break;
 				case "left":
-					this.width = 300;
-					this.x = 575;
+					this.width = 400;
+					this.x = 475;
 					break;
 				case "right":
-					this.width = 300;
+					this.width = 400;
 					this.x = -50;
 					break;
 			}

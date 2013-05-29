@@ -198,6 +198,7 @@
 		//uses a default vector rectangle if nothing else is defined 
 		//filepath is passed in from the actor type
 		//graphicsElement handles the loading, poorly :(
+		//isLevel determines if its a level, and should therefore do some extra snazzy parsing stugg
 		public function defineGraphics(filePath:String,isLevel:Boolean):void {
 			//trace("filePath:",filePath);
 			actorGraphic = new utilities.GraphicsElements.GraphicsElement();
@@ -472,6 +473,10 @@
 		public function getVelocity():Point {
 			var velocityPoint:Point = new Point(xVelocity,yVelocity);
 			return velocityPoint;
+		}
+		
+		public function getActorGraphic():MovieClip {
+			return actorGraphic;
 		}
 	}
 }

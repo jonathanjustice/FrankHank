@@ -18,7 +18,7 @@ package utilities.Engine{
 		
 		public function destroyArray(array:Array):void {
 			for(var i:int = array.length-1; i>-1;i--){
-				trace("array:",array,"i:",i);
+				//trace("array:",array,"i:",i);
 				array[i].removeActorFromGameEngine(array[i], array);
 			}
 		}

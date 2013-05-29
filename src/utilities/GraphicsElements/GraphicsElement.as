@@ -19,6 +19,7 @@
 	import utilities.GraphicsElements.Test_square;
 	import utilities.Saving_And_Loading.swfLoader;
 	import utilities.Actors.GameBoardPieces.Wall;
+	import utilities.Actors.GameBoardPieces.Art;
 	import utilities.Engine.LevelManager;
 	
 	
@@ -38,8 +39,17 @@
 		private var powerup_shoot:String = new String("../src/assets/swf_powerupShoot.swf");
 		
 		//levels
+		private var lvl_01:String = new String("../src/assets/swf_lvl_01.swf");
 		private var lvl_02:String = new String("../src/assets/swf_lvl_02.swf");
+		private var lvl_03:String = new String("../src/assets/swf_lvl_03.swf");
+		private var lvl_04:String = new String("../src/assets/swf_lvl_04.swf");
+		private var lvl_05:String = new String("../src/assets/swf_lvl_05.swf");
+		
 		private var wall:String = new String("../src/assets/swf_wall.swf");
+		
+		private var bgSquare:String = new String("../src/assets/swf_bgSquare.swf");
+		
+		
 		
 		/*
 		 * Everything else
@@ -63,6 +73,10 @@
 			ch.y = 0;
 			ch.parent.removeChild(ch);
 			if (par is Wall) {
+				par.scaleX = ch.width;
+				par.scaleY = ch.height;
+			}
+			if (par is Art) {
 				par.addChild(ch);
 			}
 			par.setUp();
@@ -81,9 +95,13 @@
 				}
 				for (var j:int = 0; j < tempArray.length; j++) {
 					
+					if(tempArray[j].name == "art"){
+						var art:Art = new Art();
+						alignmentOfParentChildGraphics(art,tempArray[j]);
+						LevelManager.arts.push(art);
+					}
 					if(tempArray[j].name == "wall"){
 						var wall:Wall = new Wall();
-						//wall.defineBounds(tempArray[j].width,tempArray[j].height);
 						alignmentOfParentChildGraphics(wall,tempArray[j]);
 						LevelManager.levels.push(wall);
 					}
@@ -171,8 +189,24 @@
 				case "powerup_shoot":
 					filePath = powerup_shoot;
 					break;
+				case "lvl_01":
+					filePath = lvl_01;
+					break;
 				case "lvl_02":
 					filePath = lvl_02;
+					break;
+				case "lvl_03":
+					filePath = lvl_03;
+					break;
+				case "lvl_04":
+					filePath = lvl_04;
+					break;
+				case "lvl_05":
+					filePath = lvl_05;
+					break;
+					
+				case "bgSquare":
+					filePath = bgSquare;
 					break;
 			}
 			var loader:swfLoader = new swfLoader();
@@ -193,7 +227,7 @@
 		public function drawGraphicDefaultRectangle():void{
 			myGraphic.graphics.lineStyle(3,0x0000ff);
 			myGraphic.graphics.beginFill(0x8800FF);
-			myGraphic.graphics.drawRect(0,0,300,100);
+			myGraphic.graphics.drawRect(0,0,100,100);
 			myGraphic.graphics.endFill();
 			this.addChild(myGraphic);
 		}

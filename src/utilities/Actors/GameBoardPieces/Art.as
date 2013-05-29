@@ -2,18 +2,15 @@
 	import utilities.Actors.Actor;
 	import utilities.Actors.SelectableActor;
 
-	public class Wall extends SelectableActor{
-		private var isBulletBlocker:Boolean=false;
-		public function Wall(){
+	public class Art extends SelectableActor{
+		public function Art(){
 			setUp();
 		}
 		
 		public function setUp():void{
 			//trace("fuck yeah it worked");
-			defineGraphics("wall",false);
 			addActorToGameEngine();
 			setPreviousPosition();
-			this.visible = false;
 		}
 		
 		public function updateLoop():void{

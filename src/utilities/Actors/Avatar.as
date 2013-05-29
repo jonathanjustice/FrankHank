@@ -36,8 +36,8 @@
 			defineGraphics("frank",false);
 			//this.x = 750;
 			//this.y = 250;
-			setHitBoxWidth(100);
-			setHitBoxHeight(100);
+			//setHitBoxWidth(100);
+			//setHitBoxHeight(100);
 		}
 		
 		public function getAvatarLocation():Point{

@@ -20,10 +20,7 @@
 		private var xVelocity:Number;
 		private var yVelocity:Number;
 		private var velocityMultiplier:Number;
-		private var avatar:Point = new Point();
 		public var numEnemies:Number=0;
-		//private static var enemyFactory = new Factory_Enemy();
-		public static var shittyTimer:int = 0;
 		public static var enemies:Array;
 		private static var numnum:Number = 0;
 		private static var _instance:EnemyManager;
@@ -66,25 +63,17 @@
 			yVelocity = 1;
 		}
 		
-		//FPO way to create enemies
+	
 		//check the enemies for collisions with bullets
 		public static function updateLoop():void{
-			/*if(numnum < 0){
-				shittyTimer++;
-				if(shittyTimer ==25){
-					shittyTimer = 0;
-					createNewEnemy();
-				}
-			}*/
-			
+
 			checkForCollisionWithBullets();
 			checkForCollisionWithWall();
-			aaa();
+			FPO_checkForLevelComplete();
 		}
 		
-		public static function aaa():void {
-			trace(Game.getIsGameStarted());
-			if (enemies.length == 0 && Game.getIsGameStarted() >= 2) {
+		public static function FPO_checkForLevelComplete():void {
+			if (enemies.length == 0 && Game.getFramesSinceGameStart() >= 2) {
 				trace("enemy manager: no enemies left");
 				LevelManager.getInstance().setIsLevelComplete(true);
 				LevelManager.getInstance().checkLevelObjectives();

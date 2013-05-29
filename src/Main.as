@@ -42,11 +42,7 @@
 		//once the stage exists, launch the game
         private function init(e:Event = null):void {
             removeEventListener(Event.ADDED_TO_STAGE, init);
-			//loader = new LazyXMLLoader("assets/assets.xml","assets",5);
-			//loader.addEventListener(BulkProgressEvent.COMPLETE,doneLoading);
-			//loader.start();
 			initialSetup();
-			//var newGraphic = new test_graphic();
         }
 		
 		//define the stage for use in other classes

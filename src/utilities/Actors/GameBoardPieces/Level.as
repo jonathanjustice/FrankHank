@@ -5,10 +5,11 @@
 	import utilities.Actors.SelectableActor;
 
 	public class Level extends SelectableActor{
-		public function Level() {
+		public function Level(levelName:String) {
 			addActorToGameEngine();
-			defineGraphics("lvl_02",true);
+			defineGraphics(levelName,true);
 			//trace("level");
+			//lvl_02
 		}
 		
 		public function setUp():void{

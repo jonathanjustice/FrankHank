@@ -8,6 +8,8 @@ access other managers:Game.manager name
 
 
 package utilities.Engine.Combat{
+	import utilities.Engine.BasicManager;
+	import utilities.Engine.IManager;
 	import utilities.Input.KeyInputManager;
 	import utilities.Engine.DefaultManager;
 	import utilities.Actors.Actor;
@@ -18,7 +20,7 @@ package utilities.Engine.Combat{
 	import flash.geom.Point;
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
-	public class BulletManager {
+	public class BulletManager extends BasicManager implements IManager{
 		
 		public static var bullets:Array;
 		public static var enemyBullets:Array;
