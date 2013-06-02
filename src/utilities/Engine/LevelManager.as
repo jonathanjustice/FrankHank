@@ -81,7 +81,7 @@
 				Game.resetGameContainerCoordinates();
 				createLevel("lvl_03");
 				Game.enableMasterLoop();
-				Game.setFramesSinceGameStart();
+				Game.setFramesSinceGameStart();//this prevents instant complettions if win condition is met by there being no enemies on the board
 			}
 		}
 		

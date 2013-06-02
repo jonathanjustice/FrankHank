@@ -13,8 +13,13 @@
 		private static var _instance:AvatarManager;
 		public static var avatar:MovieClip;
 		public static var avatars:Array;
+		public static var isAvatarDoubleJumpEnabled:Boolean = false;
 		public function AvatarManager(singletonEnforcer:SingletonEnforcer){
 			setUp();			
+		}
+		
+		public function getIsAvatarDoubleJumpEnabled():Boolean {
+			return isAvatarDoubleJumpEnabled;
 		}
 		
 		public static function getInstance():AvatarManager {
@@ -49,6 +54,7 @@
 				for (var a:int = 0; a < PowerupManager.powerups.length; a++) {
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, PowerupManager.powerups[a]) == true) {
 						myAvatar.toggleDoubleJump(true);
+						isAvatarDoubleJumpEnabled = true;
 						myAvatar.applyPowerup(PowerupManager.powerups[a].getPowerupType());
 						PowerupManager.powerups[a].takeDamage(1);
 						PowerupManager.powerups[a].checkForDeathFlag();
@@ -85,7 +91,9 @@
 			}
 		}
 		
-		private static function createAvatar():void{
+		//deprecated
+		private static function createAvatar():void {
+			trace("creating new avatar");
 			avatar = new utilities.Actors.Avatar();
 			avatars.push(avatar);
 		}

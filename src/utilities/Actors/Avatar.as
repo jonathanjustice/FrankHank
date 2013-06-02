@@ -10,7 +10,8 @@
 	import flash.geom.Point;
 	import flash.display.Sprite;
 	import flash.text.*;
-	import utilities.Engine.Combat.AnimationManager
+	import utilities.Engine.Combat.AnimationManager;
+	import utilities.Engine.Combat.AvatarManager;
 
 	public class Avatar extends JumpingActor{
 		//private var mySprite:Sprite = new Sprite();
@@ -29,15 +30,14 @@
 		public function Avatar(){
 			setUp();
 			//addStroke();
+			if (AvatarManager.getInstance().getIsAvatarDoubleJumpEnabled()) {
+				toggleDoubleJump(true);
+			}
 		}
 		
 		public function setUp():void{
 			addActorToGameEngine();
 			defineGraphics("frank",false);
-			//this.x = 750;
-			//this.y = 250;
-			//setHitBoxWidth(100);
-			//setHitBoxHeight(100);
 		}
 		
 		public function getAvatarLocation():Point{
