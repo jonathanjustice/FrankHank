@@ -1,5 +1,5 @@
 ﻿package utilities.Actors{
-	import air.update.utils.VersionUtils;
+	//import air.update.utils.VersionUtils;
 	import flash.display.AVM1Movie;
 	import flash.display.MovieClip;
 	import utilities.Screens.progressBar;
@@ -16,6 +16,7 @@
 	import flash.geom.Point;
 	import utilities.Input.KeyInputManager;
 	import utilities.Engine.Combat.AnimationManager;
+	import utilities.Engine.LevelManager;
 	
 	public class Actor extends MovieClip {
 		private var isFalling:Boolean = false;
@@ -181,10 +182,10 @@
 					//removeActorFromGameEngine(this,LootManager.getInstance().getTreasureChestArray());
 				}else if(this is Powerup_default){
 					removeActorFromGameEngine(this,PowerupManager.getInstance().getArray());
-				}/*
-				else if(this == CardDrop){
-					//removeActorFromGameEngine(this,Game.lootManager.getInstance().getArray());;
-				}*/
+				}
+				else if(this is Coin){
+					removeActorFromGameEngine(this,LevelManager.getInstance().getCoins());
+				}
 			}
 		}
 		

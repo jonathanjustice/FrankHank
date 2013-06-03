@@ -61,6 +61,13 @@
 					}
 				}
 				
+				for (var b:int = 0; b < LevelManager.coins.length;b++){
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.coins[b]) == true) {
+						LevelManager.coins[b].takeDamage(1);
+						LevelManager.coins[b].checkForDeathFlag();
+					}
+				}
+				
 				//for some horrible ass backwards reason, I included the level itself in the same array as the walls inside the level, so the iteration needs to start at 1
 				//this is unnacceptable and needs to get fixed asap because it is super confusing and inconsistent.
 				for(var i:int = 1; i<LevelManager.levels.length;i++){

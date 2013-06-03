@@ -73,7 +73,9 @@
 		}
 		
 		public static function FPO_checkForLevelComplete():void {
-			if (enemies.length == 0 && Game.getFramesSinceGameStart() >= 25) {
+		
+			if (enemies.length == 0 && LevelManager.getInstance().getisLevelActive()) {
+					
 				trace("enemy manager: no enemies left");
 				LevelManager.getInstance().setIsLevelComplete(true);
 				LevelManager.getInstance().checkLevelObjectives();

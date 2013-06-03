@@ -7,11 +7,13 @@
 	import utilities.Actors.Avatar;
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Actors.GoonEnemy;
+	import utilities.Actors.Coin;
 	import utilities.Actors.Powerup_shoot;
 	import utilities.Actors.Powerup_doubleJump;
 	import utilities.Actors.Powerup_invincible;
 	import utilities.Actors.SelectableActor;
 	import utilities.Actors.TankEnemy;
+	import utilities.Engine.Game;
 	import utilities.Engine.Combat.AvatarManager;
 	import utilities.Engine.Combat.EnemyManager;
 	import utilities.Engine.Combat.PowerupManager;
@@ -27,6 +29,8 @@
 	
 	
 	public class GraphicsElement extends MovieClip {
+		private var childrenToLoad:int = 0;
+		private var childrenLoaded:int = 0;
 		/*
 		 * File paths for swfs
 		 * */
@@ -41,6 +45,7 @@
 		private var powerup_invincible:String = new String("../src/assets/actors/swf_powerupInvincible.swf");
 		private var powerup_shoot:String = new String("../src/assets/actors/swf_powerupShoot.swf");
 		private var wall:String = new String("../src/assets/actors/swf_wall.swf");
+		private var coin:String = new String("../src/assets/actors/swf_coin.swf");
 		//test stuff
 		private var bgSquare:String = new String("../src/assets/actors/swf_bgSquare.swf");
 		
@@ -71,7 +76,7 @@
 		
 		//aka wizard shit, don't make no kind of logical sense
 		private function alignmentOfParentChildGraphics(par:MovieClip, ch:MovieClip):void {
-			
+			trace("-");
 			par.x = ch.x - ch.parent.x ;
 			par.y = ch.y - ch.parent.y;
 			ch.x = 0;
@@ -88,13 +93,14 @@
 			if (currentParent is SelectableActor) {
 				currentParent.addClickability_onLoadComplete(par);
 			}
+			
 		}
 		
 		//objects in the graphic's swf can be accessed through: assignedGraphics[0].swf_child
 		public function assignGraphic(graphic:DisplayObject):void {
 			assignedGraphics.push(graphic);
 			if (isLevel == true) {
-				
+				childrenToLoad = assignedGraphics[0].swf_child.numChildren;
 				for (var i:int = 0; i < assignedGraphics[0].swf_child.numChildren; i++) {
 					tempArray.push(assignedGraphics[0].swf_child.getChildAt(i));
 				}
@@ -104,6 +110,11 @@
 						var art:Art = new Art();
 						alignmentOfParentChildGraphics(art,tempArray[j]);
 						LevelManager.arts.push(art);
+					}
+					if(tempArray[j].name == "coin"){
+						var coin:Coin = new Coin();
+						alignmentOfParentChildGraphics(coin,tempArray[j]);
+						LevelManager.coins.push(coin);
 					}
 					if(tempArray[j].name == "wall"){
 						var wall:Wall = new Wall();
@@ -130,7 +141,6 @@
 						alignmentOfParentChildGraphics(afs,tempArray[j]);
 						EnemyManager.enemies.push(afs);
 					}
-					
 					if(tempArray[j].name == "p_shoot"){
 						var shootPowerup:Powerup_shoot = new Powerup_shoot;
 						alignmentOfParentChildGraphics(shootPowerup,tempArray[j]);
@@ -148,6 +158,13 @@
 						alignmentOfParentChildGraphics(invinviblePowerup,tempArray[j]);
 						PowerupManager.powerups.push(invinviblePowerup);
 					}
+					childrenLoaded++;
+					if (childrenLoaded == childrenToLoad) {
+						childrenToLoad = 0;
+						childrenLoaded = 0;
+						Game.setGameState("levelFullyLoaded");
+					}
+					
 				}
 			}else{
 				parent.addChild(graphic);
@@ -169,7 +186,6 @@
 			switch(filePath) {
 				case "ui_levelComplete":
 					filePath = ui_levelComplete;
-					trace("graphicsElement: file path is ui_levelComplete");
 					break;
 				case "frank":
 					filePath = frank;
@@ -185,6 +201,9 @@
 					break;
 				case "wall":
 					filePath = wall;
+					break;
+				case "coin":
+					filePath = coin;
 					break;
 				case "powerup_doubleJump":
 					filePath = powerup_doubleJump;
@@ -213,7 +232,6 @@
 				case "lvl_5":
 					filePath = lvl_5;
 					break;
-					
 				case "bgSquare":
 					filePath = bgSquare;
 					break;

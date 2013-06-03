@@ -26,7 +26,7 @@
 		public function setUp():void {
 			addActorToGameEngine();
 			health=1;
-			defineGraphics("goon",false);
+			defineGraphics("powerup_default",false);
 			powerupType = "default";
 		}
 		

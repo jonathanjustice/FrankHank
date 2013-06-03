@@ -61,18 +61,26 @@
 				case "boot":
 					//doshit
 					break;
-				case "loadingLevel":
+				case "startLevelLoad":
 					//doshit
+					
+					trace("startLevelLoad");
 					LevelManager.getInstance().loadLevel();
 					break;
-				case "levelLoaded":
+				case "levelCurrentlyLoading":
 					//doshit
+					break;
+				case "levelFullyLoaded":
+						LevelManager.getInstance().setIsLevelActive(true);
+						enableMasterLoop();
 					break;
 				case "inLevel":
 					//doshit
 					break;
 				case "levelComplete":
+					LevelManager.getInstance().setIsLevelActive(false);
 					UIManager.getInstance().openLevelCompleteScreen();
+					LevelManager.getInstance().setIsLevelComplete(false);
 					break;
 				case "died":
 					//doshit
@@ -258,7 +266,8 @@
 				LootManager.updateLoop();
 				//updateCombatManager();
 				UIManager.updateLoop();
-				//LevelManager.updateLoop();
+				LevelManager.getInstance().updateLoop();
+				//LevelManager.getInstance().setIsLevelActive(true);
 			}else{
 				//can use this section for when the game is paused but I still need to update UI stuff
 			}

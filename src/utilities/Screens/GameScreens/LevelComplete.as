@@ -16,11 +16,11 @@
 			switch (event.target.name){
 				case "btn_close":
 					removeThisScreen();
-					utilities.Engine.Game.setGameState("loadingLevel");
+					utilities.Engine.Game.setGameState("startLevelLoad");
 					break;
 				case "btn_next":
 					removeThisScreen();
-					utilities.Engine.Game.setGameState("loadingLevel");
+					utilities.Engine.Game.setGameState("startLevelLoad");
 					break;
 			}
 		}

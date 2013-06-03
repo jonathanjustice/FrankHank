@@ -11,14 +11,17 @@
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Actors.GameBoardPieces.Terrain;
 	import utilities.dataModels.LevelProgressModel;
+	import utilities.Actors.Coin;
 	import flash.geom.Point;
 	public class LevelManager extends BasicManager implements IManager{
 		private var tempArray:Array = new Array();
 		public static var level:MovieClip;
 		public static var levels:Array;
 		public static var arts:Array;
+		public static var coins:Array;
 		private var isLevelComplete:Boolean = false;
 		private static var _instance:LevelManager;
+		private var isLevelActive:Boolean = false;
 		
 		//Singleton Design Pattern features
 		public function LevelManager(singletonEnforcer:SingletonEnforcer){
@@ -28,6 +31,7 @@
 		public function setUp():void{
 			levels = [];
 			arts = [];
+			coins = [];
 		}
 		
 		public static function getInstance():LevelManager {
@@ -42,6 +46,10 @@
 			return levels;
 		}
 		
+		public function getCoins():Array{
+			return coins;
+		}
+		
 		public function getLevelLocation():Point{
 			return levels[0].getLevelLocation();
 		}
@@ -51,6 +59,9 @@
 			/*for each(var level:Level in levels){
 				level.updateLoop();
 			}*/
+			for each(var coin:Coin in coins){
+				coin.updateLoop();
+			}
 			//checkLevelObjectives();
 			LevelManager._instance.checkLevelObjectives();
 		}
@@ -65,6 +76,15 @@
 			}
 		}
 		
+		public function setIsLevelActive(activeStatus:Boolean):void {
+			isLevelActive = activeStatus;
+			trace("isLevelActive:",isLevelActive);
+		}
+		
+		public function getisLevelActive():Boolean {
+			return isLevelActive;
+		}
+		
 		private function levelCompleted():void {
 			//trace("LevelManager: Level completed: EnemyManager.enemies", EnemyManager.enemies);
 			if (EnemyManager.enemies.length == 0) {
@@ -76,6 +96,7 @@
 				EnemyManager.getInstance().destroyArray(EnemyManager.enemies);
 				LevelManager.getInstance().destroyArray(LevelManager.levels);
 				LevelManager.getInstance().destroyArray(LevelManager.arts);
+				LevelManager.getInstance().destroyArray(LevelManager.coins);
 				PowerupManager.getInstance().destroyArray(PowerupManager.powerups);
 				BulletManager.getInstance().destroyArray(BulletManager.bullets);
 				AvatarManager.getInstance().destroyArray(AvatarManager.avatars);
@@ -84,6 +105,7 @@
 				//loadMissionCompleteScreen
 				//loadLevel();
 				Game.setGameState("levelComplete");
+				Game.setFramesSinceGameStart();
 			}
 		}
 		
@@ -97,9 +119,7 @@
 			//trace("levelName:" +levelName);
 			level = new utilities.Actors.GameBoardPieces.Level(levelName);
 			levels.push(level);
-			Game.setFramesSinceGameStart();//this prevents instant complettions if win condition is met by there being no enemies on the board
-			Game.setGameState("levelLoaded");
-			Game.enableMasterLoop();
+			Game.setGameState("levelCurrentlyLoading"); 
 		}
 		
 		public function deselectActors():void {
