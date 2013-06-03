@@ -21,6 +21,9 @@
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Actors.GameBoardPieces.Art;
 	import utilities.Engine.LevelManager;
+	import flash.system.Security;
+
+
 	
 	
 	public class GraphicsElement extends MovieClip {
@@ -29,26 +32,27 @@
 		 * */
 		
 		//private var avatar:String = new String("../lib/avatar_swf.swf");
-		private var bullet:String = new String("../src/assets/swf_bullet.swf");
-		private var frank:String = new String("../src/assets/swf_frank.swf");
-		private var goon:String = new String("../src/assets/swf_goon.swf");
-		private var afs:String = new String("../src/assets/swf_afs.swf");
-		private var tank:String = new String("../src/assets/swf_tank.swf");
-		private var powerup_doubleJump:String = new String("../src/assets/swf_powerupDoubleJump.swf");
-		private var powerup_invincible:String = new String("../src/assets/swf_powerupInvincible.swf");
-		private var powerup_shoot:String = new String("../src/assets/swf_powerupShoot.swf");
+		private var bullet:String = new String("../src/assets/actors/swf_bullet.swf");
+		private var frank:String = new String("../src/assets/actors/swf_frank.swf");
+		private var goon:String = new String("../src/assets/actors/swf_goon.swf");
+		private var afs:String = new String("../src/assets/actors/swf_afs.swf");
+		private var tank:String = new String("../src/assets/actors/swf_tank.swf");
+		private var powerup_doubleJump:String = new String("../src/assets/actors/swf_powerupDoubleJump.swf");
+		private var powerup_invincible:String = new String("../src/assets/actors/swf_powerupInvincible.swf");
+		private var powerup_shoot:String = new String("../src/assets/actors/swf_powerupShoot.swf");
+		private var wall:String = new String("../src/assets/actors/swf_wall.swf");
+		//test stuff
+		private var bgSquare:String = new String("../src/assets/actors/swf_bgSquare.swf");
 		
 		//levels
-		private var lvl_01:String = new String("../src/assets/swf_lvl_01.swf");
-		private var lvl_02:String = new String("../src/assets/swf_lvl_02.swf");
-		private var lvl_03:String = new String("../src/assets/swf_lvl_03.swf");
-		private var lvl_04:String = new String("../src/assets/swf_lvl_04.swf");
-		private var lvl_05:String = new String("../src/assets/swf_lvl_05.swf");
+		private var lvl_1:String = new String("../src/assets/levels/swf_lvl_1.swf");
+		private var lvl_2:String = new String("../src/assets/levels/swf_lvl_2.swf");
+		private var lvl_3:String = new String("../src/assets/levels/swf_lvl_3.swf");
+		private var lvl_4:String = new String("../src/assets/levels/swf_lvl_4.swf");
+		private var lvl_5:String = new String("../src/assets/levels/swf_lvl_5.swf");
 		
-		private var wall:String = new String("../src/assets/swf_wall.swf");
-		
-		private var bgSquare:String = new String("../src/assets/swf_bgSquare.swf");
-		
+		//screens & UI
+		private var ui_levelComplete:String = new String("../src/assets/ui/swf_levelComplete.swf");
 		
 		
 		/*
@@ -62,11 +66,12 @@
 		private var isLevel:Boolean = false;
 		private var tempArray:Array = new Array();
 		public function GraphicsElement():void{
-			
+			Security.allowDomain("*");//doing this is real bad, needs to get fixed later
 		}
 		
 		//aka wizard shit, don't make no kind of logical sense
-		private function alignmentOfParentChildGraphics(par:MovieClip,ch:MovieClip):void {
+		private function alignmentOfParentChildGraphics(par:MovieClip, ch:MovieClip):void {
+			
 			par.x = ch.x - ch.parent.x ;
 			par.y = ch.y - ch.parent.y;
 			ch.x = 0;
@@ -162,6 +167,10 @@
 				isLevel = true;
 			}
 			switch(filePath) {
+				case "ui_levelComplete":
+					filePath = ui_levelComplete;
+					trace("graphicsElement: file path is ui_levelComplete");
+					break;
 				case "frank":
 					filePath = frank;
 					break;
@@ -189,20 +198,20 @@
 				case "powerup_shoot":
 					filePath = powerup_shoot;
 					break;
-				case "lvl_01":
-					filePath = lvl_01;
+				case "lvl_1":
+					filePath = lvl_1;
 					break;
-				case "lvl_02":
-					filePath = lvl_02;
+				case "lvl_2":
+					filePath = lvl_2;
 					break;
-				case "lvl_03":
-					filePath = lvl_03;
+				case "lvl_3":
+					filePath = lvl_3;
 					break;
-				case "lvl_04":
-					filePath = lvl_04;
+				case "lvl_4":
+					filePath = lvl_4;
 					break;
-				case "lvl_05":
-					filePath = lvl_05;
+				case "lvl_5":
+					filePath = lvl_5;
 					break;
 					
 				case "bgSquare":

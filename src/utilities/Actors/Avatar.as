@@ -19,12 +19,9 @@
 		private var myAngle:Number=0;
 		private var velocityIncrease:Number=12;
 		private var maxSpeed:Number=100;
-	
 		public var xDiff:Number=0;
 		public var yDiff:Number = 0;
 		private var jumpDamage:int = 1;
-		
-		
 		
 		
 		public function Avatar(){
@@ -103,7 +100,7 @@
 			this.y += yVelocity;
 			Main.game.moveGameContainer(this);
 		}
-
+		
 		//don't set this every frame
 		//use only when required
 		//get the change in vector

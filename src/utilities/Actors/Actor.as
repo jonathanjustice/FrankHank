@@ -462,17 +462,17 @@
 			trace(this, "Actor: class exists, probably means you fucked up somewhere else, or you can't access the object you want inside the class.");
 		}
 		
+		public function getVelocity():Point {
+			var velocityPoint:Point = new Point(xVelocity,yVelocity);
+			return velocityPoint;
+		}
+		
 		public function setIsSwfLoaded(loadState:Boolean):void {
 			isSwfLoaded = loadState;
 		}
 		
 		public function getIsSwfLoaded():Boolean {
 			return isSwfLoaded;
-		}
-		
-		public function getVelocity():Point {
-			var velocityPoint:Point = new Point(xVelocity,yVelocity);
-			return velocityPoint;
 		}
 		
 		public function getActorGraphic():MovieClip {

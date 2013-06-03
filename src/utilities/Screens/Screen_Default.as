@@ -4,21 +4,22 @@
 	import flash.display.MovieClip;
 	import utilities.Screens.Screen_Dynamic_Blocker;
 	import utilities.Engine.*;
-	import utilities.Engine.UIManager;
+	import utilities.Engine.UIManager;import utilities.GraphicsElements.GraphicsElement;
 	public class Screen_Default extends MovieClip{
 		private var blocker:Screen_Dynamic_Blocker;
 		private var myScreen:MovieClip;//or replace with swf eventually
-		
-		public function Screen_Default():void{
-			//trace("super");
+		private var actorGraphic:MovieClip;
+		public var assignedGraphic:Array = new Array();
+		private var animationState:String = "idle"
+		private var isSwfLoaded:Boolean = false;
+		public function Screen_Default():void{			
 			setUp();
 		}
 		
-		public function setUp():void{
+		public function setUp():void {
 			//myScreen = screen_swf;
-			setScreen();
+			trace("screen default setup");
 			addDynamicBlocker();
-			addScreenGraphics();
 			addScreenToUIContainer();
 			addClickHandler();
 			addOverHandler();
@@ -26,16 +27,23 @@
 			mouseEnabledHandler();
 		}
 		
-		public function setScreen():void{
-			//myScreen = screen_swf;
-			//trace(myScreen,"myScreen");
+		public function defineGraphics(filePath:String):void {
+			//trace("filePath:",filePath);
+			actorGraphic = new utilities.GraphicsElements.GraphicsElement();
+			actorGraphic.loadSwf(filePath,this,false);
+			this.addChild(actorGraphic);
 		}
 		
-		public function addScreenGraphics():void{
-			//trace("this",this);
-			//trace("myScreen",myScreen);
-			//myScreen = new MovieClip();
-			this.addChild(myScreen);
+		public function setIsSwfLoaded(loadState:Boolean):void {
+			isSwfLoaded = loadState;
+		}
+		
+		public function getIsSwfLoaded():Boolean {
+			return isSwfLoaded;
+		}
+		
+		public function getActorGraphic():MovieClip {
+			return actorGraphic;
 		}
 		
 		//CLICKING

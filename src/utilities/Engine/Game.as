@@ -18,6 +18,8 @@
 	import utilities.Audio.SoundManager;
 	import utilities.Actors.Avatar;
 	import utilities.Mathematics.QuadTree;
+	import utilities.dataModels.LevelProgressModel;
+	import utilities.Engine.Combat.AnimationManager;
 	
 	public class Game extends MovieClip{
 		public static var theGame:Game;
@@ -33,12 +35,12 @@
 		public static var levelManager:LevelManager;
 		public static var soundManager:SoundManager;
 		public static var saveDataManager:SaveDataManager;
-		import utilities.Engine.Combat.AnimationManager;
 		public static var avatar:Avatar;
 		private static var quadTree:QuadTree;
 		private static var gamePaused:Boolean = true;
 		private static var framesSinceGameStart:int = 0;
 		private static var cameraWindow:CameraWindow;
+		private static var gameState:String = "boot";
 		
 		//public var player:Player;
 		public var hero:MovieClip;
@@ -53,9 +55,55 @@
 			createQuadTree();
 		}
 		
-		private static function createGameContainer():void{
+		public static function setGameState(newState:String):void {
+			gameState = newState;
+			switch(gameState) {
+				case "boot":
+					//doshit
+					break;
+				case "loadingLevel":
+					//doshit
+					LevelManager.getInstance().loadLevel();
+					break;
+				case "levelLoaded":
+					//doshit
+					break;
+				case "inLevel":
+					//doshit
+					break;
+				case "levelComplete":
+					UIManager.getInstance().openLevelCompleteScreen();
+					break;
+				case "died":
+					//doshit
+					break;
+				case "levelFailed":
+					//doshit
+					break;
+				case "gameFailed":
+					//doshit
+					break;
+				case "gameWon":
+					//doshit
+					break;
+				case "cutscene":
+					//doshit
+					break;
+				case "worldMap":
+					//doshit
+					break;
+			}
+		}
+		
+		public static function getGameState():String {
+			return gameState;
+		}
+		
+		private static function createGameContainer():void {
+			trace("game: game container added");
 			gameContainer = new utilities.Screens.GameContainer();
-			Main.theStage.addChild(gameContainer);
+			//Main.theStage.addChild(gameContainer);
+			Main.theStage.addChildAt(gameContainer,0);
 			
 		}
 		
@@ -69,21 +117,19 @@
 		}
 		
 		//star the game from various places, such as a loaded game, new game, restarted game, etc.
-		public static function startGame(startLocation:String):void{
+		public static function startGame(startLocation:String):void {
+			
 			switch(startLocation){
 				case "debug":
-				
+					
 					trace("Started Game: From debug method");
 					createManagersAndControllers();
-					LevelManager.getInstance().createLevel("lvl_02");
-					enableMasterLoop();
+					LevelManager.getInstance().loadLevel();
 					break;
 				case "start":
 					trace("Started Game: From the Start Screen");
 					createManagersAndControllers();
-					trace(LevelManager.getInstance());
-					LevelManager.getInstance().createLevel("lvl_02");
-					enableMasterLoop();
+					LevelManager.getInstance().loadLevel();
 					break;
 				case "pause":
 					enableMasterLoop();
@@ -100,6 +146,7 @@
 			}
 			
 			Main.returnFocusToGampelay();
+			trace("start complete");
 		}
 		
 		public static function getFramesSinceGameStart():int {
@@ -111,7 +158,7 @@
 		}
 		
 		public static function enableMasterLoop():void {
-			trace("master loop");
+			trace("master loop enabled");
 			gamePaused=false;
 			gameContainer.addEventListener(Event.ENTER_FRAME, masterLoop);
 		}
@@ -128,6 +175,7 @@
 		}
 		
 		private static function createManagersAndControllers():void {
+			LevelProgressModel.getInstance();
 			PowerupManager.getInstance();
 			AnimationManager.getInstance();
 			ResourceManager.getInstance();

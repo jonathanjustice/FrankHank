@@ -10,6 +10,7 @@
 	import utilities.Actors.GameBoardPieces.Level;
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Actors.GameBoardPieces.Terrain;
+	import utilities.dataModels.LevelProgressModel;
 	import flash.geom.Point;
 	public class LevelManager extends BasicManager implements IManager{
 		private var tempArray:Array = new Array();
@@ -65,7 +66,7 @@
 		}
 		
 		private function levelCompleted():void {
-			//trace("EnemyManager.enemies", EnemyManager.enemies);
+			//trace("LevelManager: Level completed: EnemyManager.enemies", EnemyManager.enemies);
 			if (EnemyManager.enemies.length == 0) {
 				//trace("enemy manager: no enemies left");
 				//trace("EnemyManager.enemies", EnemyManager.enemies);
@@ -79,15 +80,26 @@
 				BulletManager.getInstance().destroyArray(BulletManager.bullets);
 				AvatarManager.getInstance().destroyArray(AvatarManager.avatars);
 				Game.resetGameContainerCoordinates();
-				createLevel("lvl_03");
-				Game.enableMasterLoop();
-				Game.setFramesSinceGameStart();//this prevents instant complettions if win condition is met by there being no enemies on the board
+				LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1);
+				//loadMissionCompleteScreen
+				//loadLevel();
+				Game.setGameState("levelComplete");
 			}
 		}
 		
-		public function createLevel(levelName:String):void{
+		public function loadMissionCompleteScreen():void {
+			
+		}
+		
+		public function loadLevel():void {
+			var levelName:String = String(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1 );
+			levelName = "lvl_" + levelName;
+			//trace("levelName:" +levelName);
 			level = new utilities.Actors.GameBoardPieces.Level(levelName);
 			levels.push(level);
+			Game.setFramesSinceGameStart();//this prevents instant complettions if win condition is met by there being no enemies on the board
+			Game.setGameState("levelLoaded");
+			Game.enableMasterLoop();
 		}
 		
 		public function deselectActors():void {

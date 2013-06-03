@@ -1,4 +1,5 @@
 ﻿package utilities.Engine{
+	import utilities.Screens.GameScreens.LevelComplete;
 	import utilities.Screens.xpBarSystem;
 	import utilities.Screens.Screen_Default;
 	import utilities.Screens.UIContainer;
@@ -10,8 +11,9 @@
 		public static var uiContainer:MovieClip = new utilities.Screens.UIContainer();
 		private var padding:int=11;
 		private var screen_LevelUp:MovieClip;
+		private static var screen_LevelComplete:MovieClip;
 		
-		private static var screenStart:MovieClip;
+		private static var screen_Start:MovieClip;
 		private static var _instance:UIManager;
 		
 		public function UIManager(singletonEnforcer:SingletonEnforcer){
@@ -26,12 +28,9 @@
 			return _instance;
 		}
 		
-		public function setUp():void{
-			Main.theStage.addChild(uiContainer);
-			//uiContainer = new UIContainer;
-			//Main.theStage.addChild(uiContainer);
-			//setUpXpBar();
-			
+		public function setUp():void {
+			trace("UIManager: set up");
+			Main.theStage.addChild(uiContainer);	
 		}
 		
 		public function getUIContainer():Object{
@@ -39,7 +38,12 @@
 		}
 		
 		public static function openStartScreen():void{
-			screenStart = new ScreenStart();
+			screen_Start = new ScreenStart();
+			//trace("start");
+		}
+		
+		public function openLevelCompleteScreen():void{
+			screen_LevelComplete = new LevelComplete();
 			//trace("start");
 		}
 		

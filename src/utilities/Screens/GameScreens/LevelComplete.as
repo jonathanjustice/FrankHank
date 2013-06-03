@@ -5,36 +5,25 @@
 	import utilities.Screens.Screen_Default;
 	import utilities.Screens.Screen_Dynamic_Blocker;
 	import utilities.Engine.Game;
-	public class ScreenStart extends utilities.Screens.Screen_Default{
+	public class LevelComplete extends utilities.Screens.Screen_Default{
 		private var myScreen:MovieClip;
 		
-		public function ScreenStart(){
-			utilities.Engine.Game.startGame("start");
-			removeThisScreen();
-			//defineGraphics("ui_Start")
+		public function LevelComplete(){
+			defineGraphics("ui_levelComplete");
 		}
-		
-		
 		
 		public override function clickHandler(event:MouseEvent):void{
-			//trace("parent:",event.target.parent.name);
-			//trace("target:",event.target.name);
-			//switch (event.target){
-			/*	case blocker:
-				trace("clicked start screen");
+			switch (event.target.name){
+				case "btn_close":
 					removeThisScreen();
-					utilities.Engine.Game.startGame("start");
+					utilities.Engine.Game.setGameState("loadingLevel");
 					break;
-				
-				case myScreen.btn_start:
-				trace("clicked start screen");
+				case "btn_next":
 					removeThisScreen();
-					utilities.Engine.Game.startGame("start");
+					utilities.Engine.Game.setGameState("loadingLevel");
 					break;
-					*/
-			//}
+			}
 		}
-		
 		
 		//is there a way to make this more abstract?
 		//check for everything that is a button when the screen is created?
