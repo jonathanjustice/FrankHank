@@ -19,6 +19,7 @@
 		public static var levels:Array;
 		public static var arts:Array;
 		public static var coins:Array;
+		public static var savePoints:Array;
 		private var isLevelComplete:Boolean = false;
 		private static var _instance:LevelManager;
 		private var isLevelActive:Boolean = false;
@@ -32,6 +33,7 @@
 			levels = [];
 			arts = [];
 			coins = [];
+			savePoints = [];
 		}
 		
 		public static function getInstance():LevelManager {
@@ -50,6 +52,10 @@
 			return coins;
 		}
 		
+		public function getSavePoints():Array {
+			return savePoints;
+		}
+		
 		public function getLevelLocation():Point{
 			return levels[0].getLevelLocation();
 		}
@@ -62,6 +68,9 @@
 			for each(var coin:Coin in coins){
 				coin.updateLoop();
 			}
+			/*for each(var savePoint:SavePoint in savePoints){
+				savePoint.updateLoop();
+			}*/
 			//checkLevelObjectives();
 			LevelManager._instance.checkLevelObjectives();
 		}
@@ -97,6 +106,7 @@
 				LevelManager.getInstance().destroyArray(LevelManager.levels);
 				LevelManager.getInstance().destroyArray(LevelManager.arts);
 				LevelManager.getInstance().destroyArray(LevelManager.coins);
+				LevelManager.getInstance().destroyArray(LevelManager.savePoints);
 				PowerupManager.getInstance().destroyArray(PowerupManager.powerups);
 				BulletManager.getInstance().destroyArray(BulletManager.bullets);
 				AvatarManager.getInstance().destroyArray(AvatarManager.avatars);

@@ -3,14 +3,14 @@
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Input.KeyInputManager;
 	import flash.utils.getTimer;
-	public class Coin extends Actor{
+	public class SavePoint extends Actor{
 		
 		//private var gameContainer;
 		private var velocityMultiplier:Number=15;
 		private var applyXP:Boolean=false;
 		private var xpToApply:int=0;
 		private var spawnTime:Number;
-		private var moneyValue:int = 50;
+		
 		//private var lifeSpan:Number = 2;//3 seconds
 		
 		
@@ -18,18 +18,16 @@
 		//private var availableForTargeting:Boolean=true;
 		
 		
-		public function Coin() {
+		public function SavePoint() {
 			health=1;
 		}
 		
-		public function getMoneyValue():int {
-			return moneyValue;
-		}
+		
 		
 		public function setUp():void{
 			addActorToGameEngine();
 			setPreviousPosition();
-			defineGraphics("coin",false);
+			defineGraphics("savePoint",false);
 		}
 		
 		public function updateLoop():void{

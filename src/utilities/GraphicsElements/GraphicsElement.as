@@ -8,6 +8,8 @@
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Actors.GoonEnemy;
 	import utilities.Actors.Coin;
+	import utilities.Actors.SavePoint;
+	import utilities.Actors.Gem;
 	import utilities.Actors.Powerup_shoot;
 	import utilities.Actors.Powerup_doubleJump;
 	import utilities.Actors.Powerup_invincible;
@@ -46,6 +48,8 @@
 		private var powerup_shoot:String = new String("../src/assets/actors/swf_powerupShoot.swf");
 		private var wall:String = new String("../src/assets/actors/swf_wall.swf");
 		private var coin:String = new String("../src/assets/actors/swf_coin.swf");
+		private var gem:String = new String("../src/assets/actors/swf_gem.swf");
+		private var savePoint:String = new String("../src/assets/actors/swf_savePoint.swf");
 		//test stuff
 		private var bgSquare:String = new String("../src/assets/actors/swf_bgSquare.swf");
 		
@@ -89,6 +93,9 @@
 			if (par is Art) {
 				par.addChild(ch);
 			}
+			if (par is Avatar) {
+				//par.addChild(ch);
+			}
 			par.setUp();
 			if (currentParent is SelectableActor) {
 				currentParent.addClickability_onLoadComplete(par);
@@ -116,10 +123,29 @@
 						alignmentOfParentChildGraphics(coin,tempArray[j]);
 						LevelManager.coins.push(coin);
 					}
+					if (tempArray[j].name == "savePoint") {
+						trace("savePoint 1");
+						var savePoint:SavePoint = new SavePoint();
+						//trace("savePoint 2");
+						alignmentOfParentChildGraphics(savePoint, tempArray[j]);
+						//trace("savePoint 3");
+						//LevelManager.savePoints.push(savePoint);
+						//trace("savePoint 4");
+					}
+					if(tempArray[j].name == "gem"){
+						var gem:Gem = new Gem();
+						alignmentOfParentChildGraphics(gem,tempArray[j]);
+						LevelManager.coins.push(gem);
+					}
 					if(tempArray[j].name == "wall"){
 						var wall:Wall = new Wall();
 						alignmentOfParentChildGraphics(wall,tempArray[j]);
 						LevelManager.levels.push(wall);
+					}
+					if(tempArray[j].name == "avatar"){
+						var avatar:Avatar  = new Avatar;
+						alignmentOfParentChildGraphics(avatar,tempArray[j]);
+						AvatarManager.avatars.push(avatar);
 					}
 					if(tempArray[j].name == "goon"){
 						var goon:GoonEnemy = new GoonEnemy();
@@ -130,11 +156,6 @@
 						var tank:TankEnemy = new TankEnemy();
 						alignmentOfParentChildGraphics(tank,tempArray[j]);
 						EnemyManager.enemies.push(tank);
-					}
-					if(tempArray[j].name == "avatar"){
-						var avatar:Avatar  = new Avatar;
-						alignmentOfParentChildGraphics(avatar,tempArray[j]);
-						AvatarManager.avatars.push(avatar);
 					}
 					if(tempArray[j].name == "afs"){
 						var afs:AFSEnemy = new AFSEnemy;
@@ -204,6 +225,12 @@
 					break;
 				case "coin":
 					filePath = coin;
+					break;
+				case "gem":
+					filePath = gem;
+					break;
+				case "savePoint":
+					filePath = savePoint;
 					break;
 				case "powerup_doubleJump":
 					filePath = powerup_doubleJump;

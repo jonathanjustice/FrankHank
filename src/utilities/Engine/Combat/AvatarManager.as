@@ -70,14 +70,16 @@
 				
 				//for some horrible ass backwards reason, I included the level itself in the same array as the walls inside the level, so the iteration needs to start at 1
 				//this is unnacceptable and needs to get fixed asap because it is super confusing and inconsistent.
-				for(var i:int = 1; i<LevelManager.levels.length;i++){
-				//a really uneccessarily long way to write hitTestObject, because I can
+				for (var i:int = 1; i < LevelManager.levels.length; i++) {
+					var collisionSide:String = "";
+					//a really uneccessarily long way to write hitTestObject, because I can
 					//checks for collision
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.levels[i]) == true) {
 						//resolves the collision & returns if this touched the top of the other object
 						if (utilities.Mathematics.RectangleCollision.resolveCollisionBetweenMovingAndStationaryRectangles(myAvatar, LevelManager.levels[i]) == "top") {
 							myAvatar.jumpingEnded();
-							myAvatar.resetGravity();}
+							myAvatar.resetGravity();
+						}
 					}
 				}
 				for (var j:int = 0; j < EnemyManager.enemies.length;j++){

@@ -25,7 +25,8 @@
 		
 		public function updateAnimationState(actor:Actor, animState:String):void {
 			actor.playAnimation(animState);
-		//	trace("AnimationManager: animState",animState);
+			
+			trace("AnimationManager: animState",animState);
 		}
 		
 		//update animations based on current state

@@ -17,7 +17,9 @@
 		//private var mySprite:Sprite = new Sprite();
 		private var myTextField:TextField = new TextField(); 
 		private var myAngle:Number=0;
-		private var velocityIncrease:Number=12;
+		private var velocityIncrease:Number = 3;
+		private var maxVelocity:Number = 18;
+		private var velocityDecrease:Number = .9;
 		private var maxSpeed:Number=100;
 		public var xDiff:Number=0;
 		public var yDiff:Number = 0;
@@ -79,13 +81,22 @@
 			this.rotation = Main.keyInputManager.getMyAngle();
 		}
 		
+		
 		public function getVelocityFromKeyInputManager():void{
 			KeyInputManager.setSimpleVelocityViaKeys();
+			//limit max velocity
+			if (Math.abs(xVelocity) < maxVelocity) {
+				xVelocity += KeyInputManager.getMyVelocityX() * velocityIncrease;
+			}
+			//yVelocity += KeyInputManager.getMyVelocityY() * velocityIncrease;
 			
-			xVelocity = KeyInputManager.getMyVelocityX() * velocityIncrease;
-			yVelocity += KeyInputManager.getMyVelocityY() * velocityIncrease;
+			//if you are not pressing a button to run, then you slowdown
 			if (KeyInputManager.getMyVelocityX() == 0) {
-				xVelocity = 0;
+				//xVelocity = 0;
+				xVelocity *= velocityDecrease;
+				if (xVelocity <= .5 && xVelocity >= -.5) {
+					xVelocity = 0;
+				}
 			}
 		}
 		
@@ -93,6 +104,11 @@
 			//trace(KeyInputManager.getMyRotation());
 			//trace(this.rotation);
 			this.rotation += KeyInputManager.getMyRotation();
+		}
+		
+		//used for forcing the avatar to stop
+		public function setXVelocity(newVelocity:Number):void {
+			xVelocity = newVelocity;
 		}
 		
 		public function applyVelocities():void {
