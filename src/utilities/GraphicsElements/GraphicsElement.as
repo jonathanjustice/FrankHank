@@ -129,7 +129,7 @@
 						//trace("savePoint 2");
 						alignmentOfParentChildGraphics(savePoint, tempArray[j]);
 						//trace("savePoint 3");
-						//LevelManager.savePoints.push(savePoint);
+						LevelManager.savePoints.push(savePoint);
 						//trace("savePoint 4");
 					}
 					if(tempArray[j].name == "gem"){

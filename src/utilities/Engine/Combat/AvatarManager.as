@@ -1,5 +1,6 @@
 ﻿package utilities.Engine.Combat{
 	import flash.display.MovieClip;
+	import utilities.dataModels.LevelProgressModel;
 	import utilities.Engine.BasicManager;
 	import utilities.Engine.DefaultManager;
 	import utilities.Actors.Avatar;
@@ -65,6 +66,13 @@
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.coins[b]) == true) {
 						LevelManager.coins[b].takeDamage(1);
 						LevelManager.coins[b].checkForDeathFlag();
+					}
+				}
+				
+				for (var c:int = 0; c < LevelManager.savePoints.length; c++) {
+					trace("should be setting mid mission progress");
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.savePoints[c]) == true) {
+						LevelProgressModel.getInstance().setMidMissionProgress(c);
 					}
 				}
 				
