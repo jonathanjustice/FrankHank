@@ -63,7 +63,6 @@
 					break;
 				case "startLevelLoad":
 					//doshit
-					
 					trace("startLevelLoad");
 					LevelManager.getInstance().loadLevel();
 					break;
@@ -71,8 +70,8 @@
 					//doshit
 					break;
 				case "levelFullyLoaded":
-						LevelManager.getInstance().setIsLevelActive(true);
-						enableMasterLoop();
+					LevelManager.getInstance().setIsLevelActive(true);
+					enableMasterLoop();
 					break;
 				case "inLevel":
 					//doshit
@@ -94,12 +93,34 @@
 				case "gameWon":
 					//doshit
 					break;
-				case "cutscene":
+				case "startCutSceneLoad":
 					//doshit
+					trace("Game: startCutSceneLoad");
+					CutSceneManager.getInstance().loadScene();
+					break;
+				case "cutSceneCurrentlyLoading":
+					trace("Game: cutSceneCurrentlyLoading");
+					break;
+				case "cutSceneFullyLoaded":
+					trace("Game: cutSceneFullyLoaded");
+					CutSceneManager.getInstance().setIsSceneActive(true);
+					//enableMasterLoop();
+					break;
+				case "inCutScene":
+					trace("Game: inCutScene");
+					//doshit
+					break;
+				case "cutSceneComplete":
+					trace("Game: cutSceneComplete");
+					CutSceneManager.getInstance().setIsSceneActive(false);
+					CutSceneManager.getInstance().setIsSceneComplete(false);
+					//UIManager.getInstance().openLevelCompleteScreen();
 					break;
 				case "worldMap":
 					//doshit
 					break;
+					
+					
 			}
 		}
 		

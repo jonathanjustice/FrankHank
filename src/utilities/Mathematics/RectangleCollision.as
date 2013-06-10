@@ -55,7 +55,7 @@ package utilities.Mathematics{
 			else if (movable.getPreviousPosition().x >= stationary.getPreviousPosition().x + stationary.width) {
 				movable.x = stationary.getPreviousPosition().x + stationary.width + collisionEjectDistance;
 				collisionSide = "right";
-				trace("right");
+				
 			}
 			else{
 				//trace("else, this should never fire, if it does, WHAT DID YOU DO?");

@@ -97,6 +97,7 @@
 		private function levelCompleted():void {
 			//trace("LevelManager: Level completed: EnemyManager.enemies", EnemyManager.enemies);
 			if (EnemyManager.enemies.length == 0) {
+				trace("LevelManager:levelCompleted");
 				//trace("enemy manager: no enemies left");
 				//trace("EnemyManager.enemies", EnemyManager.enemies);
 				Game.disableMasterLoop();
@@ -114,8 +115,9 @@
 				LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1);
 				//loadMissionCompleteScreen
 				//loadLevel();
-				Game.setGameState("levelComplete");
+				Game.setGameState("startCutSceneLoad");
 				Game.setFramesSinceGameStart();
+				LevelManager._instance.setIsLevelComplete(false)
 			}
 		}
 		

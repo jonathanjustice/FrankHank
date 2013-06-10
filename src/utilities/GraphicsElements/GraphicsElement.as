@@ -17,6 +17,7 @@
 	import utilities.Actors.SelectableActor;
 	import utilities.Actors.TankEnemy;
 	import utilities.Engine.Game;
+	import utilities.Engine.CutSceneManager;
 	import utilities.Engine.Combat.AvatarManager;
 	import utilities.Engine.Combat.EnemyManager;
 	import utilities.Engine.Combat.PowerupManager;
@@ -27,6 +28,7 @@
 	import utilities.Actors.GameBoardPieces.Art;
 	import utilities.Engine.LevelManager;
 	import flash.system.Security;
+	import utilities.Screens.GameScreens.CutScene;
 
 
 	//this class is insanely inefficient
@@ -65,6 +67,11 @@
 		
 		//screens & UI
 		private var ui_levelComplete:String = new String("../src/assets/ui/swf_levelComplete.swf");
+		private var ui_cutScene_1:String = new String("../src/assets/ui/swf_cutScene_1.swf");
+		private var ui_cutScene_2:String = new String("../src/assets/ui/swf_cutScene_2.swf");
+		private var ui_cutScene_3:String = new String("../src/assets/ui/swf_cutScene_3.swf");
+		private var ui_cutScene_4:String = new String("../src/assets/ui/swf_cutScene_4.swf");
+		private var ui_cutScene_5:String = new String("../src/assets/ui/swf_cutScene_5.swf");
 		
 		
 		/*
@@ -136,11 +143,8 @@
 					if (tempArray[j].name == "savePoint") {
 						trace("savePoint 1");
 						var savePoint:SavePoint = new SavePoint();
-						//trace("savePoint 2");
 						alignmentOfParentChildGraphics(savePoint, tempArray[j]);
-						//trace("savePoint 3");
 						LevelManager.savePoints.push(savePoint);
-						//trace("savePoint 4");
 					}
 					if(tempArray[j].name == "gem"){
 						var gem:Gem = new Gem();
@@ -206,6 +210,10 @@
 			if (currentParent is SelectableActor) {
 				currentParent.addClickability_onLoadComplete(graphic);
 			}
+			if (currentParent is CutScene) {
+				CutSceneManager.scenes.push(graphic);
+				Game.setGameState("cutSceneFullyLoaded");
+			}
 			parent.removeChild(this);
 			currentParent.setIsSwfLoaded(true);
 		}
@@ -215,7 +223,8 @@
 		}
 		
 		//loads a swf based on the filePath from the actor type
-		public function loadSwf(filePath:String, swfParent:MovieClip, isLvl:Boolean=false):void {
+		public function loadSwf(filePath:String, swfParent:MovieClip, isLvl:Boolean = false):void {
+			//trace("GraphicsElelement: filePath:",filePath);
 			currentParent = swfParent;
 			if (isLvl == true) {
 				isLevel = true;
@@ -223,6 +232,26 @@
 			switch(filePath) {
 				case "ui_levelComplete":
 					filePath = ui_levelComplete;
+					break;
+				case "ui_cutScene_1":
+					filePath = ui_cutScene_1;
+					trace("GraphicsElelement: filePath:",filePath);
+					break;
+				case "ui_cutScene_2":
+					filePath = ui_cutScene_2;
+					trace("GraphicsElelement: filePath:",filePath);
+					break;
+				case "ui_cutScene_3":
+					filePath = ui_cutScene_3;
+					trace("GraphicsElelement: filePath:",filePath);
+					break;
+				case "ui_cutScene_4":
+					filePath = ui_cutScene_4;
+					trace("GraphicsElelement: filePath:",filePath);
+					break;
+				case "ui_cutScene_5":
+					filePath = ui_cutScene_5;
+					trace("GraphicsElelement: filePath:",filePath);
 					break;
 				case "frank":
 					filePath = frank;

@@ -5,23 +5,28 @@
 	import utilities.Screens.Screen_Default;
 	import utilities.Screens.Screen_Dynamic_Blocker;
 	import utilities.Engine.Game;
-	public class LevelComplete extends utilities.Screens.Screen_Default{
+	public class CutScene extends utilities.Screens.Screen_Default{
 		private var myScreen:MovieClip;
 		
-		public function LevelComplete(){
-			defineGraphics("ui_levelComplete");
+		public function CutScene(sceneName:String) {
+			trace("CutScene: sceneName:",sceneName);
+			defineGraphics(sceneName);
 		}
 		
 		public override function clickHandler(event:MouseEvent):void{
-			switch (event.target.name){
-				case "btn_close":
-					removeThisScreen();
-					utilities.Engine.Game.setGameState("startLevelLoad");
-					break;
-				case "btn_next":
-					removeThisScreen();
-					utilities.Engine.Game.setGameState("startCutSceneLoad");
-					break;
+			skip();
+		}
+		
+		private function skip():void {
+			this.gotoAndStop("end")
+		}
+		
+		public function checkForCutSceneComplete():Boolean {
+			if (this.getActorGraphic().assignedGraphics[0].swf_child.currentFrameLabel  == "end") {
+				removeThisScreen();
+				return true;
+			}else {
+				return false;
 			}
 		}
 		

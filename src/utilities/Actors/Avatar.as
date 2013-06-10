@@ -28,6 +28,8 @@
 		private var attackHitbox:MovieClip;
 		private var shootingDelay:int = 30
 		private var shootingTimer:int = 0;
+		private var currentDelay:int = 0;
+		private var delay:int = 15;
 		
 		
 		
@@ -52,6 +54,15 @@
 		
 		public function getAttackHitbox():MovieClip {
 			return attackHitbox;
+		}
+		
+		public function punch():void {
+			currentDelay ++;
+			if(KeyInputManager.getXKey() == true){
+				if (currentDelay >= delay) {
+					AnimationManager.getInstance().updateAnimationState(this, "attack");
+				}
+			}
 		}
 		
 		public function getAvatarLocation():Point{
@@ -87,6 +98,7 @@
 				if (getBehaviorState() == "shooting") {
 					
 				}
+				punch();
 			}
 		}
 		
