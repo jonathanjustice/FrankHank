@@ -1,7 +1,4 @@
-﻿/*
-You can access another manager this way:
-Game.avatarManager.doSomeFunction();
-*/
+﻿
 package utilities.Actors{
 	import flash.display.MovieClip;
 	import flash.geom.Point;
@@ -14,12 +11,14 @@ package utilities.Actors{
 	import utilities.Mathematics.QuadTree;
 	import utilities.Engine.Combat.BulletManager;
 	import utilities.Engine.Game;
+	import utilities.Engine.Combat.AvatarManager;
+	import utilities.Input.KeyInputManager;
 
 	import utilities.Mathematics.MathFormulas;
 	public class Bullet extends Actor{
 		
 		//private var gameContainer;
-		private var speed:Number=15;
+		private var speed:Number=10;
 		private var velocityMultiplier:Number=20;//used for setting initialy velocity
 		private var pausedTime:Number = 0;//for pausing the game
 		private var gamePausedAtTime:Number = 0;
@@ -29,30 +28,39 @@ package utilities.Actors{
 		public var damage:Number=1;
 		public var deltaX:Number = 0;
 		public var deltaY:Number = 0;
+		
+		public var bounceTime:int = 0;
+		public var maxBounceTime:int = 8;
+		
 		//public var xDiff:Number=0;
 		//public var yDiff:Number=0;
 	
 		public function Bullet(){
 			setUp();
+			setMaxGravity(5);
+			yVelocity = 10;
 		}
 		
 		
-		public function setUp():void{
+		public function setUp():void {
+			trace("new bullet");
 			setInitialLocationAndVector();
 			addActorToGameEngine();
 			defineGraphics("bullet",false);
 		}
 		
 		//the enter frame, does everything
-		public function updateLoop():void{
+		public function updateLoop():void {
+			setPreviousPosition();
 			setQuadTreeNode();
-			//applyBulletBehaviors();//such as heat seeking
+			applyBulletBehaviors();//such as heat seeking
 			applyVector();
 			//doStuffToBulletOverTime();
 			checkForLeaveBounday();
 			checkForLifespanExpired();
 			checkForDeathFlag();
 			//trace(target);
+			
 		}
 		
 		private function doStuffToBulletOverTime():void{
@@ -110,6 +118,10 @@ package utilities.Actors{
 			}
 		}
 		
+		public function getDamage():int {
+			return damage;
+		}
+		
 		public override function defineProperties():void{
 			//classes to get behaviors from
 			
@@ -127,8 +139,8 @@ package utilities.Actors{
 		
 		public function setEnemyBulletLocationAndVector(spawnPoint:Point,newRotation:Number):void{
 			trace("setEnemyBulletLocationAndVector");
-			spawnPoint = Game.avatarManager.getAvatarLocation();
-			newRotation = Game.avatarManager.getAvatarAngle()-90;
+			spawnPoint = AvatarManager.getInstance().getAvatarLocation();
+			newRotation = AvatarManager.getInstance().getAvatarAngle()-90;
 			//trace("spawnPoint",spawnPoint);
 			var vector:Point;
 			//variances that come from bullet properties that affect spawning
@@ -147,11 +159,11 @@ package utilities.Actors{
 			if(utilities.Actors.Stats.WeaponStats.getBlobular() > 0){
 				/*spread = change_vector_based_on_bullet_properties();
 				spread = Math.random()*spread*2 - spread;
-				vector = MathFormulas.degreesToSlope(Game.avatarManager.getAvatarAngle() + spread);
+				vector = MathFormulas.degreesToSlope(AvatarManager.getInstance().getAvatarAngle() + spread);
 				this.rotation += spread; */
 			}else{
 				//if the vector is not affected by bullet properties
-				vector = MathFormulas.degreesToSlope(Game.avatarManager.getAvatarAngle());
+				vector = MathFormulas.degreesToSlope(AvatarManager.getInstance().getAvatarAngle());
 			}
 			
 			//angle based on direction avatar is facing when the bullet is spawned
@@ -170,7 +182,7 @@ package utilities.Actors{
 		
 		public function setInitialLocationAndVector():void{
 			//trace("setInitialLocationAndVector");
-			var spawnPoint:Point = Game.avatarManager.getAvatarLocation();
+			var spawnPoint:Point = AvatarManager.getInstance().getAvatarLocation();
 			
 			//trace("spawnPoint",spawnPoint);
 			var vector:Point;
@@ -184,21 +196,21 @@ package utilities.Actors{
 			//trace(this.x);
 			//get initial velocity from keyInputManager or avatar direction based on controller input
 			
-			this.rotation = Game.avatarManager.getAvatarAngle();
+			this.rotation = AvatarManager.getInstance().getAvatarAngle();
 			
 			//if the vector is affected by bullet properties
 			if(utilities.Actors.Stats.WeaponStats.getBlobular() > 0){
 				/*spread = change_vector_based_on_bullet_properties();
 				spread = Math.random()*spread*2 - spread;
-				vector = MathFormulas.degreesToSlope(Game.avatarManager.getAvatarAngle() + spread);
+				vector = MathFormulas.degreesToSlope(AvatarManager.getInstance().getAvatarAngle() + spread);
 				this.rotation += spread; */
 			}else{//if the vector is not affected by bullet properties
 				
 				//for 360 degree shooting
-				//vector = MathFormulas.degreesToSlope(Game.avatarManager.getAvatarAngle() - 90);
+				//vector = MathFormulas.degreesToSlope(AvatarManager.getInstance().getAvatarAngle() - 90);
 				
 				//for only left & right shooting
-				vector = MathFormulas.degreesToSlope(Main.keyInputManager.getAimAngle());
+				vector = MathFormulas.degreesToSlope(KeyInputManager.getInstance().getAimAngle());
 			}
 			
 			//angle based on direction avatar is facing when the bullet is spawned
@@ -242,6 +254,9 @@ package utilities.Actors{
 					//trace(this.x);
 				}
 			}
+			if (utilities.Actors.Stats.WeaponStats.getBouncyness() > 0) {
+				applyBounce();
+			}
 			//bullets that are blobular
 			/*if(utilities.Actors.Stats.WeaponStats.getBlobular() >0){
 				//blobBehavior("speedyBullet");
@@ -262,6 +277,28 @@ package utilities.Actors{
 					}
 				}
 			}*/
+		}
+		
+		private function applyBounce():void {
+			this.x += xVelocity;
+			this.y += yVelocity;
+			if (yVelocity < 0) {
+				bounceTime++;
+				if (bounceTime >= maxBounceTime) {
+					reverseVelecityY();
+					bounceTime = 0;
+				}
+			}
+		}
+		
+		
+		public function reverseVelecityX():void {
+			
+			this.xVelocity *= -1;
+		}
+		
+		public function reverseVelecityY():void {
+			this.yVelocity *= -1;
 		}
 	}
 }

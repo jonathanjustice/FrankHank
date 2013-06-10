@@ -60,6 +60,7 @@
 		private var isGravitySystemEnabled:Boolean = true;
 		private var fireProjectileDelay:int = 9999;
 		private var fireProjectileTimer:int = 0;
+		private var behaviorState:String="idle"
 		
 		public function Actor(){
 			defineWeaponStats();
@@ -80,6 +81,7 @@
 				}
 					yVelocity += currentGravity;
 			}
+			
 			return yVelocity;
 		}
 		
@@ -103,6 +105,14 @@
 			
 		}
 		
+		public function setBehaviorState(newState:String):void {
+			behaviorState = newState;
+		}
+		
+		public function getBehaviorState():String {
+			return behaviorState;
+		}
+		
 		public function defineWeaponStats():void{
 			weaponStats = new utilities.Actors.Stats.WeaponStats();
 		}
@@ -114,7 +124,7 @@
 		public function fireProjectile():void {
 			//if the key is down 
 			fireProjectileTimer++;
-			if (KeyInputManager.getRightBracket() == true) {
+			if (KeyInputManager.getZKey() == true) {
 				//if the delay has been reached
 				if (fireProjectileTimer >= fireProjectileDelay) {
 					fireProjectileTimer = 0;
@@ -478,6 +488,10 @@
 		
 		public function getActorGraphic():MovieClip {
 			return actorGraphic;
+		}
+		
+		public function setMaxGravity(newMax:int):void {
+			maxGravity = newMax;
 		}
 	}
 }

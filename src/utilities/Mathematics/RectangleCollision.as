@@ -27,9 +27,8 @@ package utilities.Mathematics{
 			|| rect_1.y + (rect_1.height) < rect_2.y);
 		 }
 		 
-		//please update this to handle 2 moving rectangles, if desired
-		//resolves collision between a stationary rectangle and a moving rectangle
-		 public static function resolveCollisionBetweenMovingAndStationaryRectangles(movable:MovieClip, stationary:MovieClip):String {
+		
+		public static function testCollision(movable:MovieClip, stationary:MovieClip):String {
 			var collisionEjectDistance:Number = 1;//don't get stuck in the other rectangle
 			var collidedWithTop:Boolean = false;
 			var collisionSide:String = "";
@@ -38,31 +37,30 @@ package utilities.Mathematics{
 			if (movable.getPreviousPosition().y + movable.height <= stationary.y) {
 				collisionSide = "top";
 				movable.y = stationary.y - movable.height - collisionEjectDistance;
-				//trace("top");
+				
 			}
 			//movable is below stationary
 			else if (movable.getPreviousPosition().y >= stationary.y + stationary.height) {
 				movable.y = stationary.y + stationary.height + collisionEjectDistance;
 				collisionSide = "bottom";
-				//trace("bottom");
+				
 			}
 			//moveable's is to the left
 			else if (movable.getPreviousPosition().x + movable.width <= stationary.getPreviousPosition().x) {
 				movable.x = stationary.getPreviousPosition().x - movable.width - collisionEjectDistance;
 				collisionSide = "left";
-				//trace("left");
+				
 			}
 			//moveable is to the right
 			else if (movable.getPreviousPosition().x >= stationary.getPreviousPosition().x + stationary.width) {
 				movable.x = stationary.getPreviousPosition().x + stationary.width + collisionEjectDistance;
 				collisionSide = "right";
-				//trace("right");
+				trace("right");
 			}
 			else{
 				//trace("else, this should never fire, if it does, WHAT DID YOU DO?");
 				//movable.y = stationary.y - movable.height - collisionEjectDistance;
 			}
-			//trace("collisionSide: collisionSide:",collisionSide);
 			return collisionSide;
 		}
 		

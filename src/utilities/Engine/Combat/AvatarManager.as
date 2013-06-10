@@ -1,5 +1,6 @@
 ﻿package utilities.Engine.Combat{
 	import flash.display.MovieClip;
+	import utilities.Actors.Bullet;
 	import utilities.dataModels.LevelProgressModel;
 	import utilities.Engine.BasicManager;
 	import utilities.Engine.DefaultManager;
@@ -70,7 +71,6 @@
 				}
 				
 				for (var c:int = 0; c < LevelManager.savePoints.length; c++) {
-					trace("should be setting mid mission progress");
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.savePoints[c]) == true) {
 						LevelProgressModel.getInstance().setMidMissionProgress(c);
 					}
@@ -79,30 +79,61 @@
 				//for some horrible ass backwards reason, I included the level itself in the same array as the walls inside the level, so the iteration needs to start at 1
 				//this is unnacceptable and needs to get fixed asap because it is super confusing and inconsistent.
 				for (var i:int = 1; i < LevelManager.levels.length; i++) {
-					var collisionSide:String = "";
+					
 					//a really uneccessarily long way to write hitTestObject, because I can
 					//checks for collision
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.levels[i]) == true) {
 						//resolves the collision & returns if this touched the top of the other object
-						if (utilities.Mathematics.RectangleCollision.resolveCollisionBetweenMovingAndStationaryRectangles(myAvatar, LevelManager.levels[i]) == "top") {
+						if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.levels[i]) == "top") {
 							myAvatar.jumpingEnded();
 							myAvatar.resetGravity();
 						}
 					}
+					for each(var bullet:Bullet in BulletManager.bullets) {
+						if (utilities.Mathematics.RectangleCollision.simpleIntersection(bullet, LevelManager.levels[i]) == true) {
+							var collisionSide:String = utilities.Mathematics.RectangleCollision.testCollision(bullet, LevelManager.levels[i]);
+							if (collisionSide == "top") {
+								
+								bullet.reverseVelecityY();
+							}
+							if (collisionSide == "bottom") {
+								
+								bullet.reverseVelecityY();
+							}
+							if (collisionSide == "left") {
+								
+								bullet.reverseVelecityX();
+							}
+							if (collisionSide == "right") {
+								
+								bullet.reverseVelecityX();
+							}
+						}
+					}
 				}
-				for (var j:int = 0; j < EnemyManager.enemies.length;j++){
+				
+				for (var j:int = 0; j < EnemyManager.enemies.length; j++) {
+					
 				//a really uneccessarily long way to write hitTestObject, because I can
 					//checks for collision
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, EnemyManager.enemies[j]) == true) {
 						//if the avatar is invincible, damage the enemy
 						EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
 						//resolves the collision & returns if this touched the top of the other object
-						if (utilities.Mathematics.RectangleCollision.resolveCollisionBetweenMovingAndStationaryRectangles(myAvatar, EnemyManager.enemies[j]) =="top") {
+						if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j]) =="top") {
 							myAvatar.jumpingEnded();
 							myAvatar.jump();
 							EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
 						}
 					}
+					//make the avatar and his hitbox exist before checking against them
+					if (myAvatar.getActorGraphic().getiIsGraphicLoaded() == true) {
+						if(EnemyManager.enemies[j].hitTestObject(myAvatar.getActorGraphic().assignedGraphics[0].swf_child.hitbox_attack)){
+							
+							EnemyManager.enemies[j].takeDamage(myAvatar.getAttackDamage());
+							
+						}
+					}	
 				}
 				myAvatar.setPreviousPosition();
 			}

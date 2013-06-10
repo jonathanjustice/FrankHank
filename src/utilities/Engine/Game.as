@@ -277,16 +277,16 @@
 		//pause any other specific things like, spawnTimes, decayRates etc. that are dependent on getTimer
 		public static function pauseGame():void{
 			gamePaused = true;
-			bulletManager.pauseAllBulletTimes()
+			BulletManager.getInstance().pauseAllBulletTimes()
 		}
 		
 		public static function resumeGame():void{
 			gamePaused = false;
-			bulletManager.resumeAllBulletTimes();
+			BulletManager.getInstance().resumeAllBulletTimes();
 		}
 		
 		public static function getBulletManager():Object{
-			return bulletManager;
+			return BulletManager.getInstance();
 		}
 		
 		public static function getGameContainer():MovieClip{

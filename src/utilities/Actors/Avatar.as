@@ -24,6 +24,12 @@
 		public var xDiff:Number=0;
 		public var yDiff:Number = 0;
 		private var jumpDamage:int = 1;
+		private var attackDamage:int = 1;
+		private var attackHitbox:MovieClip;
+		private var shootingDelay:int = 30
+		private var shootingTimer:int = 0;
+		
+		
 		
 		
 		public function Avatar(){
@@ -37,6 +43,15 @@
 		public function setUp():void{
 			addActorToGameEngine();
 			defineGraphics("frank",false);
+		}
+		
+		public function setAttackHitbox(newHitbox:MovieClip):void{
+			attackHitbox = newHitbox;
+			trace("attackHitbox",attackHitbox);
+		}
+		
+		public function getAttackHitbox():MovieClip {
+			return attackHitbox;
 		}
 		
 		public function getAvatarLocation():Point{
@@ -66,9 +81,12 @@
 				
 				//trace("thisX: ",this.x,"thisY:",this.y);
 				applyInvincibility();
-				
-				fireProjectile();
-				
+				if (getIsShootingEnabled() == true) {
+					//fireProjectile();
+				}
+				if (getBehaviorState() == "shooting") {
+					
+				}
 			}
 		}
 		
@@ -81,6 +99,10 @@
 			this.rotation = Main.keyInputManager.getMyAngle();
 		}
 		
+		public function getZKeyFromKeyInputManager():void{
+			this.rotation = Main.keyInputManager.getMyAngle();
+		}
+		
 		
 		public function getVelocityFromKeyInputManager():void{
 			KeyInputManager.setSimpleVelocityViaKeys();
@@ -88,7 +110,7 @@
 			if (Math.abs(xVelocity) < maxVelocity) {
 				xVelocity += KeyInputManager.getMyVelocityX() * velocityIncrease;
 			}
-			//yVelocity += KeyInputManager.getMyVelocityY() * velocityIncrease;
+			yVelocity += KeyInputManager.getMyVelocityY() * velocityIncrease*5;
 			
 			//if you are not pressing a button to run, then you slowdown
 			if (KeyInputManager.getMyVelocityX() == 0) {
@@ -131,6 +153,10 @@
 		
 		public function getJumpDamage():int {
 			return jumpDamage;
+		}
+		
+		public function getAttackDamage():int {
+			return attackDamage;
 		}
 		
 		public function applyPowerup(type:String):void {

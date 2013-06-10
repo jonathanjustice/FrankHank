@@ -7,7 +7,7 @@
 	import utilities.GraphicsElements.BitmapDataObject;
 	import flash.display.*;
 	public class SaveDataManager {
-		private var sharedObjects:SharedObjects = new SharedObjects();
+		private var sharedObjects:SharedObjects;
 		//private var imageSaver:ImageSaver = new ImageSaver();
 		private static var _instance:SaveDataManager;
 		public function SaveDataManager(singletonEnforcer:SingletonEnforcer){

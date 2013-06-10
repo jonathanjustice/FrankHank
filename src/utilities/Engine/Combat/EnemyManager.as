@@ -92,7 +92,7 @@
 						//perhaps i need to break it into to 2 functions, one that returns and that doesn't
 						var minDist:Number = (bullet.width/2 + enemy.width/2) * (bullet.width/2 + enemy.width/2);
 						if(MathFormulas.distanceFormulaOptimized(bullet,enemy) < minDist){
-							enemy.markDeathFlag();
+							enemy.takeDamage(bullet.getDamage());
 							bullet.markDeathFlag();
 						}
 					//}
@@ -106,7 +106,7 @@
 				for(var i:int = 1; i<LevelManager.levels.length;i++){
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(enemy, LevelManager.levels[i]) == true) {
 						//resolves the collision & returns if this touched the top of the other object
-						var collisionSide:String = utilities.Mathematics.RectangleCollision.resolveCollisionBetweenMovingAndStationaryRectangles(enemy, LevelManager.levels[i]);
+						var collisionSide:String = utilities.Mathematics.RectangleCollision.testCollision(enemy, LevelManager.levels[i]);
 						if (collisionSide == "left" || collisionSide == "right") {
 							enemy.reverseVelecityX();
 							enemy.resetGravity();

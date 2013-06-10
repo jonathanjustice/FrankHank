@@ -4,13 +4,20 @@ package utilities.Saving_And_Loading{//from livedocs
     import flash.net.SharedObjectFlushStatus;
 	import flash.display.*;
 	public class SharedObjects {
-		
+		private static var _instance:SharedObjects;
 		private var sharedObject:SharedObject;
 	
 		//gets the shared object,
 		//if it doesn't exist, then make a new one and give it a default value
-		public function SharedObjects(){
+		public function SharedObjects(singletonEnforcer:SingletonEnforcer){
 			getSharedObject();
+		}
+		
+		public static function getInstance():SharedObjects {
+			if(SharedObjects._instance == null){
+				SharedObjects._instance = new SharedObjects(new SingletonEnforcer());
+			}
+			return _instance;
 		}
 		
 		public function getSharedObject():Object {
@@ -65,3 +72,4 @@ package utilities.Saving_And_Loading{//from livedocs
         }
 	}
 }
+class SingletonEnforcer{}

@@ -58,12 +58,15 @@ package utilities.Engine.Combat{
 			for each(var enemyBullet:Bullet in enemyBullets){
 				bullet.updateLoop();
 			}
-			if_shooting_create_a_new_bullet();
+			if ( AvatarManager.avatars[0].getIsShootingEnabled()==true) {
+				if_shooting_create_a_new_bullet();
+			}
+			
 		}
 		
 		public static function if_shooting_create_a_new_bullet():void {
 			currentDelay ++;
-			if(KeyInputManager.getRightBracket() == true){
+			if(KeyInputManager.getZKey() == true){
 				Game.resumeGame();
 				if (currentDelay >= delay) {
 					if(bullets.length == 0){//one bullet at a time mode

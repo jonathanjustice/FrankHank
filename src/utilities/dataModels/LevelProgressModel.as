@@ -5,12 +5,17 @@ package utilities.dataModels {
 		private var remainingLives:int = 0;
 		private var remainingContinues:int = 0;
 		private static var _instance:LevelProgressModel;
+		private var savedDatas:Array = new Array();
 		public function LevelProgressModel(singletonEnforcer:SingletonEnforcer){
 			setUp();			
 		}
 			
 		private function setUp():void {
 			
+		}
+		
+		private function upadteSavedDatas():void {
+			savedDatas=[midMissionProgress,completedMissionsProgress,remainingLives,remainingContinues]
 		}
 		
 		public static function getInstance():LevelProgressModel {
@@ -38,18 +43,22 @@ package utilities.dataModels {
 		
 		public function setMidMissionProgress(progress:int):void {
 			midMissionProgress = progress;
+			upadteSavedDatas();
 		}
 		
 		public function setCompletedMissionsProgress(progress:int):void {
 			completedMissionsProgress = progress;
+			upadteSavedDatas();
 		}
 		
 		public function setRemainingLives(progress:int):void {
 			remainingLives = progress;
+			upadteSavedDatas();
 		}
 		
 		public function setRemainingContinues(progress:int):void {
 			remainingContinues = progress;
+			upadteSavedDatas();
 		}
 	}
 }

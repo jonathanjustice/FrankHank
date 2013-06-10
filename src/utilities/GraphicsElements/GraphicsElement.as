@@ -5,6 +5,7 @@
 	import flash.display.MovieClip;
 	import utilities.Actors.AFSEnemy;
 	import utilities.Actors.Avatar;
+	import utilities.Actors.Bullet;
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Actors.GoonEnemy;
 	import utilities.Actors.Coin;
@@ -28,11 +29,13 @@
 	import flash.system.Security;
 
 
-	
+	//this class is insanely inefficient
+	//every time I create one graphic, i create EVERY GRAPHIC
 	
 	public class GraphicsElement extends MovieClip {
 		private var childrenToLoad:int = 0;
 		private var childrenLoaded:int = 0;
+		private var isGraphicLoaded:Boolean = false;
 		/*
 		 * File paths for swfs
 		 * */
@@ -80,7 +83,7 @@
 		
 		//aka wizard shit, don't make no kind of logical sense
 		private function alignmentOfParentChildGraphics(par:MovieClip, ch:MovieClip):void {
-			trace("-");
+			//trace("-");
 			par.x = ch.x - ch.parent.x ;
 			par.y = ch.y - ch.parent.y;
 			ch.x = 0;
@@ -95,15 +98,22 @@
 			}
 			if (par is Avatar) {
 				//par.addChild(ch);
+				par.setAttackHitbox(ch.hitbox_attack);
 			}
-			par.setUp();
+			
+			if (par is Bullet) {
+				
+			}else {
+				par.setUp();
+			}
+			
 			if (currentParent is SelectableActor) {
 				currentParent.addClickability_onLoadComplete(par);
 			}
-			
 		}
 		
 		//objects in the graphic's swf can be accessed through: assignedGraphics[0].swf_child
+		//i.e, if you want access to the movieclips hitbox use: assignedGraphics[0].swf_child.hitbox
 		public function assignGraphic(graphic:DisplayObject):void {
 			assignedGraphics.push(graphic);
 			if (isLevel == true) {
@@ -184,18 +194,24 @@
 						childrenToLoad = 0;
 						childrenLoaded = 0;
 						Game.setGameState("levelFullyLoaded");
+						
 					}
 					
 				}
 			}else{
 				parent.addChild(graphic);
 				currentParent.assignedGraphic.push(graphic);
+				isGraphicLoaded = true;
 			}
 			if (currentParent is SelectableActor) {
 				currentParent.addClickability_onLoadComplete(graphic);
 			}
 			parent.removeChild(this);
 			currentParent.setIsSwfLoaded(true);
+		}
+		
+		public function getiIsGraphicLoaded():Boolean {
+			return isGraphicLoaded;
 		}
 		
 		//loads a swf based on the filePath from the actor type
