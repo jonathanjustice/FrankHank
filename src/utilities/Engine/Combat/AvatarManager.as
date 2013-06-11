@@ -72,7 +72,11 @@
 				
 				for (var c:int = 0; c < LevelManager.savePoints.length; c++) {
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.savePoints[c]) == true) {
-						LevelProgressModel.getInstance().setMidMissionProgress(c);
+						if (LevelManager.savePoints[c].getIsActive() == true) {
+								LevelProgressModel.getInstance().setMidMissionProgress(c);
+								LevelManager.savePoints[c].setIsActive(false);
+						}
+					
 					}
 				}
 				

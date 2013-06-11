@@ -10,6 +10,7 @@
 		private var applyXP:Boolean=false;
 		private var xpToApply:int=0;
 		private var spawnTime:Number;
+		private var isActive:Boolean = true;
 		
 		//private var lifeSpan:Number = 2;//3 seconds
 		
@@ -22,7 +23,13 @@
 			health=1;
 		}
 		
+		public function getIsActive():Boolean {
+			return isActive;
+		}
 		
+		public function setIsActive(activeState:Boolean):void {
+			isActive = activeState;
+		}
 		
 		public function setUp():void{
 			addActorToGameEngine();

@@ -21,16 +21,19 @@ package utilities.Saving_And_Loading{//from livedocs
 		}
 		
 		public function getSharedObject():Object {
+			
 			sharedObject = SharedObject.getLocal("sharedObj");
-			if(sharedObject.data.savedValue == null){
+			if (sharedObject.data.savedValue == null) {
+				//trace("sharedObject.data.savedValue: should be undefined:",sharedObject.data.savedValue);
 				sharedObject.data.savedValue = 0;
 			}
+			//trace("getSharedObject: sharedObject.data.savedValue: old savedValue",sharedObject.data.savedValue);
 			return sharedObject.data.savedValue;
 		}
 		
         public function saveObjectToDisk(objectToSave:Object):void {
 			sharedObject.data.savedValue = objectToSave;//set the saved value
-			
+			//trace("sharedObject.data.savedValue: new savedValue",sharedObject.data.savedValue);
 			var flushStatus:String = null;
 			//check to see if there is enough room to save
 			try {
@@ -41,7 +44,7 @@ package utilities.Saving_And_Loading{//from livedocs
 			if (flushStatus != null) {
 				switch (flushStatus) {
 					case SharedObjectFlushStatus.PENDING:
-					  // trace("Requesting permission to save object...\n");
+					   //trace("Requesting permission to save object...\n");
 						sharedObject.addEventListener(NetStatusEvent.NET_STATUS, onFlushStatus);
 						break;
 					case SharedObjectFlushStatus.FLUSHED:
@@ -58,10 +61,10 @@ package utilities.Saving_And_Loading{//from livedocs
         }
         
         public function onFlushStatus(event:NetStatusEvent):void {
-           trace("User closed permission dialog...\n");
+           //trace("User closed permission dialog...\n");
             switch (event.info.code) {
                 case "SharedObject.Flush.Success":
-                  // trace("User granted permission -- value saved.\n");
+                   //trace("User granted permission -- value saved.\n");
                     break;
                 case "SharedObject.Flush.Failed":
                    // trace("User denied permission -- value not saved.\n");

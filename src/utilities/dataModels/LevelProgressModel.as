@@ -1,4 +1,5 @@
 package utilities.dataModels {
+	import utilities.Saving_And_Loading.SharedObjects;
 	public class LevelProgressModel {
 		private var midMissionProgress:int = 0;
 		private var completedMissionsProgress:int = 0;
@@ -15,12 +16,16 @@ package utilities.dataModels {
 		}
 		
 		private function upadteSavedDatas():void {
-			savedDatas=[midMissionProgress,completedMissionsProgress,remainingLives,remainingContinues]
+			savedDatas = [midMissionProgress, completedMissionsProgress, remainingLives, remainingContinues];
+			//SharedObjects.getInstance().getSharedObject();
+			SharedObjects.getInstance().saveObjectToDisk(savedDatas);
+			//SharedObjects.getInstance().getSharedObject();
 		}
 		
 		public static function getInstance():LevelProgressModel {
 			if(LevelProgressModel._instance == null){
 				LevelProgressModel._instance = new LevelProgressModel(new SingletonEnforcer());
+				
 			}
 			return _instance;
 		}
