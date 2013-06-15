@@ -17,6 +17,7 @@
 		//private var availableForTargeting:Boolean=true;
 		
 		
+		private var filePath:String = "../src/assets/actors/swf_tank.swf";
 		public function TankEnemy() {
 			xVelocity = -5;
 			setUp();

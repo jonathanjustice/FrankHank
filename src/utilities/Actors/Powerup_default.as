@@ -18,6 +18,7 @@
 		//private var availableForTargeting:Boolean=true;
 		
 		
+		private var filePath:String = "";
 		public function Powerup_default() {
 			setUp();
 			

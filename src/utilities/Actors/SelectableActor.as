@@ -10,6 +10,7 @@
 	import utilities.Input.MouseInputManager;
 	public class SelectableActor extends Actor{
 		private var isSelected:Boolean = false;
+		private var filePath:String = "";
 		public function SelectableActor() {
 			this.mouseChildren = true;
 			this.mouseEnabled = true;

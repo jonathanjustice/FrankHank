@@ -2,7 +2,8 @@
 	import utilities.Actors.Actor;
 	import utilities.Actors.SelectableActor;
 
-	public class Art extends SelectableActor{
+	public class Art extends SelectableActor {
+		private var filePath:String = "";
 		public function Art(){
 			setUp();
 		}

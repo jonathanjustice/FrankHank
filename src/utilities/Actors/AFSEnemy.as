@@ -11,7 +11,7 @@
 		private var xpToApply:int=0;
 		private var spawnTime:Number;
 		private var lifeSpan:Number = 2;//3 seconds
-		
+		private var filePath:String = "../src/assets/actors/swf_afs.swf";
 		public function AFSEnemy() {
 			xVelocity = -1;
 			setUp();

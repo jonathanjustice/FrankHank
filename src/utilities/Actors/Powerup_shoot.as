@@ -15,6 +15,7 @@
 		//private var availableForTargeting:Boolean=true;
 		
 		
+		private var filePath:String = "../src/assets/actors/swf_powerupShoot.swf";
 		public function Powerup_shoot() {
 			health=1;
 		}

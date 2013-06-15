@@ -3,7 +3,8 @@
 	import utilities.Actors.SelectableActor;
 
 	public class Wall extends SelectableActor{
-		private var isBulletBlocker:Boolean=false;
+		private var isBulletBlocker:Boolean = false;
+		private var filePath:String = "../src/assets/actors/swf_wall.swf";
 		public function Wall(){
 			setUp();
 		}

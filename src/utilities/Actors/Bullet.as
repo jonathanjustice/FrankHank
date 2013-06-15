@@ -34,7 +34,7 @@ package utilities.Actors{
 		
 		//public var xDiff:Number=0;
 		//public var yDiff:Number=0;
-	
+		private var filePath:String = "../src/assets/actors/swf_bullet.swf";
 		public function Bullet(){
 			setUp();
 			setMaxGravity(5);

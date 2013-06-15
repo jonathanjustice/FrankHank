@@ -60,12 +60,17 @@
 		private var isGravitySystemEnabled:Boolean = true;
 		private var fireProjectileDelay:int = 9999;
 		private var fireProjectileTimer:int = 0;
-		private var behaviorState:String="idle"
+		private var behaviorState:String = "idle"
+		private var filePath:String = "";
 		
 		public function Actor(){
 			defineWeaponStats();
 			setAnimationState("idle");
 			//trace("Actor:new actor")
+		}
+		
+		public function getFilePath():String {
+			return filePath;
 		}
 		
 		/*
@@ -213,7 +218,7 @@
 		public function defineGraphics(filePath:String,isLevel:Boolean):void {
 			//trace("filePath:",filePath);
 			actorGraphic = new utilities.GraphicsElements.GraphicsElement();
-			actorGraphic.loadSwf(filePath,this,isLevel);
+			actorGraphic.loadSwf(getFilePath(),this,isLevel);
 			this.addChild(actorGraphic);
 		}
 		
@@ -222,7 +227,13 @@
 			actorGraphic = new utilities.GraphicsElements.GraphicsElement();
 			actorGraphic.drawGraphicDefaultRectangle();
 			this.addChild(actorGraphic);
-			
+		}
+		
+		public function defineLevelGraphics(filePath:String,isLevel:Boolean):void {
+			//trace("filePath:",filePath);
+			actorGraphic = new utilities.GraphicsElements.GraphicsElement();
+			actorGraphic.loadSwf(filePath,this,isLevel);
+			this.addChild(actorGraphic);
 		}
 		
 		public function createProgressBar(bar:String):void{

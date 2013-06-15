@@ -17,6 +17,7 @@
 		//private var availableForTargeting:Boolean=true;
 		
 		
+		private var filePath:String = "";
 		public function CameraWindow() {
 			defineGraphicsDefaultRectangle();
 			this.x = 175;

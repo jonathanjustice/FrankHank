@@ -19,6 +19,7 @@
 		//private var availableForTargeting:Boolean=true;
 		
 		
+		private var filePath:String = "../src/assets/actors/swf_savePoint.swf";
 		public function SavePoint() {
 			health=1;
 		}

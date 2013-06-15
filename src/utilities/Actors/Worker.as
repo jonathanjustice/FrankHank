@@ -4,6 +4,7 @@
 	public class Worker extends SelectableActor{
 		private var isSelected:Boolean = false;
 		private var moveSpeed:int = 10;
+		private var filePath:String = "";
 		public function Worker() {
 			this.mouseChildren = true;
 			this.mouseEnabled = true;

@@ -7,7 +7,7 @@
 	public class Level extends SelectableActor{
 		public function Level(levelName:String) {
 			addActorToGameEngine();
-			defineGraphics(levelName,true);
+			defineGraphicsLevel(levelName,true);
 			//trace("level");
 			//lvl_02
 		}

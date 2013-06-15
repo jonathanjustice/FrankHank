@@ -32,7 +32,7 @@
 		private var delay:int = 15;
 		
 		
-		
+		private var filePath:String = "../src/assets/actors/swf_frank.swf";
 		
 		public function Avatar(){
 			setUp();

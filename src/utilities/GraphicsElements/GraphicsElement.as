@@ -43,18 +43,18 @@
 		 * */
 		
 		//private var avatar:String = new String("../lib/avatar_swf.swf");
-		private var bullet:String = new String("../src/assets/actors/swf_bullet.swf");
-		private var frank:String = new String("../src/assets/actors/swf_frank.swf");
-		private var goon:String = new String("../src/assets/actors/swf_goon.swf");
-		private var afs:String = new String("../src/assets/actors/swf_afs.swf");
-		private var tank:String = new String("../src/assets/actors/swf_tank.swf");
-		private var powerup_doubleJump:String = new String("../src/assets/actors/swf_powerupDoubleJump.swf");
-		private var powerup_invincible:String = new String("../src/assets/actors/swf_powerupInvincible.swf");
-		private var powerup_shoot:String = new String("../src/assets/actors/swf_powerupShoot.swf");
-		private var wall:String = new String("../src/assets/actors/swf_wall.swf");
-		private var coin:String = new String("../src/assets/actors/swf_coin.swf");
-		private var gem:String = new String("../src/assets/actors/swf_gem.swf");
-		private var savePoint:String = new String("../src/assets/actors/swf_savePoint.swf");
+		//private var bullet:String = new String("../src/assets/actors/swf_bullet.swf");
+		//private var frank:String = new String("../src/assets/actors/swf_frank.swf");
+		//private var goon:String = new String("../src/assets/actors/swf_goon.swf");
+		//private var afs:String = new String("../src/assets/actors/swf_afs.swf");
+		//private var tank:String = new String("../src/assets/actors/swf_tank.swf");
+		//private var powerup_doubleJump:String = new String("../src/assets/actors/swf_powerupDoubleJump.swf");
+		//private var powerup_invincible:String = new String("../src/assets/actors/swf_powerupInvincible.swf");
+		//private var powerup_shoot:String = new String("../src/assets/actors/swf_powerupShoot.swf");
+		//private var wall:String = new String("../src/assets/actors/swf_wall.swf");
+		//private var coin:String = new String("../src/assets/actors/swf_coin.swf");
+		//private var gem:String = new String("../src/assets/actors/swf_gem.swf");
+		//private var savePoint:String = new String("../src/assets/actors/swf_savePoint.swf");
 		//test stuff
 		private var bgSquare:String = new String("../src/assets/actors/swf_bgSquare.swf");
 		
@@ -214,7 +214,7 @@
 				CutSceneManager.scenes.push(graphic);
 				Game.setGameState("cutSceneFullyLoaded");
 			}
-			parent.removeChild(this);
+			//parent.removeChild(this);
 			currentParent.setIsSwfLoaded(true);
 		}
 		
@@ -226,6 +226,7 @@
 		public function loadSwf(filePath:String, swfParent:MovieClip, isLvl:Boolean = false):void {
 			//trace("GraphicsElelement: filePath:",filePath);
 			currentParent = swfParent;
+			trace("currentParent",currentParent);
 			if (isLvl == true) {
 				isLevel = true;
 			}
@@ -314,7 +315,7 @@
 		}
 		
 		//format for using movieclips from a MAIN project FLA library
-		//used only for quick testing or other stupid bullshit
+		//used only for quick testing or other nonsense
 		public function drawGraphicFromMainFLA():void{
 			var newGraphic:utilities.GraphicsElements.Test_rect = new utilities.GraphicsElements.Test_rect();
 			this.addChild(newGraphic);

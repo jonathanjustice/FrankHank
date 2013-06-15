@@ -18,6 +18,7 @@
 		//private var availableForTargeting:Boolean=true;
 		
 		
+		private var filePath:String = "../src/assets/actors/swf_gem.swf";
 		public function Gem() {
 			health=1;
 		}
