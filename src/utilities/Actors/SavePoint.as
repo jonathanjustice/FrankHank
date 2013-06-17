@@ -3,6 +3,8 @@
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Input.KeyInputManager;
 	import flash.utils.getTimer;
+	import utilities.Engine.LevelManager;
+	import flash.display.DisplayObject;
 	public class SavePoint extends Actor{
 		
 		//private var gameContainer;
@@ -20,8 +22,27 @@
 		
 		
 		private var filePath:String = "../src/assets/actors/swf_savePoint.swf";
-		public function SavePoint() {
-			health=1;
+		public function SavePoint(newX:int, newY:int) {
+			health = 1;
+			this.x = newX,
+			this.y = newY;
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
+		}
+		
+		public function assignGraphic(graphic:DisplayObject):void {
+			
+			alignmentOfParentChildGraphics(this,graphic);
+			LevelManager.savePoints.push(this);
+			print(String(this.x));
+			print(String(this.y));
+			print(String(graphic.x));
+			print(String(graphic.y));
+			print(String(graphic.parent));
+			assignedGraphic[0] = graphic;
+			setIsSwfLoaded(true);
 		}
 		
 		public function getIsActive():Boolean {
@@ -32,7 +53,9 @@
 			isActive = activeState;
 		}
 		
-		public function setUp():void{
+		public function setUp():void {
+			print("setUp");
+			
 			addActorToGameEngine();
 			setPreviousPosition();
 			defineGraphics("savePoint",false);

@@ -12,6 +12,7 @@
 	import flash.text.*;
 	import utilities.Engine.Combat.AnimationManager;
 	import utilities.Engine.Combat.AvatarManager;
+	import flash.display.DisplayObject;
 
 	public class Avatar extends JumpingActor{
 		//private var mySprite:Sprite = new Sprite();
@@ -34,7 +35,9 @@
 		
 		private var filePath:String = "../src/assets/actors/swf_frank.swf";
 		
-		public function Avatar(){
+		public function Avatar(newX:int, newY:int) {
+			this.x = newX,
+			this.y = newY;
 			setUp();
 			//addStroke();
 			if (AvatarManager.getInstance().getIsAvatarDoubleJumpEnabled()) {
@@ -42,8 +45,25 @@
 			}
 		}
 		
-		public function setUp():void{
+		public override function getFilePath():String {
+			return filePath;
+		}
+		
+		public function assignGraphic(graphic:DisplayObject):void {
+			trace("234234234234234234234234234234234234234");
+			this.addChild(graphic);
+			AvatarManager.avatars.push(this);
 			addActorToGameEngine();
+			assignedGraphic[0] = graphic;
+			setIsSwfLoaded(true);
+			
+			trace("avatar:---",graphic);
+			trace("avatar:---",assignedGraphic[0]);
+			trace("avatar:---",assignedGraphic[0].swf_child);
+		}
+		
+		public function setUp():void {
+			print("setUp");
 			defineGraphics("frank",false);
 		}
 		

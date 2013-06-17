@@ -10,7 +10,7 @@
 	import utilities.dataModels.LevelProgressModel;
 	import flash.geom.Point;
 	public class CutSceneManager extends BasicManager implements IManager{
-		public static var scenes:Array = new Array();
+		public var cutScenes:Array = new Array();
 		public static var scene:MovieClip;
 		private var isSceneComplete:Boolean = false;
 		private static var _instance:CutSceneManager;
@@ -22,7 +22,7 @@
 		}
 		
 		public function setUp():void{
-			scenes = [];
+			
 		}
 		
 		public static function getInstance():CutSceneManager {
@@ -34,7 +34,7 @@
 		
 		//Interface features
 		public function getArray():Array{
-			return scenes;
+			return cutScenes;
 		}
 		
 		//this doesn't run for now, may never need to.....
@@ -58,16 +58,16 @@
 		
 		public function setIsSceneActive(activeStatus:Boolean):void {
 			isSceneActive = activeStatus;
-			trace("CutSceneManager :isSceneActive:", isSceneActive);
-			scenes[0].addEventListener(Event.ENTER_FRAME, playCutScene);
-			scenes[0].getActorGraphic().assignedGraphics[0].swf_child.play();
+			//print(("isSceneActive: " + String(isSceneActive)));
+			cutScenes[0].addEventListener(Event.ENTER_FRAME, playCutScene);
+			cutScenes[0].getActorGraphic().assignedGraphics[0].swf_child.play();
 		}
 		
 		public function playCutScene(e:Event):void {
-			if (scenes[0].checkForCutSceneComplete() == true) {
-				scenes[0].removeEventListener(Event.ENTER_FRAME, playCutScene);
+			if (cutScenes[0].checkForCutSceneComplete() == true) {
+				cutScenes[0].removeEventListener(Event.ENTER_FRAME, playCutScene);
 				sceneCompleted();
-				scenes = [];
+				cutScenes = [];
 			}
 		}
 		
@@ -92,19 +92,19 @@
 		}
 		
 		public function loadScene():void {
-			trace("CutSceneManager:loadScene");
+			//print("loadScene");
 			var sceneName:String = String(LevelProgressModel.getInstance().getCompletedMissionsProgress());
 			sceneName = "ui_cutScene_" + sceneName;
-			trace("CutSceneManager: loadScene: sceneName:" + sceneName);
+			//print(sceneName);
 			scene = new utilities.Screens.GameScreens.CutScene(sceneName);
-			scenes.push(scene);
+			cutScenes.push(scene);
 			Game.setGameState("cutSceneCurrentlyLoading"); 
 		}
 		
 		public function deselectActors():void {
 			//trace("levels:", levels);
-			for (var i:int = 1; i < scenes.length; i++) {
-				scenes[i].deselectActor();
+			for (var i:int = 1; i < cutScenes.length; i++) {
+				cutScenes[i].deselectActor();
 			}
 		}
 		

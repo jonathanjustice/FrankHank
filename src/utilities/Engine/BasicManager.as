@@ -4,21 +4,22 @@ package utilities.Engine{
 	import utilities.Actors.Actor;
 	import utilities.Actors.SelectableActor;
 	import flash.geom.Point;
-	public class BasicManager {
+	import utilities.objects.GameObject;
+	public class BasicManager extends GameObject {
 		private static var newSelectedItems:Array = new Array();
 		
 		public function BasicManager(){
 			
 		}
 		
-		private function getArray():Array{
+		private static function getArray():Array{
 			var array:Array = new Array();
 			return array;
 		}
 		
 		public function destroyArray(array:Array):void {
 			for(var i:int = array.length-1; i>-1;i--){
-				trace("array:",array,"i:",i);
+				//print("array:",array,"i:",i);
 				array[i].removeActorFromGameEngine(array[i], array);
 			}
 		}
@@ -31,7 +32,7 @@ package utilities.Engine{
 		
 		//gives you all the items that touch the mouse
 		public function all_items_colliding_with_mouse(array:Array):Array {
-			//trace("all items colliding with mouse");
+			//print("all items colliding with mouse");
 			var colldingWithMouse:Array = new Array();
 			var mousePoint:Point = new Point();
 				mousePoint = Main.getMouseCoordinates();

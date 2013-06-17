@@ -143,30 +143,30 @@
 		public static function createNewEnemy():void {
 			//var AFSenemy:AFSEnemy = new AFSEnemy();
 			//var goonEnemy:GoonEnemy = new GoonEnemy();
-			var tankEnemy:TankEnemy = new TankEnemy();
+			//var tankEnemy:TankEnemy = new TankEnemy();
 			//enemies.push(AFSenemy);
 			//enemies.push(goonEnemy);
-			enemies.push(tankEnemy);
+			//enemies.push(tankEnemy);
 			//give the enemy some placeholder properties
 			//AFSenemy.x = 375;
 			//AFSenemy.y = 5;
 			//goonEnemy.x = 500;
 			//goonEnemy.y = -25;
-			tankEnemy.x = 600;
-			tankEnemy.y = -25;
+			//tankEnemy.x = 600;
+			//tankEnemy.y = -25;
 			//var enemyGraphics = enemyFactory.GenerateBody();
 		
 		}
 		
 		//another shiity placeholder enemy creation
 		public static function createNewRandomEnemy():void {
-			var AFSenemy:AFSEnemy = new AFSEnemy();
+			/*var AFSenemy:AFSEnemy = new AFSEnemy();
 			var Goonenemy:GoonEnemy = new GoonEnemy();
-			var enemy:Enemy = new Enemy();
-			enemies.push(Goonenemy);
+			var enemy:Enemy = new Enemy();*/
+			//enemies.push(Goonenemy);
 			//give the enemy some placeholder properties
-			Goonenemy.x = Math.random()*500;
-			Goonenemy.y = Math.random()*200;
+			//Goonenemy.x = Math.random()*500;
+			//Goonenemy.y = Math.random()*200;
 			//var enemyGraphics = enemyFactory.GenerateBody();
 			
 			//placeholder debug var

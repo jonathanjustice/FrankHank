@@ -41,8 +41,13 @@ package utilities.Actors{
 			yVelocity = 10;
 		}
 		
-		
+		public override function getFilePath():String {
+			return filePath;
+		}
+		//newX:int, newY:int
 		public function setUp():void {
+			//this.x = newX,
+			//this.y = newY;
 			trace("new bullet");
 			setInitialLocationAndVector();
 			addActorToGameEngine();

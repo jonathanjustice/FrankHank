@@ -15,6 +15,10 @@
 			defineGraphics("frank",false);
 		}
 		
+		public override function getFilePath():String {
+			return filePath;
+		}
+		
 		public function updateLoop():void{
 			if(isBeingOpened){
 				openProgress+=10;

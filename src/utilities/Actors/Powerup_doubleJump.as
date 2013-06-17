@@ -16,8 +16,12 @@
 		
 		
 		private var filePath:String = "../src/assets/actors/swf_powerupDoubleJump.swf";
-		public function Powerup_doubleJump() {
+		public function Powerup_doubleJump(newX:int, newY:int){
 			health=1;
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
 		}
 		
 		public override function setUp():void {

@@ -7,10 +7,14 @@
 	import utilities.Engine.Game;
 	public class CutScene extends utilities.Screens.Screen_Default{
 		private var myScreen:MovieClip;
-		
+		private var filePath:String = "../src/assets/ui/swf_cutScene_1.swf";
 		public function CutScene(sceneName:String) {
 			trace("CutScene: sceneName:",sceneName);
-			defineGraphics(sceneName);
+			defineScreenGraphics(sceneName);
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
 		}
 		
 		public override function clickHandler(event:MouseEvent):void{

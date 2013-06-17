@@ -28,6 +28,10 @@
 			this.alpha = .25;
 		}
 		
+		public override function getFilePath():String {
+			return filePath;
+		}
+		
 		public function scaleToMotion(motion:String):void {
 			switch(motion) {
 				case "up":

@@ -7,9 +7,13 @@
 	import utilities.Engine.Game;
 	public class LevelComplete extends utilities.Screens.Screen_Default{
 		private var myScreen:MovieClip;
-		
+		private var filePath:String = "../src/assets/ui/swf_levelComplete.swf";
 		public function LevelComplete(){
-			defineGraphics("ui_levelComplete");
+			defineScreenGraphics("ui_levelComplete");
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
 		}
 		
 		public override function clickHandler(event:MouseEvent):void{

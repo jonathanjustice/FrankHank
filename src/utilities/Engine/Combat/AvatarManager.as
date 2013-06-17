@@ -76,7 +76,6 @@
 								LevelProgressModel.getInstance().setMidMissionProgress(c);
 								LevelManager.savePoints[c].setIsActive(false);
 						}
-					
 					}
 				}
 				
@@ -131,7 +130,7 @@
 						}
 					}
 					//make the avatar and his hitbox exist before checking against them
-					if (myAvatar.getActorGraphic().getiIsGraphicLoaded() == true) {
+					if (myAvatar.getiIsGraphicLoaded() == true) {
 						if(EnemyManager.enemies[j].hitTestObject(myAvatar.getActorGraphic().assignedGraphics[0].swf_child.hitbox_attack)){
 							
 							EnemyManager.enemies[j].takeDamage(myAvatar.getAttackDamage());
@@ -146,7 +145,7 @@
 		//deprecated
 		private static function createAvatar():void {
 			trace("creating new avatar");
-			avatar = new utilities.Actors.Avatar();
+			avatar = new utilities.Actors.Avatar(0,0);
 			avatars.push(avatar);
 		}
 		

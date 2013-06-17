@@ -24,6 +24,10 @@
 			
 		}
 		
+		public override function getFilePath():String {
+			return filePath;
+		}
+		
 		public function setUp():void {
 			addActorToGameEngine();
 			health=1;

@@ -4,7 +4,7 @@
 	import flash.display.MovieClip;
 	import utilities.Screens.Screen_Dynamic_Blocker;
 	import utilities.Engine.*;
-	import utilities.Engine.UIManager;import utilities.GraphicsElements.GraphicsElement;
+	import utilities.Engine.UIManager;import utilities.GraphicsElements.SwfParser;
 	public class Screen_Default extends MovieClip{
 		private var blocker:Screen_Dynamic_Blocker;
 		private var myScreen:MovieClip;//or replace with swf eventually
@@ -12,8 +12,13 @@
 		public var assignedGraphic:Array = new Array();
 		private var animationState:String = "idle"
 		private var isSwfLoaded:Boolean = false;
+		private var filePath: String = "";
 		public function Screen_Default():void{			
 			setUp();
+		}
+		
+		public function getFilePath():String {
+			return filePath;
 		}
 		
 		public function setUp():void {
@@ -25,10 +30,10 @@
 			mouseEnabledHandler();
 		}
 		
-		public function defineGraphics(filePath:String):void {
+		public function defineScreenGraphics(filePath:String):void {
 			//trace("filePath:",filePath);
-			actorGraphic = new utilities.GraphicsElements.GraphicsElement();
-			actorGraphic.loadSwf(filePath,this,false);
+			actorGraphic = SwfParser.getInstance();
+ 			actorGraphic.loadScreenSwf(filePath,this);
 			this.addChild(actorGraphic);
 		}
 		

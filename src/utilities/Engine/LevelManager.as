@@ -12,6 +12,7 @@
 	import utilities.Actors.GameBoardPieces.Terrain;
 	import utilities.dataModels.LevelProgressModel;
 	import utilities.Actors.Coin;
+	import utilities.Actors.Loot;
 	import flash.geom.Point;
 	public class LevelManager extends BasicManager implements IManager{
 		private var tempArray:Array = new Array();
@@ -65,8 +66,8 @@
 			/*for each(var level:Level in levels){
 				level.updateLoop();
 			}*/
-			for each(var coin:Coin in coins){
-				coin.updateLoop();
+			for each(var loot:Loot in coins){
+				loot.updateLoop();
 			}
 			/*for each(var savePoint:SavePoint in savePoints){
 				savePoint.updateLoop();
@@ -76,7 +77,7 @@
 		}
 		
 		public function checkLevelObjectives():void {
-			//trace("check level objectives");
+			//print("check level objectives");
 			//check each level objective to see if its complete
 			
 			//if all objectives are complete, then stop the level, destroy everything in it, and create a new one
@@ -87,7 +88,7 @@
 		
 		public function setIsLevelActive(activeStatus:Boolean):void {
 			isLevelActive = activeStatus;
-			trace("isLevelActive:",isLevelActive);
+			trace(("isLevelActive:",String(isLevelActive)));
 		}
 		
 		public function getisLevelActive():Boolean {
@@ -128,14 +129,14 @@
 		public function loadLevel():void {
 			var levelName:String = String(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1 );
 			levelName = "lvl_" + levelName;
-			//trace("levelName:" +levelName);
+			//print("levelName:" +levelName);
 			level = new utilities.Actors.GameBoardPieces.Level(levelName);
 			levels.push(level);
 			Game.setGameState("levelCurrentlyLoading"); 
 		}
 		
 		public function deselectActors():void {
-			//trace("levels:", levels);
+			//print("levels:", levels);
 			for (var i:int = 1; i < levels.length; i++) {
 				levels[i].deselectActor();
 			}

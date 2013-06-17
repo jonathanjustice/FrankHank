@@ -11,6 +11,10 @@
 			this.addEventListener(MouseEvent.CLICK, clickedActor);
 		}
 		
+			public override function getFilePath():String {
+			return filePath;
+		}
+		
 		public function moveTowardsTarget():void {
 			
 		}

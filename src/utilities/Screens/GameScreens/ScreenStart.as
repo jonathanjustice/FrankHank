@@ -11,7 +11,7 @@
 		public function ScreenStart(){
 			utilities.Engine.Game.startGame("start");
 			removeThisScreen();
-			//defineGraphics("ui_Start")
+			//defineScreenGraphics("ui_Start")
 		}
 		
 		

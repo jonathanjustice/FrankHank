@@ -3,6 +3,8 @@
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Input.KeyInputManager;
 	import flash.utils.getTimer;
+	import utilities.Engine.Combat.EnemyManager;
+	import flash.display.DisplayObject;
 	public class TankEnemy extends Enemy{
 		
 		//private var gameContainer;
@@ -18,12 +20,21 @@
 		
 		
 		private var filePath:String = "../src/assets/actors/swf_tank.swf";
-		public function TankEnemy() {
+		public function TankEnemy(newX:int, newY:int){
 			xVelocity = -5;
 			setUp();
 			health = 2;
 			maximumHealth = 2;
 			defineGraphics("tank",false);
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
+		}
+		
+		public function assignGraphic(graphic:DisplayObject):void {
+			//alignmentOfParentChildGraphics(gem,tempArray[j]);
+			EnemyManager.enemies.push(this);
 		}
 		
 		public override function updateLoop():void {

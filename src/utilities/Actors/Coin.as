@@ -3,7 +3,9 @@
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Input.KeyInputManager;
 	import flash.utils.getTimer;
-	public class Coin extends Actor{
+	import flash.display.DisplayObject;
+	import utilities.Engine.LevelManager;
+	public class Coin extends Loot{
 		
 		//private var gameContainer;
 		private var velocityMultiplier:Number=15;
@@ -19,12 +21,24 @@
 		
 		
 		private var filePath:String = "../src/assets/actors/swf_coin.swf";
-		public function Coin() {
+		public function Coin(newX:int, newY:int){
 			health=1;
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
 		}
 		
 		public function getMoneyValue():int {
 			return moneyValue;
+		}
+		
+		public function assignGraphic(graphic:DisplayObject):void {
+			//alignmentOfParentChildGraphics(gem,tempArray[j]);
+			LevelManager.coins.push(this);
+			assignedGraphic[0] = graphic;
+			setIsSwfLoaded(true);
+		
 		}
 		
 		public function setUp():void{
@@ -33,7 +47,7 @@
 			defineGraphics("coin",false);
 		}
 		
-		public function updateLoop():void{
+		public override function updateLoop():void{
 			//setQuadTreeNode();
 			//applyVector();
 			//doStuffToEnemyOverTime();

@@ -3,6 +3,8 @@
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Input.KeyInputManager;
 	import flash.utils.getTimer;
+	import utilities.Engine.LevelManager;
+	import flash.display.DisplayObject;
 	public class Enemy extends SelectableActor{
 		
 		//private var gameContainer;

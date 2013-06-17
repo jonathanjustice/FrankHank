@@ -67,9 +67,10 @@
 					LevelManager.getInstance().loadLevel();
 					break;
 				case "levelCurrentlyLoading":
-					//doshit
+					trace("levelCurrentlyLoading");
 					break;
 				case "levelFullyLoaded":
+					trace("levelFullyLoaded");
 					LevelManager.getInstance().setIsLevelActive(true);
 					enableMasterLoop();
 					break;
@@ -175,7 +176,7 @@
 			}
 			
 			Main.returnFocusToGampelay();
-			trace("start complete");
+			trace("Game: startGame, function complete");
 		}
 		
 		public static function getFramesSinceGameStart():int {
@@ -187,9 +188,10 @@
 		}
 		
 		public static function enableMasterLoop():void {
-			trace("master loop enabled");
+			trace("Game: enableMasterLoop: master loop enabled");
 			gamePaused=false;
 			gameContainer.addEventListener(Event.ENTER_FRAME, masterLoop);
+			trace("Game: enableMasterLoop: master loop enabled2");
 		}
 		
 		public static function disableMasterLoop():void{
@@ -278,16 +280,24 @@
 			gameContainer.y = 0;
 		}
 		
-		private static function masterLoop(event:Event):void{
+		private static function masterLoop(event:Event):void {
+			//trace("Game: masterLoop: before check for game paused");
 			if (!gamePaused) {
 				framesSinceGameStart ++;
+				//trace("Game: masterLoop: before any update loops");
 				AvatarManager.updateLoop();
+				//trace("Game: masterLoop: AvatarManager");
 				BulletManager.updateLoop();
+				//trace("Game: masterLoop: BulletManager");
 				EnemyManager.updateLoop();
+				//trace("Game: masterLoop: EnemyManager");
 				LootManager.updateLoop();
+				//trace("Game: masterLoop: LootManager");
 				//updateCombatManager();
 				UIManager.updateLoop();
+				//trace("Game: masterLoop: UIManager");
 				LevelManager.getInstance().updateLoop();
+				//trace("Game: masterLoop: LevelManager");
 				//LevelManager.getInstance().setIsLevelActive(true);
 			}else{
 				//can use this section for when the game is paused but I still need to update UI stuff
