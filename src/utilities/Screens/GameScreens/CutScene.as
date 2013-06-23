@@ -5,12 +5,21 @@
 	import utilities.Screens.Screen_Default;
 	import utilities.Screens.Screen_Dynamic_Blocker;
 	import utilities.Engine.Game;
+	import flash.display.DisplayObject;
 	public class CutScene extends utilities.Screens.Screen_Default{
 		private var myScreen:MovieClip;
 		private var filePath:String = "../src/assets/ui/swf_cutScene_1.swf";
 		public function CutScene(sceneName:String) {
-			trace("CutScene: sceneName:",sceneName);
+			//trace("CutScene: sceneName:",sceneName);
 			defineScreenGraphics(sceneName);
+
+		}
+		
+		public function assignGraphic(graphic:DisplayObject):void {
+			this.addChild(graphic);
+			assignedGraphic[0] = graphic;
+			setUp();
+			Game.setGameState("cutSceneFullyLoaded");
 		}
 		
 		public override function getFilePath():String {
@@ -22,11 +31,11 @@
 		}
 		
 		private function skip():void {
-			this.gotoAndStop("end")
+			this.assignedGraphic[0].gotoAndStop("end")
 		}
 		
 		public function checkForCutSceneComplete():Boolean {
-			if (this.getActorGraphic().assignedGraphics[0].swf_child.currentFrameLabel  == "end") {
+			if (this.assignedGraphic[0].swf_child.currentFrameLabel  == "end") {
 				removeThisScreen();
 				return true;
 			}else {

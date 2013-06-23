@@ -28,8 +28,7 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			//alignmentOfParentChildGraphics(gem,tempArray[j]);
-			EnemyManager.enemies.push(this);
+			addActorToGameEngine(graphic,EnemyManager.enemies);
 		}
 		
 		public override function updateLoop():void {

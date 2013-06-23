@@ -51,10 +51,8 @@
 		}
 		
 		public function setUp():void {
-			print("setUp");
 			defineGraphics("frank", false);
 			//addStroke();
-			
 			if (AvatarManager.getInstance().getIsAvatarDoubleJumpEnabled()) {
 				toggleDoubleJump(true);
 			}
@@ -62,7 +60,7 @@
 		
 		public function setAttackHitbox(newHitbox:MovieClip):void{
 			attackHitbox = newHitbox;
-			trace("attackHitbox",attackHitbox);
+			//trace("attackHitbox",attackHitbox);
 		}
 		
 		public function getAttackHitbox():MovieClip {

@@ -105,15 +105,15 @@
 			//ch.parent.removeChild(ch);
 			if (par is Wall) {
 				
-				par.x = ch.x;
+				/*par.x = ch.x;
 				par.y = ch.y;
 				ch.x = 0;
-				ch.y = 0;
+				ch.y = 0;*/
 			
 			}
 			if (par is Avatar) {
 				//par.addChild(ch);
-				par.setAttackHitbox(ch.hitbox_attack);
+				//par.setAttackHitbox(ch.hitbox_attack);
 			}
 			
 			if (par is Bullet) {
@@ -130,70 +130,55 @@
 		//objects in the graphic's swf can be accessed through: assignedGraphics[0].swf_child
 		//i.e, if you want access to the movieclips hitbox use: assignedGraphics[0].swf_child.hitbox
 		public function assignGraphic(graphic:DisplayObject):void {
-			//var tempClip:MovieClip;
-			trace("GraphicsElelement: assignGraphic: loadLevelSwf:",graphic);
 			assignedGraphics.push(graphic);
 			if (isLevel == true) {
 				childrenToLoad = assignedGraphics[0].swf_child.numChildren;
 				for (var i:int = 0; i < assignedGraphics[0].swf_child.numChildren; i++) {
 					tempArray.push(assignedGraphics[0].swf_child.getChildAt(i));
-					trace("i:",i);
 				}
 				for (var j:int = 0; j < tempArray.length; j++) {
-					//trace("tempArray[j].name",tempArray[j].name);
-					trace("j:",j);
+					
 					if (tempArray[j].name == "art") {
 						//childrenToLoad--;//because its not really going to get loaded
 						var art:Art = new Art(tempArray[j].x, tempArray[j].y,tempArray[j]);
-						//alignmentOfParentChildGraphics(art, tempArray[j]);
 					}
 					if(tempArray[j].name == "wall"){
 						var wall:Wall = new Wall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
-						alignmentOfParentChildGraphics(wall,tempArray[j]);
+						wall.x = tempArray[j].x;
+						wall.y = tempArray[j].y;
+						tempArray[j].x = 0;
+						tempArray[j].y = 0;
 					}
 					if(tempArray[j].name == "avatar"){
-						var avatar:Avatar = new Avatar(tempArray[j].x,tempArray[j].y);
-						print("---------------------------------------------------------------Avatar parsed from level");
+						var avatar:Avatar = new Avatar(tempArray[j].x, tempArray[j].y);
+						//par.setAttackHitbox(ch.hitbox_attack);
 					}
 					if(tempArray[j].name == "coin"){
 						var coin:Coin = new Coin(tempArray[j].x,tempArray[j].y);
-						
 					}
 					if (tempArray[j].name == "savePoint") {
-						//trace("savePoint 1");
 						var savePoint:SavePoint = new SavePoint(tempArray[j].x,tempArray[j].y);
 					}
 					if(tempArray[j].name == "gem"){
 						var gem:Gem = new Gem(tempArray[j].x,tempArray[j].y);
-						
 					}
 					if (tempArray[j].name == "goon") {
-						
 						var goon:GoonEnemy = new GoonEnemy(tempArray[j].x,tempArray[j].y);
-						
 					}
 					if(tempArray[j].name == "tank"){
 						var tank:TankEnemy = new TankEnemy(tempArray[j].x,tempArray[j].y);
-						
 					}
 					if(tempArray[j].name == "afs"){
 						var afs:AFSEnemy = new AFSEnemy(tempArray[j].x,tempArray[j].y);
-						
 					}
 					if(tempArray[j].name == "p_shoot"){
 						var shootPowerup:Powerup_shoot = new Powerup_shoot(tempArray[j].x,tempArray[j].y);
-						
 					}
-					
 					if(tempArray[j].name == "p_doubleJump"){
 						var doubleJumpPowerup:Powerup_doubleJump = new Powerup_doubleJump(tempArray[j].x,tempArray[j].y);
-						
-						
 					}
-					
 					if(tempArray[j].name == "p_inv"){
 						var invinviblePowerup:Powerup_invincible = new Powerup_invincible(tempArray[j].x,tempArray[j].y);
-						
 					}
 				}
 			}else{
@@ -203,24 +188,24 @@
 			}
 			if (currentParent is SelectableActor) {
 				currentParent.addClickability_onLoadComplete(graphic);
+				currentParent.addClickability_onLoadComplete(currentParent);
 			}
 			if (currentParent is CutScene) {
-				CutSceneManager.getInstance().cutScenes.push(graphic);
-				Game.setGameState("cutSceneFullyLoaded");
 			}
-			//currentParent.removeChild(this);
 			currentParent.setIsSwfLoaded(true);
+			assignedGraphics = [];
+			tempArray = [];
 		}
 		
 		public function incrementChildrenLoaded():void {
 			childrenLoaded++;
-			trace("childrenToLoad",childrenToLoad);
-			trace("childrenLoaded",childrenLoaded);
+			//trace("childrenToLoad",childrenToLoad);
+			//trace("childrenLoaded",childrenLoaded);
 			if (childrenLoaded == childrenToLoad) {
 				childrenToLoad = 0;
 				childrenLoaded = 0;
 				Game.setGameState("levelFullyLoaded");
-				print("level FUllY Loaded");
+				//print("level FUllY Loaded");
 			}
 		}
 		
@@ -236,9 +221,9 @@
 		
 		
 		public function loadLevelSwf(filePath:String, swfParent:MovieClip):void {
-			//trace("GraphicsElelement: loadLevelSwf: filePath:",filePath);
 			currentParent = swfParent;
 			//trace("currentParent",currentParent);
+			//trace("loadLevelSwf: level: filePath:",filePath);
 			isLevel = true;
 			switch(filePath) {
 				case "lvl_1":
@@ -262,38 +247,36 @@
 			loader = null;
 		}
 		
+		
 		public function loadScreenSwf(filePath:String, swfParent:MovieClip):void {
 			//trace("GraphicsElelement: filePath: loadLevelSwf:",filePath,"swfParent:",swfParent);
+			//trace("cutScene: filePath:",filePath);
 			currentParent = swfParent;
 			//trace("currentParent",currentParent);
-				isLevel = false;
+			isLevel = false;
+			
 			switch(filePath) {
 				case "ui_levelComplete":
 					filePath = ui_levelComplete;
 					break;
 				case "ui_cutScene_1":
 					filePath = ui_cutScene_1;
-					//trace("GraphicsElelement: filePath:",filePath);
 					break;
 				case "ui_cutScene_2":
 					filePath = ui_cutScene_2;
-					//trace("GraphicsElelement: filePath:",filePath);
 					break;
 				case "ui_cutScene_3":
 					filePath = ui_cutScene_3;
-					//trace("GraphicsElelement: filePath:",filePath);
 					break;
 				case "ui_cutScene_4":
 					filePath = ui_cutScene_4;
-					//trace("GraphicsElelement: filePath:",filePath);
 					break;
 				case "ui_cutScene_5":
 					filePath = ui_cutScene_5;
-					//trace("GraphicsElelement: filePath:",filePath);
 					break;
 			}
 			var loader:swfLoader = new swfLoader();
-			loader.beginLoad(this, filePath);
+			loader.beginLoad(swfParent, filePath);
 			loader = null;
 		}
 		

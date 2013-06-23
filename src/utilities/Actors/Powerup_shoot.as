@@ -17,7 +17,9 @@
 		
 		private var filePath:String = "../src/assets/actors/swf_powerupShoot.swf";
 		public function Powerup_shoot(newX:int, newY:int){
-			health=1;
+			health = 1;
+			this.x = newX;
+			this.y = newY;
 		}
 		
 		public override function getFilePath():String {

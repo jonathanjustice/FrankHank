@@ -29,7 +29,6 @@
 		}
 		
 		public function setUp():void {
-			trace("UIManager: set up");
 			Main.theStage.addChild(uiContainer);	
 		}
 		

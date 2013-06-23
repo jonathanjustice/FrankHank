@@ -21,9 +21,6 @@
 		*/}
 		
 		public function setUp():void{
-			print("setUp");
-			print(String(this.x));
-			print(String(this.y));
 			defineGraphics("wall",false);
 			
 			//this.visible = false;

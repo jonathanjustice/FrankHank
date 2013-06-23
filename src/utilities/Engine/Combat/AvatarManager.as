@@ -144,7 +144,6 @@
 		
 		//deprecated
 		private static function createAvatar():void {
-			trace("creating new avatar");
 			avatar = new utilities.Actors.Avatar(0,0);
 			avatars.push(avatar);
 		}

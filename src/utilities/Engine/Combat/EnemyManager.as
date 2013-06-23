@@ -76,7 +76,7 @@
 		
 			if (enemies.length == 0 && LevelManager.getInstance().getisLevelActive()) {
 					
-				trace("enemy manager: no enemies left");
+				//trace("enemy manager: no enemies left");
 				LevelManager.getInstance().setIsLevelComplete(true);
 				LevelManager.getInstance().checkLevelObjectives();
 			}

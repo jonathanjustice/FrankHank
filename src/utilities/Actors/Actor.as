@@ -72,7 +72,7 @@
 			
 			defineWeaponStats();
 			setAnimationState("idle");
-			//trace("Actor:new actor")
+			//print(this);
 		}
 		
 		public function getFilePath():String {
@@ -168,7 +168,6 @@
 			utilities.Engine.Game.gameContainer.addChild(this);
 			setIsSwfLoaded(true);
 			array.push(this);
-			print(String("----------------parent: "+this.parent));
 		}
 		
 		public function removeActorFromGameEngine(actor:MovieClip, array:Array):void {
@@ -235,17 +234,10 @@
 		//graphicsElement handles the loading, poorly :(
 		//isLevel determines if its a level, and should therefore do some extra snazzy parsing stugg
 		public function defineGraphics(filePath:String, isLevel:Boolean):void {
-			//trace("*************************************************************Define Graphics");
-			//trace("filePath:",filePath);
-			//actorGraphic = new utilities.GraphicsElements.GraphicsElement();
 			loadActorSwf(getFilePath());
-			//this.addChild(actorGraphic);
 		}
 		
 		public function loadActorSwf(filePath:String):void {
-			trace("---------------------------------loadActorSwf");
-			print("Actor"+filePath);
-			//trace("currentParent",currentParent);
 			var loader:swfLoader = new swfLoader();
 			loader.beginLoad(this, filePath);
 			loader = null;
@@ -298,8 +290,9 @@
 			drawGraphicDefaultRectangle();
 		}
 		
+		
+		//********************NEEDS UPDATE!
 		public function defineLevelGraphics(filePath:String,isLevel:Boolean):void {
-			//trace("filePath:",filePath);
 			actorGraphic = SwfParser.getInstance();
 			actorGraphic.loadLevelSwf(filePath,this);
 			this.addChild(actorGraphic);
@@ -352,9 +345,9 @@
 		
 		//this function will thow an undefined object error if runs before the assigned graphic is assigned
 		public function playAnimation(animation:String):void {
-			trace(assignedGraphic[0]);
-			trace(assignedGraphic[0].swf_child);
-			this.assignedGraphic[0].swf_child.gotoAndStop(animation);
+			//trace(assignedGraphic[0]);
+			//trace(assignedGraphic[0].swf_child);
+			//this.assignedGraphic[0].swf_child.gotoAndStop(animation);
 			//trace("Actor: playAnimation");
 		}
 		

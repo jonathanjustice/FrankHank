@@ -25,7 +25,7 @@ package utilities.Saving_And_Loading{
 		//file path format "../lib/Test_swf.swf"
 		public function beginLoad(object_to_add_swf_to:MovieClip,filePath:String):void {
 			object = object_to_add_swf_to;
-			print(String(object_to_add_swf_to));
+			//print(String(object_to_add_swf_to));
 			var newLoader:Loader = new Loader();
 			var newRequest:URLRequest = new URLRequest(filePath);
 			newLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadCompleteHandler);

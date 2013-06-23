@@ -63,14 +63,14 @@
 					break;
 				case "startLevelLoad":
 					//doshit
-					trace("startLevelLoad");
+					//trace("startLevelLoad");
 					LevelManager.getInstance().loadLevel();
 					break;
 				case "levelCurrentlyLoading":
-					trace("levelCurrentlyLoading");
+					//trace("levelCurrentlyLoading");
 					break;
 				case "levelFullyLoaded":
-					trace("levelFullyLoaded");
+					//trace("levelFullyLoaded");
 					LevelManager.getInstance().setIsLevelActive(true);
 					enableMasterLoop();
 					break;
@@ -96,23 +96,23 @@
 					break;
 				case "startCutSceneLoad":
 					//doshit
-					trace("Game: startCutSceneLoad");
+					//trace("Game: startCutSceneLoad");
 					CutSceneManager.getInstance().loadScene();
 					break;
 				case "cutSceneCurrentlyLoading":
-					trace("Game: cutSceneCurrentlyLoading");
+					//trace("Game: cutSceneCurrentlyLoading");
 					break;
 				case "cutSceneFullyLoaded":
-					trace("Game: cutSceneFullyLoaded");
+					//trace("Game: cutSceneFullyLoaded");
 					CutSceneManager.getInstance().setIsSceneActive(true);
 					//enableMasterLoop();
 					break;
 				case "inCutScene":
-					trace("Game: inCutScene");
+					//trace("Game: inCutScene");
 					//doshit
 					break;
 				case "cutSceneComplete":
-					trace("Game: cutSceneComplete");
+					//trace("Game: cutSceneComplete");
 					CutSceneManager.getInstance().setIsSceneActive(false);
 					CutSceneManager.getInstance().setIsSceneComplete(false);
 					//UIManager.getInstance().openLevelCompleteScreen();
@@ -130,9 +130,7 @@
 		}
 		
 		private static function createGameContainer():void {
-			trace("game: game container added");
 			gameContainer = new utilities.Screens.GameContainer();
-			//Main.theStage.addChild(gameContainer);
 			Main.theStage.addChildAt(gameContainer,0);
 			
 		}
@@ -152,12 +150,12 @@
 			switch(startLocation){
 				case "debug":
 					
-					trace("Started Game: From debug method");
+					//trace("Started Game: From debug method");
 					createManagersAndControllers();
 					LevelManager.getInstance().loadLevel();
 					break;
 				case "start":
-					trace("Started Game: From the Start Screen");
+					//trace("Started Game: From the Start Screen");
 					createManagersAndControllers();
 					LevelManager.getInstance().loadLevel();
 					break;
@@ -174,9 +172,7 @@
 					enableMasterLoop();
 					break;
 			}
-			
 			Main.returnFocusToGampelay();
-			trace("Game: startGame, function complete");
 		}
 		
 		public static function getFramesSinceGameStart():int {
@@ -188,10 +184,8 @@
 		}
 		
 		public static function enableMasterLoop():void {
-			trace("Game: enableMasterLoop: master loop enabled");
 			gamePaused=false;
 			gameContainer.addEventListener(Event.ENTER_FRAME, masterLoop);
-			trace("Game: enableMasterLoop: master loop enabled2");
 		}
 		
 		public static function disableMasterLoop():void{
@@ -228,7 +222,7 @@
 			var cameraSpeed:int = 12;
 			var avatarVels:Point = new Point();
 			avatarVels = avatar.getVelocity();
-			trace(avatarVels);
+			//print(String(avatarVels));
 			var avatarPoint:Point = new Point();
 			avatarPoint.x = avatar.x;
 			avatarPoint.y = avatar.y;
@@ -277,6 +271,7 @@
 		}
 		
 		public static function resetGameContainerCoordinates():void {
+			//trace("resetGameContainerCoordinates");
 			gameContainer.x = 0;
 			gameContainer.y = 0;
 		}
@@ -331,9 +326,9 @@
 		}
 		
 		public static function deselectAllActors():void {
-			trace("Game: deselectAllActors");
+			//trace("Game: deselectAllActors");
 			AvatarManager.getInstance().deselectActors();
-			trace("EnemyManager:",EnemyManager);
+			//trace("EnemyManager:",EnemyManager);
 			//EnemyManager.getInstance().deselectActors();
 		}
 		

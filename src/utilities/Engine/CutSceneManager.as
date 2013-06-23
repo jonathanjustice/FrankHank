@@ -60,7 +60,11 @@
 			isSceneActive = activeStatus;
 			//print(("isSceneActive: " + String(isSceneActive)));
 			cutScenes[0].addEventListener(Event.ENTER_FRAME, playCutScene);
-			cutScenes[0].getActorGraphic().assignedGraphics[0].swf_child.play();
+			/*trace("---------------");
+			trace(cutScenes[0]);
+			trace(cutScenes[0].assignedGraphic[0]);
+			trace(cutScenes[0].assignedGraphic[0].swf_child);*/
+			cutScenes[0].assignedGraphic[0].swf_child.play();
 		}
 		
 		public function playCutScene(e:Event):void {

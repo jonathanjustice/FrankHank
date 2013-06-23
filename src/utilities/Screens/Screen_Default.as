@@ -4,8 +4,9 @@
 	import flash.display.MovieClip;
 	import utilities.Screens.Screen_Dynamic_Blocker;
 	import utilities.Engine.*;
-	import utilities.Engine.UIManager;import utilities.GraphicsElements.SwfParser;
-	public class Screen_Default extends MovieClip{
+	import utilities.Engine.UIManager; import utilities.GraphicsElements.SwfParser;
+	import utilities.objects.GameObject;
+	public class Screen_Default extends GameObject{
 		private var blocker:Screen_Dynamic_Blocker;
 		private var myScreen:MovieClip;//or replace with swf eventually
 		private var actorGraphic:MovieClip;
@@ -23,18 +24,16 @@
 		
 		public function setUp():void {
 			addDynamicBlocker();
-			addScreenToUIContainer();
 			addClickHandler();
 			addOverHandler();
 			addOutHandler();
 			mouseEnabledHandler();
+			addScreenToUIContainer();
 		}
 		
 		public function defineScreenGraphics(filePath:String):void {
 			//trace("filePath:",filePath);
-			actorGraphic = SwfParser.getInstance();
- 			actorGraphic.loadScreenSwf(filePath,this);
-			this.addChild(actorGraphic);
+			SwfParser.getInstance().loadScreenSwf(filePath,this);
 		}
 		
 		public function setIsSwfLoaded(loadState:Boolean):void {

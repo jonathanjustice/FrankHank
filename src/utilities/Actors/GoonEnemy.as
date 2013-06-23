@@ -25,9 +25,9 @@
 		public function GoonEnemy(newX:int, newY:int) {
 			this.x = newX,
 			this.y = newY;
-			setUp();
-			health = 1;
 			xVelocity = -5;
+			health = 1;
+			setUp();
 			defineGraphics("goon",false);
 		}
 		

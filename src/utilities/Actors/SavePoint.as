@@ -33,16 +33,7 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			
-			alignmentOfParentChildGraphics(this,graphic);
-			LevelManager.savePoints.push(this);
-			print(String(this.x));
-			print(String(this.y));
-			print(String(graphic.x));
-			print(String(graphic.y));
-			print(String(graphic.parent));
-			assignedGraphic[0] = graphic;
-			setIsSwfLoaded(true);
+			addActorToGameEngine(graphic,LevelManager.savePoints);
 		}
 		
 		public function getIsActive():Boolean {
@@ -70,14 +61,6 @@
 		public function collidedWithAvatar():void {
 			
 		}
-		
-		//direction indicator is useful for determine what direction the enemy is faceing / moving in / shooting in
-		//make it invisible if its not being used
-		//it's commented out because it't not part of the default graphic anymore
-		/*private function set_direction_indicator_visibility(){
-			directionIndiactor.visible = false;
-		}
-		*/
 		
 		//this records the moment the bullet was created
 		public function setSpawnTime():void {

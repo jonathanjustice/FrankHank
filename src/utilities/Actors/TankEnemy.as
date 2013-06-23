@@ -20,12 +20,14 @@
 		
 		
 		private var filePath:String = "../src/assets/actors/swf_tank.swf";
-		public function TankEnemy(newX:int, newY:int){
+		public function TankEnemy(newX:int, newY:int) {
+			this.x = newX;
+			this.y = newY;
 			xVelocity = -5;
-			setUp();
 			health = 2;
 			maximumHealth = 2;
-			defineGraphics("tank",false);
+			setUp();
+			defineGraphics("tank", false);
 		}
 		
 		public override function getFilePath():String {
@@ -33,8 +35,7 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			//alignmentOfParentChildGraphics(gem,tempArray[j]);
-			EnemyManager.enemies.push(this);
+			addActorToGameEngine(graphic,EnemyManager.enemies);
 		}
 		
 		public override function updateLoop():void {

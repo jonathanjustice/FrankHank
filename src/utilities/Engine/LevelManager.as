@@ -88,7 +88,7 @@
 		
 		public function setIsLevelActive(activeStatus:Boolean):void {
 			isLevelActive = activeStatus;
-			trace(("isLevelActive:",String(isLevelActive)));
+			//trace(("isLevelActive:",String(isLevelActive)));
 		}
 		
 		public function getisLevelActive():Boolean {
@@ -98,7 +98,7 @@
 		private function levelCompleted():void {
 			//trace("LevelManager: Level completed: EnemyManager.enemies", EnemyManager.enemies);
 			if (EnemyManager.enemies.length == 0) {
-				trace("LevelManager:levelCompleted");
+				//trace("LevelManager:levelCompleted");
 				//trace("enemy manager: no enemies left");
 				//trace("EnemyManager.enemies", EnemyManager.enemies);
 				Game.disableMasterLoop();
