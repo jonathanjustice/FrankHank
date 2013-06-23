@@ -12,7 +12,6 @@
 		public function CutScene(sceneName:String) {
 			//trace("CutScene: sceneName:",sceneName);
 			defineScreenGraphics(sceneName);
-
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
@@ -31,7 +30,7 @@
 		}
 		
 		private function skip():void {
-			this.assignedGraphic[0].gotoAndStop("end")
+			this.assignedGraphic[0].swf_child.gotoAndStop("end")
 		}
 		
 		public function checkForCutSceneComplete():Boolean {

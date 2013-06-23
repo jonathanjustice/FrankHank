@@ -103,10 +103,10 @@
 		public static function checkForCollisionWithWall():void {
 			for each(var enemy:MovieClip in enemies) {
 				enemy.setNumberOfWallsBeingTouched(-enemy.getNumberOfWallsBeingTouched());
-				for(var i:int = 1; i<LevelManager.levels.length;i++){
-					if (utilities.Mathematics.RectangleCollision.simpleIntersection(enemy, LevelManager.levels[i]) == true) {
+				for(var i:int = 0; i<LevelManager.walls.length;i++){
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(enemy, LevelManager.walls[i]) == true) {
 						//resolves the collision & returns if this touched the top of the other object
-						var collisionSide:String = utilities.Mathematics.RectangleCollision.testCollision(enemy, LevelManager.levels[i]);
+						var collisionSide:String = utilities.Mathematics.RectangleCollision.testCollision(enemy, LevelManager.walls[i]);
 						if (collisionSide == "left" || collisionSide == "right") {
 							enemy.reverseVelecityX();
 							enemy.resetGravity();
@@ -116,7 +116,7 @@
 							enemy.resetGravity();
 							if (enemy is TankEnemy) {
 								//if a tank enemy reaches the end of a platform, make it turn around instead of falling off 
-								if (utilities.Mathematics.RectangleCollision.isRectangleOnTop(enemy, LevelManager.levels[i]) && enemy.getNumberOfWallsBeingTouched() == 1) {
+								if (utilities.Mathematics.RectangleCollision.isRectangleOnTop(enemy, LevelManager.walls[i]) && enemy.getNumberOfWallsBeingTouched() == 1) {
 									enemy.reverseVelecityX();
 									enemy.x = enemy.getPreviousPosition().x;
 									enemy.x += enemy.xVelocity * 2;

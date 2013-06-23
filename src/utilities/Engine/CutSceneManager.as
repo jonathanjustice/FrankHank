@@ -52,25 +52,22 @@
 			
 			//if all objectives are complete, then stop the level, destroy everything in it, and create a new one
 			if (CutSceneManager._instance.getIsSceneComplete() == true) {
-				CutSceneManager._instance.sceneCompleted();
+				CutSceneManager._instance.cutsceneCompleted();
 			}
 		}
 		
 		public function setIsSceneActive(activeStatus:Boolean):void {
 			isSceneActive = activeStatus;
-			//print(("isSceneActive: " + String(isSceneActive)));
-			cutScenes[0].addEventListener(Event.ENTER_FRAME, playCutScene);
-			/*trace("---------------");
-			trace(cutScenes[0]);
-			trace(cutScenes[0].assignedGraphic[0]);
-			trace(cutScenes[0].assignedGraphic[0].swf_child);*/
-			cutScenes[0].assignedGraphic[0].swf_child.play();
+			if(isSceneActive == true){
+				cutScenes[0].addEventListener(Event.ENTER_FRAME, playCutScene);
+				cutScenes[0].assignedGraphic[0].swf_child.play();
+			}
 		}
 		
 		public function playCutScene(e:Event):void {
 			if (cutScenes[0].checkForCutSceneComplete() == true) {
 				cutScenes[0].removeEventListener(Event.ENTER_FRAME, playCutScene);
-				sceneCompleted();
+				cutsceneCompleted();
 				cutScenes = [];
 			}
 		}
@@ -79,16 +76,10 @@
 			return isSceneActive;
 		}
 		
-		private function sceneCompleted():void {
-			//trace("LevelManager: Level completed: EnemyManager.enemies", EnemyManager.enemies);
-			
-			//Game.resetGameContainerCoordinates();
-			//loadMissionCompleteScreen
-			//loadLevel();
-			Game.setGameState("sceneComplete");
-			Game.setGameState("startLevelLoad");
+		private function cutsceneCompleted():void {
+			Game.setGameState("cutSceneComplete");
+			//Game.setGameState("startLevelLoad");
 			//Game.setFramesSinceGameStart();
-			
 		}
 		
 		public function loadMissionCompleteScreen():void {

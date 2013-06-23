@@ -18,6 +18,7 @@
 		private var tempArray:Array = new Array();
 		public static var level:MovieClip;
 		public static var levels:Array;
+		public static var walls:Array;
 		public static var arts:Array;
 		public static var coins:Array;
 		public static var savePoints:Array;
@@ -30,7 +31,8 @@
 			setUp();
 		}
 		
-		public function setUp():void{
+		public function setUp():void {
+			walls = [];
 			levels = [];
 			arts = [];
 			coins = [];
@@ -45,7 +47,11 @@
 		}
 		
 		//Interface features
-		public function getArray():Array{
+		public function getWalls():Array{
+			return walls;
+		}
+		
+		public function getLevels():Array{
 			return levels;
 		}
 		
@@ -105,13 +111,14 @@
 				LootManager.getInstance().destroyArray(LootManager.lootDrops);
 				LootManager.getInstance().destroyArray(LootManager.treasureChests);
 				EnemyManager.getInstance().destroyArray(EnemyManager.enemies);
-				LevelManager.getInstance().destroyArray(LevelManager.levels);
 				LevelManager.getInstance().destroyArray(LevelManager.arts);
 				LevelManager.getInstance().destroyArray(LevelManager.coins);
 				LevelManager.getInstance().destroyArray(LevelManager.savePoints);
 				PowerupManager.getInstance().destroyArray(PowerupManager.powerups);
 				BulletManager.getInstance().destroyArray(BulletManager.bullets);
 				AvatarManager.getInstance().destroyArray(AvatarManager.avatars);
+				LevelManager.getInstance().destroyArray(LevelManager.levels);
+				LevelManager.getInstance().destroyArray(LevelManager.walls);
 				Game.resetGameContainerCoordinates();
 				LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1);
 				//loadMissionCompleteScreen
@@ -137,8 +144,8 @@
 		
 		public function deselectActors():void {
 			//print("levels:", levels);
-			for (var i:int = 1; i < levels.length; i++) {
-				levels[i].deselectActor();
+			for (var i:int = 1; i < walls.length; i++) {
+				walls[i].deselectActor();
 			}
 		}
 		

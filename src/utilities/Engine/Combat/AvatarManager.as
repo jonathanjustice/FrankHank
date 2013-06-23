@@ -81,20 +81,20 @@
 				
 				//for some horrible ass backwards reason, I included the level itself in the same array as the walls inside the level, so the iteration needs to start at 1
 				//this is unnacceptable and needs to get fixed asap because it is super confusing and inconsistent.
-				for (var i:int = 1; i < LevelManager.levels.length; i++) {
+				for (var i:int = 0; i < LevelManager.walls.length; i++) {
 					
 					//a really uneccessarily long way to write hitTestObject, because I can
 					//checks for collision
-					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.levels[i]) == true) {
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.walls[i]) == true) {
 						//resolves the collision & returns if this touched the top of the other object
-						if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.levels[i]) == "top") {
+						if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
 							myAvatar.jumpingEnded();
 							myAvatar.resetGravity();
 						}
 					}
 					for each(var bullet:Bullet in BulletManager.bullets) {
-						if (utilities.Mathematics.RectangleCollision.simpleIntersection(bullet, LevelManager.levels[i]) == true) {
-							var collisionSide:String = utilities.Mathematics.RectangleCollision.testCollision(bullet, LevelManager.levels[i]);
+						if (utilities.Mathematics.RectangleCollision.simpleIntersection(bullet, LevelManager.walls[i]) == true) {
+							var collisionSide:String = utilities.Mathematics.RectangleCollision.testCollision(bullet, LevelManager.walls[i]);
 							if (collisionSide == "top") {
 								
 								bullet.reverseVelecityY();

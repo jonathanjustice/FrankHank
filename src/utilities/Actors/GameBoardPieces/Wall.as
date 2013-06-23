@@ -35,10 +35,8 @@
 			this.scaleX = tempWidth;
 			this.scaleY = tempHeight;
 			this.visible = false;
-			addActorToGameEngine(graphic,LevelManager.levels);
+			addActorToGameEngine(graphic,LevelManager.walls);
 		}
-		
-	
 		
 		public function updateLoop():void{
 			

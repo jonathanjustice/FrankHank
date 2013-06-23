@@ -115,7 +115,7 @@
 					//trace("Game: cutSceneComplete");
 					CutSceneManager.getInstance().setIsSceneActive(false);
 					CutSceneManager.getInstance().setIsSceneComplete(false);
-					//UIManager.getInstance().openLevelCompleteScreen();
+					UIManager.getInstance().openLevelCompleteScreen();
 					break;
 				case "worldMap":
 					//doshit
