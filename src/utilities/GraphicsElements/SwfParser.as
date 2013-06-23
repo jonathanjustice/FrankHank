@@ -101,22 +101,15 @@
 		private function alignmentOfParentChildGraphics(par:MovieClip, ch:MovieClip):void {
 			//trace("GraphicsElelement: alignmentOfParentChildGraphics: par:",par,", ch:",ch);
 			//trace("-");
-			trace(par);
-			trace(par.x);
-			trace(ch);
-			trace(ch.x);
-			par.x = ch.x;
-			par.y = ch.y;
-			ch.x = 0;
-			ch.y = 0;
+			
 			//ch.parent.removeChild(ch);
 			if (par is Wall) {
-				trace("its a wall!");
-				par.scaleX = ch.width;
-				par.scaleY = ch.height;
-			}
-			if (par is Art) {
-				par.addChild(ch);
+				
+				par.x = ch.x;
+				par.y = ch.y;
+				ch.x = 0;
+				ch.y = 0;
+			
 			}
 			if (par is Avatar) {
 				//par.addChild(ch);
@@ -126,7 +119,7 @@
 			if (par is Bullet) {
 				
 			}else {
-				par.setUp();
+				//par.setUp();
 			}
 			
 			if (currentParent is SelectableActor) {
@@ -137,7 +130,7 @@
 		//objects in the graphic's swf can be accessed through: assignedGraphics[0].swf_child
 		//i.e, if you want access to the movieclips hitbox use: assignedGraphics[0].swf_child.hitbox
 		public function assignGraphic(graphic:DisplayObject):void {
-			var tempClip:MovieClip;
+			//var tempClip:MovieClip;
 			trace("GraphicsElelement: assignGraphic: loadLevelSwf:",graphic);
 			assignedGraphics.push(graphic);
 			if (isLevel == true) {
@@ -150,68 +143,58 @@
 					//trace("tempArray[j].name",tempArray[j].name);
 					trace("j:",j);
 					if (tempArray[j].name == "art") {
-						
-						var art:Art = new Art(tempArray[j].x, tempArray[j].y);
-						tempClip = art;
-						tempClip.alpha = .25;
-						alignmentOfParentChildGraphics(tempClip,tempArray[j]);
-					}
-					if(tempArray[j].name == "coin"){
-						var coin:Coin = new Coin(tempArray[j].x,tempArray[j].y);
-						tempClip = coin;
-					}
-					if (tempArray[j].name == "savePoint") {
-						//trace("savePoint 1");
-						var savePoint:SavePoint = new SavePoint(tempArray[j].x,tempArray[j].y);
-						tempClip = savePoint;
-					}
-					if(tempArray[j].name == "gem"){
-						var gem:Gem = new Gem(tempArray[j].x,tempArray[j].y);
-						tempClip = gem;
+						//childrenToLoad--;//because its not really going to get loaded
+						var art:Art = new Art(tempArray[j].x, tempArray[j].y,tempArray[j]);
+						//alignmentOfParentChildGraphics(art, tempArray[j]);
 					}
 					if(tempArray[j].name == "wall"){
 						var wall:Wall = new Wall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
-						tempClip = wall;
 						alignmentOfParentChildGraphics(wall,tempArray[j]);
-						
-						//alignmentOfParentChildGraphics(wall,tempArray[j]);
 					}
 					if(tempArray[j].name == "avatar"){
 						var avatar:Avatar = new Avatar(tempArray[j].x,tempArray[j].y);
 						print("---------------------------------------------------------------Avatar parsed from level");
-						tempClip = avatar;
+					}
+					if(tempArray[j].name == "coin"){
+						var coin:Coin = new Coin(tempArray[j].x,tempArray[j].y);
+						
+					}
+					if (tempArray[j].name == "savePoint") {
+						//trace("savePoint 1");
+						var savePoint:SavePoint = new SavePoint(tempArray[j].x,tempArray[j].y);
+					}
+					if(tempArray[j].name == "gem"){
+						var gem:Gem = new Gem(tempArray[j].x,tempArray[j].y);
+						
 					}
 					if (tempArray[j].name == "goon") {
 						
 						var goon:GoonEnemy = new GoonEnemy(tempArray[j].x,tempArray[j].y);
-						tempClip = goon;
+						
 					}
 					if(tempArray[j].name == "tank"){
 						var tank:TankEnemy = new TankEnemy(tempArray[j].x,tempArray[j].y);
-						tempClip = tank;
+						
 					}
 					if(tempArray[j].name == "afs"){
 						var afs:AFSEnemy = new AFSEnemy(tempArray[j].x,tempArray[j].y);
-						tempClip = afs;
+						
 					}
 					if(tempArray[j].name == "p_shoot"){
 						var shootPowerup:Powerup_shoot = new Powerup_shoot(tempArray[j].x,tempArray[j].y);
-						tempClip = shootPowerup;
+						
 					}
 					
 					if(tempArray[j].name == "p_doubleJump"){
 						var doubleJumpPowerup:Powerup_doubleJump = new Powerup_doubleJump(tempArray[j].x,tempArray[j].y);
-						tempClip = doubleJumpPowerup;
+						
 						
 					}
 					
 					if(tempArray[j].name == "p_inv"){
 						var invinviblePowerup:Powerup_invincible = new Powerup_invincible(tempArray[j].x,tempArray[j].y);
-						tempClip = invinviblePowerup;
+						
 					}
-					
-					
-					
 				}
 			}else{
 				currentParent.addChild(graphic);
@@ -234,8 +217,8 @@
 			trace("childrenToLoad",childrenToLoad);
 			trace("childrenLoaded",childrenLoaded);
 			if (childrenLoaded == childrenToLoad) {
-				//childrenToLoad = 0;
-				//childrenLoaded = 0;
+				childrenToLoad = 0;
+				childrenLoaded = 0;
 				Game.setGameState("levelFullyLoaded");
 				print("level FUllY Loaded");
 			}
@@ -324,13 +307,6 @@
 		//draws a default graphic, just so the game doesn't crash if I haven't made graphics for an object yet
 		
 		//wall
-		public function drawGraphicDefaultRectangle():void{
-			myGraphic.graphics.lineStyle(3,0x0000ff);
-			myGraphic.graphics.beginFill(0x8800FF);
-			myGraphic.graphics.drawRect(0,0,100,100);
-			myGraphic.graphics.endFill();
-			this.addChild(myGraphic);
-		}
 	}
 }
 class SingletonEnforcer{}

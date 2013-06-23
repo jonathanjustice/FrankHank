@@ -22,8 +22,8 @@
 			defineGraphicsDefaultRectangle();
 			this.x = 175;
 			this.y = 50;
-			this.width = 500;
-			this.height = 500;
+			this.scaleX = 5;
+			this.scaleY = 5;
 			this.visible = false;
 			this.alpha = .25;
 		}

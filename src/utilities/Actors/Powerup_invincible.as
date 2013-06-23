@@ -25,10 +25,9 @@
 		}
 		
 		public override function setUp():void {
-			addActorToGameEngine();
+			powerupType = "invincible";
 			health=1;
 			defineGraphics("powerup_invincible",false);
-			powerupType = "invincible";
 		}
 		
 		public override function updateLoop():void {

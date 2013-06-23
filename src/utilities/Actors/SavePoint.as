@@ -54,10 +54,6 @@
 		}
 		
 		public function setUp():void {
-			print("setUp");
-			
-			addActorToGameEngine();
-			setPreviousPosition();
 			defineGraphics("savePoint",false);
 		}
 		

@@ -21,7 +21,10 @@
 		
 		
 		private var filePath:String = "../src/assets/actors/swf_coin.swf";
-		public function Coin(newX:int, newY:int){
+		public function Coin(newX:int, newY:int) {
+			defineGraphics("coin",false);
+			this.x = newX,
+			this.y = newY;
 			health=1;
 		}
 		
@@ -34,17 +37,11 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			//alignmentOfParentChildGraphics(gem,tempArray[j]);
-			LevelManager.coins.push(this);
-			assignedGraphic[0] = graphic;
-			setIsSwfLoaded(true);
-		
+			addActorToGameEngine(graphic,LevelManager.coins);
 		}
 		
 		public function setUp():void{
-			addActorToGameEngine();
-			setPreviousPosition();
-			defineGraphics("coin",false);
+			
 		}
 		
 		public override function updateLoop():void{

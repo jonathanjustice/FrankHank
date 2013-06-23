@@ -3,6 +3,7 @@
 	import flash.display.AVM1Movie;
 	import flash.display.MovieClip;
 	import flash.display.DisplayObject;
+	import flash.display.Sprite;
 	import utilities.Screens.progressBar;
 	import utilities.Engine.Game;
 	import utilities.Engine.Combat.*;
@@ -153,9 +154,21 @@
 		*/
 					
 		//creation & destruction
-		public function addActorToGameEngine():void {
+		//future: add ability to add things to game engine at particular orders, right now we are at the mercy of the FLA
+		public function addLevelToGameEngine():void {
 			utilities.Engine.Game.gameContainer.addChild(this);
-			
+		}
+		
+		
+		
+		public function addActorToGameEngine(graphic:DisplayObject,array:Array):void {
+			setPreviousPosition();
+			assignedGraphic[0] = graphic;
+			this.addChild(graphic);
+			utilities.Engine.Game.gameContainer.addChild(this);
+			setIsSwfLoaded(true);
+			array.push(this);
+			print(String("----------------parent: "+this.parent));
 		}
 		
 		public function removeActorFromGameEngine(actor:MovieClip, array:Array):void {
@@ -221,7 +234,8 @@
 		//filepath is passed in from the actor type
 		//graphicsElement handles the loading, poorly :(
 		//isLevel determines if its a level, and should therefore do some extra snazzy parsing stugg
-		public function defineGraphics(filePath:String,isLevel:Boolean):void {
+		public function defineGraphics(filePath:String, isLevel:Boolean):void {
+			//trace("*************************************************************Define Graphics");
 			//trace("filePath:",filePath);
 			//actorGraphic = new utilities.GraphicsElements.GraphicsElement();
 			loadActorSwf(getFilePath());
@@ -280,9 +294,8 @@
 		
 		//only used for placeholder graphics where a swf or png does not exist yet
 		public function defineGraphicsDefaultRectangle():void{
-			actorGraphic = SwfParser.getInstance();
-			actorGraphic.drawGraphicDefaultRectangle();
-			this.addChild(actorGraphic);
+			//actorGraphic = SwfParser.getInstance();
+			drawGraphicDefaultRectangle();
 		}
 		
 		public function defineLevelGraphics(filePath:String,isLevel:Boolean):void {
@@ -557,6 +570,15 @@
 		
 		public function setMaxGravity(newMax:int):void {
 			maxGravity = newMax;
+		}
+		
+		public function drawGraphicDefaultRectangle():void {
+			var myGraphic:Sprite = new Sprite();
+			myGraphic.graphics.lineStyle(3,0x0000ff);
+			myGraphic.graphics.beginFill(0x8800FF);
+			myGraphic.graphics.drawRect(0,0,100,100);
+			myGraphic.graphics.endFill();
+			this.addChild(myGraphic);
 		}
 	}
 }

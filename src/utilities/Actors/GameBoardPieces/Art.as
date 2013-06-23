@@ -5,10 +5,13 @@
 	import utilities.Engine.LevelManager;
 	public class Art extends SelectableActor {
 		private var filePath:String = "";
-		public function Art(newX:int, newY:int){
+		public function Art(newX:int, newY:int,newGraphic:DisplayObject){
 			setUp();
-			this.x = newX - this.x;
-			this.y = newY - this.y;
+			this.x = newX;
+			this.y = newY;
+			this.alpha = 1;
+			assignGraphic(newGraphic);
+			//this.addChild(newGraphic);
 		}
 		
 		public override function getFilePath():String {
@@ -16,16 +19,12 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			this.addChild(graphic);
-			assignedGraphic[0] = graphic;;
-			LevelManager.arts.push(this);
-			setIsSwfLoaded(true);
-			
+			graphic.x = 0
+			graphic.y = 0;
+			addActorToGameEngine(graphic,LevelManager.arts);
 		}
 		
 		public function setUp():void{
-			//trace("fuck yeah it worked");
-			addActorToGameEngine();
 			setPreviousPosition();
 		}
 		

@@ -32,8 +32,7 @@
 		}
 		
 		public function setUp():void{
-			addActorToGameEngine();
-			setPreviousPosition();
+			
 			//defineGraphics("frank");
 			//trace(get_availableForTargeting());
 		}

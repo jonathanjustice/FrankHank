@@ -39,10 +39,7 @@
 			this.x = newX,
 			this.y = newY;
 			setUp();
-			//addStroke();
-			if (AvatarManager.getInstance().getIsAvatarDoubleJumpEnabled()) {
-				toggleDoubleJump(true);
-			}
+			
 		}
 		
 		public override function getFilePath():String {
@@ -50,21 +47,17 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			trace("234234234234234234234234234234234234234");
-			this.addChild(graphic);
-			AvatarManager.avatars.push(this);
-			addActorToGameEngine();
-			assignedGraphic[0] = graphic;
-			setIsSwfLoaded(true);
-			
-			trace("avatar:---",graphic);
-			trace("avatar:---",assignedGraphic[0]);
-			trace("avatar:---",assignedGraphic[0].swf_child);
+			addActorToGameEngine(graphic,AvatarManager.avatars);
 		}
 		
 		public function setUp():void {
 			print("setUp");
-			defineGraphics("frank",false);
+			defineGraphics("frank", false);
+			//addStroke();
+			
+			if (AvatarManager.getInstance().getIsAvatarDoubleJumpEnabled()) {
+				toggleDoubleJump(true);
+			}
 		}
 		
 		public function setAttackHitbox(newHitbox:MovieClip):void{

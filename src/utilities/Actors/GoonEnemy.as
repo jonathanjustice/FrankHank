@@ -22,10 +22,12 @@
 		
 		
 		private var filePath:String = "../src/assets/actors/swf_goon.swf";
-		public function GoonEnemy(newX:int, newY:int){
-			xVelocity = -5;
+		public function GoonEnemy(newX:int, newY:int) {
+			this.x = newX,
+			this.y = newY;
 			setUp();
-			health=1;
+			health = 1;
+			xVelocity = -5;
 			defineGraphics("goon",false);
 		}
 		
@@ -34,8 +36,7 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			//alignmentOfParentChildGraphics(gem,tempArray[j]);
-			EnemyManager.enemies.push(this);
+			addActorToGameEngine(graphic,EnemyManager.enemies);
 		}
 		
 		public override function updateLoop():void {

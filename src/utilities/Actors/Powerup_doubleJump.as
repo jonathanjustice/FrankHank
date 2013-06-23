@@ -25,10 +25,9 @@
 		}
 		
 		public override function setUp():void {
-			addActorToGameEngine();
+			powerupType = "doubleJump";
 			health=1;
 			defineGraphics("powerup_doubleJump",false);
-			powerupType = "doubleJump";
 		}
 		
 		public override function updateLoop():void {

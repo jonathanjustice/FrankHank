@@ -6,12 +6,27 @@
 	public class Wall extends SelectableActor{
 		private var isBulletBlocker:Boolean = false;
 		private var filePath:String = "../src/assets/actors/swf_wall.swf";
+		private var tempWidth:Number = 0;
+		private var tempHeight:Number = 0;
 		public function Wall(newX:int, newY:int,newWidth:Number,newHeight:Number){
 			setUp();
-			//this.scaleX = newWidth;
-			//this.scaleY = newHeight;
-			//this.x = newX;
-			//this.y = newY;
+			tempWidth = newWidth;
+			tempHeight = newHeight;
+			/*print(String("newX: " + newX + " newY: " + newY + " newWidth: " + newWidth + " newHeight: " + newHeight)); 
+			this.scaleX = newWidth;
+			this.scaleY = newHeight;
+			this.x = newX;
+			this.y = newY;
+			print(String("newX: " + x + " newY: " + y + " newWidth: " + scaleX + " newHeight: " + scaleY)); 
+		*/}
+		
+		public function setUp():void{
+			print("setUp");
+			print(String(this.x));
+			print(String(this.y));
+			defineGraphics("wall",false);
+			
+			//this.visible = false;
 		}
 		
 		public override function getFilePath():String {
@@ -20,18 +35,13 @@
 		
 		public function assignGraphic(graphic:DisplayObject):void {
 			
-			assignedGraphic[0] = graphic;
-			LevelManager.levels.push(this);
-			setIsSwfLoaded(true);
+			this.scaleX = tempWidth;
+			this.scaleY = tempHeight;
+			this.visible = false;
+			addActorToGameEngine(graphic,LevelManager.levels);
 		}
 		
-		public function setUp():void{
-			//trace("fuck yeah it worked");
-			defineGraphics("wall",false);
-			addActorToGameEngine();
-			setPreviousPosition();
-			//this.visible = false;
-		}
+	
 		
 		public function updateLoop():void{
 			

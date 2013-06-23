@@ -6,7 +6,7 @@
 
 	public class Level extends SelectableActor{
 		public function Level(levelName:String) {
-			addActorToGameEngine();
+			addLevelToGameEngine();
 			defineLevelGraphics(levelName,true);
 			//print("level");
 			//lvl_02

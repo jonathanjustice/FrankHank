@@ -22,7 +22,7 @@
 		
 		private var filePath:String = "../src/assets/actors/swf_gem.swf";
 		public function Gem(newX:int, newY:int){
-			
+			defineGraphics("gem",false);
 			health = 1;
 			this.x = newX - this.x;
 			this.y = newY - this.y;
@@ -37,16 +37,11 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			//alignmentOfParentChildGraphics(gem,tempArray[j]);
-			LevelManager.coins.push(this);
-			assignedGraphic[0] = graphic;
-			setIsSwfLoaded(true);
+			addActorToGameEngine(graphic,LevelManager.coins);
 		}
 		
 		public function setUp():void{
-			addActorToGameEngine();
-			setPreviousPosition();
-			defineGraphics("gem",false);
+			
 		}
 
 		

@@ -20,15 +20,14 @@
 			health=1;
 		}
 		
-			public override function getFilePath():String {
+		public override function getFilePath():String {
 			return filePath;
 		}
 		
 		public override function setUp():void {
-			addActorToGameEngine();
+			powerupType = "shoot";
 			health=1;
 			defineGraphics("powerup_shoot",false);
-			powerupType = "shoot";
 		}
 		
 		public override function updateLoop():void {

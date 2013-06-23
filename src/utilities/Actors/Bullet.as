@@ -46,11 +46,8 @@ package utilities.Actors{
 		}
 		//newX:int, newY:int
 		public function setUp():void {
-			//this.x = newX,
-			//this.y = newY;
 			trace("new bullet");
 			setInitialLocationAndVector();
-			addActorToGameEngine();
 			defineGraphics("bullet",false);
 		}
 		

@@ -29,10 +29,10 @@
 		}
 		
 		public function setUp():void {
-			addActorToGameEngine();
-			health=1;
-			defineGraphics("powerup_default",false);
+			health = 1;
 			powerupType = "default";
+			defineGraphics("powerup_default",false);
+		
 		}
 		
 		public function getPowerupType():String {

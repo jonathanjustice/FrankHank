@@ -228,6 +228,7 @@
 			var cameraSpeed:int = 12;
 			var avatarVels:Point = new Point();
 			avatarVels = avatar.getVelocity();
+			trace(avatarVels);
 			var avatarPoint:Point = new Point();
 			avatarPoint.x = avatar.x;
 			avatarPoint.y = avatar.y;
