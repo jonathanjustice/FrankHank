@@ -71,6 +71,7 @@
 			currentDelay ++;
 			if(KeyInputManager.getXKey() == true){
 				if (currentDelay >= delay) {
+					//print("pressed x");
 					AnimationManager.getInstance().updateAnimationState(this, "attack");
 				}
 			}
@@ -83,7 +84,7 @@
 		
 		public function updateLoop():void {
 			if (getIsSwfLoaded() == true) {
-				idleLogic();
+				animationLogic();
 				//setIsFalling(true);
 				getisJumpingFromInputManager();
 				applyVelocities();
@@ -199,13 +200,14 @@
 			//trace("isDoubleJumpingEnabled",isDoubleJumpingEnabled);
 		}
 		
-		public function idleLogic():void {
+		public function animationLogic():void {
 			//If running, disable idleing & play run 
 			if (xVelocity != 0 && yVelocity == 0) {
 				setIsIdle(false);
 				setIdleTime(0);
-				//AnimationManager().updateAnimationState(this, "run");
-				//if you are not moving and have not already started idleing, then idle
+				AnimationManager.getInstance().updateAnimationState(this, "run");
+				
+			//if you are not moving and have not already started idleing, then idle
 			}else if (xVelocity == 0 && yVelocity == 0 && isJumping == false && getIdleTime() == 0) {
 				AnimationManager.getInstance().updateAnimationState(this, "idle");
 				setIsIdle(true);

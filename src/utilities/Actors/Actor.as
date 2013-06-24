@@ -233,6 +233,10 @@
 		//filepath is passed in from the actor type
 		//graphicsElement handles the loading, poorly :(
 		//isLevel determines if its a level, and should therefore do some extra snazzy parsing stugg
+		
+		private function animationStateController():void {
+			setAnimationState("idle");
+		}
 		public function defineGraphics(filePath:String, isLevel:Boolean):void {
 			loadActorSwf(getFilePath());
 		}
@@ -249,39 +253,6 @@
 		
 		public function setiIsGraphicLoaded(loadedState:Boolean):void {
 			isGraphicLoaded = loadedState;
-		}
-		
-		public function alignmentOfParentChildGraphics(par:MovieClip, ch:DisplayObject):void {
-			
-			assignedGraphic[0] = ch;
-			//trace("GraphicsElelement: alignmentOfParentChildGraphics: par:",par,", ch:",ch);
-			//trace("-");
-			/*par.x = ch.x - ch.parent.x ;
-			par.y = ch.y - ch.parent.y;
-			ch.x = 0;
-			ch.y = 0;*/
-			//ch.parent.removeChild(ch);
-		/*	if (par is Wall) {
-				par.scaleX = ch.width;
-				par.scaleY = ch.height;
-			}
-			if (par is Art) {
-				par.addChild(ch);
-			}*/
-			if (par is Avatar) {
-				//par.addChild(ch);
-				//par.setAttackHitbox(ch.hitbox_attack);
-			}
-			
-			/*if (par is Bullet) {
-				
-			}else {
-				par.setUp();
-			}*/
-			
-		/*	if (currentParent is SelectableActor) {
-				currentParent.addClickability_onLoadComplete(par);
-			}*/
 		}
 		
 		//only used for placeholder graphics where a swf or png does not exist yet
@@ -347,7 +318,7 @@
 		public function playAnimation(animation:String):void {
 			//trace(assignedGraphic[0]);
 			//trace(assignedGraphic[0].swf_child);
-			//this.assignedGraphic[0].swf_child.gotoAndStop(animation);
+			this.assignedGraphic[0].swf_child.gotoAndStop(animation);
 			//trace("Actor: playAnimation");
 		}
 		

@@ -1,10 +1,11 @@
 ﻿package utilities.Engine.Combat{
 	
 	import utilities.Actors.Actor;
+	import utilities.Engine.BasicManager;
 	import utilities.Engine.DefaultManager;
 	import flash.display.MovieClip;
 
-	public class AnimationManager {
+	public class AnimationManager extends BasicManager{
 		private static var _instance:AnimationManager;
 		
 		public function AnimationManager(singletonEnforcer:SingletonEnforcer){
@@ -26,7 +27,7 @@
 		public function updateAnimationState(actor:Actor, animState:String):void {
 			actor.playAnimation(animState);
 			
-			//trace("AnimationManager: animState",animState);
+			print(String("AnimationManager: animState"+animState));
 		}
 		
 		//update animations based on current state
