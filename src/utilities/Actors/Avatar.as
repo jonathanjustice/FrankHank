@@ -12,6 +12,7 @@
 	import flash.text.*;
 	import utilities.Engine.Combat.AnimationManager;
 	import utilities.Engine.Combat.AvatarManager;
+	import flash.display.DisplayObject;
 
 	public class Avatar extends JumpingActor{
 		//private var mySprite:Sprite = new Sprite();
@@ -32,24 +33,34 @@
 		private var delay:int = 15;
 		
 		
+		private var filePath:String = "../src/assets/actors/swf_frank.swf";
 		
-		
-		public function Avatar(){
+		public function Avatar(newX:int, newY:int) {
+			this.x = newX,
+			this.y = newY;
 			setUp();
+			
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
+		}
+		
+		public function assignGraphic(graphic:DisplayObject):void {
+			addActorToGameEngine(graphic,AvatarManager.avatars);
+		}
+		
+		public function setUp():void {
+			defineGraphics("frank", false);
 			//addStroke();
 			if (AvatarManager.getInstance().getIsAvatarDoubleJumpEnabled()) {
 				toggleDoubleJump(true);
 			}
 		}
 		
-		public function setUp():void{
-			addActorToGameEngine();
-			defineGraphics("frank",false);
-		}
-		
 		public function setAttackHitbox(newHitbox:MovieClip):void{
 			attackHitbox = newHitbox;
-			trace("attackHitbox",attackHitbox);
+			//trace("attackHitbox",attackHitbox);
 		}
 		
 		public function getAttackHitbox():MovieClip {
@@ -60,6 +71,7 @@
 			currentDelay ++;
 			if(KeyInputManager.getXKey() == true){
 				if (currentDelay >= delay) {
+					//print("pressed x");
 					AnimationManager.getInstance().updateAnimationState(this, "attack");
 				}
 			}
@@ -72,7 +84,7 @@
 		
 		public function updateLoop():void {
 			if (getIsSwfLoaded() == true) {
-				idleLogic();
+				animationLogic();
 				//setIsFalling(true);
 				getisJumpingFromInputManager();
 				applyVelocities();
@@ -188,13 +200,14 @@
 			//trace("isDoubleJumpingEnabled",isDoubleJumpingEnabled);
 		}
 		
-		public function idleLogic():void {
+		public function animationLogic():void {
 			//If running, disable idleing & play run 
 			if (xVelocity != 0 && yVelocity == 0) {
 				setIsIdle(false);
 				setIdleTime(0);
-				//AnimationManager().updateAnimationState(this, "run");
-				//if you are not moving and have not already started idleing, then idle
+				AnimationManager.getInstance().updateAnimationState(this, "run");
+				
+			//if you are not moving and have not already started idleing, then idle
 			}else if (xVelocity == 0 && yVelocity == 0 && isJumping == false && getIdleTime() == 0) {
 				AnimationManager.getInstance().updateAnimationState(this, "idle");
 				setIsIdle(true);

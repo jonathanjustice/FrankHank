@@ -17,14 +17,19 @@
 		//private var availableForTargeting:Boolean=true;
 		
 		
+		private var filePath:String = "";
 		public function CameraWindow() {
 			defineGraphicsDefaultRectangle();
 			this.x = 175;
 			this.y = 50;
-			this.width = 500;
-			this.height = 500;
+			this.scaleX = 5;
+			this.scaleY = 5;
 			this.visible = false;
 			this.alpha = .25;
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
 		}
 		
 		public function scaleToMotion(motion:String):void {

@@ -69,7 +69,7 @@
 			}
 			
 			//mouse is not touching any walls
-			if(LevelManager.getInstance().all_items_colliding_with_mouse(LevelManager.getInstance().getArray()).length == 0) {
+			if(LevelManager.getInstance().all_items_colliding_with_mouse(LevelManager.getInstance().getWalls()).length == 0) {
 				LevelManager.getInstance().deselectActors();
 				//trace("Not touching any walls");
 			}

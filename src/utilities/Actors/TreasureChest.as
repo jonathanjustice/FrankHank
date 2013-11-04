@@ -10,8 +10,13 @@
 		private var progressMax:int=100;
 		private var chestGraphic:MovieClip=new MovieClip();
 		private var chestType:String = "Basic";
+		private var filePath:String = "";
 		public function TreasureChest(){
 			defineGraphics("frank",false);
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
 		}
 		
 		public function updateLoop():void{

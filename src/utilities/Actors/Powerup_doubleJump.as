@@ -15,15 +15,21 @@
 		//private var availableForTargeting:Boolean=true;
 		
 		
-		public function Powerup_doubleJump() {
-			health=1;
+		private var filePath:String = "../src/assets/actors/swf_powerupDoubleJump.swf";
+		public function Powerup_doubleJump(newX:int, newY:int){
+			health = 1;
+			this.x = newX;
+			this.y = newY;
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
 		}
 		
 		public override function setUp():void {
-			addActorToGameEngine();
+			powerupType = "doubleJump";
 			health=1;
 			defineGraphics("powerup_doubleJump",false);
-			powerupType = "doubleJump";
 		}
 		
 		public override function updateLoop():void {

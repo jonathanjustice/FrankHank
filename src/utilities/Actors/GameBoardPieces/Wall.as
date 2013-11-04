@@ -1,19 +1,41 @@
 ﻿package utilities.Actors.GameBoardPieces{
 	import utilities.Actors.Actor;
 	import utilities.Actors.SelectableActor;
-
+	import flash.display.DisplayObject;
+	import utilities.Engine.LevelManager;
 	public class Wall extends SelectableActor{
-		private var isBulletBlocker:Boolean=false;
-		public function Wall(){
+		private var isBulletBlocker:Boolean = false;
+		private var filePath:String = "../src/assets/actors/swf_wall.swf";
+		private var tempWidth:Number = 0;
+		private var tempHeight:Number = 0;
+		public function Wall(newX:int, newY:int,newWidth:Number,newHeight:Number){
 			setUp();
-		}
+			tempWidth = newWidth;
+			tempHeight = newHeight;
+			/*print(String("newX: " + newX + " newY: " + newY + " newWidth: " + newWidth + " newHeight: " + newHeight)); 
+			this.scaleX = newWidth;
+			this.scaleY = newHeight;
+			this.x = newX;
+			this.y = newY;
+			print(String("newX: " + x + " newY: " + y + " newWidth: " + scaleX + " newHeight: " + scaleY)); 
+		*/}
 		
 		public function setUp():void{
-			//trace("fuck yeah it worked");
 			defineGraphics("wall",false);
-			addActorToGameEngine();
-			setPreviousPosition();
+			
+			//this.visible = false;
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
+		}
+		
+		public function assignGraphic(graphic:DisplayObject):void {
+			
+			this.scaleX = tempWidth;
+			this.scaleY = tempHeight;
 			this.visible = false;
+			addActorToGameEngine(graphic,LevelManager.walls);
 		}
 		
 		public function updateLoop():void{

@@ -5,16 +5,22 @@
 	import utilities.Screens.Screen_Default;
 	import utilities.Screens.Screen_Dynamic_Blocker;
 	import utilities.Engine.Game;
+	import flash.display.DisplayObject;
 	public class ScreenStart extends utilities.Screens.Screen_Default{
 		private var myScreen:MovieClip;
 		
 		public function ScreenStart(){
 			utilities.Engine.Game.startGame("start");
 			removeThisScreen();
-			//defineGraphics("ui_Start")
+			//defineScreenGraphics("ui_Start")
 		}
 		
-		
+		public function assignGraphic(graphic:DisplayObject):void {
+			setUp();
+			this.addChild(graphic);
+			assignedGraphic[0] = graphic;
+			//Game.setGameState("cutSceneFullyLoaded");
+		}
 		
 		public override function clickHandler(event:MouseEvent):void{
 			//trace("parent:",event.target.parent.name);

@@ -3,6 +3,8 @@
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Input.KeyInputManager;
 	import flash.utils.getTimer;
+	import utilities.Engine.LevelManager;
+	import flash.display.DisplayObject;
 	public class SavePoint extends Actor{
 		
 		//private var gameContainer;
@@ -19,8 +21,19 @@
 		//private var availableForTargeting:Boolean=true;
 		
 		
-		public function SavePoint() {
-			health=1;
+		private var filePath:String = "../src/assets/actors/swf_savePoint.swf";
+		public function SavePoint(newX:int, newY:int) {
+			health = 1;
+			this.x = newX,
+			this.y = newY;
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
+		}
+		
+		public function assignGraphic(graphic:DisplayObject):void {
+			addActorToGameEngine(graphic,LevelManager.savePoints);
 		}
 		
 		public function getIsActive():Boolean {
@@ -31,9 +44,7 @@
 			isActive = activeState;
 		}
 		
-		public function setUp():void{
-			addActorToGameEngine();
-			setPreviousPosition();
+		public function setUp():void {
 			defineGraphics("savePoint",false);
 		}
 		
@@ -50,14 +61,6 @@
 		public function collidedWithAvatar():void {
 			
 		}
-		
-		//direction indicator is useful for determine what direction the enemy is faceing / moving in / shooting in
-		//make it invisible if its not being used
-		//it's commented out because it't not part of the default graphic anymore
-		/*private function set_direction_indicator_visibility(){
-			directionIndiactor.visible = false;
-		}
-		*/
 		
 		//this records the moment the bullet was created
 		public function setSpawnTime():void {

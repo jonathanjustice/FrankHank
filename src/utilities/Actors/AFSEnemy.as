@@ -3,6 +3,8 @@
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Input.KeyInputManager;
 	import flash.utils.getTimer;
+	import flash.display.DisplayObject;
+	import utilities.Engine.Combat.EnemyManager;
 	public class AFSEnemy extends Enemy{
 		
 		//private var gameContainer;
@@ -11,12 +13,22 @@
 		private var xpToApply:int=0;
 		private var spawnTime:Number;
 		private var lifeSpan:Number = 2;//3 seconds
-		
-		public function AFSEnemy() {
+		private var filePath:String = "../src/assets/actors/swf_afs.swf";
+		public function AFSEnemy(newX:int, newY:int) {
 			xVelocity = -1;
 			setUp();
 			health=1;
-			defineGraphics("afs",false);
+			defineGraphics("afs", false);
+			this.x = newX,
+			this.y = newY;
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
+		}
+		
+		public function assignGraphic(graphic:DisplayObject):void {
+			addActorToGameEngine(graphic,EnemyManager.enemies);
 		}
 		
 		public override function updateLoop():void {

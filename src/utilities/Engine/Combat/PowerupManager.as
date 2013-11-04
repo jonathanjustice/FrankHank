@@ -67,7 +67,7 @@
 		
 		//shitty placeholder enemy creation
 		public static function createNewPowerup():void {
-			var powerup:Powerup_doubleJump = new Powerup_doubleJump();
+			/*var powerup:Powerup_doubleJump = new Powerup_doubleJump();
 			var powerup1:Powerup_shoot = new Powerup_shoot();
 			var powerup2:Powerup_invincible = new Powerup_invincible();
 			//var powerup:Powerup_default = new Powerup_default();
@@ -83,7 +83,7 @@
 			powerup1.x = 350;
 			powerup1.y = 0;
 			powerup2.x = 450;
-			powerup2.y = 0;
+			powerup2.y = 0;*/
 		}
 	}
 }

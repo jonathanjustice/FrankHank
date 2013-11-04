@@ -5,11 +5,23 @@
 	import utilities.Screens.Screen_Default;
 	import utilities.Screens.Screen_Dynamic_Blocker;
 	import utilities.Engine.Game;
+	import flash.display.DisplayObject;
 	public class LevelComplete extends utilities.Screens.Screen_Default{
 		private var myScreen:MovieClip;
-		
+		private var filePath:String = "../src/assets/ui/swf_levelComplete.swf";
 		public function LevelComplete(){
-			defineGraphics("ui_levelComplete");
+			defineScreenGraphics("ui_levelComplete");
+		}
+		
+		public function assignGraphic(graphic:DisplayObject):void {
+			setUp();
+			this.addChild(graphic);
+			assignedGraphic[0] = graphic;
+			//Game.setGameState("cutSceneFullyLoaded");
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
 		}
 		
 		public override function clickHandler(event:MouseEvent):void{
@@ -20,7 +32,7 @@
 					break;
 				case "btn_next":
 					removeThisScreen();
-					utilities.Engine.Game.setGameState("startCutSceneLoad");
+					utilities.Engine.Game.setGameState("startLevelLoad");
 					break;
 			}
 		}

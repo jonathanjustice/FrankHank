@@ -3,6 +3,8 @@
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Input.KeyInputManager;
 	import flash.utils.getTimer;
+	import utilities.Engine.LevelManager;
+	import flash.display.DisplayObject;
 	public class Enemy extends SelectableActor{
 		
 		//private var gameContainer;
@@ -23,14 +25,14 @@
 		//private var availableForTargeting:Boolean=true;
 		
 		
+		private var filePath:String = "";
 		public function Enemy(){
 			setUp();
 			//health=1;
 		}
 		
 		public function setUp():void{
-			addActorToGameEngine();
-			setPreviousPosition();
+			
 			//defineGraphics("frank");
 			//trace(get_availableForTargeting());
 		}

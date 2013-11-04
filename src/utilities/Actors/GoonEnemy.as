@@ -3,6 +3,8 @@
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Input.KeyInputManager;
 	import flash.utils.getTimer;
+	import flash.display.DisplayObject;
+	import utilities.Engine.Combat.EnemyManager;
 	public class GoonEnemy extends Enemy{
 		
 		//private var gameContainer;
@@ -19,11 +21,22 @@
 		//private var availableForTargeting:Boolean=true;
 		
 		
-		public function GoonEnemy() {
+		private var filePath:String = "../src/assets/actors/swf_goon.swf";
+		public function GoonEnemy(newX:int, newY:int) {
+			this.x = newX,
+			this.y = newY;
 			xVelocity = -5;
+			health = 1;
 			setUp();
-			health=1;
 			defineGraphics("goon",false);
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
+		}
+		
+		public function assignGraphic(graphic:DisplayObject):void {
+			addActorToGameEngine(graphic,EnemyManager.enemies);
 		}
 		
 		public override function updateLoop():void {

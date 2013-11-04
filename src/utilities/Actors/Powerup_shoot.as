@@ -15,15 +15,21 @@
 		//private var availableForTargeting:Boolean=true;
 		
 		
-		public function Powerup_shoot() {
-			health=1;
+		private var filePath:String = "../src/assets/actors/swf_powerupShoot.swf";
+		public function Powerup_shoot(newX:int, newY:int){
+			health = 1;
+			this.x = newX;
+			this.y = newY;
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
 		}
 		
 		public override function setUp():void {
-			addActorToGameEngine();
+			powerupType = "shoot";
 			health=1;
 			defineGraphics("powerup_shoot",false);
-			powerupType = "shoot";
 		}
 		
 		public override function updateLoop():void {

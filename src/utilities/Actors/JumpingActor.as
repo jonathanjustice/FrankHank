@@ -22,6 +22,7 @@
 		public var isJumping:Boolean = false;
 		
 		
+		private var filePath:String = "";
 		public function JumpingActor(){
 			
 		}

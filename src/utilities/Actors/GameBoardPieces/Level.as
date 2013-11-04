@@ -6,9 +6,9 @@
 
 	public class Level extends SelectableActor{
 		public function Level(levelName:String) {
-			addActorToGameEngine();
-			defineGraphics(levelName,true);
-			//trace("level");
+			addLevelToGameEngine();
+			defineLevelGraphics(levelName,true);
+			//print("level");
 			//lvl_02
 		}
 		
@@ -22,13 +22,13 @@
 		}
 		
 		public override function deselectActor():void {
-				trace("deselect");
+				print("deselect");
 				
 				//removeStroke();
 		}
 			
 		public override function selectActor():void {
-			trace("select");
+			print("select");
 			
 			//addStroke();
 		}

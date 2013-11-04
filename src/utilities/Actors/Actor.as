@@ -2,6 +2,8 @@
 	//import air.update.utils.VersionUtils;
 	import flash.display.AVM1Movie;
 	import flash.display.MovieClip;
+	import flash.display.DisplayObject;
+	import flash.display.Sprite;
 	import utilities.Screens.progressBar;
 	import utilities.Engine.Game;
 	import utilities.Engine.Combat.*;
@@ -9,7 +11,7 @@
 	import utilities.Actors.TreasureChest;
 	import utilities.Engine.Builders.LootManager;
 	import utilities.Actors.Stats.WeaponStats;
-	import utilities.GraphicsElements.GraphicsElement;
+	import utilities.GraphicsElements.SwfParser;
 	import utilities.GraphicsElements.Animation;
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Mathematics.QuadTree;
@@ -17,8 +19,11 @@
 	import utilities.Input.KeyInputManager;
 	import utilities.Engine.Combat.AnimationManager;
 	import utilities.Engine.LevelManager;
+	import utilities.objects.GameObject;
 	
-	public class Actor extends MovieClip {
+	import utilities.Saving_And_Loading.swfLoader;
+	public class Actor extends GameObject {
+		public var isGraphicLoaded:Boolean = false;
 		private var isFalling:Boolean = false;
 		private var idleImpatientTime:int = 0;
 		private var idleTime:int = 0;
@@ -60,12 +65,18 @@
 		private var isGravitySystemEnabled:Boolean = true;
 		private var fireProjectileDelay:int = 9999;
 		private var fireProjectileTimer:int = 0;
-		private var behaviorState:String="idle"
+		private var behaviorState:String = "idle"
+		private var filePath:String = "";
 		
-		public function Actor(){
+		public function Actor() {
+			
 			defineWeaponStats();
 			setAnimationState("idle");
-			//trace("Actor:new actor")
+			//print(this);
+		}
+		
+		public function getFilePath():String {
+			return filePath;
 		}
 		
 		/*
@@ -143,8 +154,20 @@
 		*/
 					
 		//creation & destruction
-		public function addActorToGameEngine():void {
+		//future: add ability to add things to game engine at particular orders, right now we are at the mercy of the FLA
+		public function addLevelToGameEngine():void {
 			utilities.Engine.Game.gameContainer.addChild(this);
+		}
+		
+		
+		
+		public function addActorToGameEngine(graphic:DisplayObject,array:Array):void {
+			setPreviousPosition();
+			assignedGraphic[0] = graphic;
+			this.addChild(graphic);
+			utilities.Engine.Game.gameContainer.addChild(this);
+			setIsSwfLoaded(true);
+			array.push(this);
 		}
 		
 		public function removeActorFromGameEngine(actor:MovieClip, array:Array):void {
@@ -210,19 +233,40 @@
 		//filepath is passed in from the actor type
 		//graphicsElement handles the loading, poorly :(
 		//isLevel determines if its a level, and should therefore do some extra snazzy parsing stugg
-		public function defineGraphics(filePath:String,isLevel:Boolean):void {
-			//trace("filePath:",filePath);
-			actorGraphic = new utilities.GraphicsElements.GraphicsElement();
-			actorGraphic.loadSwf(filePath,this,isLevel);
-			this.addChild(actorGraphic);
+		
+		private function animationStateController():void {
+			setAnimationState("idle");
+		}
+		public function defineGraphics(filePath:String, isLevel:Boolean):void {
+			loadActorSwf(getFilePath());
+		}
+		
+		public function loadActorSwf(filePath:String):void {
+			var loader:swfLoader = new swfLoader();
+			loader.beginLoad(this, filePath);
+			loader = null;
+		}
+		
+		public function getiIsGraphicLoaded():Boolean {
+			return isGraphicLoaded;
+		}
+		
+		public function setiIsGraphicLoaded(loadedState:Boolean):void {
+			isGraphicLoaded = loadedState;
 		}
 		
 		//only used for placeholder graphics where a swf or png does not exist yet
 		public function defineGraphicsDefaultRectangle():void{
-			actorGraphic = new utilities.GraphicsElements.GraphicsElement();
-			actorGraphic.drawGraphicDefaultRectangle();
+			//actorGraphic = SwfParser.getInstance();
+			drawGraphicDefaultRectangle();
+		}
+		
+		
+		//********************NEEDS UPDATE!
+		public function defineLevelGraphics(filePath:String,isLevel:Boolean):void {
+			actorGraphic = SwfParser.getInstance();
+			actorGraphic.loadLevelSwf(filePath,this);
 			this.addChild(actorGraphic);
-			
 		}
 		
 		public function createProgressBar(bar:String):void{
@@ -271,7 +315,9 @@
 		}
 		
 		//this function will thow an undefined object error if runs before the assigned graphic is assigned
-		public function playAnimation(animation:String):void {	
+		public function playAnimation(animation:String):void {
+			//trace(assignedGraphic[0]);
+			//trace(assignedGraphic[0].swf_child);
 			this.assignedGraphic[0].swf_child.gotoAndStop(animation);
 			//trace("Actor: playAnimation");
 		}
@@ -462,13 +508,8 @@
 		}
 		
 		public function traceProperties():void {
-			trace("health:",health);
-			trace("actorGraphic.assignedGraphic",actorGraphic.assignedGraphic);
-			trace("actorGraphic.assignedGraphic.mc_circle",actorGraphic.assignedGraphic.mc_circle);
-			trace("actorGraphic.assignedGraphic.children",actorGraphic.assignedGraphic.children);
-			trace("actorGraphic.assignedGraphic.numChildren",actorGraphic.assignedGraphic.numChildren);
+			
 		}
-		
 		public function testFunction():void{
 			trace(this, "Actor: class exists, probably means you fucked up somewhere else, or you can't access the object you want inside the class.");
 		}
@@ -480,6 +521,7 @@
 		
 		public function setIsSwfLoaded(loadState:Boolean):void {
 			isSwfLoaded = loadState;
+			SwfParser.getInstance().incrementChildrenLoaded();
 		}
 		
 		public function getIsSwfLoaded():Boolean {
@@ -492,6 +534,15 @@
 		
 		public function setMaxGravity(newMax:int):void {
 			maxGravity = newMax;
+		}
+		
+		public function drawGraphicDefaultRectangle():void {
+			var myGraphic:Sprite = new Sprite();
+			myGraphic.graphics.lineStyle(3,0x0000ff);
+			myGraphic.graphics.beginFill(0x8800FF);
+			myGraphic.graphics.drawRect(0,0,100,100);
+			myGraphic.graphics.endFill();
+			this.addChild(myGraphic);
 		}
 	}
 }

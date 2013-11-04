@@ -15,15 +15,21 @@
 		//private var availableForTargeting:Boolean=true;
 		
 		
-		public function Powerup_invincible() {
-			health=1;
+		private var filePath:String = "../src/assets/actors/swf_powerupInvincible.swf";
+		public function Powerup_invincible(newX:int, newY:int){
+			health = 1;
+			this.x = newX;
+			this.y = newY;
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
 		}
 		
 		public override function setUp():void {
-			addActorToGameEngine();
+			powerupType = "invincible";
 			health=1;
 			defineGraphics("powerup_invincible",false);
-			powerupType = "invincible";
 		}
 		
 		public override function updateLoop():void {

@@ -34,18 +34,20 @@ package utilities.Actors{
 		
 		//public var xDiff:Number=0;
 		//public var yDiff:Number=0;
-	
+		private var filePath:String = "../src/assets/actors/swf_bullet.swf";
 		public function Bullet(){
 			setUp();
 			setMaxGravity(5);
 			yVelocity = 10;
 		}
 		
-		
+		public override function getFilePath():String {
+			return filePath;
+		}
+		//newX:int, newY:int
 		public function setUp():void {
 			trace("new bullet");
 			setInitialLocationAndVector();
-			addActorToGameEngine();
 			defineGraphics("bullet",false);
 		}
 		

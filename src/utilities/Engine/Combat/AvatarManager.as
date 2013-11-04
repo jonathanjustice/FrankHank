@@ -52,7 +52,7 @@
 		public static function updateLoop():void{
 			for each(var myAvatar:Avatar in avatars){
 				myAvatar.updateLoop();
-				
+				//collide powersups & avatar
 				for (var a:int = 0; a < PowerupManager.powerups.length; a++) {
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, PowerupManager.powerups[a]) == true) {
 						myAvatar.toggleDoubleJump(true);
@@ -62,40 +62,35 @@
 						PowerupManager.powerups[a].checkForDeathFlag();
 					}
 				}
-				
+				//collide coins & avatar
 				for (var b:int = 0; b < LevelManager.coins.length;b++){
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.coins[b]) == true) {
 						LevelManager.coins[b].takeDamage(1);
 						LevelManager.coins[b].checkForDeathFlag();
 					}
 				}
-				
+				//collide save points & avatar
 				for (var c:int = 0; c < LevelManager.savePoints.length; c++) {
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.savePoints[c]) == true) {
 						if (LevelManager.savePoints[c].getIsActive() == true) {
 								LevelProgressModel.getInstance().setMidMissionProgress(c);
 								LevelManager.savePoints[c].setIsActive(false);
 						}
-					
 					}
 				}
-				
-				//for some horrible ass backwards reason, I included the level itself in the same array as the walls inside the level, so the iteration needs to start at 1
-				//this is unnacceptable and needs to get fixed asap because it is super confusing and inconsistent.
-				for (var i:int = 1; i < LevelManager.levels.length; i++) {
-					
-					//a really uneccessarily long way to write hitTestObject, because I can
-					//checks for collision
-					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.levels[i]) == true) {
+				//collide walls & avatar
+				for (var i:int = 0; i < LevelManager.walls.length; i++) {
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.walls[i]) == true) {
 						//resolves the collision & returns if this touched the top of the other object
-						if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.levels[i]) == "top") {
+						if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
 							myAvatar.jumpingEnded();
 							myAvatar.resetGravity();
 						}
 					}
+					//collide bullets  & walls
 					for each(var bullet:Bullet in BulletManager.bullets) {
-						if (utilities.Mathematics.RectangleCollision.simpleIntersection(bullet, LevelManager.levels[i]) == true) {
-							var collisionSide:String = utilities.Mathematics.RectangleCollision.testCollision(bullet, LevelManager.levels[i]);
+						if (utilities.Mathematics.RectangleCollision.simpleIntersection(bullet, LevelManager.walls[i]) == true) {
+							var collisionSide:String = utilities.Mathematics.RectangleCollision.testCollision(bullet, LevelManager.walls[i]);
 							if (collisionSide == "top") {
 								
 								bullet.reverseVelecityY();
@@ -115,10 +110,8 @@
 						}
 					}
 				}
-				
+				//collide enemies & avatar
 				for (var j:int = 0; j < EnemyManager.enemies.length; j++) {
-					
-				//a really uneccessarily long way to write hitTestObject, because I can
 					//checks for collision
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, EnemyManager.enemies[j]) == true) {
 						//if the avatar is invincible, damage the enemy
@@ -131,11 +124,9 @@
 						}
 					}
 					//make the avatar and his hitbox exist before checking against them
-					if (myAvatar.getActorGraphic().getiIsGraphicLoaded() == true) {
+					if (myAvatar.getiIsGraphicLoaded() == true) {
 						if(EnemyManager.enemies[j].hitTestObject(myAvatar.getActorGraphic().assignedGraphics[0].swf_child.hitbox_attack)){
-							
 							EnemyManager.enemies[j].takeDamage(myAvatar.getAttackDamage());
-							
 						}
 					}	
 				}
@@ -145,8 +136,7 @@
 		
 		//deprecated
 		private static function createAvatar():void {
-			trace("creating new avatar");
-			avatar = new utilities.Actors.Avatar();
+			avatar = new utilities.Actors.Avatar(0,0);
 			avatars.push(avatar);
 		}
 		

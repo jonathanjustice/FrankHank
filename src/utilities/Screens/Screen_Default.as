@@ -4,32 +4,36 @@
 	import flash.display.MovieClip;
 	import utilities.Screens.Screen_Dynamic_Blocker;
 	import utilities.Engine.*;
-	import utilities.Engine.UIManager;import utilities.GraphicsElements.GraphicsElement;
-	public class Screen_Default extends MovieClip{
+	import utilities.Engine.UIManager; import utilities.GraphicsElements.SwfParser;
+	import utilities.objects.GameObject;
+	public class Screen_Default extends GameObject{
 		private var blocker:Screen_Dynamic_Blocker;
 		private var myScreen:MovieClip;//or replace with swf eventually
 		private var actorGraphic:MovieClip;
 		public var assignedGraphic:Array = new Array();
 		private var animationState:String = "idle"
 		private var isSwfLoaded:Boolean = false;
+		private var filePath: String = "";
 		public function Screen_Default():void{			
 			setUp();
 		}
 		
+		public function getFilePath():String {
+			return filePath;
+		}
+		
 		public function setUp():void {
 			addDynamicBlocker();
-			addScreenToUIContainer();
 			addClickHandler();
 			addOverHandler();
 			addOutHandler();
 			mouseEnabledHandler();
+			addScreenToUIContainer();
 		}
 		
-		public function defineGraphics(filePath:String):void {
+		public function defineScreenGraphics(filePath:String):void {
 			//trace("filePath:",filePath);
-			actorGraphic = new utilities.GraphicsElements.GraphicsElement();
-			actorGraphic.loadSwf(filePath,this,false);
-			this.addChild(actorGraphic);
+			SwfParser.getInstance().loadScreenSwf(filePath,this);
 		}
 		
 		public function setIsSwfLoaded(loadState:Boolean):void {

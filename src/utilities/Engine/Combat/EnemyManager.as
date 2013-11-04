@@ -76,7 +76,7 @@
 		
 			if (enemies.length == 0 && LevelManager.getInstance().getisLevelActive()) {
 					
-				trace("enemy manager: no enemies left");
+				//trace("enemy manager: no enemies left");
 				LevelManager.getInstance().setIsLevelComplete(true);
 				LevelManager.getInstance().checkLevelObjectives();
 			}
@@ -103,10 +103,10 @@
 		public static function checkForCollisionWithWall():void {
 			for each(var enemy:MovieClip in enemies) {
 				enemy.setNumberOfWallsBeingTouched(-enemy.getNumberOfWallsBeingTouched());
-				for(var i:int = 1; i<LevelManager.levels.length;i++){
-					if (utilities.Mathematics.RectangleCollision.simpleIntersection(enemy, LevelManager.levels[i]) == true) {
+				for(var i:int = 0; i<LevelManager.walls.length;i++){
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(enemy, LevelManager.walls[i]) == true) {
 						//resolves the collision & returns if this touched the top of the other object
-						var collisionSide:String = utilities.Mathematics.RectangleCollision.testCollision(enemy, LevelManager.levels[i]);
+						var collisionSide:String = utilities.Mathematics.RectangleCollision.testCollision(enemy, LevelManager.walls[i]);
 						if (collisionSide == "left" || collisionSide == "right") {
 							enemy.reverseVelecityX();
 							enemy.resetGravity();
@@ -116,7 +116,7 @@
 							enemy.resetGravity();
 							if (enemy is TankEnemy) {
 								//if a tank enemy reaches the end of a platform, make it turn around instead of falling off 
-								if (utilities.Mathematics.RectangleCollision.isRectangleOnTop(enemy, LevelManager.levels[i]) && enemy.getNumberOfWallsBeingTouched() == 1) {
+								if (utilities.Mathematics.RectangleCollision.isRectangleOnTop(enemy, LevelManager.walls[i]) && enemy.getNumberOfWallsBeingTouched() == 1) {
 									enemy.reverseVelecityX();
 									enemy.x = enemy.getPreviousPosition().x;
 									enemy.x += enemy.xVelocity * 2;
@@ -143,30 +143,30 @@
 		public static function createNewEnemy():void {
 			//var AFSenemy:AFSEnemy = new AFSEnemy();
 			//var goonEnemy:GoonEnemy = new GoonEnemy();
-			var tankEnemy:TankEnemy = new TankEnemy();
+			//var tankEnemy:TankEnemy = new TankEnemy();
 			//enemies.push(AFSenemy);
 			//enemies.push(goonEnemy);
-			enemies.push(tankEnemy);
+			//enemies.push(tankEnemy);
 			//give the enemy some placeholder properties
 			//AFSenemy.x = 375;
 			//AFSenemy.y = 5;
 			//goonEnemy.x = 500;
 			//goonEnemy.y = -25;
-			tankEnemy.x = 600;
-			tankEnemy.y = -25;
+			//tankEnemy.x = 600;
+			//tankEnemy.y = -25;
 			//var enemyGraphics = enemyFactory.GenerateBody();
 		
 		}
 		
 		//another shiity placeholder enemy creation
 		public static function createNewRandomEnemy():void {
-			var AFSenemy:AFSEnemy = new AFSEnemy();
+			/*var AFSenemy:AFSEnemy = new AFSEnemy();
 			var Goonenemy:GoonEnemy = new GoonEnemy();
-			var enemy:Enemy = new Enemy();
-			enemies.push(Goonenemy);
+			var enemy:Enemy = new Enemy();*/
+			//enemies.push(Goonenemy);
 			//give the enemy some placeholder properties
-			Goonenemy.x = Math.random()*500;
-			Goonenemy.y = Math.random()*200;
+			//Goonenemy.x = Math.random()*500;
+			//Goonenemy.y = Math.random()*200;
 			//var enemyGraphics = enemyFactory.GenerateBody();
 			
 			//placeholder debug var

@@ -2,6 +2,8 @@
 	import utilities.Engine.Game;
 	import utilities.Mathematics.MathFormulas;
 	import flash.utils.getTimer;
+	import utilities.Engine.Combat.PowerupManager;
+	import flash.display.DisplayObject;
 	public class Powerup_default extends Actor{
 		
 		//private var gameContainer;
@@ -18,16 +20,26 @@
 		//private var availableForTargeting:Boolean=true;
 		
 		
+		private var filePath:String = "";
 		public function Powerup_default() {
 			setUp();
 			
 		}
 		
+		public function assignGraphic(graphic:DisplayObject):void {
+			addActorToGameEngine(graphic,PowerupManager.powerups);
+		}
+		
+		public override function getFilePath():String {
+			return filePath;
+		}
+		
 		public function setUp():void {
-			addActorToGameEngine();
-			health=1;
-			defineGraphics("powerup_default",false);
+			health = 1;
 			powerupType = "default";
+			defineGraphics("powerup_default", false);
+			
+		
 		}
 		
 		public function getPowerupType():String {
