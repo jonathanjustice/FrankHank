@@ -148,6 +148,15 @@
 						wall.y = tempArray[j].y;
 						tempArray[j].x = 0;
 						tempArray[j].y = 0;
+						wall.setType("standard")
+					}
+					if(tempArray[j].name == "platform"){
+						var platform:Wall = new Wall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
+						platform.x = tempArray[j].x;
+						platform.y = tempArray[j].y;
+						tempArray[j].x = 0;
+						tempArray[j].y = 0;
+						platform.setType("platform")
 					}
 					if(tempArray[j].name == "avatar"){
 						var avatar:Avatar = new Avatar(tempArray[j].x, tempArray[j].y);

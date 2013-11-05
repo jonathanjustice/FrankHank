@@ -3,13 +3,13 @@
 	import utilities.Actors.SelectableActor;
 	import flash.display.DisplayObject;
 	import utilities.Engine.LevelManager;
-	public class Wall extends SelectableActor{
+	public class Platform extends Wall{
 		private var isBulletBlocker:Boolean = false;
 		private var filePath:String = "../src/assets/actors/swf_wall.swf";
 		private var tempWidth:Number = 0;
 		private var tempHeight:Number = 0;
-		private var wallType:String = "standard";
-		public function Wall(newX:int, newY:int,newWidth:Number,newHeight:Number){
+		private var wallType:String = "platform";
+		public function Platform(newX:int, newY:int,newWidth:Number,newHeight:Number){
 			setUp();
 			tempWidth = newWidth;
 			tempHeight = newHeight;
@@ -25,14 +25,6 @@
 			defineGraphics("wall",false);
 			
 			//this.visible = false;
-		}
-		
-		public function setType(newType:String):void {
-			wallType = newType;
-		}
-		
-		public function getType():String {
-			return wallType;
 		}
 		
 		public override function getFilePath():String {

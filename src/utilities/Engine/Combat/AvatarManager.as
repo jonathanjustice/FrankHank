@@ -80,12 +80,34 @@
 				}
 				//collide walls & avatar
 				for (var i:int = 0; i < LevelManager.walls.length; i++) {
+					
+					
+					
+					
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.walls[i]) == true) {
-						//resolves the collision & returns if this touched the top of the other object
-						if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
-							myAvatar.jumpingEnded();
-							myAvatar.resetGravity();
+						
+						switch (LevelManager.walls[i].getType()){
+							case "standard":
+								trace("standard");
+								//resolves the collision & returns if this touched the top of the other object
+								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
+									myAvatar.jumpingEnded();
+									myAvatar.resetGravity();
+								}
+								break;
+							case "platform":
+								trace("platform");
+								if (utilities.Mathematics.RectangleCollision.isRectangleOnTop(myAvatar, LevelManager.walls[i]) == "top") {
+									myAvatar.jumpingEnded();
+									myAvatar.resetGravity();
+								}
+								break;
+							
 						}
+						
+						
+						
+						
 					}
 					//collide bullets  & walls
 					for each(var bullet:Bullet in BulletManager.bullets) {
