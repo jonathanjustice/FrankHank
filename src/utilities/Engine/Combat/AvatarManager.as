@@ -96,6 +96,13 @@
 									myAvatar.resetGravity();
 								}
 								break;
+							case "movingPlatform":
+								if (utilities.Mathematics.RectangleCollision.testCollisionWithPlatform(myAvatar, LevelManager.walls[i]) == true) {
+									trace("platform");
+									myAvatar.jumpingEnded();
+									myAvatar.resetGravity();
+								}
+								break;
 						}
 					}
 					//collide bullets  & walls

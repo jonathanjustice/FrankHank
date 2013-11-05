@@ -3,13 +3,15 @@
 	import utilities.Actors.SelectableActor;
 	import flash.display.DisplayObject;
 	import utilities.Engine.LevelManager;
-	public class Platform extends Wall{
+	public class MovingWall extends SelectableActor{
 		private var isBulletBlocker:Boolean = false;
 		private var filePath:String = "../src/assets/actors/swf_wall.swf";
 		private var tempWidth:Number = 0;
 		private var tempHeight:Number = 0;
 		private var wallType:String = "platform";
-		public function Platform(newX:int, newY:int,newWidth:Number,newHeight:Number){
+		private var nodes:Array = new Array;
+		public function MovingWall(newX:int, newY:int, newWidth:Number, newHeight:Number) {
+			
 			setUp();
 			tempWidth = newWidth;
 			tempHeight = newHeight;
@@ -21,14 +23,18 @@
 			print(String("newX: " + x + " newY: " + y + " newWidth: " + scaleX + " newHeight: " + scaleY)); 
 		*/}
 		
+		public override function getFilePath():String {
+			return filePath;
+		}
+		
 		public function setUp():void{
 			defineGraphics("wall",false);
 			
 			//this.visible = false;
 		}
 		
-		public override function getFilePath():String {
-			return filePath;
+		public function setType(newType:String):void {
+			wallType = newType;
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
@@ -39,8 +45,17 @@
 			addActorToGameEngine(graphic,LevelManager.walls);
 		}
 		
-		public function updateLoop():void{
-			
+		public function updateLoop():void {
+			moveToNextNode();
+		}
+		
+		public function moveToNextNode():void {
+			this.x += xVelocity;
+			this.y += yVelocity;
+		}
+		
+		public function defineNodes():void {
+			trace("this.numChildren",this.numChildren);
 		}
 		
 		public function wallTest():void {
