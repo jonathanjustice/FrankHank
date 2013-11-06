@@ -91,14 +91,21 @@
 								break;
 							case "platform":
 								if (utilities.Mathematics.RectangleCollision.testCollisionWithPlatform(myAvatar, LevelManager.walls[i]) == true) {
-									trace("platform");
+									//trace("platform");
+									myAvatar.jumpingEnded();
+									myAvatar.resetGravity();
+								}
+								break;
+							case "movingWall":
+								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == true) {
+									trace("movingWall");
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 								}
 								break;
 							case "movingPlatform":
 								if (utilities.Mathematics.RectangleCollision.testCollisionWithPlatform(myAvatar, LevelManager.walls[i]) == true) {
-									trace("platform");
+									trace("movingPlatform");
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 								}

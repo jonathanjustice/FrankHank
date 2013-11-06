@@ -166,6 +166,16 @@
 						tempArray[j].x = 0;
 						tempArray[j].y = 0;
 						movingWall.setType("movingWall");
+						var nodeArray:Array = new Array;
+						for (var n:int = 0; n < tempArray[j].numChildren; n++) {
+							if (tempArray[j].getChildAt(n).name != "hitbox") {
+								nodeArray.push(tempArray[j].getChildAt(n));
+							}
+						}
+						movingWall.defineNodes(nodeArray);
+						trace(nodeArray.numChildren);
+						trace(nodeArray);
+						
 					}
 					if(tempArray[j].name == "avatar"){
 						var avatar:Avatar = new Avatar(tempArray[j].x, tempArray[j].y);
