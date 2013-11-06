@@ -81,10 +81,28 @@
 				//collide walls & avatar
 				for (var i:int = 0; i < LevelManager.walls.length; i++) {
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.walls[i]) == true) {
-						//resolves the collision & returns if this touched the top of the other object
-						if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
-							myAvatar.jumpingEnded();
-							myAvatar.resetGravity();
+						switch (LevelManager.walls[i].getType()){
+							case "standard":
+								//resolves the collision & returns if this touched the top of the other object
+								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
+									myAvatar.jumpingEnded();
+									myAvatar.resetGravity();
+								}
+								break;
+							case "platform":
+								if (utilities.Mathematics.RectangleCollision.testCollisionWithPlatform(myAvatar, LevelManager.walls[i]) == true) {
+									trace("platform");
+									myAvatar.jumpingEnded();
+									myAvatar.resetGravity();
+								}
+								break;
+							case "movingPlatform":
+								if (utilities.Mathematics.RectangleCollision.testCollisionWithPlatform(myAvatar, LevelManager.walls[i]) == true) {
+									trace("platform");
+									myAvatar.jumpingEnded();
+									myAvatar.resetGravity();
+								}
+								break;
 						}
 					}
 					//collide bullets  & walls

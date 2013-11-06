@@ -76,5 +76,22 @@ package utilities.Mathematics{
 			}
 			return isOnTop;
 		}
+		
+		public static function testCollisionWithPlatform(movable:MovieClip, stationary:MovieClip):Boolean {
+			var collisionEjectDistance:Number = 1;//don't get stuck in the other rectangle
+			var isOnTop:Boolean = false;
+			if (movable.getPreviousPosition().y + movable.height <= stationary.y) {
+				if (movable.getPreviousPosition().x + movable.width >= stationary.getPreviousPosition().x) {
+					isOnTop = true;
+				}
+				if (movable.getPreviousPosition().x <= stationary.getPreviousPosition().x + stationary.width) {
+					isOnTop = true;
+				}
+				if (isOnTop) {
+					movable.y = stationary.y - movable.height - collisionEjectDistance;
+				}
+			}
+			return isOnTop;
+		}
 	 }
 }

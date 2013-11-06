@@ -26,6 +26,7 @@
 	import utilities.objects.GameObject;
 	import utilities.Saving_And_Loading.swfLoader;
 	import utilities.Actors.GameBoardPieces.Wall;
+	import utilities.Actors.GameBoardPieces.MovingWall;
 	import utilities.Actors.GameBoardPieces.Art;
 	import utilities.Engine.LevelManager;
 	import flash.system.Security;
@@ -148,6 +149,23 @@
 						wall.y = tempArray[j].y;
 						tempArray[j].x = 0;
 						tempArray[j].y = 0;
+						wall.setType("standard");
+					}
+					if(tempArray[j].name == "platform"){
+						var platform:Wall = new Wall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
+						platform.x = tempArray[j].x;
+						platform.y = tempArray[j].y;
+						tempArray[j].x = 0;
+						tempArray[j].y = 0;
+						platform.setType("platform");
+					}
+					if(tempArray[j].name == "movingWall"){
+						var movingWall:MovingWall = new MovingWall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
+						movingWall.x = tempArray[j].x;
+						movingWall.y = tempArray[j].y;
+						tempArray[j].x = 0;
+						tempArray[j].y = 0;
+						movingWall.setType("movingWall");
 					}
 					if(tempArray[j].name == "avatar"){
 						var avatar:Avatar = new Avatar(tempArray[j].x, tempArray[j].y);
