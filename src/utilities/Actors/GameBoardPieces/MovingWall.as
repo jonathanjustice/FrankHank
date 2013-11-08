@@ -11,7 +11,6 @@
 		private var tempWidth:Number = 0;
 		private var tempHeight:Number = 0;
 		private var wallType:String = "platform";
-		private var nodes:Array = new Array;
 		private var currentNode:MovieClip;
 		public function MovingWall(newX:int, newY:int, newWidth:Number, newHeight:Number) {
 			
@@ -31,7 +30,8 @@
 		}
 		
 		public function setUp():void{
-			defineGraphics("wall",false);
+			defineGraphics("wall", false);
+			xVelocity = -1;
 			
 			//this.visible = false;
 			
@@ -49,33 +49,23 @@
 			
 			this.scaleX = tempWidth;
 			this.scaleY = tempHeight;
-			this.visible = false;
+			//this.visible = false;
 			addActorToGameEngine(graphic, LevelManager.walls);
-			if (graphic is MovieClip) {
-					var myClip:MovieClip = graphic as MovieClip;
-					trace("1",myClip);
-					trace("2",myClip.swf_child);
-					trace("3",myClip.swf_child.numChildren);
-				//	trace("4",myClip.swf_child.child.name);
-				//defineNodes(myClip);
-			}
-			
+		
+			defineGraphicsDefaultSmallRectangle();
 		}
 		
-		public function updateLoop(e:Event):void {
+		public function updateLoop():void {
 			moveToNextNode();
 		}
 		
 		public function moveToNextNode():void {
-			trace("move to next node");
+			//trace("move to next node");
 			this.x += xVelocity;
 			this.y += yVelocity;
-		}
-		
-		public function defineNodes(array:Array):void {
-			nodes = array;
-			trace("nodes: ",nodes);
-			this.addEventListener(Event.ENTER_FRAME, updateLoop);
+			//trace(getHitbox());
+			//trace(getHitbox().x);
+			//trace(getHitbox().y);
 		}
 		
 		public function wallTest():void {

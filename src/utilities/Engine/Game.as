@@ -20,6 +20,7 @@
 	import utilities.Mathematics.QuadTree;
 	import utilities.dataModels.LevelProgressModel;
 	import utilities.Engine.Combat.AnimationManager;
+	import utilities.Actors.GameBoardPieces.Art;
 	
 	public class Game extends MovieClip{
 		public static var theGame:Game;
@@ -241,8 +242,24 @@
 					if (avatarVels.x >= 0) {
 						//do nothing
 					}else {
-						//trace("moving left");
+						trace("moving left");
 						gameContainer.x += cameraSpeed;
+						for (var i:int = 0; i < LevelManager.arts.length; i++ ) {
+							//trace("arts: ", i," ", LevelManager.arts[i]);
+							
+						//for each(var art:Art in levelManager.getArts()) {
+							switch(LevelManager.arts[i].getParallaxLevel) {
+								case 0:
+									//art += cameraSpeed;
+									break;
+								case 1:
+									LevelManager.arts[i].x += cameraSpeed;
+									break;
+								case 2:
+									LevelManager.arts[i].x += cameraSpeed;
+									break;
+							}
+						}
 					}
 					//
 				}

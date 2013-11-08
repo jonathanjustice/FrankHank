@@ -23,6 +23,8 @@
 	
 	import utilities.Saving_And_Loading.swfLoader;
 	public class Actor extends GameObject {
+		private var hitbox:MovieClip = new MovieClip;
+		private var nodes:Array = new Array;
 		public var isGraphicLoaded:Boolean = false;
 		private var isFalling:Boolean = false;
 		private var idleImpatientTime:int = 0;
@@ -159,7 +161,19 @@
 			utilities.Engine.Game.gameContainer.addChild(this);
 		}
 		
+		//usually from SwfParser
+		public function defineNodes(array:Array):void {
+			nodes = array;
+			//trace("nodes: ",nodes);
+		}
 		
+		public function defineHitbox(newHitbox:MovieClip):void {
+			hitbox = newHitbox;
+		}
+		
+		public function getHitbox():MovieClip {
+			return hitbox;
+		}
 		
 		public function addActorToGameEngine(graphic:DisplayObject,array:Array):void {
 			setPreviousPosition();
@@ -259,6 +273,10 @@
 		public function defineGraphicsDefaultRectangle():void{
 			//actorGraphic = SwfParser.getInstance();
 			drawGraphicDefaultRectangle();
+		}
+		
+		public function defineGraphicsDefaultSmallRectangle():void {
+			drawGraphicDefaultSmallRectangle();
 		}
 		
 		
@@ -534,6 +552,16 @@
 		
 		public function setMaxGravity(newMax:int):void {
 			maxGravity = newMax;
+		}
+		
+		public function drawGraphicDefaultSmallRectangle():void {
+			var myGraphic:Sprite = new Sprite();
+			//myGraphic.graphics.lineStyle(3, 0x0000ff);
+			myGraphic.graphics.lineStyle();
+			myGraphic.graphics.beginFill(0x8800FF);
+			myGraphic.graphics.drawRect(0,0,1,1);
+			myGraphic.graphics.endFill();
+			this.addChild(myGraphic);
 		}
 		
 		public function drawGraphicDefaultRectangle():void {

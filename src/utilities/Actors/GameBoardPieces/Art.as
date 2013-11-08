@@ -5,13 +5,15 @@
 	import utilities.Engine.LevelManager;
 	public class Art extends SelectableActor {
 		private var filePath:String = "";
-		public function Art(newX:int, newY:int,newGraphic:DisplayObject){
+		private var parallaxLevel:int = 0;
+		public function Art(newX:int, newY:int,newGraphic:DisplayObject,parallaxingLevel:int){
 			setUp();
 			this.x = newX;
 			this.y = newY;
 			this.alpha = 1;
 			assignGraphic(newGraphic);
 			//this.addChild(newGraphic);
+			parallaxLevel = parallaxingLevel;
 		}
 		
 		public override function getFilePath():String {
@@ -30,6 +32,10 @@
 		
 		public function updateLoop():void{
 			
+		}
+		
+		public function getParallaxLevel():int {
+			return parallaxLevel;
 		}
 		
 		

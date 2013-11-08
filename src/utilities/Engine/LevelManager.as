@@ -51,6 +51,10 @@
 			return walls;
 		}
 		
+		public function getArts():Array{
+			return arts;
+		}
+		
 		public function getLevels():Array{
 			return levels;
 		}

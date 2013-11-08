@@ -80,6 +80,9 @@
 				}
 				//collide walls & avatar
 				for (var i:int = 0; i < LevelManager.walls.length; i++) {
+					if (LevelManager.walls[i].getType() == "movingWall") {
+						LevelManager.walls[i].updateLoop();
+					}
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.walls[i]) == true) {
 						switch (LevelManager.walls[i].getType()){
 							case "standard":
@@ -87,6 +90,7 @@
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
+									//trace("standard");
 								}
 								break;
 							case "platform":
@@ -97,8 +101,9 @@
 								}
 								break;
 							case "movingWall":
-								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == true) {
-									trace("movingWall");
+								trace("movingWall");
+								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
+									
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 								}
@@ -108,6 +113,7 @@
 									trace("movingPlatform");
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
+									
 								}
 								break;
 						}

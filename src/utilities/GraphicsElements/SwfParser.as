@@ -3,6 +3,7 @@
 	import flash.display.Graphics;
 	import flash.display.Sprite; 
 	import flash.display.MovieClip;
+	import utilities.Actors.Actor;
 	import utilities.Actors.AFSEnemy;
 	import utilities.Actors.Avatar;
 	import utilities.Actors.Bullet;
@@ -128,6 +129,34 @@
 			}
 		}
 		
+		private function sortNodes(actor:Actor, objectToSort:MovieClip):Array {
+			var nodeArray:Array = new Array;
+			for (var n:int = 0; n < objectToSort.numChildren; n++) {
+				trace("startLoop: n",n);
+				if (objectToSort.getChildAt(n).name == "hitbox") {
+					actor.defineHitbox(objectToSort.hitbox);
+					//trace("1",objectToSort.hitbox);
+					//trace("2",objectToSort.hitbox.name);
+					//objectToSort.removeChild(objectToSort.getChildAt(n));
+					//objectToSort.removeChild(objectToSort.hitbox);
+					trace("splicingHitbox: n",n);
+					//var hitboxObject:MovieClip = nodeArray.splice(n, 1, getChildAt(n));
+					trace("splicedHitbox: n",n);
+				}
+				if (objectToSort.getChildAt(n).name == "node_" + String(n)) {
+					trace("sorting nodes: n",n);
+					nodeArray.splice(n, 0, getChildAt(n));
+				}
+			}
+			if (objectToSort.contains(objectToSort.hitbox)) {
+				objectToSort.removeChild(objectToSort.hitbox);
+			}
+			actor.defineNodes(nodeArray);
+			//trace(nodeArray.numChildren);
+			trace("nodeArray",nodeArray);
+			return nodeArray;
+		}
+		
 		//objects in the graphic's swf can be accessed through: assignedGraphics[0].swf_child
 		//i.e, if you want access to the movieclips hitbox use: assignedGraphics[0].swf_child.hitbox
 		public function assignGraphic(graphic:DisplayObject):void {
@@ -141,7 +170,14 @@
 					
 					if (tempArray[j].name == "art") {
 						//childrenToLoad--;//because its not really going to get loaded
-						var art:Art = new Art(tempArray[j].x, tempArray[j].y,tempArray[j]);
+						var art:Art = new Art(tempArray[j].x, tempArray[j].y, tempArray[j],0);
+						//art.visible = false;
+					}	
+					if(tempArray[j].name == "art_1"){
+						var art_1:Art = new Art(tempArray[j].x, tempArray[j].y, tempArray[j],1);
+					}
+					if(tempArray[j].name == "art_2"){
+						var art_2:Art = new Art(tempArray[j].x, tempArray[j].y, tempArray[j],2);
 					}
 					if(tempArray[j].name == "wall"){
 						var wall:Wall = new Wall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
@@ -166,17 +202,11 @@
 						tempArray[j].x = 0;
 						tempArray[j].y = 0;
 						movingWall.setType("movingWall");
-						var nodeArray:Array = new Array;
-						for (var n:int = 0; n < tempArray[j].numChildren; n++) {
-							if (tempArray[j].getChildAt(n).name != "hitbox") {
-								nodeArray.push(tempArray[j].getChildAt(n));
-							}
-						}
-						movingWall.defineNodes(nodeArray);
-						trace(nodeArray.numChildren);
-						trace(nodeArray);
+						sortNodes(movingWall, tempArray[j]);
+						
 						
 					}
+				
 					if(tempArray[j].name == "avatar"){
 						var avatar:Avatar = new Avatar(tempArray[j].x, tempArray[j].y);
 						//par.setAttackHitbox(ch.hitbox_attack);
