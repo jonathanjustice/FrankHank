@@ -42,6 +42,9 @@
 		private static var framesSinceGameStart:int = 0;
 		private static var cameraWindow:CameraWindow;
 		private static var gameState:String = "boot";
+		private static var bg_speed_0:Number = 0;
+		private static var bg_speed_1:Number = -0.25;
+		private static var bg_speed_2:Number = -0.35;
 		
 		//public var player:Player;
 		public var hero:MovieClip;
@@ -244,26 +247,25 @@
 					}else {
 						trace("moving left");
 						gameContainer.x += cameraSpeed;
-						for (var i:int = 0; i < LevelManager.arts.length; i++ ) {
-							//trace("arts: ", i," ", LevelManager.arts[i]);
-							
-						//for each(var art:Art in levelManager.getArts()) {
-							switch(LevelManager.arts[i].getParallaxLevel) {
-								case 0:
-									//art += cameraSpeed;
-									break;
-								case 1:
-									LevelManager.arts[i].x += cameraSpeed;
-									break;
-								case 2:
-									LevelManager.arts[i].x += cameraSpeed;
-									break;
-							}
-						}
+						
 					}
 					//
 				}
 				gameContainer.x -= avatar.getVelocity().x;
+				for (var i:int = 0; i < LevelManager.arts.length; i++ ) {
+					trace(LevelManager.arts[i].getParallaxLevel());
+					switch(LevelManager.arts[i].getParallaxLevel()) {
+						case 0:
+							//art += cameraSpeed;
+							break;
+						case 1:
+							LevelManager.arts[i].x -= avatar.getVelocity().x * bg_speed_1;
+							break;
+						case 2:
+							LevelManager.arts[i].x -= avatar.getVelocity().x * bg_speed_2;
+							break;
+					}
+				}
 			}
 			//running right
 			if (avatarPoint.x + avatar.width > cameraWindow.x + cameraWindow.width ) {
@@ -272,10 +274,25 @@
 						//do nothing
 					}else {
 						//trace("moving right");
+						
 						gameContainer.x -= cameraSpeed;
 					}
 				}
 				gameContainer.x -= avatar.getVelocity().x;
+				for (var j:int = 0; j < LevelManager.arts.length; j++ ) {
+				//	trace(LevelManager.arts[j].getParallaxLevel());
+					switch(LevelManager.arts[j].getParallaxLevel()) {
+						case 0:
+							//art += cameraSpeed;
+							break;
+						case 1:
+							LevelManager.arts[j].x -= avatar.getVelocity().x * bg_speed_1;
+							break;
+						case 2:
+							LevelManager.arts[j].x -= avatar.getVelocity().x * bg_speed_2;
+							break;
+					}
+				}
 			}
 			if (avatarPoint.y < cameraWindow.y) {
 				gameContainer.y -= avatar.getVelocity().y;
