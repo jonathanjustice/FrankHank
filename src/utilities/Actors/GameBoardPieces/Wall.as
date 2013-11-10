@@ -44,7 +44,8 @@
 			this.scaleX = tempWidth;
 			this.scaleY = tempHeight;
 			this.visible = false;
-			addActorToGameEngine(graphic,LevelManager.walls);
+			addActorToGameEngine(graphic, LevelManager.walls);
+			graphic = hitbox;
 		}
 		
 		public function updateLoop():void{

@@ -101,7 +101,8 @@
 								}
 								break;
 							case "movingWall":
-								trace("movingWall");
+								//trace("movingWall");
+								//trace(LevelManager.walls[i].name);
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
 									
 									myAvatar.jumpingEnded();

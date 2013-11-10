@@ -245,7 +245,7 @@
 					if (avatarVels.x >= 0) {
 						//do nothing
 					}else {
-						trace("moving left");
+						//trace("moving left");
 						gameContainer.x += cameraSpeed;
 						
 					}
@@ -253,7 +253,7 @@
 				}
 				gameContainer.x -= avatar.getVelocity().x;
 				for (var i:int = 0; i < LevelManager.arts.length; i++ ) {
-					trace(LevelManager.arts[i].getParallaxLevel());
+					//trace(LevelManager.arts[i].getParallaxLevel());
 					switch(LevelManager.arts[i].getParallaxLevel()) {
 						case 0:
 							//art += cameraSpeed;

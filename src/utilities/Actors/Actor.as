@@ -20,10 +20,9 @@
 	import utilities.Engine.Combat.AnimationManager;
 	import utilities.Engine.LevelManager;
 	import utilities.objects.GameObject;
-	
 	import utilities.Saving_And_Loading.swfLoader;
 	public class Actor extends GameObject {
-		private var hitbox:MovieClip = new MovieClip;
+		public var hitbox:MovieClip = new MovieClip;
 		private var nodes:Array = new Array;
 		public var isGraphicLoaded:Boolean = false;
 		private var isFalling:Boolean = false;
@@ -167,8 +166,13 @@
 			//trace("nodes: ",nodes);
 		}
 		
+		public function getNodes():Array {
+			return nodes;
+		}
+		
 		public function defineHitbox(newHitbox:MovieClip):void {
 			hitbox = newHitbox;
+			trace("hitbox",hitbox);
 		}
 		
 		public function getHitbox():MovieClip {
