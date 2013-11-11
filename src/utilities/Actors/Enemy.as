@@ -28,6 +28,7 @@
 		private var filePath:String = "";
 		public function Enemy(){
 			setUp();
+			setCollisionDamage(1);
 			//health=1;
 		}
 		

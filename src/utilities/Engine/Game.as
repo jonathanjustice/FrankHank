@@ -90,7 +90,10 @@
 					//doshit
 					break;
 				case "levelFailed":
-					//doshit
+					trace("level failed !!!!!!!!!!!!!!!!!!!!!!!!!!");
+					LevelManager.getInstance().setIsLevelActive(false);
+					//UIManager.getInstance().openLevelCompleteScreen();
+					LevelManager.getInstance().setIsLevelFailed(true);
 					break;
 				case "gameFailed":
 					//doshit

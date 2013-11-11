@@ -23,6 +23,7 @@
 		public static var coins:Array;
 		public static var savePoints:Array;
 		private var isLevelComplete:Boolean = false;
+		private var isLevelFailed:Boolean = false;
 		private static var _instance:LevelManager;
 		private var isLevelActive:Boolean = false;
 		
@@ -84,6 +85,7 @@
 			}*/
 			//checkLevelObjectives();
 			LevelManager._instance.checkLevelObjectives();
+			LevelManager._instance.checkLevelFailed();
 		}
 		
 		public function checkLevelObjectives():void {
@@ -93,6 +95,12 @@
 			//if all objectives are complete, then stop the level, destroy everything in it, and create a new one
 			if (LevelManager._instance.getIsLevelComplete() == true) {
 				LevelManager._instance.levelCompleted();
+			}
+		}
+		
+		public function checkLevelFailed():void {
+			if (LevelManager._instance.getIsLevelFailed() == true) {
+				LevelManager._instance.levelFailed();
 			}
 		}
 		
@@ -129,8 +137,36 @@
 				//loadLevel();
 				Game.setGameState("startCutSceneLoad");
 				Game.setFramesSinceGameStart();
-				LevelManager._instance.setIsLevelComplete(false)
+				LevelManager._instance.setIsLevelComplete(false);
 			}
+		}
+		
+		private function levelFailed():void {
+			setIsLevelFailed(false);
+			//trace("LevelManager:levelFailed");
+			//trace("enemy manager: no enemies left");
+			//trace("EnemyManager.enemies", EnemyManager.enemies);
+			Game.disableMasterLoop();
+			LootManager.getInstance().destroyArray(LootManager.lootDrops);
+			LootManager.getInstance().destroyArray(LootManager.treasureChests);
+			EnemyManager.getInstance().destroyArray(EnemyManager.enemies);
+			LevelManager.getInstance().destroyArray(LevelManager.arts);
+			LevelManager.getInstance().destroyArray(LevelManager.coins);
+			LevelManager.getInstance().destroyArray(LevelManager.savePoints);
+			PowerupManager.getInstance().destroyArray(PowerupManager.powerups);
+			BulletManager.getInstance().destroyArray(BulletManager.bullets);
+			AvatarManager.getInstance().destroyArray(AvatarManager.avatars);
+			LevelManager.getInstance().destroyArray(LevelManager.levels);
+			LevelManager.getInstance().destroyArray(LevelManager.walls);
+			Game.resetGameContainerCoordinates();
+			LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress());
+			//loadMissionCompleteScreen
+			//loadLevel();
+			//Game.setGameState("startCutSceneLoad");
+			Game.setFramesSinceGameStart();
+			LevelManager._instance.setIsLevelComplete(false);
+			Game.setGameState("startLevelLoad");
+			
 		}
 		
 		public function loadMissionCompleteScreen():void {
@@ -163,6 +199,14 @@
 		
 		public function setIsLevelComplete(completeState:Boolean):void{
 			isLevelComplete = completeState;
+		}
+		
+		public function getIsLevelFailed():Boolean{
+			return isLevelFailed;
+		}
+		
+		public function setIsLevelFailed(failedState:Boolean):void{
+			isLevelFailed = failedState;
 		}
 	}
 }

@@ -52,6 +52,7 @@
 		
 		public function setUp():void {
 			defineGraphics("frank", false);
+			health = 1;
 			//addStroke();
 			if (AvatarManager.getInstance().getIsAvatarDoubleJumpEnabled()) {
 				toggleDoubleJump(true);
@@ -84,6 +85,7 @@
 		
 		public function updateLoop():void {
 			if (getIsSwfLoaded() == true) {
+				//trace("health",health);
 				animationLogic();
 				//setIsFalling(true);
 				getisJumpingFromInputManager();

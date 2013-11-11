@@ -105,9 +105,9 @@
 					Key_rotRight=true;
 				}
 			}
-			trace("DOWN------------------------------------DOWN: ", e.keyCode);
-			trace("Key_right_2", Key_right_2);
-			trace("Key_left_2", Key_left_2);
+		//	trace("DOWN------------------------------------DOWN: ", e.keyCode);
+		//	trace("Key_right_2", Key_right_2);
+		//	trace("Key_left_2", Key_left_2);
 			setSimpleAngleViaKeys();
 			setSimpleVelocityViaKeys();
 			setSimpleRotationViaKeys();
@@ -162,9 +162,9 @@
 				if(e.keyCode == 105){
 					Key_rotRight=false;
 				}
-				trace("UP------------------------------------UP: ", e.keyCode);
-				trace("Key_right_2", Key_right_2);
-				trace("Key_left_2", Key_left_2);
+			//	trace("UP------------------------------------UP: ", e.keyCode);
+			//	trace("Key_right_2", Key_right_2);
+			//	trace("Key_left_2", Key_left_2);
 				setSimpleAngleViaKeys();
 				setSimpleVelocityViaKeys();
 				setSimpleRotationViaKeys();

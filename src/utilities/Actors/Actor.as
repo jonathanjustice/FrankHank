@@ -196,7 +196,8 @@
 			actor.setTargetToFalse();
 		}
 		
-		public function takeDamage(amount:Number):void{
+		public function takeDamage(amount:Number):void {
+			//trace("takeDamage",this);
 			this.health -= amount;
 			checkForDamage();
 			
@@ -204,8 +205,14 @@
 		}
 		
 		public function checkForDamage():void {
-			if(health <= 0){
-				markDeathFlag();
+			//trace("checkForDamage",this);
+			if (health <= 0) {
+				if (this is Avatar) {
+					trace("YOU DIE NOW");
+					Game.setGameState("levelFailed");
+				}else{
+					markDeathFlag();
+				}
 			}
 		}
 		
@@ -219,7 +226,8 @@
 		//determine what needs to be deleted and then delete it
 		//this would be a really nice place to start using Interfaces... hint hint hint
 		public function checkForDeathFlag():void{
-			if(markedForDeletion){
+			if (markedForDeletion) {
+				trace("checkForDeathFlag",this);
 				//delete it
 				if(this is Bullet){
 					removeActorFromGameEngine(this,BulletManager.getInstance().getArray());
@@ -233,8 +241,7 @@
 					//removeActorFromGameEngine(this,LootManager.getInstance().getTreasureChestArray());
 				}else if(this is Powerup_default){
 					removeActorFromGameEngine(this,PowerupManager.getInstance().getArray());
-				}
-				else if(this is Coin){
+				}else if(this is Coin){
 					removeActorFromGameEngine(this,LevelManager.getInstance().getCoins());
 				}
 			}
@@ -519,6 +526,10 @@
 		
 		public function getCollisionDamage():int {
 			return collisionDamage;
+		}
+		
+		public function setCollisionDamage(newCollisionDamage:int):void {
+			collisionDamage = newCollisionDamage;
 		}
 		
 		public function getIsFalling(): Boolean {
