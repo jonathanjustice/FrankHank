@@ -22,7 +22,9 @@
 		*/}
 		
 		public function setUp():void{
-			defineGraphics("wall",false);
+			defineGraphics("wall", false);
+			xVelocity = 0;
+			yVelocity = 0;
 			
 			//this.visible = false;
 		}

@@ -29,7 +29,7 @@ package utilities.Mathematics{
 		 
 		
 		public static function testCollision(movable:MovieClip, stationary:MovieClip):String {
-			var collisionEjectDistance:Number = 1;//don't get stuck in the other rectangle
+			var collisionEjectDistance:Number = 3;//don't get stuck in the other rectangle
 			var collidedWithTop:Boolean = false;
 			var collisionSide:String = "";
 		//	trace("moveable: ", movable);
@@ -37,6 +37,7 @@ package utilities.Mathematics{
 			if (movable.getPreviousPosition().y + movable.height <= stationary.y) {
 				collisionSide = "top";
 				movable.y = stationary.y - movable.height - collisionEjectDistance;
+				//movable.y -= stationary.yVelocity;
 				
 			}
 			//movable is below stationary

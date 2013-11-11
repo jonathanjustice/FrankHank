@@ -44,7 +44,7 @@
 		public function setUp():void{
 			defineGraphics("wall", false);
 			xVelocity = 1;
-			xVelocity = 1;
+			yVelocity = 1;
 			
 			
 			//this.visible = false;
@@ -53,8 +53,12 @@
 		
 		public function defineInitialPoint():void {
 			initialPoint.x = this.x;
-			initialPoint.y = this.y
-			trace("initialPoint",initialPoint);
+			initialPoint.y = this.y;
+			trace("initialPoint", initialPoint);
+			for (var i:int = 0; i < this.getNodes().length; i++) {
+				trace("NODE_", i, ".x", this.getNodes().x);
+				trace("NODE_", i, ".y", this.getNodes().y);
+			}
 		}
 		
 		public function setType(newType:String):void {
@@ -81,97 +85,85 @@
 		}
 		
 		public function setNewTarget():void {
-			print("newTarget");
-			trace("targetNode:",targetNode);
-			//	var tween:Tween = new Tween(this, 'x', Regular.easeInOut, 0, 400, 1.5, true);
-			
+			horizontalMotion == "";
+			verticalMotion == "";
+			trace(" OLD targetNode:",targetNode);
 			if (nodeSequencing == "forward") {
-				//if incrementing, select next node
-				if (targetNode < getNodes.length) {
-					targetNode++;
-				}
+				trace("nodeSequencing", nodeSequencing);
 				//if reached last node switch to decrementing
-				if (targetNode >= getNodes.length) {
+				trace("this.getNodes().length", this.getNodes().length);
+				
+				if (targetNode == this.getNodes().length-1) {
 					nodeSequencing = "backward";
 					targetNode--;
 				}
-			}
-			
-			if (nodeSequencing == "backward") {
-				//if decrementing, select next node
-				if (targetNode > 0) {
-					targetNode--;
-				}
-				//if reached first node, switch to incrementing
-				if (targetNode <= 0) {
-					nodeSequencing = "forward";
+				//if incrementing, select next node
+				else if (targetNode < this.getNodes().length-1) {
 					targetNode++;
 				}
 				
+			}else if (nodeSequencing == "backward") {
+				//if reached first node, switch to incrementing
+				if (targetNode == 0) {
+					nodeSequencing = "forward";
+					targetNode++;
+				}
+				//if decrementing, select next node
+				else if (targetNode > 0) {
+					targetNode--;
+				}
+				
+				
 			}
-			trace("targetNode:",targetNode);
-			//getHitbox();
-			//trace("this.x: ",this.x);
-			//trace("this.getNodes:",this.getNodes());
-			trace("targetNode.x: ",this.getNodes()[targetNode].x);
-			if (this.x - initialPoint.x > this.getNodes()[targetNode].x) {
-				horizontalMotion = "negative";
-				this.x -= xVelocity;
-			}else {
-				horizontalMotion = "positive";
-				this.x += xVelocity;
-			}
-			
-			if (this.y - initialPoint.y> this.getNodes()[targetNode].y) {
-				verticalMotion = "negative";
-				this.y -= yVelocity;
-			}else {
-				verticalMotion = "positive";
-				this.y += yVelocity;
-			}
+			trace(" NEW targetNode:",targetNode);
 		}
 		
 		public function moveToNextNode():void {
-			//trace("this.hitbox.x:",this.hitbox.x);
+			if (horizontalMotion != "arrived") {
+				if (this.x - initialPoint.x < this.getNodes()[targetNode].x) {
+					this.x += xVelocity;
+				}else if(this.x - initialPoint.x > this.getNodes()[targetNode].x){
+					this.x -= xVelocity;
+				}
+			}
+			
+			if (verticalMotion != "arrived") {
+					if (this.y - initialPoint.y < this.getNodes()[targetNode].y) {
+					this.y += yVelocity;
+				}else if(this.y - initialPoint.y > this.getNodes()[targetNode].y){
+					this.y -= yVelocity;
+				}
+			}
+		
+			
+			
 			trace("this.x:", this.x);
-			trace("targetNode.x",this.getNodes()[targetNode].x);
+			trace("this.y:", this.y);
+			trace("targetNode:", targetNode);
+			trace("this.getNodes()[targetNode]",this.getNodes()[targetNode]);
+  			trace("targetNode.x",this.getNodes()[targetNode].x);
+			trace("targetNode.y",this.getNodes()[targetNode].y);
 			//if you are close to the targetPoint, align to the targetPoint
-			if (Math.abs(this.x - initialPoint.x- this.getNodes()[targetNode].x) < xVelocity + 1) {
-				this.x = this.getNodes()[targetNode].x;
+			if (Math.abs(this.x - initialPoint.x - this.getNodes()[targetNode].x) < xVelocity * 2) {
+				//this.x = this.getNodes()[targetNode].x + initialPoint.x;
 				horizontalMotion = "arrived";
 				print("H: arrived");
-				this.x = this.getNodes()[targetNode].x;
+				//this.x = this.getNodes()[targetNode].x;
 			}
-			if (Math.abs(this.y - initialPoint.y -  this.getNodes()[targetNode].y) < yVelocity + 1) {
-				this.y = this.getNodes()[targetNode].y;
+			if (Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y) < yVelocity * 2) {
+				//this.y = this.getNodes()[targetNode].y + initialPoint.y;
 				verticalMotion = "arrived";
 				print("V: arrived");
-				this.y = this.getNodes()[targetNode].y;
+				//this.y = this.getNodes()[targetNode].y;
 			}
 			
-			if (verticalMotion == "negative") {
-				this.y -= yVelocity;
-				print("V: negative");
-			}else if (verticalMotion == "positive") {
-				this.y += yVelocity;
-					print("V: positivr");
-			}else if (verticalMotion == "arrived") {
-				//no motion
-			}
 			
-			if (horizontalMotion == "negative") {
-				this.x -= xVelocity;
-				print("H: negative");
-			}else if (horizontalMotion == "positive") {
-				this.x += xVelocity;
-				print("H: psoitive");
-			}else if (horizontalMotion == "arrived") {
-				//no motion
-			}
 			
 			
 			if (horizontalMotion == "arrived" && verticalMotion == "arrived") {
 				print("Both: arrived");
+				verticalMotion = "nope";
+				horizontalMotion = "nope";
 				setNewTarget();
 			}
 		}
