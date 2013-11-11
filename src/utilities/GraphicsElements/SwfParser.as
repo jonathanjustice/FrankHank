@@ -137,9 +137,9 @@
 				myString = String(objectToSort.getChildAt(n).name);
 				if (objectToSort.getChildAt(n).name.indexOf("node_") != -1) {	var index:int = 0;
 					index = int(objectToSort.getChildAt(n).name.charAt(5));
-					trace("objectToSort.getChildAt(n).name:",objectToSort.getChildAt(n).name);
-					trace("index: ",index);
-					trace("sorting nodes: n",n);
+				//	trace("objectToSort.getChildAt(n).name:",objectToSort.getChildAt(n).name);
+				//	trace("index: ",index);
+				//	trace("sorting nodes: n",n);
 					nodeArray.splice(index, 0, objectToSort.getChildAt(n));
 				}
 				if (objectToSort.getChildAt(n).name == "hitbox") {
@@ -152,6 +152,7 @@
 			if (objectToSort.contains(objectToSort.hitbox)) {
 				objectToSort.removeChild(objectToSort.hitbox);
 			}
+			
 			actor.defineNodes(nodeArray);
 			return nodeArray;
 		}
@@ -202,7 +203,9 @@
 						tempArray[j].y = 0;
 						movingWall.setType("movingWall");
 						sortNodes(movingWall, tempArray[j]);
-						
+						//trace("sorting nodes completed");
+						movingWall.setNewTarget();
+						movingWall.defineInitialPoint();
 						
 					}
 				

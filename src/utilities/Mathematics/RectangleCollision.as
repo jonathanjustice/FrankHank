@@ -49,7 +49,7 @@ package utilities.Mathematics{
 			else if (movable.getPreviousPosition().x + movable.width <= stationary.getPreviousPosition().x) {
 				movable.x = stationary.getPreviousPosition().x - movable.width - collisionEjectDistance;
 				collisionSide = "left";
-				trace("stationary.getPreviousPosition().x",stationary.getPreviousPosition().x);
+				//trace("stationary.getPreviousPosition().x",stationary.getPreviousPosition().x);
 				
 			}
 			//moveable is to the right
