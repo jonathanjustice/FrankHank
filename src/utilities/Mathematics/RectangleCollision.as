@@ -29,15 +29,16 @@ package utilities.Mathematics{
 		 
 		
 		public static function testCollision(movable:MovieClip, stationary:MovieClip):String {
-			var collisionEjectDistance:Number = 3;//don't get stuck in the other rectangle
+			var collisionEjectDistance:Number = 1;//don't get stuck in the other rectangle
 			var collidedWithTop:Boolean = false;
 			var collisionSide:String = "";
 		//	trace("moveable: ", movable);
 			//moveable is above stationary
-			if (movable.getPreviousPosition().y + movable.height <= stationary.y) {
+			if (movable.getPreviousPosition().y + movable.height <= stationary.getPreviousPosition().y) {
 				collisionSide = "top";
-				movable.y = stationary.y - movable.height - collisionEjectDistance;
+				movable.y = stationary.y - movable.height - (collisionEjectDistance - stationary.yVelocity);
 				//movable.y -= stationary.yVelocity;
+	 			movable.x += stationary.xVelocity *2;
 				
 			}
 			//movable is below stationary
