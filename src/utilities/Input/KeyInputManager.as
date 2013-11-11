@@ -55,7 +55,9 @@
 			Main.theStage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
 		}
 		
-		public function keyDownHandler(e:KeyboardEvent):void{
+		public function keyDownHandler(e:KeyboardEvent):void {
+			//Key_left_2 = false;
+			//Key_right_2 = false;
 			if(isKeysEnabled == true){
 				//trace(e.keyCode);
 				if(e.keyCode == KeyCodes.key_RIGHT_BRACKET){
@@ -71,13 +73,15 @@
 					Key_X=true;
 				}
 				if(e.keyCode == 37){
-					Key_left_2=true;
+					Key_left_2 = true;
+					Key_right_2 = false;
 				}
 				if(e.keyCode == 38){
-					Key_up_2=true;
+					Key_up_2 = true;
 				}
 				if(e.keyCode == 39){
-					Key_right_2=true;
+					Key_right_2 = true;
+					Key_left_2 = false;
 				}
 				if(e.keyCode == 40){
 					Key_down_2=true;
@@ -101,13 +105,16 @@
 					Key_rotRight=true;
 				}
 			}
+			trace("DOWN------------------------------------DOWN: ", e.keyCode);
+			trace("Key_right_2", Key_right_2);
+			trace("Key_left_2", Key_left_2);
 			setSimpleAngleViaKeys();
 			setSimpleVelocityViaKeys();
 			setSimpleRotationViaKeys();
-			//trace(e.keyCode);
 		}
 		
-		public function keyUpHandler(e:KeyboardEvent):void{
+		public function keyUpHandler(e:KeyboardEvent):void {
+			
 			if(isKeysEnabled == true){
 				if(e.keyCode == KeyCodes.key_RIGHT_BRACKET){
 					Key_rightBracket=false;
@@ -122,13 +129,17 @@
 					Key_X = false;
 				}
 				if(e.keyCode == 37){
-					Key_left_2=false;
+					
+					Key_left_2 = false;
+					Key_right_2 = false;
 				}
 				if(e.keyCode == 38){
 					Key_up_2=false;
 				}
 				if(e.keyCode == 39){
-					Key_right_2=false;
+					
+					Key_left_2 = false;
+					Key_right_2 = false;
 				}
 				if(e.keyCode == 40){
 					Key_down_2=false;
@@ -151,6 +162,9 @@
 				if(e.keyCode == 105){
 					Key_rotRight=false;
 				}
+				trace("UP------------------------------------UP: ", e.keyCode);
+				trace("Key_right_2", Key_right_2);
+				trace("Key_left_2", Key_left_2);
 				setSimpleAngleViaKeys();
 				setSimpleVelocityViaKeys();
 				setSimpleRotationViaKeys();
@@ -191,6 +205,11 @@
 			if(Key_right_2){
 				myVelocityX = 1;
 				aimAngle = 90;
+			}
+			if(Key_left_2 == true && Key_right_2 == true){
+				myVelocityX = 0;
+				Key_left_2 = false;
+				Key_right_2 = false;
 			}
 		}
 		

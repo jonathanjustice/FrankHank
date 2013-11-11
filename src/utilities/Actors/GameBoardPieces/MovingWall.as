@@ -54,10 +54,7 @@
 		public function defineInitialPoint():void {
 			initialPoint.x = this.x;
 			initialPoint.y = this.y;
-			trace("initialPoint", initialPoint);
 			for (var i:int = 0; i < this.getNodes().length; i++) {
-				trace("NODE_", i, ".x", this.getNodes().x);
-				trace("NODE_", i, ".y", this.getNodes().y);
 			}
 		}
 		
@@ -85,11 +82,8 @@
 		}
 		
 		public function setNewTarget():void {
-			trace(" OLD targetNode:",targetNode);
 			if (nodeSequencing == "forward") {
-				trace("nodeSequencing", nodeSequencing);
 				//if reached last node switch to decrementing
-				trace("this.getNodes().length", this.getNodes().length);
 				
 				if (targetNode == this.getNodes().length-1) {
 					nodeSequencing = "backward";
@@ -113,7 +107,6 @@
 				
 				
 			}
-			trace(" NEW targetNode:",targetNode);
 		}
 		
 		public function moveToNextNode():void {
@@ -137,22 +130,21 @@
 		
 			this.x += xVelocity;
 			this.y += yVelocity;
-			
+			/*
 			trace("this.x:", this.x);
 			trace("this.y:", this.y);
 			trace("targetNode:", targetNode);
 			trace("this.getNodes()[targetNode]",this.getNodes()[targetNode]);
   			trace("targetNode.x",this.getNodes()[targetNode].x);
-			trace("targetNode.y",this.getNodes()[targetNode].y);
+			trace("targetNode.y", this.getNodes()[targetNode].y);
+			*/
 			//if you are close to the targetPoint, align to the targetPoint
 			if (Math.abs(this.x - initialPoint.x - this.getNodes()[targetNode].x) < xVelocity * 2) {
 				horizontalMotion = "arrived";
-				print("H: arrived");
 				xVelocity = 0;
 			}
 			if (Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y) < yVelocity * 2) {
 				verticalMotion = "arrived";
-				print("V: arrived");
 				yVelocity = 0;
 			}
 			
@@ -160,14 +152,13 @@
 			
 			
 			if (horizontalMotion == "arrived" && verticalMotion == "arrived") {
-				print("Both: arrived");
 				verticalMotion = "nope";
 				horizontalMotion = "nope";
 				setNewTarget();
 			}
 		}
 		public function wallTest():void {
-			//trace("fuck yeah it worked");
+			
 		}
 		
 		public function defineBounds(newWidth:Number,newHeight:Number):void {
