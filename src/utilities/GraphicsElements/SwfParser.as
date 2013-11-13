@@ -129,31 +129,31 @@
 			}
 		}
 		
+		//sort out nodes, put them into new array in sequence based on their number
 		private function sortNodes(actor:Actor, objectToSort:MovieClip):Array {
 			var nodeArray:Array = new Array;
 			for (var n:int = 0; n < objectToSort.numChildren; n++) {
-				trace("startLoop: n",n);
+				var myString:String = "";
+				myString = String(objectToSort.getChildAt(n).name);
+				if (objectToSort.getChildAt(n).name.indexOf("node_") != -1) {	var index:int = 0;
+					index = int(objectToSort.getChildAt(n).name.charAt(5));
+				//	trace("objectToSort.getChildAt(n).name:",objectToSort.getChildAt(n).name);
+				//	trace("index: ",index);
+				//	trace("sorting nodes: n",n);
+					nodeArray.splice(index, 0, objectToSort.getChildAt(n));
+				}
 				if (objectToSort.getChildAt(n).name == "hitbox") {
 					actor.defineHitbox(objectToSort.hitbox);
-					//trace("1",objectToSort.hitbox);
-					//trace("2",objectToSort.hitbox.name);
-					//objectToSort.removeChild(objectToSort.getChildAt(n));
-					//objectToSort.removeChild(objectToSort.hitbox);
-					trace("splicingHitbox: n",n);
-					//var hitboxObject:MovieClip = nodeArray.splice(n, 1, getChildAt(n));
-					trace("splicedHitbox: n",n);
+					//trace("splicingHitbox: n",n);
+					//trace("splicedHitbox: n",n);
 				}
-				if (objectToSort.getChildAt(n).name == "node_" + String(n)) {
-					trace("sorting nodes: n",n);
-					nodeArray.splice(n, 0, getChildAt(n));
-				}
+				
 			}
 			if (objectToSort.contains(objectToSort.hitbox)) {
 				objectToSort.removeChild(objectToSort.hitbox);
 			}
+			
 			actor.defineNodes(nodeArray);
-			//trace(nodeArray.numChildren);
-			trace("nodeArray",nodeArray);
 			return nodeArray;
 		}
 		
@@ -203,7 +203,9 @@
 						tempArray[j].y = 0;
 						movingWall.setType("movingWall");
 						sortNodes(movingWall, tempArray[j]);
-						
+						//trace("sorting nodes completed");
+						movingWall.setNewTarget();
+						movingWall.defineInitialPoint();
 						
 					}
 				

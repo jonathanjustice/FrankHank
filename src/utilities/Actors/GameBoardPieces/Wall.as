@@ -22,7 +22,9 @@
 		*/}
 		
 		public function setUp():void{
-			defineGraphics("wall",false);
+			defineGraphics("wall", false);
+			xVelocity = 0;
+			yVelocity = 0;
 			
 			//this.visible = false;
 		}
@@ -44,7 +46,8 @@
 			this.scaleX = tempWidth;
 			this.scaleY = tempHeight;
 			this.visible = false;
-			addActorToGameEngine(graphic,LevelManager.walls);
+			addActorToGameEngine(graphic, LevelManager.walls);
+			graphic = hitbox;
 		}
 		
 		public function updateLoop():void{

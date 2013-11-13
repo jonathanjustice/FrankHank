@@ -90,7 +90,10 @@
 					//doshit
 					break;
 				case "levelFailed":
-					//doshit
+					trace("level failed !!!!!!!!!!!!!!!!!!!!!!!!!!");
+					LevelManager.getInstance().setIsLevelActive(false);
+					//UIManager.getInstance().openLevelCompleteScreen();
+					LevelManager.getInstance().setIsLevelFailed(true);
 					break;
 				case "gameFailed":
 					//doshit
@@ -245,7 +248,7 @@
 					if (avatarVels.x >= 0) {
 						//do nothing
 					}else {
-						trace("moving left");
+						//trace("moving left");
 						gameContainer.x += cameraSpeed;
 						
 					}
@@ -253,7 +256,7 @@
 				}
 				gameContainer.x -= avatar.getVelocity().x;
 				for (var i:int = 0; i < LevelManager.arts.length; i++ ) {
-					trace(LevelManager.arts[i].getParallaxLevel());
+					//trace(LevelManager.arts[i].getParallaxLevel());
 					switch(LevelManager.arts[i].getParallaxLevel()) {
 						case 0:
 							//art += cameraSpeed;

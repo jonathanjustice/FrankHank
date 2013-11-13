@@ -101,7 +101,8 @@
 								}
 								break;
 							case "movingWall":
-								trace("movingWall");
+								//trace("movingWall");
+								//trace(LevelManager.walls[i].name);
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
 									
 									myAvatar.jumpingEnded();
@@ -146,12 +147,14 @@
 					//checks for collision
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, EnemyManager.enemies[j]) == true) {
 						//if the avatar is invincible, damage the enemy
-						EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
+						//EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
 						//resolves the collision & returns if this touched the top of the other object
 						if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j]) =="top") {
 							myAvatar.jumpingEnded();
 							myAvatar.jump();
 							EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
+						}else {
+							myAvatar.takeDamage(EnemyManager.enemies[j].getCollisionDamage() );
 						}
 					}
 					//make the avatar and his hitbox exist before checking against them

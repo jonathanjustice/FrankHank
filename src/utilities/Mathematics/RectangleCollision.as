@@ -32,11 +32,13 @@ package utilities.Mathematics{
 			var collisionEjectDistance:Number = 1;//don't get stuck in the other rectangle
 			var collidedWithTop:Boolean = false;
 			var collisionSide:String = "";
-		
+		//	trace("moveable: ", movable);
 			//moveable is above stationary
-			if (movable.getPreviousPosition().y + movable.height <= stationary.y) {
+			if (movable.getPreviousPosition().y + movable.height <= stationary.getPreviousPosition().y) {
 				collisionSide = "top";
-				movable.y = stationary.y - movable.height - collisionEjectDistance;
+				movable.y = stationary.y - movable.height - (collisionEjectDistance - stationary.yVelocity);
+				//movable.y -= stationary.yVelocity;
+	 			movable.x += stationary.xVelocity *2;
 				
 			}
 			//movable is below stationary
@@ -49,6 +51,7 @@ package utilities.Mathematics{
 			else if (movable.getPreviousPosition().x + movable.width <= stationary.getPreviousPosition().x) {
 				movable.x = stationary.getPreviousPosition().x - movable.width - collisionEjectDistance;
 				collisionSide = "left";
+				//trace("stationary.getPreviousPosition().x",stationary.getPreviousPosition().x);
 				
 			}
 			//moveable is to the right
