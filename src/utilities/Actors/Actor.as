@@ -55,6 +55,9 @@
 		private var isInvincible:Boolean = false;
 		private var invincibilityTimer:int = 0;
 		private var invincibilityMaxTime:int = 120;
+		private var killsOnContact:Boolean = true;
+		private var damagedInvincibilityTimer:int = 0;
+		private var damagedInvincibilityMaxTime:int = 30;
 		private var animationState:String = "idle"
 		private var isSwfLoaded:Boolean = false;
 		public var xVelocity:Number=0;//velocity
@@ -62,6 +65,7 @@
 		private var collisionDamage:Number = 0;
 		private var collisionDamageInvincible:Number = 9999;
 		private var collisionDamageOriginal:Number = 0;
+		private var isAvailableForCollisionWithNonWallActors:Boolean = false;
 		private var isShootingEnabled:Boolean = false;
 		private var isGravitySystemEnabled:Boolean = true;
 		private var fireProjectileDelay:int = 9999;
@@ -198,8 +202,10 @@
 		
 		public function takeDamage(amount:Number):void {
 			//trace("takeDamage",this);
-			this.health -= amount;
-			checkForDamage();
+			if (!isInvincible) {
+				this.health -= amount;
+				checkForDamage();	
+			}
 			
 			
 		}
@@ -489,13 +495,26 @@
 			return isInvincible;
 		}
 		
-		public function setInvincibilityEnabled(invincibility:Boolean):void {
-			invincibilityTimer
-			isInvincible = invincibility;
-			if (isInvincible == true) {
+		public function getKillsOnContact():Boolean {
+			return killsOnContact;
+		}
+		
+		public function setKillsOnContact(newState:Boolean):void {
+			killsOnContact = newState;
+			if (killsOnContact == true) {
 				collisionDamage = collisionDamageInvincible;
+			}
+		}
+		
+		public function setInvincibilityEnabled(newState:Boolean):void {
+			//invincibilityTimer
+			isInvincible = newState;
+			if (isInvincible == true) {
+				//collisionDamage = collisionDamageInvincible;
+	
 			}else if(isInvincible == false){
 				collisionDamage = collisionDamageOriginal;
+				setKillsOnContact(false);
 			}
 		}
 		

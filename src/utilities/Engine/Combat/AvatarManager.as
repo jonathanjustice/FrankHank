@@ -155,12 +155,17 @@
 							EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
 						}else {
 							myAvatar.takeDamage(EnemyManager.enemies[j].getCollisionDamage() );
+							
+							EnemyManager.enemies[j].takeDamage(myAvatar.getAttackDamage());
 						}
 					}
-					//make the avatar and his hitbox exist before checking against them
+					//make sure the avatar and his hitbox exist before checking against them
+					
+					//I think is supposed to check if you attack it?
 					if (myAvatar.getiIsGraphicLoaded() == true) {
 						if(EnemyManager.enemies[j].hitTestObject(myAvatar.getActorGraphic().assignedGraphics[0].swf_child.hitbox_attack)){
 							EnemyManager.enemies[j].takeDamage(myAvatar.getAttackDamage());
+							trace("asdsadasdasd");
 						}
 					}	
 				}
