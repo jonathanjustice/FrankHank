@@ -62,6 +62,8 @@
 		private var isSwfLoaded:Boolean = false;
 		public var xVelocity:Number=0;//velocity
 		public var yVelocity:Number = 0;
+		private var knockbackVelocityX:int = -30;
+		private var knockbackVelocityY:int = -10;
 		private var collisionDamage:Number = 0;
 		private var collisionDamageInvincible:Number = 9999;
 		private var collisionDamageOriginal:Number = 0;
@@ -204,10 +206,14 @@
 			//trace("takeDamage",this);
 			if (!isInvincible) {
 				this.health -= amount;
+				onTakeDamage();
 				checkForDamage();	
 			}
-			
-			
+		}
+		
+		public function onTakeDamage():void {
+			//overriden by each individual class
+			//used for feedback mostly
 		}
 		
 		public function checkForDamage():void {
@@ -220,6 +226,22 @@
 					markDeathFlag();
 				}
 			}
+		}
+		
+		
+		public function setBounceDirection(bounceDirection:String):void {
+			if (bounceDirection == "left") {
+				knockbackVelocityX = -1*(Math.abs(knockbackVelocityX));
+			}else if (bounceDirection == "right") {
+				knockbackVelocityX = Math.abs(knockbackVelocityX);
+				
+			}
+		}
+		
+		public function bounceBackward():void {
+			//bounce backward based on which direction you are moving
+			xVelocity = knockbackVelocityX;
+			yVelocity = knockbackVelocityY;
 		}
 		
 		//flag actor for deletion, normally on death, collision or time out

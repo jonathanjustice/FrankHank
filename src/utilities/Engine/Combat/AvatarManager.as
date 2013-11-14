@@ -149,14 +149,18 @@
 						//if the avatar is invincible, damage the enemy
 						//EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
 						//resolves the collision & returns if this touched the top of the other object
-						if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j]) =="top") {
+						var collisionDirection:String = "";
+						collisionDirection = utilities.Mathematics.RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j]);
+						if (collisionDirection=="top") {
 							myAvatar.jumpingEnded();
 							myAvatar.jump();
 							EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
 						}else {
+							myAvatar.setBounceDirection(collisionDirection);
+							//if you are invincible, this will cause the enemy to take damage, else it will do nothing
 							myAvatar.takeDamage(EnemyManager.enemies[j].getCollisionDamage() );
-							
-							EnemyManager.enemies[j].takeDamage(myAvatar.getAttackDamage());
+							//if you are invincible, you will instant kill the enemy, else it will do nothing
+							EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
 						}
 					}
 					//make sure the avatar and his hitbox exist before checking against them

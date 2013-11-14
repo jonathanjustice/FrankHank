@@ -31,7 +31,7 @@
 		private var shootingTimer:int = 0;
 		private var currentDelay:int = 0;
 		private var delay:int = 15;
-		private var avatarHealth:int = 2;
+		private var avatarHealth:int = 3;
 		
 		
 		private var filePath:String = "../src/assets/actors/swf_frank.swf";
@@ -59,6 +59,7 @@
 				toggleDoubleJump(true);
 			}
 		}
+		
 		
 		public function setAttackHitbox(newHitbox:MovieClip):void{
 			attackHitbox = newHitbox;
@@ -235,6 +236,10 @@
 					setIdleTime(0);
 				}
 			}
+		}
+		
+		public override function onTakeDamage():void {
+			bounceBackward();
 		}
 	}
 }
