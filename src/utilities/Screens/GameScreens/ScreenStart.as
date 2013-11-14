@@ -10,35 +10,67 @@
 		private var myScreen:MovieClip;
 		
 		public function ScreenStart(){
-			utilities.Engine.Game.startGame("start");
-			removeThisScreen();
-			//defineScreenGraphics("ui_Start")
+			//utilities.Engine.Game.startGame("start");
+			//removeThisScreen();
+			defineScreenGraphics("ui_start")
+		}
+		
+		public override function setUp():void {
+			//addDynamicBlocker();
+			addClickHandler();
+			addOverHandler();
+			addOutHandler();
+			mouseEnabledHandler();
+			addScreenToUIContainer();
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
 			setUp();
 			this.addChild(graphic);
 			assignedGraphic[0] = graphic;
+			assignedGraphic[0].swf_child.clickToStart.visible = true;
+			assignedGraphic[0].swf_child.startButtons.visible = false;
 			//Game.setGameState("cutSceneFullyLoaded");
 		}
 		
 		public override function clickHandler(event:MouseEvent):void{
 			//trace("parent:",event.target.parent.name);
-			//trace("target:",event.target.name);
-			//switch (event.target){
-			/*	case blocker:
+			trace("target:",event.target.name);
+			switch (event.target){
+				//go to select screen
+				/*case blocker:
 				trace("clicked start screen");
+					myScreen.startButtons.visible = true;
+					break;
+				//go to select screen
+				case myScreen.btn_start:
+					trace("clicked btn_start");
+					myScreen.clickToStart.visible = false;
+					myScreen.startButtons.visible = true;
+					break;*/
+				case assignedGraphic[0].swf_child:
+					trace("clicked clickToStart");
+					assignedGraphic[0].swf_child.clickToStart.visible = false;
+					assignedGraphic[0].swf_child.startButtons.visible = true;
+					break;
+				case assignedGraphic[0].swf_child.clickToStart:
+					trace("clicked clickToStart");
+					assignedGraphic[0].swf_child.clickToStart.visible = false;
+					assignedGraphic[0].swf_child.startButtons.visible = true;
+					break;
+				case assignedGraphic[0].swf_child.startButtons.btn_newGame:
+					trace("clicked btn_newGame");
 					removeThisScreen();
 					utilities.Engine.Game.startGame("start");
+					break;
+				case assignedGraphic[0].swf_child.startButtons.btn_continue:
+					trace("clicked btn_continue");
+					//removeThisScreen();
+					//utilities.Engine.Game.startGame("start");
+					//do continue-y stuff
 					break;
 				
-				case myScreen.btn_start:
-				trace("clicked start screen");
-					removeThisScreen();
-					utilities.Engine.Game.startGame("start");
-					break;
-					*/
-			//}
+			}
 		}
 		
 		
