@@ -1,5 +1,6 @@
 ﻿package utilities.Engine{
 	import utilities.Screens.GameScreens.LevelComplete;
+	import utilities.Screens.GameScreens.LevelFailed;
 	import utilities.Screens.xpBarSystem;
 	import utilities.Screens.Screen_Default;
 	import utilities.Screens.UIContainer;
@@ -12,6 +13,7 @@
 		private var padding:int=11;
 		private var screen_LevelUp:MovieClip;
 		private static var screen_LevelComplete:MovieClip;
+		private static var screen_LevelFailed:MovieClip;
 		
 		private static var screen_Start:MovieClip;
 		private static var _instance:UIManager;
@@ -43,6 +45,11 @@
 		
 		public function openLevelCompleteScreen():void{
 			screen_LevelComplete = new LevelComplete();
+			//trace("start");
+		}
+		
+		public function openLevelFailedScreen():void{
+			screen_LevelFailed = new LevelFailed();
 			//trace("start");
 		}
 		

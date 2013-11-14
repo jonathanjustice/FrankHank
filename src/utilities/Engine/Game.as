@@ -92,7 +92,7 @@
 				case "levelFailed":
 					trace("level failed !!!!!!!!!!!!!!!!!!!!!!!!!!");
 					LevelManager.getInstance().setIsLevelActive(false);
-					//UIManager.getInstance().openLevelCompleteScreen();
+					UIManager.getInstance().openLevelFailedScreen();
 					LevelManager.getInstance().setIsLevelFailed(true);
 					break;
 				case "gameFailed":
