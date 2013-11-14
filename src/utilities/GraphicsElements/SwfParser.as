@@ -72,6 +72,7 @@
 		//screens & UI
 		private var ui_levelComplete:String = new String("../src/assets/ui/swf_levelComplete.swf");
 		private var ui_levelFailed:String = new String("../src/assets/ui/swf_levelFailed.swf");
+		private var ui_lives:String = new String("../src/assets/ui/swf_lives.swf");
 		private var ui_cutScene_1:String = new String("../src/assets/ui/swf_cutScene_1.swf");
 		private var ui_cutScene_2:String = new String("../src/assets/ui/swf_cutScene_2.swf");
 		private var ui_cutScene_3:String = new String("../src/assets/ui/swf_cutScene_3.swf");
@@ -322,6 +323,9 @@
 					break;
 				case "ui_levelFailed":
 					filePath = ui_levelFailed;
+					break;
+				case "ui_lives":
+					filePath = ui_lives;
 					break;
 				case "ui_cutScene_1":
 					filePath = ui_cutScene_1;

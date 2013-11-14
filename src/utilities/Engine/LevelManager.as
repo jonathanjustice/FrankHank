@@ -124,6 +124,7 @@
 		
 		private function levelFailed():void {
 			trace("LEVEL FAILED");
+			Game.setLives(Game.getLives() - 1);
 			clearLevel();
 			setIsLevelFailed(false);
 			LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress());

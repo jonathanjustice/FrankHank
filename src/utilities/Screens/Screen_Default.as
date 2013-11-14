@@ -14,6 +14,7 @@
 		private var animationState:String = "idle"
 		private var isSwfLoaded:Boolean = false;
 		private var filePath: String = "";
+		private var hasBlocker:Boolean = false;
 		public function Screen_Default():void{			
 			setUp();
 		}
@@ -94,10 +95,14 @@
 		private function addDynamicBlocker():void{
 			blocker = new utilities.Screens.Screen_Dynamic_Blocker;
 			this.addChild(blocker)
+			hasBlocker = true;
 		}
 		
 		private function removeDynamicBlocker():void{
-			this.removeChild(blocker);
+			
+			if (hasBlocker) {
+				this.removeChild(blocker);
+			}
 		}
 		
 		private function updateDynamicBlocker():void{

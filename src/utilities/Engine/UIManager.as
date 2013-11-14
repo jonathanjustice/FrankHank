@@ -1,6 +1,7 @@
 ﻿package utilities.Engine{
 	import utilities.Screens.GameScreens.LevelComplete;
 	import utilities.Screens.GameScreens.LevelFailed;
+	import utilities.Screens.GameScreens.Lives;
 	import utilities.Screens.xpBarSystem;
 	import utilities.Screens.Screen_Default;
 	import utilities.Screens.UIContainer;
@@ -14,6 +15,7 @@
 		private var screen_LevelUp:MovieClip;
 		private static var screen_LevelComplete:MovieClip;
 		private static var screen_LevelFailed:MovieClip;
+		private static var screen_Lives:MovieClip;
 		
 		private static var screen_Start:MovieClip;
 		private static var _instance:UIManager;
@@ -50,6 +52,16 @@
 		
 		public function openLevelFailedScreen():void{
 			screen_LevelFailed = new LevelFailed();
+			//trace("start");
+		}
+		
+		public function openLivesScreen():void{
+			screen_Lives = new Lives();
+			//trace("start");
+		}
+		
+		public function removeLivesScreen():void{
+			screen_Lives.removeThisScreen();
 			//trace("start");
 		}
 		

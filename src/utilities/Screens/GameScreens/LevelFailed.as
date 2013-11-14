@@ -9,15 +9,55 @@
 	public class LevelFailed extends utilities.Screens.Screen_Default{
 		private var myScreen:MovieClip;
 		private var filePath:String = "../src/assets/ui/swf_levelFailed.swf";
+		private var countdownTimer:int = 0;
+		private var timeFadeIn:int = 3;
+		private var timeFadeOut:int = 87;
+		private var timeNextScreen:int = 90;
 		public function LevelFailed(){
 			defineScreenGraphics("ui_levelFailed");
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
 			setUp();
+			this.alpha = 0;
 			this.addChild(graphic);
 			assignedGraphic[0] = graphic;
 			//Game.setGameState("cutSceneFullyLoaded");
+			startTimerToNextLevel();
+			setLivesDisplay();
+		}
+		
+			
+		public function setLivesDisplay():void {
+			var livesDisplay:String = "";
+			livesDisplay = "x" + String(Game.getLives());
+			assignedGraphic[0].swf_child.txt_lives.text = livesDisplay;
+		}
+		
+		private function startTimerToNextLevel():void {
+			countdownTimer = 0;
+			this.addEventListener(Event.ENTER_FRAME, countdown);
+		}
+		
+		private function stopTimerToNextLevel():void {
+			this.removeEventListener(Event.ENTER_FRAME, countdown);
+		}
+		
+		private function countdown(e:Event):void {
+			countdownTimer++;
+			if (countdownTimer <= timeFadeIn) {
+				this.alpha = countdownTimer / timeFadeIn;
+			}
+			if (countdownTimer >= timeFadeOut && countdownTimer < timeNextScreen) {
+				this.alpha = 1 - (countdownTimer -timeFadeOut) / (timeNextScreen - timeFadeOut);
+			}
+			if (countdownTimer >= timeNextScreen) {
+				stopTimerToNextLevel();
+				countdownTimer = 0;
+				this.alpha = 0;
+				removeThisScreen();
+				utilities.Engine.Game.setGameState("startLevelLoad");
+			}
 		}
 		
 		public override function getFilePath():String {

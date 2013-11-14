@@ -24,6 +24,7 @@
 	
 	public class Game extends MovieClip{
 		public static var theGame:Game;
+		public static var lives:int = 3;
 		public static var resourceManager:ResourceManager;
 		public static var powerupManager:PowerupManager;
 		public static var animationManager:AnimationManager;
@@ -76,6 +77,7 @@
 				case "levelFullyLoaded":
 					//trace("levelFullyLoaded");
 					LevelManager.getInstance().setIsLevelActive(true);
+					UIManager.getInstance().openLivesScreen();
 					enableMasterLoop();
 					break;
 				case "inLevel":
@@ -93,6 +95,7 @@
 					trace("level failed !!!!!!!!!!!!!!!!!!!!!!!!!!");
 					LevelManager.getInstance().setIsLevelActive(false);
 					UIManager.getInstance().openLevelFailedScreen();
+					UIManager.getInstance().removeLivesScreen();
 					LevelManager.getInstance().setIsLevelFailed(true);
 					break;
 				case "gameFailed":
@@ -334,6 +337,17 @@
 				//LevelManager.getInstance().setIsLevelActive(true);
 			}else{
 				//can use this section for when the game is paused but I still need to update UI stuff
+			}
+		}
+		
+		public static function getLives():int {
+			return lives;
+		}
+		
+		public static function setLives(newAmount:int):void {
+			lives = newAmount;
+			if (lives <= 0 ){
+				//do game over stuff
 			}
 		}
 		
