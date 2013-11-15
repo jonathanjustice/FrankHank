@@ -28,9 +28,9 @@
 			MouseInputManager.runSelectionLogic(event);
 			//trace("clicked")
 			if (isSelected) {
-				deselectActor();
+			//	deselectActor();
 			}else {
-				selectActor();
+			//	selectActor();
 			}
 		}
 		

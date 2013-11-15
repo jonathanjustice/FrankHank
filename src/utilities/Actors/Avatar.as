@@ -31,6 +31,7 @@
 		private var shootingTimer:int = 0;
 		private var currentDelay:int = 0;
 		private var delay:int = 15;
+		private var avatarHealth:int = 3;
 		
 		
 		private var filePath:String = "../src/assets/actors/swf_frank.swf";
@@ -52,12 +53,13 @@
 		
 		public function setUp():void {
 			defineGraphics("frank", false);
-			health = 1;
+			health = avatarHealth;
 			//addStroke();
 			if (AvatarManager.getInstance().getIsAvatarDoubleJumpEnabled()) {
 				toggleDoubleJump(true);
 			}
 		}
+		
 		
 		public function setAttackHitbox(newHitbox:MovieClip):void{
 			attackHitbox = newHitbox;
@@ -191,6 +193,7 @@
 					setIsShootingEnabled(true);
 					break;
 				case "invincible":
+					setKillsOnContact(true);
 					setInvincibilityEnabled(true);
 					break;
 				case "doubleJump":
@@ -233,6 +236,10 @@
 					setIdleTime(0);
 				}
 			}
+		}
+		
+		public override function onTakeDamage():void {
+			bounceBackward();
 		}
 	}
 }

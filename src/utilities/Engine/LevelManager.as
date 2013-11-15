@@ -114,38 +114,25 @@
 		}
 		
 		private function levelCompleted():void {
-			//trace("LevelManager: Level completed: EnemyManager.enemies", EnemyManager.enemies);
+			clearLevel();
 			if (EnemyManager.enemies.length == 0) {
-				//trace("LevelManager:levelCompleted");
-				//trace("enemy manager: no enemies left");
-				//trace("EnemyManager.enemies", EnemyManager.enemies);
-				Game.disableMasterLoop();
-				LootManager.getInstance().destroyArray(LootManager.lootDrops);
-				LootManager.getInstance().destroyArray(LootManager.treasureChests);
-				EnemyManager.getInstance().destroyArray(EnemyManager.enemies);
-				LevelManager.getInstance().destroyArray(LevelManager.arts);
-				LevelManager.getInstance().destroyArray(LevelManager.coins);
-				LevelManager.getInstance().destroyArray(LevelManager.savePoints);
-				PowerupManager.getInstance().destroyArray(PowerupManager.powerups);
-				BulletManager.getInstance().destroyArray(BulletManager.bullets);
-				AvatarManager.getInstance().destroyArray(AvatarManager.avatars);
-				LevelManager.getInstance().destroyArray(LevelManager.levels);
-				LevelManager.getInstance().destroyArray(LevelManager.walls);
-				Game.resetGameContainerCoordinates();
 				LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1);
-				//loadMissionCompleteScreen
-				//loadLevel();
 				Game.setGameState("startCutSceneLoad");
-				Game.setFramesSinceGameStart();
 				LevelManager._instance.setIsLevelComplete(false);
 			}
 		}
 		
 		private function levelFailed():void {
+			trace("LEVEL FAILED");
+			clearLevel();
 			setIsLevelFailed(false);
-			//trace("LevelManager:levelFailed");
-			//trace("enemy manager: no enemies left");
-			//trace("EnemyManager.enemies", EnemyManager.enemies);
+			LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress());
+			LevelManager._instance.setIsLevelComplete(false);
+			//Game.setGameState("startLevelLoad");
+			
+		}
+		
+		private function clearLevel():void {
 			Game.disableMasterLoop();
 			LootManager.getInstance().destroyArray(LootManager.lootDrops);
 			LootManager.getInstance().destroyArray(LootManager.treasureChests);
@@ -159,15 +146,9 @@
 			LevelManager.getInstance().destroyArray(LevelManager.levels);
 			LevelManager.getInstance().destroyArray(LevelManager.walls);
 			Game.resetGameContainerCoordinates();
-			LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress());
-			//loadMissionCompleteScreen
-			//loadLevel();
-			//Game.setGameState("startCutSceneLoad");
 			Game.setFramesSinceGameStart();
-			LevelManager._instance.setIsLevelComplete(false);
-			Game.setGameState("startLevelLoad");
-			
 		}
+		
 		
 		public function loadMissionCompleteScreen():void {
 			
