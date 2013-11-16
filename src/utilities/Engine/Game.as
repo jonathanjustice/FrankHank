@@ -344,6 +344,11 @@
 			return lives;
 		}
 		
+		public static function getContinueCode():String {
+			var continueCode:String = "sddf-sdfsdfsdf-asdasdasd"
+			return continueCode;
+		}
+		
 		public static function setLives(newAmount:int):void {
 			lives = newAmount;
 			if (lives <= 0 ){
