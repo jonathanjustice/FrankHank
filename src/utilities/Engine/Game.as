@@ -5,6 +5,7 @@
 	import utilities.Actors.CameraWindow;
 	import utilities.Engine.Combat.PowerupManager;
 	import utilities.GraphicsElements.Animation;
+	import utilities.Saving_And_Loading.JsonParser;
 	import utilities.Screens.GameContainer;
 	import utilities.Engine.ResourceManager;
 	import utilities.Engine.Builders.LevelBuilder;
@@ -22,6 +23,7 @@
 	import utilities.dataModels.LevelProgressModel;
 	import utilities.Engine.Combat.AnimationManager;
 	import utilities.Actors.GameBoardPieces.Art;
+	import utilities.customEvents.*;
 	
 	public class Game extends MovieClip{
 		public static var theGame:Game;
@@ -49,6 +51,7 @@
 		private static var bg_speed_0:Number = 0;
 		private static var bg_speed_1:Number = -0.25;
 		private static var bg_speed_2:Number = -0.35;
+		public static var jsonParser:JsonParser;
 		
 		//public var player:Player;
 		public var hero:MovieClip;
@@ -62,6 +65,17 @@
 			createGameContainer();
 			setUpCameraWindow();
 			createQuadTree();
+			jsonParser = new JsonParser();
+			Main.theStage.addEventListener(StateMachineEvent.TEST_EVENT, testEvent);
+			Main.theStage.addEventListener(StateMachineEvent.BOOT, boot);
+		}
+		
+		public function testEvent(e:StateMachineEvent):void {
+			trace("testEvent Fired in Game!")
+		}
+		
+		public function boot(e:StateMachineEvent):void {
+			trace("boot Fired in Game!")
 		}
 		
 		public static function setGameState(newState:String,filePathName:String =""):void {
@@ -383,20 +397,14 @@
 				framesSinceGameStart ++;
 				//trace("Game: masterLoop: before any update loops");
 				AvatarManager.updateLoop();
-				//trace("Game: masterLoop: AvatarManager");
 				BulletManager.updateLoop();
-				//trace("Game: masterLoop: BulletManager");
 				EnemyManager.updateLoop();
-				//trace("Game: masterLoop: EnemyManager");
 				LootManager.updateLoop();
-				//trace("Game: masterLoop: LootManager");
 				//updateCombatManager();
 				UIManager.updateLoop();
-				//trace("Game: masterLoop: UIManager");
 				LevelManager.getInstance().updateLoop();
-				//trace("Game: masterLoop: LevelManager");
-				//LevelManager.getInstance().setIsLevelActive(true);
 				CheatManager.getInstance().updateLoop();
+				EffectsManager.getInstance().updateLoop();
 			}else{
 				//can use this section for when the game is paused but I still need to update UI stuff
 			}
@@ -452,6 +460,10 @@
 		
 		public static function getAnimationManager():AnimationManager {
 			return animationManager;
+		}
+		
+		public function getJsonParser():JsonParser {
+			return jsonParser;
 		}
 	}
 }

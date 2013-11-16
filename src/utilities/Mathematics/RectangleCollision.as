@@ -34,47 +34,47 @@ package utilities.Mathematics{
 			var collisionSide:String = "";
 		//	trace("moveable: ", movable);
 			//moveable is above stationary
-			if (movable.getPreviousPosition().y + movable.height <= stationary.getPreviousPosition().y) {
+			if (movable.getPreviousPosition().y + movable.hitbox.height <= stationary.getPreviousPosition().y) {
 				collisionSide = "top";
-				movable.y = stationary.y - movable.height - (collisionEjectDistance - stationary.yVelocity);
+				movable.y = stationary.y - movable.hitbox.height - (collisionEjectDistance - stationary.yVelocity);
 				//movable.y -= stationary.yVelocity;
 	 			movable.x += stationary.xVelocity *2;
 				
 			}
 			//movable is below stationary
-			else if (movable.getPreviousPosition().y >= stationary.getPreviousPosition().y + stationary.height) {
-				movable.y = stationary.y + stationary.height + collisionEjectDistance *2;
+			else if (movable.getPreviousPosition().y >= stationary.getPreviousPosition().y + stationary.hitbox.height) {
+				movable.y = stationary.y + stationary.hitbox.height + collisionEjectDistance *2;
 				collisionSide = "bottom";
 				movable.reduceJumpSpeed();
 				
 			}
 			//moveable's is to the left
-			else if (movable.getPreviousPosition().x + movable.width <= stationary.getPreviousPosition().x) {
-				movable.x = stationary.x - movable.width - collisionEjectDistance;
+			else if (movable.getPreviousPosition().x + movable.hitbox.width <= stationary.getPreviousPosition().x) {
+				movable.x = stationary.x - movable.hitbox.width - collisionEjectDistance;
 				collisionSide = "left";
 				//trace("stationary.getPreviousPosition().x",stationary.getPreviousPosition().x);
 				
 			}
 			//moveable is to the right
-			else if (movable.getPreviousPosition().x >= stationary.getPreviousPosition().x + stationary.width) {
-				movable.x = stationary.x + stationary.width + collisionEjectDistance;
+			else if (movable.getPreviousPosition().x >= stationary.getPreviousPosition().x + stationary.hitbox.width) {
+				movable.x = stationary.x + stationary.hitbox.width + collisionEjectDistance;
 				collisionSide = "right";
 				
 			}
 			else{
 				//trace("else, this should never fire, if it does, WHAT DID YOU DO?");
-				//movable.y = stationary.y - movable.height - collisionEjectDistance;
+				//movable.y = stationary.y - movable.hitbox.height - collisionEjectDistance;
 			}
 			return collisionSide;
 		}
 		
 		public static function isRectangleOnTop(movable:MovieClip, stationary:MovieClip):Boolean {
 			var isOnTop:Boolean = false;
-			if (movable.getPreviousPosition().y + movable.height <= stationary.y) {
-				if (movable.getPreviousPosition().x + movable.width >= stationary.getPreviousPosition().x + stationary.width) {
+			if (movable.getPreviousPosition().y + movable.hitbox.height<= stationary.y) {
+				if (movable.getPreviousPosition().x + movable.hitbox.width + movable.xVelocity >= stationary.getPreviousPosition().x + stationary.hitbox.width) {
 					isOnTop = true;
 				}
-				if (movable.getPreviousPosition().x <= stationary.getPreviousPosition().x) {
+				if (movable.getPreviousPosition().x + movable.xVelocity <= stationary.getPreviousPosition().x) {
 					isOnTop = true;
 				}
 			}
@@ -84,15 +84,15 @@ package utilities.Mathematics{
 		public static function testCollisionWithPlatform(movable:MovieClip, stationary:MovieClip):Boolean {
 			var collisionEjectDistance:Number = 1;//don't get stuck in the other rectangle
 			var isOnTop:Boolean = false;
-			if (movable.getPreviousPosition().y + movable.height <= stationary.y) {
-				if (movable.getPreviousPosition().x + movable.width >= stationary.getPreviousPosition().x) {
+			if (movable.getPreviousPosition().y + movable.hitbox.height <= stationary.y) {
+				if (movable.getPreviousPosition().x + movable.hitbox.width >= stationary.getPreviousPosition().x) {
 					isOnTop = true;
 				}
-				if (movable.getPreviousPosition().x <= stationary.getPreviousPosition().x + stationary.width) {
+				if (movable.getPreviousPosition().x <= stationary.getPreviousPosition().x + stationary.hitbox.width) {
 					isOnTop = true;
 				}
 				if (isOnTop) {
-					movable.y = stationary.y - movable.height - collisionEjectDistance;
+					movable.y = stationary.y - movable.hitbox.height - collisionEjectDistance;
 				}
 			}
 			return isOnTop;

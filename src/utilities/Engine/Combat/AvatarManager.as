@@ -7,6 +7,7 @@
 	import utilities.Actors.Avatar;
 	import utilities.Engine.IManager;
 	import utilities.Engine.LevelManager;
+	import utilities.Engine.EffectsManager
 	import utilities.Engine.Combat.PowerupManager;
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Mathematics.RectangleCollision;
@@ -92,22 +93,22 @@
 					}
 				}
 				//collide with triggers
-				for (var e:int = 0; e < LevelManager.triggers_endZones.length; e++) {
+				/*for (var e:int = 0; e < LevelManager.triggers_endZones.length; e++) {
 					//trace("end zone here");
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_endZones[e]) == true) {
 						LevelManager.triggers_endZones[e].takeDamage(1);
 						LevelManager.triggers_endZones[e].checkForDeathFlag();
 						//trace("touched end zone trigger");
 					}
-				}
-				for (var f:int = 0; f < LevelManager.triggers_cutScenes.length; f++) {
+				}*/
+				/*for (var f:int = 0; f < LevelManager.triggers_cutScenes.length; f++) {
 					//trace("cut scene trigger here");
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_cutScenes[f]) == true) {
 						LevelManager.triggers_cutScenes[f].takeDamage(1);
 						LevelManager.triggers_cutScenes[f].checkForDeathFlag();
 						//trace("touched cut scene trigger");
 					}
-				}
+				}*/
 				
 				//collide walls & avatar
 				for (var h:int = 0; h < LevelManager.triggerableWalls.length; h++) {
@@ -145,7 +146,7 @@
 								break;
 							case "platform":
 								if (utilities.Mathematics.RectangleCollision.testCollisionWithPlatform(myAvatar, LevelManager.walls[i]) == true) {
-									//trace("platform");
+									trace("platform");
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 								}
@@ -212,11 +213,13 @@
 							if (utilities.Mathematics.RectangleCollision.isRectangleOnTop(myAvatar, EnemyManager.enemies[j]) == false) {
 								trace("vulnerable and not on top");
 								
+								
 							}else {
 								trace("vulnerable and on top");
 								myAvatar.jumpingEnded();
 								myAvatar.jump();
 								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
+								EffectsManager.getInstance().newEffect_FeedbackTextField(EnemyManager.enemies[j].x + EnemyManager.enemies[j].width/2, EnemyManager.enemies[j].y );
 							}
 						}else{
 							//if the avatar is invincible, damage the enemy regardless of any other states
@@ -231,6 +234,7 @@
 								myAvatar.jump();
 								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
 								EnemyManager.enemies[j].setIsVulnerable(true);
+								EffectsManager.getInstance().newEffect_FeedbackTextField(EnemyManager.enemies[j].getPreviousPosition().x + EnemyManager.enemies[j].width/2, EnemyManager.enemies[j].getPreviousPosition().y );
 							//if the avatar touches the enemy on anything but the top, the avatar takes damage
 							}else {
 								

@@ -24,7 +24,7 @@
 		private var isVulnerable:Boolean = false;
 		private var isAttachedToAvatar:Boolean = false;
 		private var throwable:Boolean = false;
-		private var originalXVelocity:int;
+		public var originalXVelocity:int;
 		
 		
 		//private var availableForTargeting:Boolean=true;
@@ -46,7 +46,7 @@
 		
 		public function updateLoop():void{
 			//setQuadTreeNode();
-			//applyVector();
+			applyVector();
 			//doStuffToEnemyOverTime();
 			//checkForDamage();
 			//checkForDeathFlag();
@@ -54,9 +54,10 @@
 		}
 		
 		public function beThrown():void {
-			xVelocity = 45;
-			yVelocity = -20;
-			applyVector();
+			this.y -= 30 ;
+			xVelocity = 20;
+			yVelocity = -25;
+			//applyVector();
 			rechargePause = false;
 			health = maximumHealth;
 			isRechargingHealth = false;
@@ -64,14 +65,15 @@
 		
 		//if the enemy is not stunned, then move forward
 		public function applyVector():void {
+			this.y += yVelocity;
 			if (!isVulnerable) {
 				this.x += xVelocity;
-				this.y += yVelocity;
 			}
-			trace("xvel",xVelocity);
-			trace("abs svel",Math.abs(xVelocity));
-			if (Math.abs(xVelocity) > originalXVelocity) {
-				xVelocity *= .1;
+			//trace("xvel",xVelocity);
+			//trace("abs svel",Math.abs(xVelocity));
+			if (Math.abs(xVelocity) > Math.abs(originalXVelocity)) {
+				xVelocity *= .99;
+				trace("too fast ");
 			}
 		}
 		
@@ -182,7 +184,7 @@
 			rechargePause = newState;
 		}
 		public function setIsVulnerable(newState:Boolean):void {
-			trace("setisVulnerable",newState);
+			//trace("setisVulnerable",newState);
 			isVulnerable = newState;
 			if (isVulnerable == true) {
 				playAnimation("vulnerable")

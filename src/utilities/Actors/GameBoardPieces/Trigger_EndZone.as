@@ -16,6 +16,8 @@
 			setUp();
 			tempWidth = newWidth;
 			tempHeight = newHeight;
+			this.x = newX;
+			this.y = newY;
 			/*print(String("newX: " + newX + " newY: " + newY + " newWidth: " + newWidth + " newHeight: " + newHeight)); 
 			this.scaleX = newWidth;
 			this.scaleY = newHeight;

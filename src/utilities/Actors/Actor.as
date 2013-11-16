@@ -4,6 +4,7 @@
 	import flash.display.MovieClip;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import utilities.Effects.FeedbackTextField;
 	import utilities.Screens.progressBar;
 	import utilities.Engine.Game;
 	import utilities.Engine.Combat.*;
@@ -11,6 +12,7 @@
 	import utilities.Actors.TreasureChest;
 	import utilities.Engine.Builders.LootManager;
 	import utilities.Actors.Stats.WeaponStats;
+	import utilities.Actors.GameBoardPieces.Level;
 	import utilities.Actors.GameBoardPieces.Trigger;
 	import utilities.Actors.GameBoardPieces.Trigger_CutScene;
 	import utilities.Actors.GameBoardPieces.Trigger_EndZone;
@@ -21,12 +23,14 @@
 	import flash.geom.Point;
 	import utilities.Input.KeyInputManager;
 	import utilities.Engine.Combat.AnimationManager;
+	import utilities.Engine.EffectsManager;
 	import utilities.Engine.LevelManager;
 	import utilities.objects.GameObject;
 	import utilities.Saving_And_Loading.swfLoader;
 	public class Actor extends GameObject {
 		public var attachedArt:MovieClip = new MovieClip;
 		public var hitbox:MovieClip = new MovieClip;
+		public var hitzone:MovieClip = new MovieClip;
 		private var nodes:Array = new Array;
 		public var isGraphicLoaded:Boolean = false;
 		private var isFalling:Boolean = false;
@@ -189,9 +193,11 @@
 		}
 		
 		public function defineHitbox(newHitbox:MovieClip):void {
-			hitbox = newHitbox;
+			trace("-------------------------------------definehitbox",this);
+			trace("-------------------------------------hitbox",hitbox);
+			hitbox = newHitbox as MovieClip;
+			trace("------------------------------------------------------hitbox",hitbox);
 			hitbox.visible = false;
-			//trace("hitbox",hitbox);
 		}
 		
 		public function getHitbox():MovieClip {
@@ -199,17 +205,46 @@
 		}
 		
 		public function addActorToGameEngine(graphic:DisplayObject, array:Array, spliceIndex:int = 0):void {
+			
 			//spliceIndex = array.length;
-			setPreviousPosition();
+			
 			assignedGraphic[0] = graphic;
 			this.addChild(graphic);
 			utilities.Engine.Game.gameContainer.addChild(this);
 			setIsSwfLoaded(true);
 			//array.push(this);
 			array.splice(spliceIndex, 0, this);
+			try {
+				if (assignedGraphic[0].swf_child.getChildByName("hitbox") == null) { //code; }
+					//trace("it does not have a hitbox");
+				}else {
+					trace("it has a hitbox");
+					trace(this);
+						hitbox = this.assignedGraphic[0].swf_child.hitbox;
+						this.assignedGraphic[0].swf_child.removeChild(hitbox);
+						this.addChildAt(hitbox,0);
+					//	hitzone = this.assignedGraphic[0].swf_child.hitzone;
+				}
+			}catch (error:Error ) {
+				//it does not have a hitbox
+			}
+			try {
+				if (assignedGraphic[0].swf_child.getChildByName("hitzone") == null) { //code; }
+					//trace("it does not have a hitbox");
+				}else {
+					trace("it has a hitzone");
+						hitzone = this.assignedGraphic[0].swf_child.hitzone;
+				}
+			}catch (error:Error ) {
+				//it does not have a hitbox
+			}
+			
+			setPreviousPosition();
 		}
 		
 		public function removeActorFromGameEngine(actor:MovieClip, array:Array):void {
+			trace("actor",actor);
+			trace("array",array);
 			actor.availableForTargeting=false;
 			var index:int = array.indexOf(actor);
 			array.splice(index,1);
@@ -276,7 +311,7 @@
 		//this would be a really nice place to start using Interfaces... hint hint hint
 		public function checkForDeathFlag():void{
 			if (markedForDeletion) {
-				//trace("checkForDeathFlag",this);
+				trace("checkForDeathFlag",this);
 				//delete it
 				if(this is Bullet){
 					removeActorFromGameEngine(this,BulletManager.getInstance().getArray());
@@ -298,6 +333,8 @@
 					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers_cutScenes());
 				}else if(this is Trigger_EndZone){
 					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers_endZones());
+				}else if (this is FeedbackTextField) {
+					removeActorFromGameEngine(this,EffectsManager.getInstance().getEffects());
 				}
 			}
 		}
@@ -317,7 +354,7 @@
 		private function animationStateController():void {
 			setAnimationState("idle");
 		}
-		public function defineGraphics(filePath:String, isLevel:Boolean):void {
+		public function defineGraphics(filePath:String="", isLevel:Boolean=false):void {
 			loadActorSwf(getFilePath());
 		}
 		
@@ -455,9 +492,9 @@
 		}
 
 		//useful for collision detection, in case the object gets into an invalid location
-		public function setPreviousPosition():void{
-			previousPosition.x = this.x;
-			previousPosition.y = this.y;
+		public function setPreviousPosition():void {
+			previousPosition.x = this.x + hitbox.x;
+			previousPosition.y = this.y + hitbox.y;
 		}
 		
 		//useful for collision detection
@@ -645,14 +682,15 @@
 			maxGravity = newMax;
 		}
 		
-		public function drawGraphicDefaultSmallRectangle():void {
+		public function drawGraphicDefaultSmallRectangle():Sprite {
 			var myGraphic:Sprite = new Sprite();
 			//myGraphic.graphics.lineStyle(3, 0x0000ff);
 			myGraphic.graphics.lineStyle();
 			myGraphic.graphics.beginFill(0x8800FF);
 			myGraphic.graphics.drawRect(0,0,1,1);
 			myGraphic.graphics.endFill();
-			this.addChild(myGraphic);
+			//this.addChild(myGraphic as MovieClip);
+			return (myGraphic);
 		}
 		
 		public function drawGraphicDefaultRectangle():void {

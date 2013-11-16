@@ -1,0 +1,5 @@
+{
+	"sounds": [
+		{ "name":"mp3_guileTheme" , "filePath":"sound/GuileTheme.mp3" , "volume": ".01" }
+	]
+}

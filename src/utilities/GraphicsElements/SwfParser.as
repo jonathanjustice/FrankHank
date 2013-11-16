@@ -107,6 +107,7 @@
 		}
 		
 		public static function getInstance():SwfParser {
+			
 			if(SwfParser._instance == null){
 				SwfParser._instance = new SwfParser(new SingletonEnforcer());
 			}
@@ -181,53 +182,70 @@
 				}
 				for (var j:int = 0; j < tempArray.length; j++) {
 					
-					if (tempArray[j].name == "art") {
-						//childrenToLoad--;//because its not really going to get loaded
-						var art:Art = new Art(tempArray[j].x, tempArray[j].y, tempArray[j],0);
-						//art.visible = false;
-					}	
-					if(tempArray[j].name == "art_1"){
-						var art_1:Art = new Art(tempArray[j].x, tempArray[j].y, tempArray[j],1);
-					}
-					if(tempArray[j].name == "art_2"){
-						var art_2:Art = new Art(tempArray[j].x, tempArray[j].y, tempArray[j],2);
-					}
-					if(tempArray[j].name == "wall"){
-						var wall:Wall = new Wall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height, "standard");
-						wall.x = tempArray[j].x;
-						wall.y = tempArray[j].y;
-						tempArray[j].x = 0;
-						tempArray[j].y = 0;
-						//wall.setType("standard");
-					}
-					if(tempArray[j].name == "platform"){
-						var platform:Wall = new Wall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height, "platform");
-						platform.x = tempArray[j].x;
-						platform.y = tempArray[j].y;
-						tempArray[j].x = 0;
-						tempArray[j].y = 0;
-						//platform.setType("platform");
-					}
-					if(tempArray[j].name == "movingWall"){
-						var movingWall:MovingWall = new MovingWall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height, "movingWall");
-						movingWall.x = tempArray[j].x;
-						movingWall.y = tempArray[j].y;
-						tempArray[j].x = 0;
-						tempArray[j].y = 0;
-						//movingWall.setType("movingWall");
-						sortNodes(movingWall, tempArray[j]);
-						//trace("sorting nodes completed");
-						movingWall.setNewTarget();
-						movingWall.defineInitialPoint();
-						
-					}
-					if(tempArray[j].name == "trigger_EndZone"){
-						var trigger_EndZone:Trigger_EndZone = new Trigger_EndZone(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
-						trigger_EndZone.x = tempArray[j].x;
-						trigger_EndZone.y = tempArray[j].y;
-						tempArray[j].x = 0;
-						tempArray[j].y = 0;
-						//wall.setType("standard");
+					switch(tempArray[j].name) {
+						case "art":
+							//childrenToLoad--;//because its not really going to get loaded
+							var art:Art = new Art(tempArray[j].x, tempArray[j].y, tempArray[j],0);
+							//art.visible = false;
+							break;
+						case "art_1":
+							var art_1:Art = new Art(tempArray[j].x, tempArray[j].y, tempArray[j], 1);
+							break;
+						case "art_2":
+							var art_2:Art = new Art(tempArray[j].x, tempArray[j].y, tempArray[j],2);
+							break;
+						case "wall":
+							var wall:Wall = new Wall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height, "standard");
+							break;
+						case "platform":
+							var platform:Wall = new Wall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height, "platform");
+							break;
+						case "movingWall":
+							var movingWall:MovingWall = new MovingWall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height, "movingWall");
+							sortNodes(movingWall, tempArray[j]);
+							break;
+						case "trigger_EndZone":
+							var trigger_EndZone:Trigger_EndZone = new Trigger_EndZone(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
+							break;
+						case "trigger_EngineCutScene":
+							var trigger_EngineCutScene:Trigger_EngineCutScene = new Trigger_EngineCutScene(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
+							trigger_EngineCutScene.x = tempArray[j].x;
+							trigger_EngineCutScene.y = tempArray[j].y;
+							//wall.setType("standard");
+							break;
+						case "avatar":
+							var avatar:Avatar = new Avatar(tempArray[j].x, tempArray[j].y);
+							break;
+						case "coin":
+							var coin:Coin = new Coin(tempArray[j].x,tempArray[j].y);
+							break;
+						case "savePoint":
+							var savePoint:SavePoint = new SavePoint(tempArray[j].x,tempArray[j].y);
+							break;
+						case "gem":
+							var gem:Gem = new Gem(tempArray[j].x,tempArray[j].y);
+							break;
+						case "goon":
+							var goon:GoonEnemy = new GoonEnemy(tempArray[j].x,tempArray[j].y);
+							break;
+						case "tank":
+							var tank:TankEnemy = new TankEnemy(tempArray[j].x,tempArray[j].y);
+							break;
+						case "spider":
+							var spider:SpiderEnemy = new SpiderEnemy(tempArray[j].x,tempArray[j].y);
+							break;
+						case "afs":
+							var afs:AFSEnemy = new AFSEnemy(tempArray[j].x,tempArray[j].y);
+							break;
+						case "p_shoot":
+							var shootPowerup:Powerup_shoot = new Powerup_shoot(tempArray[j].x,tempArray[j].y);
+							break;
+						case "p_doubleJump":
+							var doubleJumpPowerup:Powerup_doubleJump = new Powerup_doubleJump(tempArray[j].x,tempArray[j].y);
+							break;
+						case "p_inv":
+							var invinviblePowerup:Powerup_invincible = new Powerup_invincible(tempArray[j].x,tempArray[j].y);
+							break;
 					}
 					if (tempArray[j].name.indexOf("trigger_CutScene_") != -1) {
 						var cutSceneName:String = tempArray[j].name;
@@ -241,16 +259,6 @@
 						var trigger_CutScene:Trigger_CutScene = new Trigger_CutScene(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height,cutSceneName);
 						trigger_CutScene.x = tempArray[j].x;
 						trigger_CutScene.y = tempArray[j].y;
-						tempArray[j].x = 0;
-						tempArray[j].y = 0;
-						//wall.setType("standard");
-					}
-					if(tempArray[j].name == "trigger_EngineCutScene"){
-						var trigger_EngineCutScene:Trigger_EngineCutScene = new Trigger_EngineCutScene(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
-						trigger_EngineCutScene.x = tempArray[j].x;
-						trigger_EngineCutScene.y = tempArray[j].y;
-						tempArray[j].x = 0;
-						tempArray[j].y = 0;
 						//wall.setType("standard");
 					}
 					if (tempArray[j].name.indexOf("trigger_") != -1) {
@@ -259,64 +267,14 @@
 						var trigger:Trigger = new Trigger(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height,trigger_Index);
 						trigger.x = tempArray[j].x;
 						trigger.y = tempArray[j].y;
-						tempArray[j].x = 0;
-						tempArray[j].y = 0;
-						//t.setType("trigger");
-						//var triggerIndex:int = 0;
 						
 					}
-					
-					
 					if (tempArray[j].name.indexOf("triggeredWall_") != -1) {
 						var triggeredWallIndex:int = tempArray[j].name.charAt(14);
-						//trace("triggeredWallIndex",triggeredWallIndex);
 						var triggeredWall:MovingWall = new MovingWall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height,"triggeredWall",triggeredWallIndex);
-						triggeredWall.x = tempArray[j].x;
-						triggeredWall.y = tempArray[j].y;
-						tempArray[j].x = 0;
-						tempArray[j].y = 0;
-						//triggeredWall.setType("triggeredWall");
 						sortNodes(triggeredWall, tempArray[j]);
-						//trace("sorting nodes completed");
-						triggeredWall.setNewTarget();
-						triggeredWall.defineInitialPoint();
 					}
 					
-				
-					if(tempArray[j].name == "avatar"){
-						var avatar:Avatar = new Avatar(tempArray[j].x, tempArray[j].y);
-						//par.setAttackHitbox(ch.hitbox_attack);
-					}
-					if(tempArray[j].name == "coin"){
-						var coin:Coin = new Coin(tempArray[j].x,tempArray[j].y);
-					}
-					if (tempArray[j].name == "savePoint") {
-						var savePoint:SavePoint = new SavePoint(tempArray[j].x,tempArray[j].y);
-					}
-					if(tempArray[j].name == "gem"){
-						var gem:Gem = new Gem(tempArray[j].x,tempArray[j].y);
-					}
-					if (tempArray[j].name == "goon") {
-						var goon:GoonEnemy = new GoonEnemy(tempArray[j].x,tempArray[j].y);
-					}
-					if(tempArray[j].name == "tank"){
-						var tank:TankEnemy = new TankEnemy(tempArray[j].x,tempArray[j].y);
-					}
-					if(tempArray[j].name == "spider"){
-						var spider:SpiderEnemy = new SpiderEnemy(tempArray[j].x,tempArray[j].y);
-					}
-					if(tempArray[j].name == "afs"){
-						var afs:AFSEnemy = new AFSEnemy(tempArray[j].x,tempArray[j].y);
-					}
-					if(tempArray[j].name == "p_shoot"){
-						var shootPowerup:Powerup_shoot = new Powerup_shoot(tempArray[j].x,tempArray[j].y);
-					}
-					if(tempArray[j].name == "p_doubleJump"){
-						var doubleJumpPowerup:Powerup_doubleJump = new Powerup_doubleJump(tempArray[j].x,tempArray[j].y);
-					}
-					if(tempArray[j].name == "p_inv"){
-						var invinviblePowerup:Powerup_invincible = new Powerup_invincible(tempArray[j].x,tempArray[j].y);
-					}
 				}
 			}else{
 				currentParent.addChild(graphic);
