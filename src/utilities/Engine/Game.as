@@ -25,6 +25,7 @@
 	public class Game extends MovieClip{
 		public static var theGame:Game;
 		public static var lives:int = 3;
+		public static var originaLives:int = 3;
 		public static var resourceManager:ResourceManager;
 		public static var powerupManager:PowerupManager;
 		public static var animationManager:AnimationManager;
@@ -53,7 +54,8 @@
 		//usually for things like zooming in and out, recentering the camera, etc.
 		public static var gameContainer:MovieClip;
 		
-		public function Game():void{
+		public function Game():void {
+			originaLives = lives;
 			theGame = this;
 			createGameContainer();
 			setUpCameraWindow();
@@ -163,7 +165,7 @@
 		}
 		
 		private static function resetGameValues():void {
-			setLives(1);
+			setLives(originaLives);
 			LevelManager.getInstance().setIsLevelFailed(false);
 			//AvatarManager.getInstance().getAvatar().resetHealth();
 		}

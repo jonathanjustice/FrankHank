@@ -11,8 +11,8 @@
 		private var filePath:String = "../src/assets/ui/swf_levelFailed.swf";
 		private var countdownTimer:int = 0;
 		private var timeFadeIn:int = 3;
-		private var timeFadeOut:int = 10;
-		private var timeNextScreen:int = 3;
+		private var timeFadeOut:int = 3;
+		private var timeNextScreen:int = 30;
 		//3,87,90
 		public function LevelFailed(){
 			defineScreenGraphics("ui_levelFailed");
@@ -46,11 +46,15 @@
 		
 		private function countdown(e:Event):void {
 			countdownTimer++;
+			//fade in
 			if (countdownTimer <= timeFadeIn) {
+				trace("INININININ");
 				this.alpha = countdownTimer / timeFadeIn;
 			}
-			if (countdownTimer >= timeFadeOut && countdownTimer < timeNextScreen) {
-				this.alpha = 1 - (countdownTimer -timeFadeOut) / (timeNextScreen - timeFadeOut);
+			//afde out
+			if (countdownTimer >= (timeNextScreen - timeFadeOut) && countdownTimer < timeNextScreen) {
+				trace("OUTOUTOUT");
+				this.alpha =  1- (countdownTimer - (timeNextScreen-timeFadeOut) ) / timeFadeOut;
 			}
 			if (countdownTimer >= timeNextScreen) {
 				stopTimerToNextLevel();
