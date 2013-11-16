@@ -34,36 +34,23 @@
 		}
 		
 		public override function clickHandler(event:MouseEvent):void{
-			//trace("parent:",event.target.parent.name);
-			trace("target:",event.target.name);
-			switch (event.target){
-				//go to select screen
-				/*case blocker:
-				trace("clicked start screen");
-					myScreen.startButtons.visible = true;
-					break;
-				//go to select screen
-				case myScreen.btn_start:
-					trace("clicked btn_start");
-					myScreen.clickToStart.visible = false;
-					myScreen.startButtons.visible = true;
-					break;*/
+			//trace("target:", event.target.name);
+			switch (event.target.name){
 				case assignedGraphic[0].swf_child:
-					trace("clicked clickToStart");
+					trace("clicked parent");
+					break;
+					
+				case "hitbox_clickToStart":
+					trace("clicked hitbox_clickToStart");
 					assignedGraphic[0].swf_child.clickToStart.visible = false;
 					assignedGraphic[0].swf_child.startButtons.visible = true;
 					break;
-				case assignedGraphic[0].swf_child.clickToStart:
-					trace("clicked clickToStart");
-					assignedGraphic[0].swf_child.clickToStart.visible = false;
-					assignedGraphic[0].swf_child.startButtons.visible = true;
-					break;
-				case assignedGraphic[0].swf_child.startButtons.btn_newGame:
+				case "hitbox_newGame":
 					trace("clicked btn_newGame");
 					removeThisScreen();
 					utilities.Engine.Game.startGame("start");
 					break;
-				case assignedGraphic[0].swf_child.startButtons.btn_continue:
+				case "hitbox_continue":
 					trace("clicked btn_continue");
 					//removeThisScreen();
 					//utilities.Engine.Game.startGame("start");

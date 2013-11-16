@@ -29,8 +29,8 @@
 		
 		public function listenForFrame(frameLabel:String):void {
 			var label:String = frameLabel;
-			//if (assignedGraphic[0].swf_child.currentLabel == "end"){
-			if (assignedGraphic[0].swf_child.currentFrame == 140) {
+			if (assignedGraphic[0].swf_child.currentLabel == "end"){
+			//if (assignedGraphic[0].swf_child.currentFrame == 140) {
 				stopTimerToNextLevel();
 				removeThisScreen();
 				Game.setGameState("startScreen");
