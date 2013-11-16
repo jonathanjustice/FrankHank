@@ -220,8 +220,14 @@
 			//trace("checkForDamage",this);
 			if (health <= 0) {
 				if (this is Avatar) {
-					trace("YOU DIE NOW");
-					Game.setGameState("levelFailed");
+					if (Game.getLives() > 0) {
+						trace("checkForDamage levelFailed");
+						Game.setGameState("levelFailed");
+					}else if(Game.getLives() <= 0){
+						trace("checkForDamage: gameOver");
+						Game.setGameState("gameOver");
+					}
+					
 				}else{
 					markDeathFlag();
 				}

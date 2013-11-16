@@ -31,7 +31,7 @@
 		private var shootingTimer:int = 0;
 		private var currentDelay:int = 0;
 		private var delay:int = 15;
-		private var avatarHealth:int = 3;
+		private var avatarHealth:int = 1;
 		
 		
 		private var filePath:String = "../src/assets/actors/swf_frank.swf";
@@ -43,6 +43,10 @@
 			
 		}
 		
+		public function resetHealth():void {
+			health = avatarHealth;
+		}
+		
 		public override function getFilePath():String {
 			return filePath;
 		}
@@ -52,8 +56,9 @@
 		}
 		
 		public function setUp():void {
+			print("Avatar.SetUp()");
 			defineGraphics("frank", false);
-			health = avatarHealth;
+			resetHealth();
 			//addStroke();
 			if (AvatarManager.getInstance().getIsAvatarDoubleJumpEnabled()) {
 				toggleDoubleJump(true);

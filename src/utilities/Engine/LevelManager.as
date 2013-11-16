@@ -126,10 +126,19 @@
 			trace("LEVEL FAILED");
 			Game.setLives(Game.getLives() - 1);
 			clearLevel();
-			setIsLevelFailed(false);
-			LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress());
-			LevelManager._instance.setIsLevelComplete(false);
-			//Game.setGameState("startLevelLoad");
+			if (Game.getLives() >= 0 ){
+				setIsLevelFailed(false);
+				LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress());
+				LevelManager._instance.setIsLevelComplete(false);
+				//Game.setGameState("startLevelLoad");
+			}
+			/*else if (Game.getLives() <= 0) {
+				setIsLevelFailed(false);
+				LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress());
+				LevelManager._instance.setIsLevelComplete(false);
+				//Game.setGameState("startLevelLoad");
+			}*/
+			
 			
 		}
 		

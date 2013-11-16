@@ -53,7 +53,8 @@
 			theStage = this.stage;
 			UIManager.getInstance();
 			game = new utilities.Engine.Game();
-			openStartScreen();
+			Game.setGameState("startScreen");
+			//openStartScreen();
 			KeyInputManager.getInstance();
 			MouseInputManager.getInstance();
 		}

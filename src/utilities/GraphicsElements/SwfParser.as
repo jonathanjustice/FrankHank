@@ -71,6 +71,7 @@
 		
 		//screens & UI
 		private var ui_levelComplete:String = new String("../src/assets/ui/swf_levelComplete.swf");
+		private var ui_gameOver:String = new String("../src/assets/ui/swf_gameOver.swf");
 		private var ui_levelFailed:String = new String("../src/assets/ui/swf_levelFailed.swf");
 		private var ui_lives:String = new String("../src/assets/ui/swf_lives.swf");
 		private var ui_start:String = new String("../src/assets/ui/swf_start.swf");
@@ -327,6 +328,9 @@
 					break;
 				case "ui_levelFailed":
 					filePath = ui_levelFailed;
+					break;
+				case "ui_gameOver":
+					filePath = ui_gameOver;
 					break;
 				case "ui_lives":
 					filePath = ui_lives;

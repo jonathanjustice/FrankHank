@@ -66,6 +66,10 @@
 				case "boot":
 					//doshit
 					break;
+				case "startScreen":
+					UIManager.openStartScreen();
+					resetGameValues();
+					break;
 				case "startLevelLoad":
 					//doshit
 					//trace("startLevelLoad");
@@ -92,14 +96,18 @@
 					//doshit
 					break;
 				case "levelFailed":
-					trace("level failed !!!!!!!!!!!!!!!!!!!!!!!!!!");
+					trace("level failed ");
 					LevelManager.getInstance().setIsLevelActive(false);
 					UIManager.getInstance().openLevelFailedScreen();
 					UIManager.getInstance().removeLivesScreen();
 					LevelManager.getInstance().setIsLevelFailed(true);
 					break;
-				case "gameFailed":
-					//doshit
+				case "gameOver":
+					trace("setGameState gameOver");
+					LevelManager.getInstance().setIsLevelActive(false);
+					UIManager.getInstance().openGameOverScreen();
+					UIManager.getInstance().removeLivesScreen();
+					LevelManager.getInstance().setIsLevelFailed(true);
 					break;
 				case "gameWon":
 					//doshit
@@ -152,6 +160,12 @@
 		
 		private static function createQuadTree():void{
 			quadTree = new utilities.Mathematics.QuadTree();
+		}
+		
+		private static function resetGameValues():void {
+			setLives(1);
+			LevelManager.getInstance().setIsLevelFailed(false);
+			//AvatarManager.getInstance().getAvatar().resetHealth();
 		}
 		
 		//star the game from various places, such as a loaded game, new game, restarted game, etc.

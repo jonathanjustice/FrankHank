@@ -1,4 +1,5 @@
 ﻿package utilities.Engine{
+	import utilities.Screens.GameScreens.GameOver;
 	import utilities.Screens.GameScreens.LevelComplete;
 	import utilities.Screens.GameScreens.LevelFailed;
 	import utilities.Screens.GameScreens.Lives;
@@ -15,6 +16,7 @@
 		private var screen_LevelUp:MovieClip;
 		private static var screen_LevelComplete:MovieClip;
 		private static var screen_LevelFailed:MovieClip;
+		private static var screen_GameOver:MovieClip;
 		private static var screen_Lives:MovieClip;
 		
 		private static var screen_Start:MovieClip;
@@ -52,6 +54,11 @@
 		
 		public function openLevelFailedScreen():void{
 			screen_LevelFailed = new LevelFailed();
+			//trace("start");
+		}
+		
+		public function openGameOverScreen():void{
+			screen_GameOver = new GameOver();
 			//trace("start");
 		}
 		

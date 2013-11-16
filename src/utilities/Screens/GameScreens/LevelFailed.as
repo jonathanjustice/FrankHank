@@ -11,8 +11,9 @@
 		private var filePath:String = "../src/assets/ui/swf_levelFailed.swf";
 		private var countdownTimer:int = 0;
 		private var timeFadeIn:int = 3;
-		private var timeFadeOut:int = 87;
-		private var timeNextScreen:int = 90;
+		private var timeFadeOut:int = 10;
+		private var timeNextScreen:int = 3;
+		//3,87,90
 		public function LevelFailed(){
 			defineScreenGraphics("ui_levelFailed");
 		}

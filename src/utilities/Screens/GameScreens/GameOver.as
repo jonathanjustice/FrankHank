@@ -19,7 +19,7 @@
 		
 		public function assignGraphic(graphic:DisplayObject):void {
 			setUp();
-			this.alpha = 0;
+			//this.alpha = 0;
 			this.addChild(graphic);
 			assignedGraphic[0] = graphic;
 			//Game.setGameState("cutSceneFullyLoaded");
@@ -27,20 +27,30 @@
 			setContinueCodeDisplay();
 		}
 		
+		public function listenForFrame(frameLabel:String):void {
+			var label:String = frameLabel;
+			//if (assignedGraphic[0].swf_child.currentLabel == "end"){
+			if (assignedGraphic[0].swf_child.currentFrame == 140) {
+				stopTimerToNextLevel();
+				removeThisScreen();
+				Game.setGameState("startScreen");
+			}
+		}
+		
 		private function setContinueCodeDisplay():void {
 			var continueCodeDisplay:String = "";
 			continueCodeDisplay = "x" + String(Game.getContinueCode());
-			assignedGraphic[0].swf_child.txt_lives.text = continueCodeDisplay;
+			//assignedGraphic[0].swf_child.txt_lives.text = continueCodeDisplay;
 		}
 		
 		
 		private function startTimerToNextLevel():void {
 			countdownTimer = 0;
-			this.addEventListener(Event.ENTER_FRAME, countdown);
+			this.addEventListener(Event.ENTER_FRAME, listenForFrame);
 		}
 		
 		private function stopTimerToNextLevel():void {
-			this.removeEventListener(Event.ENTER_FRAME, countdown);
+			this.removeEventListener(Event.ENTER_FRAME, listenForFrame);
 		}
 		
 		private function countdown(e:Event):void {

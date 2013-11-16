@@ -119,6 +119,8 @@
 			utilities.Engine.UIManager.uiContainer.addChild(this);
 		}
 		
+		
+		
 		//removing the screen
 		public function removeThisScreen():void{
 			removeOutHandler();
