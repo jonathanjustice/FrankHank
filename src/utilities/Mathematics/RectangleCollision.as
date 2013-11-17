@@ -42,21 +42,22 @@ package utilities.Mathematics{
 				
 			}
 			//movable is below stationary
-			else if (movable.getPreviousPosition().y >= stationary.y + stationary.height) {
-				movable.y = stationary.y + stationary.height + collisionEjectDistance;
+			else if (movable.getPreviousPosition().y >= stationary.getPreviousPosition().y + stationary.height) {
+				movable.y = stationary.y + stationary.height + collisionEjectDistance *2;
 				collisionSide = "bottom";
+				movable.reduceJumpSpeed();
 				
 			}
 			//moveable's is to the left
 			else if (movable.getPreviousPosition().x + movable.width <= stationary.getPreviousPosition().x) {
-				movable.x = stationary.getPreviousPosition().x - movable.width - collisionEjectDistance;
+				movable.x = stationary.x - movable.width - collisionEjectDistance;
 				collisionSide = "left";
 				//trace("stationary.getPreviousPosition().x",stationary.getPreviousPosition().x);
 				
 			}
 			//moveable is to the right
 			else if (movable.getPreviousPosition().x >= stationary.getPreviousPosition().x + stationary.width) {
-				movable.x = stationary.getPreviousPosition().x + stationary.width + collisionEjectDistance;
+				movable.x = stationary.x + stationary.width + collisionEjectDistance;
 				collisionSide = "right";
 				
 			}

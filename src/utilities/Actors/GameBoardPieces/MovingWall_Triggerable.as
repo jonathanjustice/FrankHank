@@ -20,20 +20,12 @@
 		private var targetPoint:Point = new Point(0, 0);
 		private var verticalMotion:String = "positive";
 		private var horizontalMotion:String = "positive";
-		private var initialPoint:Point = new Point(0, 0);
-		private var triggerable:Boolean = false;
-		private var isActive:Boolean = true;
-		private var triggerIndex:int = 0;
-		private var originalXVelocity:int = 0;
-		private var originalYVelocity:int = 0;
-		private var triggeredWallXVelocity:int = 20;
-		private var triggeredWallYVelocity:int = 20;
+		private var initialPoint:Point = new Point(0,0);
 		 
 		//create a var tween
 		
-		public function MovingWall(newX:int, newY:int, newWidth:Number, newHeight:Number, newWallType:String, newIndex:int = 0) {
-			setType(newWallType);
-			triggerIndex = newIndex;
+		public function MovingWall(newX:int, newY:int, newWidth:Number, newHeight:Number) {
+			
 			setUp();
 			tempWidth = newWidth;
 			tempHeight = newHeight;
@@ -49,14 +41,10 @@
 			return filePath;
 		}
 		
-		public function setUp():void {
-			nodeSequencing = "forward";
-			isActive = true;
+		public function setUp():void{
 			defineGraphics("wall", false);
-			xVelocity = 3;
-			yVelocity = 3;
-			originalXVelocity = xVelocity;
-			originalYVelocity = yVelocity;
+			xVelocity = 1;
+			yVelocity = 1;
 			
 			
 			//this.visible = false;
@@ -83,80 +71,38 @@
 			this.scaleX = tempWidth;
 			this.scaleY = tempHeight;
 			//this.visible = false;
-			
-			if (wallType == "triggeredWall") {
-				isActive = false;
-				triggerable = true;
-				xVelocity = triggeredWallXVelocity;
-				yVelocity = triggeredWallYVelocity;
-				
-				originalXVelocity = xVelocity;
-				originalYVelocity = yVelocity;
-				addActorToGameEngine(graphic, LevelManager.triggerableWalls, triggerIndex);
-			}else {
-				addActorToGameEngine(graphic, LevelManager.walls);
-			}
-			defineGraphicsDefaultSmallRectangle();
-		}
+			addActorToGameEngine(graphic, LevelManager.walls);
 		
-		public function setIsActive(newState:Boolean):void {
-			isActive = newState;
+			defineGraphicsDefaultSmallRectangle();
 		}
 		
 		public function updateLoop():void {
 			setPreviousPosition();
-			if (isActive == true) {	
-				moveToNextNode();
-			}else if (isActive == false) {
-				
-			}
+			moveToNextNode();
 		}
 		
 		public function setNewTarget():void {
 			if (nodeSequencing == "forward") {
-				trace("settign");
 				//if reached last node switch to decrementing
-				if (targetNode == this.getNodes().length - 1) {
-					if (triggerable == true) {
-						isActive = false;
-						trace("is triggerable and now set isActive to false");
-					}
-					
-					if(isActive == true){
-						nodeSequencing = "backward";
-						trace("switch to backward")
-						targetNode--;
-						trace("DE crementing Node");
-						trace("targetNode: ",targetNode)
-					}
+				
+				if (targetNode == this.getNodes().length-1) {
+					nodeSequencing = "backward";
+					targetNode--;
 				}
 				//if incrementing, select next node
-				else if (targetNode < this.getNodes().length) {
+				else if (targetNode < this.getNodes().length-1) {
 					targetNode++;
-					trace("incrementing Node");
-					trace("targetNode: ", targetNode);
-					trace(isActive);
 				}
-				trace("outside statement");
-				
 				
 			}else if (nodeSequencing == "backward") {
 				//if reached first node, switch to incrementing
 				if (targetNode == 0) {
 					nodeSequencing = "forward";
 					targetNode++;
-					
-					trace("switch to forward");
-					trace("incrementing Node");
-					trace("targetNode: ", targetNode);
-					trace("isactive",isActive);
-					trace("triggerable",triggerable);
 				}
 				//if decrementing, select next node
 				else if (targetNode > 0) {
 					targetNode--;
-					trace("DE crementing Node");
-					trace("targetNode: ",targetNode)
 				}
 				
 				
@@ -166,18 +112,18 @@
 		public function moveToNextNode():void {
 			if (horizontalMotion != "arrived") {
 				if (this.x - initialPoint.x < this.getNodes()[targetNode].x) {
-					xVelocity = originalXVelocity;
+					xVelocity = 2;
 				}else if(this.x - initialPoint.x > this.getNodes()[targetNode].x){
-					xVelocity = -originalXVelocity;
+					xVelocity = -2;
 				}
 				
 			}
 			
 			if (verticalMotion != "arrived") {
 					if (this.y - initialPoint.y < this.getNodes()[targetNode].y) {
-					yVelocity = originalYVelocity;
+					yVelocity = 2;
 				}else if(this.y - initialPoint.y > this.getNodes()[targetNode].y){
-					yVelocity = -originalYVelocity;
+					yVelocity = -2;
 				}
 				
 			}

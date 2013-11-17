@@ -83,7 +83,7 @@
 					//trace("levelCurrentlyLoading");
 					break;
 				case "levelFullyLoaded":
-					//trace("levelFullyLoaded");
+					trace("levelFullyLoaded");
 					LevelManager.getInstance().setIsLevelActive(true);
 					UIManager.getInstance().openLivesScreen();
 					enableMasterLoop();

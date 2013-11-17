@@ -78,6 +78,40 @@
 						}
 					}
 				}
+				//collide with triggers
+				for (var d:int = 0; d < LevelManager.triggers.length; d++) {
+					//trace("triggers here");
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers[d]) == true) {
+						LevelManager.triggers[d].takeDamage(1);
+						LevelManager.triggers[d].checkForDeathFlag();
+						trace("touched trigger");
+					}
+				}
+				
+				//collide walls & avatar
+				for (var e:int = 0; e < LevelManager.triggerableWalls.length; e++) {
+					if (LevelManager.triggerableWalls[e].getType() == "triggeredWall") {
+						LevelManager.triggerableWalls[e].updateLoop();
+					}
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggerableWalls[e]) == true) {
+						switch (LevelManager.triggerableWalls[e].getType()){
+							case "triggeredWall":
+								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.triggerableWalls[e]) == "top") {
+									trace("triggeredWall");
+									myAvatar.jumpingEnded();
+									myAvatar.resetGravity();
+									
+									
+									
+									
+									
+									
+									//reduceJumpSpeed.yVelocity();
+								}
+								break;
+						}
+					}
+				}
 				//collide walls & avatar
 				for (var i:int = 0; i < LevelManager.walls.length; i++) {
 					if (LevelManager.walls[i].getType() == "movingWall") {

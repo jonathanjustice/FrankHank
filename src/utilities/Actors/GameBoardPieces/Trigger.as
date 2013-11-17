@@ -3,14 +3,15 @@
 	import utilities.Actors.SelectableActor;
 	import flash.display.DisplayObject;
 	import utilities.Engine.LevelManager;
-	public class Wall extends SelectableActor{
+	public class Trigger extends SelectableActor{
 		private var isBulletBlocker:Boolean = false;
 		private var filePath:String = "../src/assets/actors/swf_wall.swf";
 		private var tempWidth:Number = 0;
 		private var tempHeight:Number = 0;
-		private var wallType:String = "standard";
-		public function Wall(newX:int, newY:int, newWidth:Number, newHeight:Number, newWallType:String ) {
-			setType(newWallType);
+		private var wallType:String = "trigger";
+		private var triggerIndex:int = 0;
+		public function Trigger(newX:int, newY:int, newWidth:Number, newHeight:Number, newIndex:int) {
+			triggerIndex = newIndex;
 			setUp();
 			tempWidth = newWidth;
 			tempHeight = newHeight;
@@ -28,6 +29,32 @@
 			yVelocity = 0;
 			
 			//this.visible = false;
+		}
+		/*
+		public override function addActorToGameEngine(graphic:DisplayObject,array:Array,spliceIndex:int):void {
+			setPreviousPosition();
+			assignedGraphic[0] = graphic;
+			this.addChild(graphic);
+			utilities.Engine.Game.gameContainer.addChild(this);
+			setIsSwfLoaded(true);
+			//array.push(this);
+			spliceIndex = triggerIndex;
+			array.splice(spliceIndex, 0, this);
+		}
+		*/
+		public function setTriggerIndex(newIndex:int):void {
+			triggerIndex = newIndex;
+		}
+		
+		public function getTriggerIndex():int {
+			return triggerIndex;
+		}
+		
+		public override function onTakeDamage():void {
+			//overriden by each individual class
+			//used for feedback mostly
+			LevelManager.getInstance().activateTriggerableWall(triggerIndex);
+				
 		}
 		
 		public function setType(newType:String):void {
@@ -47,7 +74,7 @@
 			this.scaleX = tempWidth;
 			this.scaleY = tempHeight;
 			this.visible = false;
-			addActorToGameEngine(graphic, LevelManager.walls);
+			addActorToGameEngine(graphic, LevelManager.triggers,triggerIndex);
 			graphic = hitbox;
 		}
 		
