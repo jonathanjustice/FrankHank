@@ -88,6 +88,7 @@
 					UIManager.getInstance().openLivesScreen();
 					enableMasterLoop();
 					UIManager.getInstance().closeLoadingScreen();
+					
 					break;
 				case "inLevel":
 					//doshit
@@ -139,6 +140,12 @@
 					CutSceneManager.getInstance().setIsSceneActive(false);
 					CutSceneManager.getInstance().setIsSceneComplete(false);
 					UIManager.getInstance().openLevelCompleteScreen();
+					break;
+				case "inLevelCutScene":
+					//trace("Game: inLevelCutScene");
+					UIManager.getInstance().openLetterBox();
+					//CutSceneManager.getInstance().setIsSceneActive(true);
+					//enableMasterLoop();
 					break;
 				case "worldMap":
 					//doshit

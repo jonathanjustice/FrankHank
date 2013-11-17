@@ -69,6 +69,7 @@
 		private var lvl_4:String = new String("../src/assets/levels/swf_lvl_4.swf");
 		private var lvl_5:String = new String("../src/assets/levels/swf_lvl_5.swf");
 		//screens & UI
+		private var ui_letterBox:String = new String("../src/assets/ui/swf_letterBox.swf");
 		private var ui_loadingScreen:String = new String("../src/assets/ui/swf_loadingScreen.swf");
 		private var ui_levelComplete:String = new String("../src/assets/ui/swf_levelComplete.swf");
 		private var ui_gameOver:String = new String("../src/assets/ui/swf_gameOver.swf");
@@ -337,6 +338,9 @@
 					break;
 				case "ui_lives":
 					filePath = ui_lives;
+					break;
+				case "ui_letterBox":
+					filePath = ui_letterBox;
 					break;
 				case "ui_cutScene_1":
 					filePath = ui_cutScene_1;

@@ -143,7 +143,7 @@
 			if (Math.abs(xVelocity) < maxVelocity) {
 				xVelocity += KeyInputManager.getMyVelocityX() * velocityIncrease;
 			}
-			yVelocity += KeyInputManager.getMyVelocityY() * velocityIncrease*5;
+			//yVelocity += KeyInputManager.getMyVelocityY() * velocityIncrease*5;
 			
 			//if you are not pressing a button to run, then you slowdown
 			if (KeyInputManager.getMyVelocityX() == 0) {

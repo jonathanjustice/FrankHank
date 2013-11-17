@@ -1,5 +1,6 @@
 ﻿package utilities.Engine{
 	import utilities.Screens.GameScreens.GameOver;
+	import utilities.Screens.GameScreens.LetterBox;
 	import utilities.Screens.GameScreens.LevelComplete;
 	import utilities.Screens.GameScreens.LevelFailed;
 	import utilities.Screens.GameScreens.Lives;
@@ -20,6 +21,7 @@
 		private static var screen_LevelFailed:MovieClip;
 		private static var screen_GameOver:MovieClip;
 		private static var screen_Lives:MovieClip;
+		private static var screen_LetterBox:MovieClip;
 		
 		private static var screen_Start:MovieClip;
 		private static var _instance:UIManager;
@@ -82,6 +84,16 @@
 		
 		public function removeLivesScreen():void{
 			screen_Lives.removeThisScreen();
+			//trace("start");
+		}
+		
+		public function openLetterBox():void{
+			screen_LetterBox = new LetterBox();
+			//trace("start");
+		}
+		
+		public function closeLetterBox():void{
+			screen_LetterBox.removeThisScreen();
 			//trace("start");
 		}
 		
