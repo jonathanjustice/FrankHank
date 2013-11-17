@@ -74,8 +74,10 @@
 					break;
 				case "startLevelLoad":
 					//doshit
-					//trace("startLevelLoad");
+					trace("startLevelLoad");
+					UIManager.getInstance().openLoadingScreen();
 					LevelManager.getInstance().loadLevel();
+					
 					break;
 				case "levelCurrentlyLoading":
 					//trace("levelCurrentlyLoading");
@@ -85,6 +87,7 @@
 					LevelManager.getInstance().setIsLevelActive(true);
 					UIManager.getInstance().openLivesScreen();
 					enableMasterLoop();
+					UIManager.getInstance().closeLoadingScreen();
 					break;
 				case "inLevel":
 					//doshit
@@ -178,12 +181,12 @@
 					
 					//trace("Started Game: From debug method");
 					createManagersAndControllers();
-					LevelManager.getInstance().loadLevel();
+					setGameState("startLevelLoad")
 					break;
 				case "start":
 					//trace("Started Game: From the Start Screen");
 					createManagersAndControllers();
-					LevelManager.getInstance().loadLevel();
+					setGameState("startLevelLoad")
 					break;
 				case "pause":
 					enableMasterLoop();

@@ -3,6 +3,7 @@
 	import utilities.Screens.GameScreens.LevelComplete;
 	import utilities.Screens.GameScreens.LevelFailed;
 	import utilities.Screens.GameScreens.Lives;
+	import utilities.Screens.GameScreens.LoadingScreen;
 	import utilities.Screens.xpBarSystem;
 	import utilities.Screens.Screen_Default;
 	import utilities.Screens.UIContainer;
@@ -15,6 +16,7 @@
 		private var padding:int=11;
 		private var screen_LevelUp:MovieClip;
 		private static var screen_LevelComplete:MovieClip;
+		private static var screen_LoadingScreen:MovieClip;
 		private static var screen_LevelFailed:MovieClip;
 		private static var screen_GameOver:MovieClip;
 		private static var screen_Lives:MovieClip;
@@ -44,6 +46,17 @@
 		
 		public static function openStartScreen():void{
 			screen_Start = new ScreenStart();
+			//trace("start");
+		}
+		
+		public function openLoadingScreen():void {
+			screen_LoadingScreen = new LoadingScreen();
+			trace("UIManager: opening loading screen",screen_LoadingScreen);
+		}
+		
+		public function closeLoadingScreen():void {
+			trace("closing loading screen",screen_LoadingScreen);
+			screen_LoadingScreen.removeThisScreen();
 			//trace("start");
 		}
 		
