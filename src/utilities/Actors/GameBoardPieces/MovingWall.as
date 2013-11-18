@@ -26,7 +26,7 @@
 		private var triggerIndex:int = 0;
 		private var originalXVelocity:int = 3;
 		private var originalYVelocity:int = 3;
-		private var triggeredWallXVelocity:int = 20;
+		private var triggeredWallXVelocity:int = 0;
 		private var triggeredWallYVelocity:int = 20;
 		 
 		//create a var tween
@@ -158,6 +158,8 @@
 		}
 		
 		public function moveToNextNode():void {
+			this.x += xVelocity;
+			this.y += yVelocity;
 		/*trace("xVelocity ", xVelocity);
 			trace(this.x - initialPoint.x);
 			trace(this.getNodes()[targetNode].x);
@@ -183,8 +185,7 @@
 				}
 			}
 		
-			this.x += xVelocity;
-			this.y += yVelocity;
+			
 			/*
 			trace("this.x:", this.x);
 			trace("this.y:", this.y);
@@ -195,13 +196,13 @@
 			*/
 			//if you are close to the targetPoint, align to the targetPoint
 			//trace("X",Math.abs(this.x - initialPoint.x - this.getNodes()[targetNode].x));
-			if (Math.abs(this.x - initialPoint.x - this.getNodes()[targetNode].x) < xVelocity * 2.1) {
+			if (Math.abs(this.x - initialPoint.x - this.getNodes()[targetNode].x) < xVelocity * 1.1) {
 				horizontalMotion = "arrived";
 				xVelocity = 0;
 				//trace("horizontalMotion arrived");
 			}
 			//trace("FUCK",Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y));
-			if (Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y) < yVelocity * 2.1) {
+			if (Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y) < yVelocity * 1.1) {
 				verticalMotion = "arrived";
 				yVelocity = 0;
 				//trace("verticalMotion arrived");
@@ -216,6 +217,7 @@
 				setNewTarget();
 				//trace("both arrived");
 			}
+			
 		}
 		public function wallTest():void {
 			

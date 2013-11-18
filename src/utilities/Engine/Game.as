@@ -327,12 +327,15 @@
 					}
 				}
 			}
+		
 			if (avatarPoint.y < cameraWindow.y) {
-				gameContainer.y -= avatar.getVelocity().y;
+				trace("touching top of screen");
+				trace(avatar.getAdditionalYVelocity());
+				gameContainer.y -= avatar.getVelocity().y + avatar.getAdditionalYVelocity()*10;
 				
 			}
 			if (avatarPoint.y + avatar.height > cameraWindow.y + cameraWindow.height) {
-				gameContainer.y -= avatar.getVelocity().y;
+				gameContainer.y -= avatar.getVelocity().y + avatar.getAdditionalYVelocity()*10;
 				
 			}
 		}

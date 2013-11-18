@@ -32,6 +32,7 @@
 		private var currentDelay:int = 0;
 		private var delay:int = 15;
 		private var avatarHealth:int = 1;
+		private var additionalYVelocityForCamera:int = 0;
 		
 		
 		private var filePath:String = "../src/assets/actors/swf_frank.swf";
@@ -41,6 +42,14 @@
 			this.y = newY;
 			setUp();
 			
+		}
+		
+		public function setAdditionalYVelocity(newVel:int):void {
+			additionalYVelocityForCamera = newVel;
+		}
+		
+		public function getAdditionalYVelocity():int {
+			return additionalYVelocityForCamera;
 		}
 		
 		public function resetHealth():void {

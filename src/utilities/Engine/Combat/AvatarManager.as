@@ -49,8 +49,11 @@
 			}
 		}
 	
-		public static function updateLoop():void{
+		public static function updateLoop():void {
 			for each(var myAvatar:Avatar in avatars){
+			trace(myAvatar.getAdditionalYVelocity());
+				var isTouchingWall:Boolean = false;
+				var additionalVelocity:int = 0;
 				myAvatar.updateLoop();
 				//collide powersups & avatar
 				for (var a:int = 0; a < PowerupManager.powerups.length; a++) {
@@ -97,6 +100,8 @@
 						switch (LevelManager.triggerableWalls[e].getType()){
 							case "triggeredWall":
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.triggerableWalls[e]) == "top") {
+									additionalVelocity = LevelManager.triggerableWalls[i].getVelocity().y;
+									isTouchingWall = true;
 									trace("triggeredWall");
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
@@ -138,13 +143,16 @@
 								//trace("movingWall");
 								//trace(LevelManager.walls[i].name);
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
-									
+									additionalVelocity = LevelManager.walls[i].getVelocity().y;
+									isTouchingWall = true;
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 								}
 								break;
 							case "movingPlatform":
 								if (utilities.Mathematics.RectangleCollision.testCollisionWithPlatform(myAvatar, LevelManager.walls[i]) == true) {
+									additionalVelocity = LevelManager.walls[i].getVelocity().y;
+									isTouchingWall = true;
 									trace("movingPlatform");
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
@@ -208,6 +216,7 @@
 					}	
 				}
 				myAvatar.setPreviousPosition();
+				myAvatar.setAdditionalYVelocity(additionalVelocity);
 			}
 		}
 		
