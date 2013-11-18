@@ -51,7 +51,7 @@
 	
 		public static function updateLoop():void {
 			for each(var myAvatar:Avatar in avatars){
-			trace(myAvatar.getAdditionalYVelocity());
+			//trace(myAvatar.getAdditionalYVelocity());
 				var isTouchingWall:Boolean = false;
 				var additionalVelocity:int = 0;
 				myAvatar.updateLoop();
@@ -87,7 +87,7 @@
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers[d]) == true) {
 						LevelManager.triggers[d].takeDamage(1);
 						LevelManager.triggers[d].checkForDeathFlag();
-						trace("touched trigger");
+						//trace("touched trigger");
 					}
 				}
 				
@@ -102,7 +102,7 @@
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.triggerableWalls[e]) == "top") {
 									additionalVelocity = LevelManager.triggerableWalls[i].getVelocity().y;
 									isTouchingWall = true;
-									trace("triggeredWall");
+									//trace("triggeredWall");
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 									
@@ -153,7 +153,7 @@
 								if (utilities.Mathematics.RectangleCollision.testCollisionWithPlatform(myAvatar, LevelManager.walls[i]) == true) {
 									additionalVelocity = LevelManager.walls[i].getVelocity().y;
 									isTouchingWall = true;
-									trace("movingPlatform");
+									//trace("movingPlatform");
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 									
@@ -211,7 +211,6 @@
 					if (myAvatar.getiIsGraphicLoaded() == true) {
 						if(EnemyManager.enemies[j].hitTestObject(myAvatar.getActorGraphic().assignedGraphics[0].swf_child.hitbox_attack)){
 							EnemyManager.enemies[j].takeDamage(myAvatar.getAttackDamage());
-							trace("asdsadasdasd");
 						}
 					}	
 				}

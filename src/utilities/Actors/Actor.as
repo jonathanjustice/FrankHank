@@ -23,6 +23,7 @@
 	import utilities.objects.GameObject;
 	import utilities.Saving_And_Loading.swfLoader;
 	public class Actor extends GameObject {
+		public var attachedArt:MovieClip = new MovieClip;
 		public var hitbox:MovieClip = new MovieClip;
 		private var nodes:Array = new Array;
 		public var isGraphicLoaded:Boolean = false;
@@ -81,6 +82,14 @@
 			defineWeaponStats();
 			setAnimationState("idle");
 			//print(this);
+		}
+		
+		public function attachAdditionalArt(artToAttach:MovieClip):void {
+			attachedArt = artToAttach;
+			this.addChild(attachedArt);
+			//trace(this.assignedGraphic[0]);
+			//trace(this.assignedGraphic[0].swf_child);
+			//this.assignedGraphic[0].swf_child.addChild(attachedArt);
 		}
 		
 		public function getFilePath():String {
@@ -179,6 +188,7 @@
 		
 		public function defineHitbox(newHitbox:MovieClip):void {
 			hitbox = newHitbox;
+			hitbox.visible = false;
 			//trace("hitbox",hitbox);
 		}
 		

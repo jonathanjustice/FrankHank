@@ -20,7 +20,7 @@
 		private var myAngle:Number=0;
 		private var velocityIncrease:Number = 3;
 		private var maxVelocity:Number = 18;
-		private var velocityDecrease:Number = .9;
+		private var velocityDecrease:Number = .8;
 		private var maxSpeed:Number=100;
 		public var xDiff:Number=0;
 		public var yDiff:Number = 0;

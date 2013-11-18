@@ -43,12 +43,12 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			
+			addActorToGameEngine(graphic, LevelManager.walls);
+			graphic = hitbox;
 			this.scaleX = tempWidth;
 			this.scaleY = tempHeight;
 			this.visible = false;
-			addActorToGameEngine(graphic, LevelManager.walls);
-			graphic = hitbox;
+			
 		}
 		
 		public function updateLoop():void{

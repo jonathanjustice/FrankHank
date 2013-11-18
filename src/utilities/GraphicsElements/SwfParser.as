@@ -149,11 +149,15 @@
 				if (objectToSort.getChildAt(n).name == "hitbox") {
 					actor.defineHitbox(objectToSort.hitbox);
 				}
+				if (objectToSort.getChildAt(n).name == "art") {
+					actor.attachAdditionalArt(objectToSort.art);
+				}
 				
 			}
 			if (objectToSort.contains(objectToSort.hitbox)) {
 				objectToSort.removeChild(objectToSort.hitbox);
 			}
+			
 			
 			actor.defineNodes(nodeArray);
 			return nodeArray;
@@ -206,7 +210,7 @@
 						//movingWall.setType("movingWall");
 						sortNodes(movingWall, tempArray[j]);
 						//trace("sorting nodes completed");
-						//movingWall.setNewTarget();
+						movingWall.setNewTarget();
 						movingWall.defineInitialPoint();
 						
 					}

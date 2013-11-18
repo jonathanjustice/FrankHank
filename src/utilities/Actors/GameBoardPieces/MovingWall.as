@@ -79,9 +79,17 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
+			trace("------------------------------");
+			this.hitbox.width = tempWidth;
+			this.hitbox.height = tempHeight;
+			//this.attachedArt.scaleX = 1/tempWidth;
+			//this.attachedArt.scaleY = 1/tempHeight;
+			trace("this.scaleX", this.scaleX);
+			trace("this.scaleY", this.scaleY);
+			trace("this.attachedArt.scaleX", this.attachedArt.scaleX);
+			trace("this.attachedArt.scaleY", this.attachedArt.scaleY);
 			
-			this.scaleX = tempWidth;
-			this.scaleY = tempHeight;
+			trace("------------------------------");
 			//this.visible = false;
 			
 			if (wallType == "triggeredWall") {
@@ -96,7 +104,7 @@
 			}else {
 				addActorToGameEngine(graphic, LevelManager.walls);
 			}
-			defineGraphicsDefaultSmallRectangle();
+			//defineGraphicsDefaultSmallRectangle();
 		}
 		
 		public function setIsActive(newState:Boolean):void {
