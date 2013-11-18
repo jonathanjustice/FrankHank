@@ -56,7 +56,7 @@
 		}
 		
 		public function setUp():void {
-			print("Avatar.SetUp()");
+			//print("Avatar.SetUp()");
 			defineGraphics("frank", false);
 			resetHealth();
 			//addStroke();

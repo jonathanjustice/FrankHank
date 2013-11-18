@@ -74,7 +74,7 @@
 					break;
 				case "startLevelLoad":
 					//doshit
-					trace("startLevelLoad");
+					//trace("startLevelLoad");
 					UIManager.getInstance().openLoadingScreen();
 					LevelManager.getInstance().loadLevel();
 					
@@ -83,11 +83,11 @@
 					//trace("levelCurrentlyLoading");
 					break;
 				case "levelFullyLoaded":
-					trace("levelFullyLoaded");
+					//trace("levelFullyLoaded");
 					LevelManager.getInstance().setIsLevelActive(true);
 					UIManager.getInstance().openLivesScreen();
-					enableMasterLoop();
 					UIManager.getInstance().closeLoadingScreen();
+					enableMasterLoop();
 					
 					break;
 				case "inLevel":
@@ -102,14 +102,14 @@
 					//doshit
 					break;
 				case "levelFailed":
-					trace("level failed ");
+					//trace("level failed ");
 					LevelManager.getInstance().setIsLevelActive(false);
 					UIManager.getInstance().openLevelFailedScreen();
 					UIManager.getInstance().removeLivesScreen();
 					LevelManager.getInstance().setIsLevelFailed(true);
 					break;
 				case "gameOver":
-					trace("setGameState gameOver");
+				//	trace("setGameState gameOver");
 					LevelManager.getInstance().setIsLevelActive(false);
 					UIManager.getInstance().openGameOverScreen();
 					UIManager.getInstance().removeLivesScreen();
@@ -220,6 +220,7 @@
 		}
 		
 		public static function enableMasterLoop():void {
+			trace("enabling master loop");
 			gamePaused=false;
 			gameContainer.addEventListener(Event.ENTER_FRAME, masterLoop);
 		}

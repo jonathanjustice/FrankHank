@@ -206,7 +206,7 @@
 						//movingWall.setType("movingWall");
 						sortNodes(movingWall, tempArray[j]);
 						//trace("sorting nodes completed");
-						movingWall.setNewTarget();
+						//movingWall.setNewTarget();
 						movingWall.defineInitialPoint();
 						
 					}
