@@ -26,8 +26,8 @@
 		private var triggerIndex:int = 0;
 		private var originalXVelocity:int = 3;
 		private var originalYVelocity:int = 3;
-		private var triggeredWallXVelocity:int = 10;
-		private var triggeredWallYVelocity:int = 10;
+		private var triggeredWallXVelocity:int = 20;
+		private var triggeredWallYVelocity:int = 20;
 		 
 		//create a var tween
 		
@@ -114,28 +114,31 @@
 		
 		public function setNewTarget():void {
 			if (nodeSequencing == "forward") {
-				trace("is FORWARD")
+				//trace("is FORWARD")
 				//if reached last node switch to decrementing
 				if (targetNode == this.getNodes().length - 1) {
 					nodeSequencing = "backward";
 					targetNode--;
+					if (triggerable) {
+						isActive = false;
+					}
 				//	trace("switch to backward and Dec");
 				//	trace("target node:  ", targetNode);
 				}
 				//if incrementing, select next node
 				else if (targetNode < this.getNodes().length ) {
 					targetNode++;
-					trace("forward and Inc");
-					trace("target node:  ", targetNode);
+					//trace("forward and Inc");
+					//trace("target node:  ", targetNode);
 				}
 			}else if (nodeSequencing == "backward") {
-				trace("is BACKWARD")
+				//trace("is BACKWARD")
 				//if reached first node, switch to incrementing
 				if (targetNode == 0) {
 					nodeSequencing = "forward";
 					targetNode++;
-					trace("switch to forward and Inc");
-					trace("target node:  ", targetNode);
+					//trace("switch to forward and Inc");
+					//trace("target node:  ", targetNode);
 				}
 				//if decrementing, select next node
 				else if (targetNode > 0) {
@@ -191,17 +194,17 @@
 			trace("targetNode.y", this.getNodes()[targetNode].y);
 			*/
 			//if you are close to the targetPoint, align to the targetPoint
-			trace("X",Math.abs(this.x - initialPoint.x - this.getNodes()[targetNode].x));
-			if (Math.abs(this.x - initialPoint.x - this.getNodes()[targetNode].x) < xVelocity * 3) {
+			//trace("X",Math.abs(this.x - initialPoint.x - this.getNodes()[targetNode].x));
+			if (Math.abs(this.x - initialPoint.x - this.getNodes()[targetNode].x) < xVelocity * 2.1) {
 				horizontalMotion = "arrived";
 				xVelocity = 0;
-				trace("horizontalMotion arrived");
+				//trace("horizontalMotion arrived");
 			}
-			trace("FUCK",Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y));
-			if (Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y) < yVelocity * 3) {
+			//trace("FUCK",Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y));
+			if (Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y) < yVelocity * 2.1) {
 				verticalMotion = "arrived";
 				yVelocity = 0;
-				trace("verticalMotion arrived");
+				//trace("verticalMotion arrived");
 			}
 			
 			
@@ -211,7 +214,7 @@
 				verticalMotion = "nope";
 				horizontalMotion = "nope";
 				setNewTarget();
-				trace("both arrived");
+				//trace("both arrived");
 			}
 		}
 		public function wallTest():void {
