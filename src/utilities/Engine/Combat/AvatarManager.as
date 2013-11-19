@@ -99,6 +99,14 @@
 						//trace("touched trigger");
 					}
 				}
+				for (var f:int = 0; f < LevelManager.triggers_cutScenes.length; f++) {
+					//trace("cut scene trigger here");
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_cutScenes[f]) == true) {
+						LevelManager.triggers_cutScenes[f].takeDamage(1);
+						LevelManager.triggers_cutScenes[f].checkForDeathFlag();
+						trace("touched cut scene trigger");
+					}
+				}
 				
 				//collide walls & avatar
 				for (var h:int = 0; h < LevelManager.triggerableWalls.length; h++) {

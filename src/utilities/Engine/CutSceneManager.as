@@ -56,8 +56,8 @@
 			}
 		}
 		
-		public function setIsSceneActive(activeStatus:Boolean):void {
-			isSceneActive = activeStatus;
+		public function setIsSceneActive(newActiveStatus:Boolean):void {
+			isSceneActive = newActiveStatus;
 			if(isSceneActive == true){
 				cutScenes[0].addEventListener(Event.ENTER_FRAME, playCutScene);
 				cutScenes[0].assignedGraphic[0].swf_child.play();
@@ -86,14 +86,27 @@
 			
 		}
 		
-		public function loadScene():void {
-			//print("loadScene");
+		public function loadInGameCutScene(newSceneName:String ):void {
+			var sceneName:String = "swf_cutScene_" + newSceneName;
+			trace("sceneName:---------------------------------------------------------------- ", sceneName );
+			print(sceneName);
+			loadSceneFromName(sceneName);
+			Game.setGameState("cutSceneCurrentlyLoading_Trigger"); 
+		}
+		
+		public function loadSceneBasedOnLevelProgress():void {
+			print("loadScene");
 			var sceneName:String = String(LevelProgressModel.getInstance().getCompletedMissionsProgress());
-			sceneName = "ui_cutScene_" + sceneName;
+			sceneName = "swf_cutScene_" + sceneName;
+			trace("sceneName: ", sceneName);
 			//print(sceneName);
+			loadSceneFromName(sceneName);
+			Game.setGameState("cutSceneCurrentlyLoading"); 
+		}
+		
+		public function loadSceneFromName(sceneName:String):void {
 			scene = new utilities.Screens.GameScreens.CutScene(sceneName);
 			cutScenes.push(scene);
-			Game.setGameState("cutSceneCurrentlyLoading"); 
 		}
 		
 		public function deselectActors():void {

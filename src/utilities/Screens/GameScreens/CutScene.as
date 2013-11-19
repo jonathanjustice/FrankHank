@@ -8,7 +8,8 @@
 	import flash.display.DisplayObject;
 	public class CutScene extends utilities.Screens.Screen_Default{
 		private var myScreen:MovieClip;
-		private var filePath:String = "../src/assets/ui/swf_cutScene_1.swf";
+		//private var filePath:String = "../src/assets/ui/swf_cutScene_1.swf";
+		private var filePath:String = "";
 		public function CutScene(sceneName:String) {
 			//trace("CutScene: sceneName:",sceneName);
 			defineScreenGraphics(sceneName);

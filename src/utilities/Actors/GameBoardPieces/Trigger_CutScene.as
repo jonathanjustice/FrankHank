@@ -3,16 +3,19 @@
 	import utilities.Actors.SelectableActor;
 	import flash.display.DisplayObject;
 	import utilities.Engine.LevelManager;
-	public class TriggerEndZone extends SelectableActor{
+	import utilities.Engine.Game;
+	public class Trigger_CutScene extends SelectableActor{
 		private var isBulletBlocker:Boolean = false;
 		private var filePath:String = "../src/assets/actors/swf_wall.swf";
 		private var tempWidth:Number = 0;
 		private var tempHeight:Number = 0;
 		private var wallType:String = "trigger";
 		private var triggerIndex:int = 0;
-		public function TriggerEndZone(newX:int, newY:int, newWidth:Number, newHeight:Number, newIndex:int = 0) {
+		private var cutSceneName:String = "";
+		public function Trigger_CutScene(newX:int, newY:int, newWidth:Number, newHeight:Number, newCutSceneName:String) {
 			print("wewewewewe");
-			triggerIndex = newIndex;
+			cutSceneName = newCutSceneName;
+			trace("cutSceneName", cutSceneName);
 			setUp();
 			tempWidth = newWidth;
 			tempHeight = newHeight;
@@ -31,20 +34,12 @@
 			
 			//this.visible = false;
 		}
-		
-		public function setTriggerIndex(newIndex:int):void {
-			triggerIndex = newIndex;
-		}
-		
-		public function getTriggerIndex():int {
-			return triggerIndex;
-		}
-		
+	
 		public override function onTakeDamage():void {
 			//overriden by each individual class
 			//used for feedback mostly
-			LevelManager.getInstance().setIsLevelComplete(true);
-				
+			//LevelManager.getInstance().setIsLevelComplete(true);
+			Game.setGameState("startInGameCutScene",cutSceneName);
 		}
 		
 		public function setType(newType:String):void {
@@ -64,7 +59,7 @@
 			this.scaleX = tempWidth;
 			this.scaleY = tempHeight;
 			this.visible = false;
-			addActorToGameEngine(graphic, LevelManager.triggers_endZones,triggerIndex);
+			addActorToGameEngine(graphic, LevelManager.triggers_cutScenes);
 			graphic = hitbox;
 		}
 		

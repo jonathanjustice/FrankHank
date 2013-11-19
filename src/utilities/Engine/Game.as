@@ -62,7 +62,7 @@
 			createQuadTree();
 		}
 		
-		public static function setGameState(newState:String):void {
+		public static function setGameState(newState:String,filePathName:String =""):void {
 			gameState = newState;
 			switch(gameState) {
 				case "boot":
@@ -118,10 +118,27 @@
 				case "gameWon":
 					//doshit
 					break;
+					
+				/*  in-engine cutscenes  */
+					
+					
+				/*  in-level cutscenes  */
+				case "startInGameCutScene":
+					//doshit
+					CutSceneManager.getInstance().loadInGameCutScene(filePathName);
+					trace("Game: startInGameCutScene");
+					//CutSceneManager.getInstance().loadSceneFromFilePath();
+					break;	
+					
+				case "cutSceneCurrentlyLoading_Trigger":
+					
+					break;
+					
+				/* capstone cutScenes */
 				case "startCutSceneLoad":
 					//doshit
 					//trace("Game: startCutSceneLoad");
-					CutSceneManager.getInstance().loadScene();
+					CutSceneManager.getInstance().loadSceneBasedOnLevelProgress();
 					break;
 				case "cutSceneCurrentlyLoading":
 					//trace("Game: cutSceneCurrentlyLoading");

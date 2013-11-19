@@ -7,7 +7,9 @@
 	import utilities.Actors.AFSEnemy;
 	import utilities.Actors.Avatar;
 	import utilities.Actors.Bullet;
-	import utilities.Actors.GameBoardPieces.TriggerEndZone;
+	import utilities.Actors.GameBoardPieces.Trigger_EndZone;
+	import utilities.Actors.GameBoardPieces.Trigger_CutScene;
+	import utilities.Actors.GameBoardPieces.Trigger_EngineCutScene;
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Actors.GoonEnemy;
 	import utilities.Actors.Coin;
@@ -78,11 +80,14 @@
 		private var ui_levelFailed:String = new String("../src/assets/ui/swf_levelFailed.swf");
 		private var ui_lives:String = new String("../src/assets/ui/swf_lives.swf");
 		private var ui_start:String = new String("../src/assets/ui/swf_start.swf");
-		private var ui_cutScene_1:String = new String("../src/assets/ui/swf_cutScene_1.swf");
-		private var ui_cutScene_2:String = new String("../src/assets/ui/swf_cutScene_2.swf");
-		private var ui_cutScene_3:String = new String("../src/assets/ui/swf_cutScene_3.swf");
-		private var ui_cutScene_4:String = new String("../src/assets/ui/swf_cutScene_4.swf");
-		private var ui_cutScene_5:String = new String("../src/assets/ui/swf_cutScene_5.swf");
+		private var swf_cutScene_1:String = new String("../src/assets/cutScenes/swf_cutScene_1.swf");
+		private var swf_cutScene_2:String = new String("../src/assets/cutScenes/swf_cutScene_2.swf");
+		private var swf_cutScene_3:String = new String("../src/assets/cutScenes/swf_cutScene_3.swf");
+		private var swf_cutScene_4:String = new String("../src/assets/cutScenes/swf_cutScene_4.swf");
+		private var swf_cutScene_5:String = new String("../src/assets/cutScenes/swf_cutScene_5.swf");
+		
+		private var swf_cutScene_level_1_mid:String = new String("../src/assets/cutScenes/swf_cutScene_level_1_mid.swf");
+		//private var swf_cutScene_level_2_mid:String = new String("../src/assets/cutScenes/swf_cutScene_level_2_mid.swf");
 		
 		
 		/*
@@ -105,7 +110,6 @@
 			}
 			return _instance;
 		}
-		
 		//aka wizard shit, don't make no kind of logical sense
 		private function alignmentOfParentChildGraphics(par:MovieClip, ch:MovieClip):void {
 			//trace("GraphicsElelement: alignmentOfParentChildGraphics: par:",par,", ch:",ch);
@@ -215,18 +219,42 @@
 						movingWall.defineInitialPoint();
 						
 					}
-					if(tempArray[j].name == "triggerEndZone"){
-						var triggerEndZone:TriggerEndZone = new TriggerEndZone(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
-						triggerEndZone.x = tempArray[j].x;
-						triggerEndZone.y = tempArray[j].y;
+					if(tempArray[j].name == "trigger_EndZone"){
+						var trigger_EndZone:Trigger_EndZone = new Trigger_EndZone(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
+						trigger_EndZone.x = tempArray[j].x;
+						trigger_EndZone.y = tempArray[j].y;
+						tempArray[j].x = 0;
+						tempArray[j].y = 0;
+						//wall.setType("standard");
+					}
+					if (tempArray[j].name.indexOf("trigger_CutScene_") != -1) {
+						var cutSceneName:String = tempArray[j].name;
+						
+						trace(cutSceneName.slice(17, cutSceneName.length)); // output: !!!
+						//get the name after the "cutScene_Trigger_" part
+						cutSceneName = cutSceneName.slice(17, cutSceneName.length);
+						trace(cutSceneName);
+						var trigger_CutScene_Index:int = tempArray[j].name.charAt(17);
+						//trace("triggerIndex",triggerIndex);
+						var trigger_CutScene:Trigger_CutScene = new Trigger_CutScene(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height,cutSceneName);
+						trigger_CutScene.x = tempArray[j].x;
+						trigger_CutScene.y = tempArray[j].y;
+						tempArray[j].x = 0;
+						tempArray[j].y = 0;
+						//wall.setType("standard");
+					}
+					if(tempArray[j].name == "trigger_EngineCutScene"){
+						var trigger_EngineCutScene:Trigger_EngineCutScene = new Trigger_EngineCutScene(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
+						trigger_EngineCutScene.x = tempArray[j].x;
+						trigger_EngineCutScene.y = tempArray[j].y;
 						tempArray[j].x = 0;
 						tempArray[j].y = 0;
 						//wall.setType("standard");
 					}
 					if (tempArray[j].name.indexOf("trigger_") != -1) {
-						var triggerIndex:int = tempArray[j].name.charAt(8);
+						var trigger_Index:int = tempArray[j].name.charAt(8);
 						//trace("triggerIndex",triggerIndex);
-						var trigger:Trigger = new Trigger(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height,triggerIndex);
+						var trigger:Trigger = new Trigger(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height,trigger_Index);
 						trigger.x = tempArray[j].x;
 						trigger.y = tempArray[j].y;
 						tempArray[j].x = 0;
@@ -381,20 +409,23 @@
 				case "ui_letterBox":
 					filePath = ui_letterBox;
 					break;
-				case "ui_cutScene_1":
-					filePath = ui_cutScene_1;
+				case "swf_cutScene_1":
+					filePath = swf_cutScene_1;
 					break;
-				case "ui_cutScene_2":
-					filePath = ui_cutScene_2;
+				case "swf_cutScene_2":
+					filePath = swf_cutScene_2;
 					break;
-				case "ui_cutScene_3":
-					filePath = ui_cutScene_3;
+				case "swf_cutScene_3":
+					filePath = swf_cutScene_3;
 					break;
-				case "ui_cutScene_4":
-					filePath = ui_cutScene_4;
+				case "swf_cutScene_4":
+					filePath = swf_cutScene_4;
 					break;
-				case "ui_cutScene_5":
-					filePath = ui_cutScene_5;
+				case "swf_cutScene_5":
+					filePath = swf_cutScene_5;
+					break;
+				case "swf_cutScene_level_1_mid":
+					filePath = swf_cutScene_level_1_mid;
 					break;
 			}
 			var loader:swfLoader = new swfLoader();
