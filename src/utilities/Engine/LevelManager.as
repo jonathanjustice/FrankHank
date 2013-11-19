@@ -22,6 +22,7 @@
 		
 		public static var triggerableWalls:Array;
 		public static var triggers:Array;
+		public static var triggers_endZones:Array;
 		public static var arts:Array;
 		public static var coins:Array;
 		public static var savePoints:Array;
@@ -43,6 +44,7 @@
 			savePoints = [];
 			triggers = [];
 			triggerableWalls = [];
+			triggers_endZones = [];
 		}
 		
 		public static function getInstance():LevelManager {
@@ -61,6 +63,10 @@
 		
 		
 		//Interface features
+		public function getTriggers_endZones():Array{
+			return triggers_endZones;
+		}
+		
 		public function getTriggers():Array{
 			return triggers;
 		}
@@ -178,6 +184,7 @@
 			LevelManager.getInstance().destroyArray(LevelManager.levels);
 			LevelManager.getInstance().destroyArray(LevelManager.walls);
 			LevelManager.getInstance().destroyArray(LevelManager.triggerableWalls);
+			LevelManager.getInstance().destroyArray(LevelManager.triggers_endZones);
 			Game.resetGameContainerCoordinates();
 			Game.setFramesSinceGameStart();
 		}

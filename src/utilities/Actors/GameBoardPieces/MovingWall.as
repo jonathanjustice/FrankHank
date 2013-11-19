@@ -79,7 +79,7 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			trace("------------------------------");
+			/*trace("------------------------------");
 			this.hitbox.width = tempWidth;
 			this.hitbox.height = tempHeight;
 			//this.attachedArt.scaleX = 1/tempWidth;
@@ -89,7 +89,7 @@
 			trace("this.attachedArt.scaleX", this.attachedArt.scaleX);
 			trace("this.attachedArt.scaleY", this.attachedArt.scaleY);
 			
-			trace("------------------------------");
+			trace("------------------------------");*/
 			//this.visible = false;
 			
 			if (wallType == "triggeredWall") {

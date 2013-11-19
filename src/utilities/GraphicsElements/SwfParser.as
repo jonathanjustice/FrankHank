@@ -7,6 +7,7 @@
 	import utilities.Actors.AFSEnemy;
 	import utilities.Actors.Avatar;
 	import utilities.Actors.Bullet;
+	import utilities.Actors.GameBoardPieces.TriggerEndZone;
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Actors.GoonEnemy;
 	import utilities.Actors.Coin;
@@ -213,6 +214,14 @@
 						movingWall.setNewTarget();
 						movingWall.defineInitialPoint();
 						
+					}
+					if(tempArray[j].name == "triggerEndZone"){
+						var triggerEndZone:TriggerEndZone = new TriggerEndZone(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
+						triggerEndZone.x = tempArray[j].x;
+						triggerEndZone.y = tempArray[j].y;
+						tempArray[j].x = 0;
+						tempArray[j].y = 0;
+						//wall.setType("standard");
 					}
 					if (tempArray[j].name.indexOf("trigger_") != -1) {
 						var triggerIndex:int = tempArray[j].name.charAt(8);

@@ -90,17 +90,26 @@
 						//trace("touched trigger");
 					}
 				}
+				//collide with triggers
+				for (var e:int = 0; e < LevelManager.triggers_endZones.length; e++) {
+					//trace("end zone here");
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_endZones[e]) == true) {
+						LevelManager.triggers_endZones[e].takeDamage(1);
+						LevelManager.triggers_endZones[e].checkForDeathFlag();
+						//trace("touched trigger");
+					}
+				}
 				
 				//collide walls & avatar
-				for (var e:int = 0; e < LevelManager.triggerableWalls.length; e++) {
-					if (LevelManager.triggerableWalls[e].getType() == "triggeredWall") {
-						LevelManager.triggerableWalls[e].updateLoop();
+				for (var h:int = 0; h < LevelManager.triggerableWalls.length; h++) {
+					if (LevelManager.triggerableWalls[h].getType() == "triggeredWall") {
+						LevelManager.triggerableWalls[h].updateLoop();
 					}
-					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggerableWalls[e]) == true) {
-						switch (LevelManager.triggerableWalls[e].getType()){
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggerableWalls[h]) == true) {
+						switch (LevelManager.triggerableWalls[h].getType()){
 							case "triggeredWall":
-								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.triggerableWalls[e]) == "top") {
-									additionalVelocity = LevelManager.triggerableWalls[i].getVelocity().y;
+								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.triggerableWalls[h]) == "top") {
+									additionalVelocity = LevelManager.triggerableWalls[h].getVelocity().y;
 									isTouchingWall = true;
 									//trace("triggeredWall");
 									myAvatar.jumpingEnded();
