@@ -27,6 +27,7 @@
 	import utilities.objects.GameObject;
 	import utilities.Saving_And_Loading.swfLoader;
 	import utilities.Actors.GameBoardPieces.Wall;
+	import utilities.Actors.GameBoardPieces.Trigger;
 	import utilities.Actors.GameBoardPieces.MovingWall;
 	import utilities.Actors.GameBoardPieces.Art;
 	import utilities.Engine.LevelManager;
@@ -140,23 +141,23 @@
 			for (var n:int = 0; n < objectToSort.numChildren; n++) {
 				var myString:String = "";
 				myString = String(objectToSort.getChildAt(n).name);
-				if (objectToSort.getChildAt(n).name.indexOf("node_") != -1) {	var index:int = 0;
+				if (objectToSort.getChildAt(n).name.indexOf("node_") != -1) {	
+					var index:int = 0;
 					index = int(objectToSort.getChildAt(n).name.charAt(5));
-				//	trace("objectToSort.getChildAt(n).name:",objectToSort.getChildAt(n).name);
-				//	trace("index: ",index);
-				//	trace("sorting nodes: n",n);
 					nodeArray.splice(index, 0, objectToSort.getChildAt(n));
 				}
 				if (objectToSort.getChildAt(n).name == "hitbox") {
 					actor.defineHitbox(objectToSort.hitbox);
-					//trace("splicingHitbox: n",n);
-					//trace("splicedHitbox: n",n);
+				}
+				if (objectToSort.getChildAt(n).name == "art") {
+					actor.attachAdditionalArt(objectToSort.art);
 				}
 				
 			}
 			if (objectToSort.contains(objectToSort.hitbox)) {
 				objectToSort.removeChild(objectToSort.hitbox);
 			}
+			
 			
 			actor.defineNodes(nodeArray);
 			return nodeArray;
@@ -185,34 +186,63 @@
 						var art_2:Art = new Art(tempArray[j].x, tempArray[j].y, tempArray[j],2);
 					}
 					if(tempArray[j].name == "wall"){
-						var wall:Wall = new Wall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
+						var wall:Wall = new Wall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height, "standard");
 						wall.x = tempArray[j].x;
 						wall.y = tempArray[j].y;
 						tempArray[j].x = 0;
 						tempArray[j].y = 0;
-						wall.setType("standard");
+						//wall.setType("standard");
 					}
 					if(tempArray[j].name == "platform"){
-						var platform:Wall = new Wall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
+						var platform:Wall = new Wall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height, "platform");
 						platform.x = tempArray[j].x;
 						platform.y = tempArray[j].y;
 						tempArray[j].x = 0;
 						tempArray[j].y = 0;
-						platform.setType("platform");
+						//platform.setType("platform");
 					}
 					if(tempArray[j].name == "movingWall"){
-						var movingWall:MovingWall = new MovingWall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
+						var movingWall:MovingWall = new MovingWall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height, "movingWall");
 						movingWall.x = tempArray[j].x;
 						movingWall.y = tempArray[j].y;
 						tempArray[j].x = 0;
 						tempArray[j].y = 0;
-						movingWall.setType("movingWall");
+						//movingWall.setType("movingWall");
 						sortNodes(movingWall, tempArray[j]);
 						//trace("sorting nodes completed");
 						movingWall.setNewTarget();
 						movingWall.defineInitialPoint();
 						
 					}
+					if (tempArray[j].name.indexOf("trigger_") != -1) {
+						var triggerIndex:int = tempArray[j].name.charAt(8);
+						//trace("triggerIndex",triggerIndex);
+						var trigger:Trigger = new Trigger(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height,triggerIndex);
+						trigger.x = tempArray[j].x;
+						trigger.y = tempArray[j].y;
+						tempArray[j].x = 0;
+						tempArray[j].y = 0;
+						//t.setType("trigger");
+						//var triggerIndex:int = 0;
+						
+					}
+					
+					
+					if (tempArray[j].name.indexOf("triggeredWall_") != -1) {
+						var triggeredWallIndex:int = tempArray[j].name.charAt(14);
+						//trace("triggeredWallIndex",triggeredWallIndex);
+						var triggeredWall:MovingWall = new MovingWall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height,"triggeredWall",triggeredWallIndex);
+						triggeredWall.x = tempArray[j].x;
+						triggeredWall.y = tempArray[j].y;
+						tempArray[j].x = 0;
+						tempArray[j].y = 0;
+						//triggeredWall.setType("triggeredWall");
+						sortNodes(triggeredWall, tempArray[j]);
+						//trace("sorting nodes completed");
+						triggeredWall.setNewTarget();
+						triggeredWall.defineInitialPoint();
+					}
+					
 				
 					if(tempArray[j].name == "avatar"){
 						var avatar:Avatar = new Avatar(tempArray[j].x, tempArray[j].y);
@@ -270,7 +300,7 @@
 				childrenToLoad = 0;
 				childrenLoaded = 0;
 				Game.setGameState("levelFullyLoaded");
-				//print("level FUllY Loaded");
+				print("level FUllY Loaded");
 			}
 		}
 		

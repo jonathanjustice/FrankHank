@@ -20,7 +20,7 @@
 		private var myAngle:Number=0;
 		private var velocityIncrease:Number = 3;
 		private var maxVelocity:Number = 18;
-		private var velocityDecrease:Number = .9;
+		private var velocityDecrease:Number = .8;
 		private var maxSpeed:Number=100;
 		public var xDiff:Number=0;
 		public var yDiff:Number = 0;
@@ -32,6 +32,7 @@
 		private var currentDelay:int = 0;
 		private var delay:int = 15;
 		private var avatarHealth:int = 1;
+		private var additionalYVelocityForCamera:int = 0;
 		
 		
 		private var filePath:String = "../src/assets/actors/swf_frank.swf";
@@ -41,6 +42,14 @@
 			this.y = newY;
 			setUp();
 			
+		}
+		
+		public function setAdditionalYVelocity(newVel:int):void {
+			additionalYVelocityForCamera = newVel;
+		}
+		
+		public function getAdditionalYVelocity():int {
+			return additionalYVelocityForCamera;
 		}
 		
 		public function resetHealth():void {
@@ -56,7 +65,7 @@
 		}
 		
 		public function setUp():void {
-			print("Avatar.SetUp()");
+			//print("Avatar.SetUp()");
 			defineGraphics("frank", false);
 			resetHealth();
 			//addStroke();

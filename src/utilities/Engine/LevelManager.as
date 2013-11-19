@@ -19,6 +19,9 @@
 		public static var level:MovieClip;
 		public static var levels:Array;
 		public static var walls:Array;
+		
+		public static var triggerableWalls:Array;
+		public static var triggers:Array;
 		public static var arts:Array;
 		public static var coins:Array;
 		public static var savePoints:Array;
@@ -38,6 +41,8 @@
 			arts = [];
 			coins = [];
 			savePoints = [];
+			triggers = [];
+			triggerableWalls = [];
 		}
 		
 		public static function getInstance():LevelManager {
@@ -47,9 +52,25 @@
 			return _instance;
 		}
 		
+		public function activateTriggerableWall(newIndex:int):void {
+			//trace("newIndex", newIndex);
+			//trace(triggerableWalls);
+			//trace(triggerableWalls[newIndex]);
+ 			triggerableWalls[newIndex].setIsActive(true);
+		}
+		
+		
 		//Interface features
+		public function getTriggers():Array{
+			return triggers;
+		}
+		
 		public function getWalls():Array{
 			return walls;
+		}
+		
+		public function getTriggerableWalls():Array {
+			return triggerableWalls;
 		}
 		
 		public function getArts():Array{
@@ -150,11 +171,13 @@
 			LevelManager.getInstance().destroyArray(LevelManager.arts);
 			LevelManager.getInstance().destroyArray(LevelManager.coins);
 			LevelManager.getInstance().destroyArray(LevelManager.savePoints);
+			LevelManager.getInstance().destroyArray(LevelManager.triggers);
 			PowerupManager.getInstance().destroyArray(PowerupManager.powerups);
 			BulletManager.getInstance().destroyArray(BulletManager.bullets);
 			AvatarManager.getInstance().destroyArray(AvatarManager.avatars);
 			LevelManager.getInstance().destroyArray(LevelManager.levels);
 			LevelManager.getInstance().destroyArray(LevelManager.walls);
+			LevelManager.getInstance().destroyArray(LevelManager.triggerableWalls);
 			Game.resetGameContainerCoordinates();
 			Game.setFramesSinceGameStart();
 		}
@@ -175,8 +198,11 @@
 		
 		public function deselectActors():void {
 			//print("levels:", levels);
-			for (var i:int = 1; i < walls.length; i++) {
-				walls[i].deselectActor();
+			for (var a:int = 1; a < walls.length; a++) {
+				walls[a].deselectActor();
+			}
+			for (var b:int = 1; b < walls.length; b++) {
+				walls[b].deselectActor();
 			}
 		}
 		

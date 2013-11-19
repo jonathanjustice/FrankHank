@@ -11,6 +11,7 @@
 	import utilities.Actors.TreasureChest;
 	import utilities.Engine.Builders.LootManager;
 	import utilities.Actors.Stats.WeaponStats;
+	import utilities.Actors.GameBoardPieces.Trigger;
 	import utilities.GraphicsElements.SwfParser;
 	import utilities.GraphicsElements.Animation;
 	import utilities.Mathematics.MathFormulas;
@@ -22,6 +23,7 @@
 	import utilities.objects.GameObject;
 	import utilities.Saving_And_Loading.swfLoader;
 	public class Actor extends GameObject {
+		public var attachedArt:MovieClip = new MovieClip;
 		public var hitbox:MovieClip = new MovieClip;
 		private var nodes:Array = new Array;
 		public var isGraphicLoaded:Boolean = false;
@@ -80,6 +82,14 @@
 			defineWeaponStats();
 			setAnimationState("idle");
 			//print(this);
+		}
+		
+		public function attachAdditionalArt(artToAttach:MovieClip):void {
+			attachedArt = artToAttach;
+			this.addChild(attachedArt);
+			//trace(this.assignedGraphic[0]);
+			//trace(this.assignedGraphic[0].swf_child);
+			//this.assignedGraphic[0].swf_child.addChild(attachedArt);
 		}
 		
 		public function getFilePath():String {
@@ -178,20 +188,23 @@
 		
 		public function defineHitbox(newHitbox:MovieClip):void {
 			hitbox = newHitbox;
-			trace("hitbox",hitbox);
+			hitbox.visible = false;
+			//trace("hitbox",hitbox);
 		}
 		
 		public function getHitbox():MovieClip {
 			return hitbox;
 		}
 		
-		public function addActorToGameEngine(graphic:DisplayObject,array:Array):void {
+		public function addActorToGameEngine(graphic:DisplayObject, array:Array, spliceIndex:int = 0):void {
+			//spliceIndex = array.length;
 			setPreviousPosition();
 			assignedGraphic[0] = graphic;
 			this.addChild(graphic);
 			utilities.Engine.Game.gameContainer.addChild(this);
 			setIsSwfLoaded(true);
-			array.push(this);
+			//array.push(this);
+			array.splice(spliceIndex, 0, this);
 		}
 		
 		public function removeActorFromGameEngine(actor:MovieClip, array:Array):void {
@@ -221,10 +234,10 @@
 			if (health <= 0) {
 				if (this is Avatar) {
 					if (Game.getLives() > 0) {
-						trace("checkForDamage levelFailed");
+						//trace("checkForDamage levelFailed");
 						Game.setGameState("levelFailed");
 					}else if(Game.getLives() <= 0){
-						trace("checkForDamage: gameOver");
+						//trace("checkForDamage: gameOver");
 						Game.setGameState("gameOver");
 					}
 					
@@ -261,7 +274,7 @@
 		//this would be a really nice place to start using Interfaces... hint hint hint
 		public function checkForDeathFlag():void{
 			if (markedForDeletion) {
-				trace("checkForDeathFlag",this);
+				//trace("checkForDeathFlag",this);
 				//delete it
 				if(this is Bullet){
 					removeActorFromGameEngine(this,BulletManager.getInstance().getArray());
@@ -277,6 +290,8 @@
 					removeActorFromGameEngine(this,PowerupManager.getInstance().getArray());
 				}else if(this is Coin){
 					removeActorFromGameEngine(this,LevelManager.getInstance().getCoins());
+				}else if(this is Trigger){
+					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers());
 				}
 			}
 		}
@@ -597,6 +612,12 @@
 		public function getVelocity():Point {
 			var velocityPoint:Point = new Point(xVelocity,yVelocity);
 			return velocityPoint;
+		}
+		
+		//this is normall for when you touch a platform or wall above you
+		// it should prevent you from clipping through it
+		public function reduceJumpSpeed():void {
+			yVelocity = 2;
 		}
 		
 		public function setIsSwfLoaded(loadState:Boolean):void {

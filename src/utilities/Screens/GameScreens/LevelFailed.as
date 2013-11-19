@@ -48,12 +48,10 @@
 			countdownTimer++;
 			//fade in
 			if (countdownTimer <= timeFadeIn) {
-				trace("INININININ");
 				this.alpha = countdownTimer / timeFadeIn;
 			}
 			//afde out
 			if (countdownTimer >= (timeNextScreen - timeFadeOut) && countdownTimer < timeNextScreen) {
-				trace("OUTOUTOUT");
 				this.alpha =  1- (countdownTimer - (timeNextScreen-timeFadeOut) ) / timeFadeOut;
 			}
 			if (countdownTimer >= timeNextScreen) {

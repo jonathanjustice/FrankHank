@@ -49,8 +49,11 @@
 			}
 		}
 	
-		public static function updateLoop():void{
+		public static function updateLoop():void {
 			for each(var myAvatar:Avatar in avatars){
+			//trace(myAvatar.getAdditionalYVelocity());
+				var isTouchingWall:Boolean = false;
+				var additionalVelocity:int = 0;
 				myAvatar.updateLoop();
 				//collide powersups & avatar
 				for (var a:int = 0; a < PowerupManager.powerups.length; a++) {
@@ -75,6 +78,42 @@
 						if (LevelManager.savePoints[c].getIsActive() == true) {
 								LevelProgressModel.getInstance().setMidMissionProgress(c);
 								LevelManager.savePoints[c].setIsActive(false);
+						}
+					}
+				}
+				//collide with triggers
+				for (var d:int = 0; d < LevelManager.triggers.length; d++) {
+					//trace("triggers here");
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers[d]) == true) {
+						LevelManager.triggers[d].takeDamage(1);
+						LevelManager.triggers[d].checkForDeathFlag();
+						//trace("touched trigger");
+					}
+				}
+				
+				//collide walls & avatar
+				for (var e:int = 0; e < LevelManager.triggerableWalls.length; e++) {
+					if (LevelManager.triggerableWalls[e].getType() == "triggeredWall") {
+						LevelManager.triggerableWalls[e].updateLoop();
+					}
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggerableWalls[e]) == true) {
+						switch (LevelManager.triggerableWalls[e].getType()){
+							case "triggeredWall":
+								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.triggerableWalls[e]) == "top") {
+									additionalVelocity = LevelManager.triggerableWalls[i].getVelocity().y;
+									isTouchingWall = true;
+									//trace("triggeredWall");
+									myAvatar.jumpingEnded();
+									myAvatar.resetGravity();
+									
+									
+									
+									
+									
+									
+									//reduceJumpSpeed.yVelocity();
+								}
+								break;
 						}
 					}
 				}
@@ -104,14 +143,17 @@
 								//trace("movingWall");
 								//trace(LevelManager.walls[i].name);
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
-									
+									additionalVelocity = LevelManager.walls[i].getVelocity().y;
+									isTouchingWall = true;
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 								}
 								break;
 							case "movingPlatform":
 								if (utilities.Mathematics.RectangleCollision.testCollisionWithPlatform(myAvatar, LevelManager.walls[i]) == true) {
-									trace("movingPlatform");
+									additionalVelocity = LevelManager.walls[i].getVelocity().y;
+									isTouchingWall = true;
+									//trace("movingPlatform");
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 									
@@ -169,11 +211,11 @@
 					if (myAvatar.getiIsGraphicLoaded() == true) {
 						if(EnemyManager.enemies[j].hitTestObject(myAvatar.getActorGraphic().assignedGraphics[0].swf_child.hitbox_attack)){
 							EnemyManager.enemies[j].takeDamage(myAvatar.getAttackDamage());
-							trace("asdsadasdasd");
 						}
 					}	
 				}
 				myAvatar.setPreviousPosition();
+				myAvatar.setAdditionalYVelocity(additionalVelocity);
 			}
 		}
 		
