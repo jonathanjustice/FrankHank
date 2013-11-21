@@ -149,11 +149,11 @@
 		
 		private function levelCompleted():void {
 			clearLevel();
-			if (EnemyManager.enemies.length == 0) {
+		//	if (EnemyManager.enemies.length == 0) {
 				LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1);
 				Game.setGameState("startCutSceneLoad");
-				LevelManager._instance.setIsLevelComplete(false);
-			}
+				
+		//	}
 		}
 		
 		private function levelFailed():void {
@@ -203,6 +203,7 @@
 		}
 		
 		public function loadLevel():void {
+			LevelManager._instance.setIsLevelComplete(false);
 			var levelName:String = String(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1 );
 			levelName = "lvl_" + levelName;
 			//print("levelName:" +levelName);

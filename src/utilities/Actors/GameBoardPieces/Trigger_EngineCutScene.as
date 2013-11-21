@@ -11,7 +11,7 @@
 		private var wallType:String = "trigger";
 		private var triggerIndex:int = 0;
 		public function Trigger_EngineCutScene(newX:int, newY:int, newWidth:Number, newHeight:Number, newIndex:int = 0) {
-			print("wewewewewe");
+			//print("wewewewewe");
 			triggerIndex = newIndex;
 			setUp();
 			tempWidth = newWidth;

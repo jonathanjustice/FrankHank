@@ -27,6 +27,15 @@
 			setContinueCodeDisplay();
 		}
 		
+		private function startTimerToNextLevel():void {
+			countdownTimer = 0;
+			this.addEventListener(Event.ENTER_FRAME, listenForFrame);
+		}
+		
+		private function stopTimerToNextLevel():void {
+			this.removeEventListener(Event.ENTER_FRAME, listenForFrame);
+		}
+		
 		public function listenForFrame(frameLabel:String):void {
 			var label:String = frameLabel;
 			if (assignedGraphic[0].swf_child.currentLabel == "end"){
@@ -44,14 +53,7 @@
 		}
 		
 		
-		private function startTimerToNextLevel():void {
-			countdownTimer = 0;
-			this.addEventListener(Event.ENTER_FRAME, listenForFrame);
-		}
 		
-		private function stopTimerToNextLevel():void {
-			this.removeEventListener(Event.ENTER_FRAME, listenForFrame);
-		}
 		
 		private function countdown(e:Event):void {
 			countdownTimer++;

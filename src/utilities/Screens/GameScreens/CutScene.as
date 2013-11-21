@@ -8,6 +8,7 @@
 	import flash.display.DisplayObject;
 	public class CutScene extends utilities.Screens.Screen_Default{
 		private var myScreen:MovieClip;
+		//filepath gets generated outside and passed in
 		//private var filePath:String = "../src/assets/ui/swf_cutScene_1.swf";
 		private var filePath:String = "";
 		public function CutScene(sceneName:String) {

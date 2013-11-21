@@ -13,7 +13,7 @@
 		private var triggerIndex:int = 0;
 		private var cutSceneName:String = "";
 		public function Trigger_CutScene(newX:int, newY:int, newWidth:Number, newHeight:Number, newCutSceneName:String) {
-			print("wewewewewe");
+			//print("wewewewewe");
 			cutSceneName = newCutSceneName;
 			trace("cutSceneName", cutSceneName);
 			setUp();

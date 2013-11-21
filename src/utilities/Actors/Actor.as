@@ -12,6 +12,8 @@
 	import utilities.Engine.Builders.LootManager;
 	import utilities.Actors.Stats.WeaponStats;
 	import utilities.Actors.GameBoardPieces.Trigger;
+	import utilities.Actors.GameBoardPieces.Trigger_CutScene;
+	import utilities.Actors.GameBoardPieces.Trigger_EndZone;
 	import utilities.GraphicsElements.SwfParser;
 	import utilities.GraphicsElements.Animation;
 	import utilities.Mathematics.MathFormulas;
@@ -292,6 +294,10 @@
 					removeActorFromGameEngine(this,LevelManager.getInstance().getCoins());
 				}else if(this is Trigger){
 					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers());
+				}else if(this is Trigger_CutScene){
+					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers_cutScenes());
+				}else if(this is Trigger_EndZone){
+					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers_endZones());
 				}
 			}
 		}

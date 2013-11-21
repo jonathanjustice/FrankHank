@@ -110,10 +110,10 @@
 					break;
 				case "gameOver":
 				//	trace("setGameState gameOver");
-					LevelManager.getInstance().setIsLevelActive(false);
+					LevelManager.getInstance().setIsLevelComplete(false);
 					UIManager.getInstance().openGameOverScreen();
 					UIManager.getInstance().removeLivesScreen();
-					LevelManager.getInstance().setIsLevelFailed(true);
+					LevelManager.getInstance().setIsLevelComplete(true);
 					break;
 				case "gameWon":
 					//doshit
@@ -125,9 +125,9 @@
 				/*  in-level cutscenes  */
 				case "startInGameCutScene":
 					//doshit
+					disableMasterLoop();
 					CutSceneManager.getInstance().loadInGameCutScene(filePathName);
-					trace("Game: startInGameCutScene");
-					//CutSceneManager.getInstance().loadSceneFromFilePath();
+					//trace("Game: startInGameCutScene");
 					break;	
 					
 				case "cutSceneCurrentlyLoading_Trigger":
@@ -138,6 +138,7 @@
 				case "startCutSceneLoad":
 					//doshit
 					//trace("Game: startCutSceneLoad");
+					disableMasterLoop();
 					CutSceneManager.getInstance().loadSceneBasedOnLevelProgress();
 					break;
 				case "cutSceneCurrentlyLoading":
@@ -156,7 +157,13 @@
 					//trace("Game: cutSceneComplete");
 					CutSceneManager.getInstance().setIsSceneActive(false);
 					CutSceneManager.getInstance().setIsSceneComplete(false);
-					UIManager.getInstance().openLevelCompleteScreen();
+					trace("LevelManager.getInstance().getIsLevelComplete == true",LevelManager.getInstance().getIsLevelComplete == true);
+					if (LevelManager.getInstance().getIsLevelComplete() == false) {
+						enableMasterLoop();
+					}else if (LevelManager.getInstance().getIsLevelComplete() == true) {
+						trace("ELSE level is marked as completed");
+						UIManager.getInstance().openLevelCompleteScreen();	
+					}
 					break;
 				case "inLevelCutScene":
 					//trace("Game: inLevelCutScene");

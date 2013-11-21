@@ -88,17 +88,17 @@
 		
 		public function loadInGameCutScene(newSceneName:String ):void {
 			var sceneName:String = "swf_cutScene_" + newSceneName;
-			trace("sceneName:---------------------------------------------------------------- ", sceneName );
-			print(sceneName);
+			//trace("sceneName:---------------------------------------------------------------- ", sceneName );
+			//print(sceneName);
 			loadSceneFromName(sceneName);
 			Game.setGameState("cutSceneCurrentlyLoading_Trigger"); 
 		}
 		
 		public function loadSceneBasedOnLevelProgress():void {
-			print("loadScene");
+			//print("loadScene");
 			var sceneName:String = String(LevelProgressModel.getInstance().getCompletedMissionsProgress());
 			sceneName = "swf_cutScene_" + sceneName;
-			trace("sceneName: ", sceneName);
+			//trace("sceneName: ", sceneName);
 			//print(sceneName);
 			loadSceneFromName(sceneName);
 			Game.setGameState("cutSceneCurrentlyLoading"); 
