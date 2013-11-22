@@ -240,13 +240,21 @@
 		private static function createAvatar():void {
 			avatar = new utilities.Actors.Avatar(0,0);
 			avatars.push(avatar);
+			//trace();
 		}
 		
 		public function getArray():Array{
 			return avatars;
 		}
 		
-		public function getAvatar():MovieClip{
+		public function getAvatar():MovieClip {
+			trace("avatars[0]", avatars[0]);
+			trace("avatars",avatars);
+			trace("avatars.numChildren",avatars.numChildren);
+			return avatars[0];
+		}
+		
+		public static function getAvatarForCheats():MovieClip{
 			return avatars[0];
 		}
 	}

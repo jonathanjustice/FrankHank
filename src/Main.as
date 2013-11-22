@@ -7,6 +7,7 @@
 	import utilities.Engine.UIManager;
 	import utilities.Input.KeyInputManager;
 	import utilities.Input.MouseInputManager;
+	import utilities.Engine.CheatManager;
 	import flash.geom.Point;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;

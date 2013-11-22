@@ -15,6 +15,7 @@
 	import utilities.Engine.Combat.AvatarManager;
 	import utilities.Engine.Combat.AnimationManager;
 	import utilities.Engine.Combat.SaveDataManager;
+	import utilities.Engine.CheatManager;
 	import utilities.Audio.SoundManager;
 	import utilities.Actors.Avatar;
 	import utilities.Mathematics.QuadTree;
@@ -38,6 +39,7 @@
 		public static var levelManager:LevelManager;
 		public static var soundManager:SoundManager;
 		public static var saveDataManager:SaveDataManager;
+		public static var cheatManager:CheatManager;
 		public static var avatar:Avatar;
 		private static var quadTree:QuadTree;
 		private static var gamePaused:Boolean = true;
@@ -275,6 +277,7 @@
 			SoundManager.getInstance();
 			SaveDataManager.getInstance();
 			AnimationManager.getInstance();
+			CheatManager.getInstance();
 		}
 		
 		
@@ -389,6 +392,7 @@
 				LevelManager.getInstance().updateLoop();
 				//trace("Game: masterLoop: LevelManager");
 				//LevelManager.getInstance().setIsLevelActive(true);
+				CheatManager.getInstance().updateLoop();
 			}else{
 				//can use this section for when the game is paused but I still need to update UI stuff
 			}
