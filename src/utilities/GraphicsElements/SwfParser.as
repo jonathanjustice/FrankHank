@@ -20,6 +20,7 @@
 	import utilities.Actors.Powerup_invincible;
 	import utilities.Actors.SelectableActor;
 	import utilities.Actors.TankEnemy;
+	import utilities.Actors.SpiderEnemy;
 	import utilities.Engine.Game;
 	import utilities.Engine.CutSceneManager;
 	import utilities.Engine.Combat.AvatarManager;
@@ -299,6 +300,9 @@
 					}
 					if(tempArray[j].name == "tank"){
 						var tank:TankEnemy = new TankEnemy(tempArray[j].x,tempArray[j].y);
+					}
+					if(tempArray[j].name == "spider"){
+						var spider:SpiderEnemy = new SpiderEnemy(tempArray[j].x,tempArray[j].y);
 					}
 					if(tempArray[j].name == "afs"){
 						var afs:AFSEnemy = new AFSEnemy(tempArray[j].x,tempArray[j].y);

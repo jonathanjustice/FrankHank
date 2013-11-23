@@ -1,6 +1,7 @@
 ﻿package utilities.Engine.Combat{
 	
 	import utilities.Actors.Actor;
+	import utilities.Actors.SpiderEnemy;
 	import utilities.Engine.DefaultManager;
 	import flash.display.MovieClip;
 	import flash.geom.Point;
@@ -114,7 +115,7 @@
 						if (collisionSide == "top") {
 							enemy.setNumberOfWallsBeingTouched(1);
 							enemy.resetGravity();
-							if (enemy is TankEnemy) {
+							if (enemy is TankEnemy || enemy is SpiderEnemy) {
 								//if a tank enemy reaches the end of a platform, make it turn around instead of falling off 
 								if (utilities.Mathematics.RectangleCollision.isRectangleOnTop(enemy, LevelManager.walls[i]) && enemy.getNumberOfWallsBeingTouched() == 1) {
 									enemy.reverseVelecityX();
