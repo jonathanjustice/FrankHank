@@ -104,11 +104,9 @@
 					//doshit
 					break;
 				case "levelFailed":
-					trace("setgamestate: level failed ");
+					trace("setGameState: level failed ");
 					disableMasterLoop();
 					UIManager.getInstance().removeLivesScreen();
-				//	LevelManager.getInstance().setIsLevelActive(false);
-				//	UIManager.getInstance().openLevelFailedScreen();
 					LevelManager.getInstance().levelFailed();
 					
 					break;
@@ -118,6 +116,7 @@
 					UIManager.getInstance().removeLivesScreen();
 					UIManager.getInstance().openGameOverScreen();
 					LevelManager.getInstance().setIsLevelComplete(true);
+				
 					break;
 				case "gameWon":
 					//doshit
@@ -141,7 +140,7 @@
 				/* capstone cutScenes */
 				case "startCutSceneLoad":
 					//doshit
-					//trace("Game: startCutSceneLoad");
+					trace("Game: startCutSceneLoad");
 					disableMasterLoop();
 					CutSceneManager.getInstance().loadSceneBasedOnLevelProgress();
 					break;
@@ -161,7 +160,6 @@
 					//trace("Game: cutSceneComplete");
 					CutSceneManager.getInstance().setIsSceneActive(false);
 					CutSceneManager.getInstance().setIsSceneComplete(false);
-					trace("LevelManager.getInstance().getIsLevelComplete == true",LevelManager.getInstance().getIsLevelComplete == true);
 					if (LevelManager.getInstance().getIsLevelComplete() == false) {
 						enableMasterLoop();
 					}else if (LevelManager.getInstance().getIsLevelComplete() == true) {
@@ -248,7 +246,7 @@
 		}
 		
 		public static function enableMasterLoop():void {
-			trace("enabling master loop");
+			//trace("enabling master loop");
 			gamePaused=false;
 			gameContainer.addEventListener(Event.ENTER_FRAME, masterLoop);
 		}

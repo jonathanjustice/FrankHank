@@ -140,6 +140,8 @@
 		
 		public function setIsLevelActive(activeStatus:Boolean):void {
 			isLevelActive = activeStatus;
+			isLevelComplete = false;
+			isLevelFailed = false;
 		}
 		
 		public function getisLevelActive():Boolean {
@@ -147,6 +149,7 @@
 		}
 		
 		private function levelCompleted():void {
+			trace("levelCompleted");
 			clearLevel();
 		//	if (EnemyManager.enemies.length == 0) {
 				LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1);
@@ -205,8 +208,9 @@
 		}
 		
 		public function loadLevel():void {
-			//print("loadLevel");
+			print("loadLevel : 1");
 			LevelManager._instance.setIsLevelComplete(false);
+			//print("loadLevel");
 			var levelName:String = String(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1 );
 			levelName = "lvl_" + levelName;
 			//print("levelName:" +levelName);
@@ -232,8 +236,11 @@
 		public function getIsLevelComplete():Boolean{
 			return isLevelComplete;
 		}
-		
-		public function setIsLevelComplete(completeState:Boolean):void{
+	
+		public function setIsLevelComplete(completeState:Boolean):void {
+			
+			//trace("SETTING IS LEVEL COMPLETE");
+			//trace(completeState);
 			isLevelComplete = completeState;
 			//print("setIsLevelComplete");
 		}

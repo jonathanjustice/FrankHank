@@ -69,7 +69,7 @@
 
 			checkForCollisionWithBullets();
 			checkForCollisionWithWall();
-			FPO_checkForLevelComplete();
+			//FPO_checkForLevelComplete();
 		}
 		
 		public static function FPO_checkForLevelComplete():void {
