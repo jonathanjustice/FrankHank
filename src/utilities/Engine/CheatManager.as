@@ -41,16 +41,17 @@
 		}
 		
 		public static function restartLevel():void {
-			trace(AvatarManager.getInstance());
-			trace(AvatarManager.getInstance().getIsAvatarDoubleJumpEnabled());
-			trace();
+		//	trace(AvatarManager.getInstance());
+		//	trace(AvatarManager.getInstance().getIsAvatarDoubleJumpEnabled());
+			//LevelManager.getInstance().setIsLevelActive(false);
+			Game.setGameState("levelFailed");
+		//	trace();
 			//for each(var myAvatar:Avatar in avatars){
-			trace(AvatarManager.getInstance().getAvatar());
+		//	trace(AvatarManager.getInstance().getAvatar());
 			//trace(AvatarManager.getInstance().getAvatarForCheats());
 			//trace();
-			AvatarManager.getInstance().getAvatar().takeDamage(999);
+			//AvatarManager.getInstance().getAvatar().takeDamage(999);
 			//myAvatar.takeDamage(EnemyManager.enemies[j].getCollisionDamage() );
-			//LevelManager.getInstance().setIsLevelFailed(true);
 		}
 		
 		public static function completeLevel():void {

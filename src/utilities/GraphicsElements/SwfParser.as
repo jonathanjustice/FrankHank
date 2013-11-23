@@ -230,10 +230,10 @@
 					if (tempArray[j].name.indexOf("trigger_CutScene_") != -1) {
 						var cutSceneName:String = tempArray[j].name;
 						
-						trace(cutSceneName.slice(17, cutSceneName.length)); // output: !!!
+						//trace(cutSceneName.slice(17, cutSceneName.length)); // output: !!!
 						//get the name after the "cutScene_Trigger_" part
 						cutSceneName = cutSceneName.slice(17, cutSceneName.length);
-						trace(cutSceneName);
+						//trace(cutSceneName);
 						var trigger_CutScene_Index:int = tempArray[j].name.charAt(17);
 						//trace("triggerIndex",triggerIndex);
 						var trigger_CutScene:Trigger_CutScene = new Trigger_CutScene(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height,cutSceneName);

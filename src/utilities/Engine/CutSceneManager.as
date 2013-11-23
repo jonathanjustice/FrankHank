@@ -60,6 +60,18 @@
 			isSceneActive = newActiveStatus;
 			if(isSceneActive == true){
 				cutScenes[0].addEventListener(Event.ENTER_FRAME, playCutScene);
+				
+				trace("cutScenes[0]", cutScenes[0]);
+				
+				trace("cutScenes[0].assignedGraphic[0]", cutScenes[0].assignedGraphic[0]);
+				
+				trace("cutScenes[0].swf_child",cutScenes[0].swf_child);
+				
+				trace("cutScenes[0].assignedGraphic[0].swf_child", cutScenes[0].assignedGraphic[0].swf_child);
+				
+				trace("cutScenes[0].assignedGraphic[0].swf_child.play()",cutScenes[0].assignedGraphic[0].swf_child.play());
+				
+				
 				cutScenes[0].assignedGraphic[0].swf_child.play();
 			}
 		}

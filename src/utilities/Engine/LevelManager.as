@@ -140,7 +140,6 @@
 		
 		public function setIsLevelActive(activeStatus:Boolean):void {
 			isLevelActive = activeStatus;
-			//trace(("isLevelActive:",String(isLevelActive)));
 		}
 		
 		public function getisLevelActive():Boolean {
@@ -156,15 +155,18 @@
 		//	}
 		}
 		
-		private function levelFailed():void {
-			trace("LEVEL FAILED");
+		public function levelFailed():void {
 			Game.setLives(Game.getLives() - 1);
 			clearLevel();
-			if (Game.getLives() >= 0 ){
-				setIsLevelFailed(false);
+			if (Game.getLives() >= 0 ) {
+				//print("Game.getLives() was >= 0");
+				//print("AvatarManager.getInstance()" + String(AvatarManager.getInstance()));
+				//LevelManager._instance.setIsLevelComplete(false);
+				//LevelManager._instance.setIsLevelActive(false);
+				
 				LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress());
-				LevelManager._instance.setIsLevelComplete(false);
-				//Game.setGameState("startLevelLoad");
+				Game.setGameState("startLevelLoad");
+				LevelManager._instance.setIsLevelFailed(false);
 			}
 			/*else if (Game.getLives() <= 0) {
 				setIsLevelFailed(false);
@@ -203,6 +205,7 @@
 		}
 		
 		public function loadLevel():void {
+			//print("loadLevel");
 			LevelManager._instance.setIsLevelComplete(false);
 			var levelName:String = String(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1 );
 			levelName = "lvl_" + levelName;
@@ -232,6 +235,7 @@
 		
 		public function setIsLevelComplete(completeState:Boolean):void{
 			isLevelComplete = completeState;
+			//print("setIsLevelComplete");
 		}
 		
 		public function getIsLevelFailed():Boolean{

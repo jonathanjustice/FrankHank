@@ -82,7 +82,9 @@
 			//trace("start");
 		}
 		
-		public function removeLivesScreen():void{
+		public function removeLivesScreen():void {
+			trace("scren_Lives", screen_Lives);
+			trace("scren_Lives.parent",screen_Lives.parent);
 			screen_Lives.removeThisScreen();
 			//trace("start");
 		}

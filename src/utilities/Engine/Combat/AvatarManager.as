@@ -204,6 +204,7 @@
 				//collide enemies & avatar
 				for (var j:int = 0; j < EnemyManager.enemies.length; j++) {
 					//checks for collision
+				//	trace("enemies:", EnemyManager.enemies[j]);
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, EnemyManager.enemies[j]) == true) {
 						//if the avatar is invincible, damage the enemy
 						//EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
@@ -215,11 +216,17 @@
 							myAvatar.jump();
 							EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
 						}else {
+						//	trace("J",j)
+						//	trace("enemies:", EnemyManager.enemies[j]);
+						//	trace("myAvatar",myAvatar);
+						//	trace("myAvatar.getcollisiondamage",myAvatar.getCollisionDamage());
+							
+	 						EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
 							myAvatar.setBounceDirection(collisionDirection);
 							//if you are invincible, this will cause the enemy to take damage, else it will do nothing
 							myAvatar.takeDamage(EnemyManager.enemies[j].getCollisionDamage() );
 							//if you are invincible, you will instant kill the enemy, else it will do nothing
-							EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
+							
 						}
 					}
 					//make sure the avatar and his hitbox exist before checking against them

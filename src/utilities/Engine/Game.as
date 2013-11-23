@@ -104,17 +104,19 @@
 					//doshit
 					break;
 				case "levelFailed":
-					//trace("level failed ");
-					LevelManager.getInstance().setIsLevelActive(false);
-					UIManager.getInstance().openLevelFailedScreen();
+					trace("setgamestate: level failed ");
+					disableMasterLoop();
 					UIManager.getInstance().removeLivesScreen();
-					LevelManager.getInstance().setIsLevelFailed(true);
+				//	LevelManager.getInstance().setIsLevelActive(false);
+				//	UIManager.getInstance().openLevelFailedScreen();
+					LevelManager.getInstance().levelFailed();
+					
 					break;
 				case "gameOver":
-				//	trace("setGameState gameOver");
+					trace("setGameState: gameOver");
 					LevelManager.getInstance().setIsLevelComplete(false);
-					UIManager.getInstance().openGameOverScreen();
 					UIManager.getInstance().removeLivesScreen();
+					UIManager.getInstance().openGameOverScreen();
 					LevelManager.getInstance().setIsLevelComplete(true);
 					break;
 				case "gameWon":
