@@ -43,12 +43,12 @@
 		public override function clickHandler(event:MouseEvent):void{
 			switch (event.target.name){
 				case "btn_close":
-					removeThisScreen();
-					utilities.Engine.Game.setGameState("startLevelLoad");
+					//removeThisScreen();
+					//utilities.Engine.Game.setGameState("startLevelLoad");
 					break;
 				case "btn_next":
-					removeThisScreen();
-					utilities.Engine.Game.setGameState("startLevelLoad");
+					//removeThisScreen();
+					//utilities.Engine.Game.setGameState("startLevelLoad");
 					break;
 			}
 		}

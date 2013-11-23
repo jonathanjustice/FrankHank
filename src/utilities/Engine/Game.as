@@ -15,6 +15,7 @@
 	import utilities.Engine.Combat.AvatarManager;
 	import utilities.Engine.Combat.AnimationManager;
 	import utilities.Engine.Combat.SaveDataManager;
+	import utilities.Engine.CheatManager;
 	import utilities.Audio.SoundManager;
 	import utilities.Actors.Avatar;
 	import utilities.Mathematics.QuadTree;
@@ -38,6 +39,7 @@
 		public static var levelManager:LevelManager;
 		public static var soundManager:SoundManager;
 		public static var saveDataManager:SaveDataManager;
+		public static var cheatManager:CheatManager;
 		public static var avatar:Avatar;
 		private static var quadTree:QuadTree;
 		private static var gamePaused:Boolean = true;
@@ -102,18 +104,19 @@
 					//doshit
 					break;
 				case "levelFailed":
-					//trace("level failed ");
-					LevelManager.getInstance().setIsLevelActive(false);
-					UIManager.getInstance().openLevelFailedScreen();
+					trace("setGameState: level failed ");
+					disableMasterLoop();
 					UIManager.getInstance().removeLivesScreen();
-					LevelManager.getInstance().setIsLevelFailed(true);
+					LevelManager.getInstance().levelFailed();
+					
 					break;
 				case "gameOver":
-				//	trace("setGameState gameOver");
+					trace("setGameState: gameOver");
 					LevelManager.getInstance().setIsLevelComplete(false);
-					UIManager.getInstance().openGameOverScreen();
 					UIManager.getInstance().removeLivesScreen();
+					UIManager.getInstance().openGameOverScreen();
 					LevelManager.getInstance().setIsLevelComplete(true);
+				
 					break;
 				case "gameWon":
 					//doshit
@@ -137,7 +140,7 @@
 				/* capstone cutScenes */
 				case "startCutSceneLoad":
 					//doshit
-					//trace("Game: startCutSceneLoad");
+					trace("Game: startCutSceneLoad");
 					disableMasterLoop();
 					CutSceneManager.getInstance().loadSceneBasedOnLevelProgress();
 					break;
@@ -157,7 +160,6 @@
 					//trace("Game: cutSceneComplete");
 					CutSceneManager.getInstance().setIsSceneActive(false);
 					CutSceneManager.getInstance().setIsSceneComplete(false);
-					trace("LevelManager.getInstance().getIsLevelComplete == true",LevelManager.getInstance().getIsLevelComplete == true);
 					if (LevelManager.getInstance().getIsLevelComplete() == false) {
 						enableMasterLoop();
 					}else if (LevelManager.getInstance().getIsLevelComplete() == true) {
@@ -244,7 +246,7 @@
 		}
 		
 		public static function enableMasterLoop():void {
-			trace("enabling master loop");
+			//trace("enabling master loop");
 			gamePaused=false;
 			gameContainer.addEventListener(Event.ENTER_FRAME, masterLoop);
 		}
@@ -275,6 +277,7 @@
 			SoundManager.getInstance();
 			SaveDataManager.getInstance();
 			AnimationManager.getInstance();
+			CheatManager.getInstance();
 		}
 		
 		
@@ -389,6 +392,7 @@
 				LevelManager.getInstance().updateLoop();
 				//trace("Game: masterLoop: LevelManager");
 				//LevelManager.getInstance().setIsLevelActive(true);
+				CheatManager.getInstance().updateLoop();
 			}else{
 				//can use this section for when the game is paused but I still need to update UI stuff
 			}

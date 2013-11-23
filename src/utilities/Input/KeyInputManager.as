@@ -17,6 +17,9 @@
 		private static var Key_space:Boolean = false;
 		private static var Key_Z:Boolean = false;
 		private static var Key_X:Boolean = false;
+		
+		private static var Key_W:Boolean = false;
+		private static var Key_R:Boolean = false;
 		private static var Key_rightBracket:Boolean = false;//we're using right bracket now, because my keyboard is a jerk
 		private var keys:Array = new Array();
 		private static var aimAngle:Number = 90;
@@ -104,6 +107,13 @@
 				if(e.keyCode == 105){
 					Key_rotRight=true;
 				}
+				if(e.keyCode == 82){
+					Key_R=true;
+				}
+				
+				if(e.keyCode == 87){
+					Key_W=true;
+				}
 			}
 		//	trace("DOWN------------------------------------DOWN: ", e.keyCode);
 		//	trace("Key_right_2", Key_right_2);
@@ -161,6 +171,13 @@
 				}
 				if(e.keyCode == 105){
 					Key_rotRight=false;
+				}
+				if(e.keyCode == 82){
+					Key_R=false;
+				}
+				
+				if(e.keyCode == 87){
+					Key_W=false;
 				}
 			//	trace("UP------------------------------------UP: ", e.keyCode);
 			//	trace("Key_right_2", Key_right_2);
@@ -278,6 +295,16 @@
 		public static function getXKey():Boolean{
 			//trace("space" + Key_space);
 			return Key_X;
+		}
+		
+		public static function getRKey():Boolean{
+			//trace("space" + Key_space);
+			return Key_R;
+		}
+		
+		public static function getWKey():Boolean{
+			//trace("space" + Key_space);
+			return Key_W;
 		}
 	}
 }

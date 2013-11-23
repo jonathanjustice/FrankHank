@@ -140,7 +140,8 @@
 		
 		public function setIsLevelActive(activeStatus:Boolean):void {
 			isLevelActive = activeStatus;
-			//trace(("isLevelActive:",String(isLevelActive)));
+			isLevelComplete = false;
+			isLevelFailed = false;
 		}
 		
 		public function getisLevelActive():Boolean {
@@ -148,6 +149,7 @@
 		}
 		
 		private function levelCompleted():void {
+			trace("levelCompleted");
 			clearLevel();
 		//	if (EnemyManager.enemies.length == 0) {
 				LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1);
@@ -156,15 +158,18 @@
 		//	}
 		}
 		
-		private function levelFailed():void {
-			trace("LEVEL FAILED");
+		public function levelFailed():void {
 			Game.setLives(Game.getLives() - 1);
 			clearLevel();
-			if (Game.getLives() >= 0 ){
-				setIsLevelFailed(false);
+			if (Game.getLives() >= 0 ) {
+				//print("Game.getLives() was >= 0");
+				//print("AvatarManager.getInstance()" + String(AvatarManager.getInstance()));
+				//LevelManager._instance.setIsLevelComplete(false);
+				//LevelManager._instance.setIsLevelActive(false);
+				
 				LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress());
-				LevelManager._instance.setIsLevelComplete(false);
-				//Game.setGameState("startLevelLoad");
+				Game.setGameState("startLevelLoad");
+				LevelManager._instance.setIsLevelFailed(false);
 			}
 			/*else if (Game.getLives() <= 0) {
 				setIsLevelFailed(false);
@@ -203,7 +208,9 @@
 		}
 		
 		public function loadLevel():void {
+			print("loadLevel : 1");
 			LevelManager._instance.setIsLevelComplete(false);
+			//print("loadLevel");
 			var levelName:String = String(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1 );
 			levelName = "lvl_" + levelName;
 			//print("levelName:" +levelName);
@@ -229,9 +236,13 @@
 		public function getIsLevelComplete():Boolean{
 			return isLevelComplete;
 		}
-		
-		public function setIsLevelComplete(completeState:Boolean):void{
+	
+		public function setIsLevelComplete(completeState:Boolean):void {
+			
+			//trace("SETTING IS LEVEL COMPLETE");
+			//trace(completeState);
 			isLevelComplete = completeState;
+			//print("setIsLevelComplete");
 		}
 		
 		public function getIsLevelFailed():Boolean{
