@@ -403,6 +403,7 @@
 			//trace(assignedGraphic[0]);
 			//trace(assignedGraphic[0].swf_child);
 			assignedGraphic[0].swf_child.gotoAndStop(animation);
+			assignedGraphic[0].swf_child.anim.play();
 			//trace("Actor:",this, "Animation:",animation);
 			
 		}

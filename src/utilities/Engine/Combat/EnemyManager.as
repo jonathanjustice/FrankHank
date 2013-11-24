@@ -17,6 +17,7 @@
 	import utilities.Actors.TankEnemy;
 	import utilities.Actors.Bullet;
 	import utilities.Engine.LevelManager;
+	import utilities.Input.KeyInputManager;
 	public class EnemyManager extends BasicManager implements IManager{
 		
 		private var xVelocity:Number;
@@ -71,6 +72,7 @@
 
 			checkForCollisionWithBullets();
 			checkForCollisionWithWall();
+			stayAttachedToAvatar();
 			//FPO_checkForLevelComplete();
 		}
 		
@@ -81,6 +83,27 @@
 				//trace("enemy manager: no enemies left");
 				LevelManager.getInstance().setIsLevelComplete(true);
 				LevelManager.getInstance().checkLevelObjectives();
+			}
+		}
+		
+		public static function stayAttachedToAvatar():void{
+ 			for each(var enemy:MovieClip in enemies) {
+				//trace(enemy.getThrowable());
+				if (KeyInputManager.getUpKey() == false) {
+					enemy.setThrowable(true);
+				}
+				if (enemy.getIsAttachedToAvatar() == true) {
+					trace("is attached to avatar");
+					if (KeyInputManager.getUpKey() == true && enemy.getThrowable() == true) {
+						//trace("is throwable");
+						enemy.setAttachToAvatar(false);
+						enemy.setIsVulnerable(false);
+						enemy.beThrown();
+					}else {
+						enemy.x = AvatarManager.avatars[0].x-25;
+						enemy.y = AvatarManager.avatars[0].y-70;
+					}
+				}
 			}
 		}
 		

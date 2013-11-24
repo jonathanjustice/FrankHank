@@ -1,4 +1,5 @@
 ﻿package utilities.Actors{
+	import flash.display.MovieClip;
 	import utilities.Engine.Game;
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Input.KeyInputManager;
@@ -21,6 +22,9 @@
 		private var rechargeHealthTime:int = 120;
 		private var rechargePause:Boolean = false;
 		private var isVulnerable:Boolean = false;
+		private var isAttachedToAvatar:Boolean = false;
+		private var throwable:Boolean = false;
+		private var originalXVelocity:int;
 		
 		
 		//private var availableForTargeting:Boolean=true;
@@ -30,6 +34,7 @@
 		public function Enemy(){
 			setUp();
 			setCollisionDamage(1);
+			originalXVelocity = xVelocity;
 			//health=1;
 		}
 		
@@ -48,12 +53,42 @@
 			//setPreviousPosition();
 		}
 		
+		public function beThrown():void {
+			xVelocity = 20;
+			yVelocity = -20;
+			applyVector();
+			rechargePause = false;
+			health = maximumHealth;
+			isRechargingHealth = false;
+		}
+		
 		//if the enemy is not stunned, then move forward
 		public function applyVector():void {
 			if (!isVulnerable) {	
 				this.x += xVelocity;
 				this.y += yVelocity;
 			}
+			trace("xvel",xVelocity);
+			trace("abs svel",Math.abs(xVelocity));
+			if (Math.abs(xVelocity) > originalXVelocity) {
+				xVelocity *= .1;
+			}
+		}
+		
+		public function getThrowable():Boolean {
+			return throwable;
+		}
+		
+		public function setThrowable(newState:Boolean):void {
+			throwable = newState;
+		}
+		
+		public function getIsAttachedToAvatar():Boolean {
+			return isAttachedToAvatar;
+		}
+		
+		public function setAttachToAvatar(newState:Boolean):void {
+			isAttachedToAvatar = newState;
 		}
 		
 		public function collidedWithAvatar():void {

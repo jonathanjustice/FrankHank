@@ -17,7 +17,7 @@
 		private var isGravitySystemEnabled:Boolean = true;
 		//private var hitbox:MovieClip;
 		private var hitzone:MovieClip;
-		
+		private var originalXVelocity:int=0;
 		
 		//private var availableForTargeting:Boolean=true;
 		
@@ -27,6 +27,7 @@
 			this.x = newX;
 			this.y = newY;
 			xVelocity = -5;
+			originalXVelocity = xVelocity;
 			health = 2;
 			maximumHealth = 2;
 			setUp();
@@ -61,6 +62,14 @@
 			if (!getIsVulnerable()) {	
 				this.x += xVelocity;
 				
+			}
+			trace("xvel",xVelocity);
+			trace("abs svel",Math.abs(xVelocity));
+			if (xVelocity > 5) {
+				xVelocity -= .5;
+			}
+			if (xVelocity < -5) {
+				xVelocity -= .5;
 			}
 		}
 		

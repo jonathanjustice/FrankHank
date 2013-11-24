@@ -204,8 +204,11 @@
 						if ( EnemyManager.enemies[j].getIsVulnerable() == true) {
 							//trace("enemy is vulnerable");
 							if (KeyInputManager.getUpKey() == true) {
+								EnemyManager.enemies[j].setAttachToAvatar(true);
 								EnemyManager.enemies[j].setRechargePause(true);
+								EnemyManager.enemies[j].setThrowable(false)
 							}
+							
 							if (utilities.Mathematics.RectangleCollision.isRectangleOnTop(myAvatar, EnemyManager.enemies[j]) == false) {
 								trace("vulnerable and not on top");
 								
