@@ -9,6 +9,7 @@
 	import utilities.Engine.Game;
 	import utilities.Engine.BasicManager;
 	import utilities.Mathematics.MathFormulas;
+	import utilities.Mathematics.RectangleCollision;
 	import utilities.Screens.xpBarSystem;
 	import utilities.Actors.Enemy;
 	import utilities.Actors.AFSEnemy;
@@ -107,7 +108,7 @@
 				for(var i:int = 0; i<LevelManager.walls.length;i++){
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(enemy, LevelManager.walls[i]) == true) {
 						//resolves the collision & returns if this touched the top of the other object
-						var collisionSide:String = utilities.Mathematics.RectangleCollision.testCollision(enemy, LevelManager.walls[i]);
+						var collisionSide:String = RectangleCollision.testCollision(enemy, LevelManager.walls[i]);
 						if (collisionSide == "left" || collisionSide == "right") {
 							enemy.reverseVelecityX();
 							enemy.resetGravity();
@@ -117,7 +118,7 @@
 							enemy.resetGravity();
 							if (enemy is TankEnemy || enemy is SpiderEnemy) {
 								//if a tank enemy reaches the end of a platform, make it turn around instead of falling off 
-								if (utilities.Mathematics.RectangleCollision.isRectangleOnTop(enemy, LevelManager.walls[i]) && enemy.getNumberOfWallsBeingTouched() == 1) {
+								if (RectangleCollision.isRectangleOnTop(enemy, LevelManager.walls[i]) && enemy.getNumberOfWallsBeingTouched() == 1) {
 									enemy.reverseVelecityX();
 									enemy.x = enemy.getPreviousPosition().x;
 									enemy.x += enemy.xVelocity * 2;

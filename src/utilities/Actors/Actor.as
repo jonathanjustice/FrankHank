@@ -402,8 +402,9 @@
 		public function playAnimation(animation:String):void {
 			//trace(assignedGraphic[0]);
 			//trace(assignedGraphic[0].swf_child);
-			this.assignedGraphic[0].swf_child.gotoAndStop(animation);
-			//trace("Actor: playAnimation");
+			assignedGraphic[0].swf_child.gotoAndStop(animation);
+			//trace("Actor:",this, "Animation:",animation);
+			
 		}
 		
 		/*

@@ -18,7 +18,8 @@
 		private var numberOfWallsBeingTouched:int = 0;
 		private var isRechargingHealth:Boolean = false;
 		private var rechargeHealthTimer:int = 0;
-		private var rechargeHealthTime:int = 90;
+		private var rechargeHealthTime:int = 120;
+		private var rechargePause:Boolean = false;
 		private var isVulnerable:Boolean = false;
 		
 		
@@ -117,11 +118,13 @@
 		public function rechargeHealth():void {
 			if (health < maximumHealth) {
 				isRechargingHealth = true;
-				isVulnerable = true;
 			}
+			//recharge health unless recharging is paused, usually due to being stunned / vulnerable
 			if (isRechargingHealth) {
 				//trace("isRecharging");
-				rechargeHealthTimer++;
+				if (rechargePause == false) {
+					rechargeHealthTimer++;
+				}
 			}
 			if (rechargeHealthTimer >= rechargeHealthTime) {
 				//trace("recharge Time Complete");
@@ -131,8 +134,27 @@
 					//trace("maxmimum health reached");
 					health = maximumHealth;
 					isRechargingHealth = false;
-					isVulnerable = false;
+					setIsVulnerable(false);
 				}
+			}
+		}
+		
+		public function getRechargePause():Boolean {
+			return rechargePause;
+		}
+		
+		public function setRechargePause(newState:Boolean):void{
+			rechargePause = newState;
+		}
+		public function setIsVulnerable(newState:Boolean):void {
+			trace("setisVulnerable",newState);
+			isVulnerable = newState;
+			if (isVulnerable == true) {
+				playAnimation("vulnerable")
+			}
+			if (isVulnerable == false) {
+				playAnimation("walk")
+				
 			}
 		}
 		

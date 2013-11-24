@@ -282,6 +282,11 @@
 			return Key_rightBracket;
 		}
 		
+			public static function getUpKey():Boolean{
+			//trace("space" + Key_space);
+			return Key_up_2;
+		}
+		
 		public static function getSpace():Boolean{
 			//trace("space" + Key_space);
 			return Key_space;

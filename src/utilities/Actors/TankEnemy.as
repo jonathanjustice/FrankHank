@@ -1,4 +1,5 @@
 ﻿package utilities.Actors{
+	import flash.display.MovieClip;
 	import utilities.Engine.Game;
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Input.KeyInputManager;
@@ -14,6 +15,8 @@
 		private var spawnTime:Number;
 		private var lifeSpan:Number = 2;//3 seconds
 		private var isGravitySystemEnabled:Boolean = true;
+		//private var hitbox:MovieClip;
+		private var hitzone:MovieClip;
 		
 		
 		//private var availableForTargeting:Boolean=true;
@@ -35,7 +38,10 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			addActorToGameEngine(graphic,EnemyManager.enemies);
+			addActorToGameEngine(graphic, EnemyManager.enemies);
+		//	hitbox = this.assignedGraphic[0].swf_child.hitbox;
+		//	hitzone = this.assignedGraphic[0].swf_child.hitzone;
+			playAnimation("walk");
 		}
 		
 		public override function updateLoop():void {

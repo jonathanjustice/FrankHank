@@ -31,7 +31,7 @@
 		private var shootingTimer:int = 0;
 		private var currentDelay:int = 0;
 		private var delay:int = 15;
-		private var avatarHealth:int = 1;
+		private var avatarHealth:int = 10;
 		private var additionalYVelocityForCamera:int = 0;
 		
 		

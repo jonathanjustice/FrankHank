@@ -10,6 +10,7 @@
 	import utilities.Engine.Combat.PowerupManager;
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Mathematics.RectangleCollision;
+	import utilities.Input.KeyInputManager;
 	import flash.geom.Point;
 	public class AvatarManager extends BasicManager implements IManager {
 		private static var _instance:AvatarManager;
@@ -87,7 +88,7 @@
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers[d]) == true) {
 						LevelManager.triggers[d].takeDamage(1);
 						LevelManager.triggers[d].checkForDeathFlag();
-						//trace("touched trigger");
+						//trace("touched moveable wall trigger");
 					}
 				}
 				//collide with triggers
@@ -96,7 +97,7 @@
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_endZones[e]) == true) {
 						LevelManager.triggers_endZones[e].takeDamage(1);
 						LevelManager.triggers_endZones[e].checkForDeathFlag();
-						//trace("touched trigger");
+						//trace("touched end zone trigger");
 					}
 				}
 				for (var f:int = 0; f < LevelManager.triggers_cutScenes.length; f++) {
@@ -104,7 +105,7 @@
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_cutScenes[f]) == true) {
 						LevelManager.triggers_cutScenes[f].takeDamage(1);
 						LevelManager.triggers_cutScenes[f].checkForDeathFlag();
-						trace("touched cut scene trigger");
+						//trace("touched cut scene trigger");
 					}
 				}
 				
@@ -122,13 +123,6 @@
 									//trace("triggeredWall");
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
-									
-									
-									
-									
-									
-									
-									//reduceJumpSpeed.yVelocity();
 								}
 								break;
 						}
@@ -206,27 +200,43 @@
 					//checks for collision
 				//	trace("enemies:", EnemyManager.enemies[j]);
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, EnemyManager.enemies[j]) == true) {
-						//if the avatar is invincible, damage the enemy
-						//EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
-						//resolves the collision & returns if this touched the top of the other object
-						var collisionDirection:String = "";
-						collisionDirection = utilities.Mathematics.RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j]);
-						if (collisionDirection=="top") {
-							myAvatar.jumpingEnded();
-							myAvatar.jump();
-							EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
-						}else {
-						//	trace("J",j)
-						//	trace("enemies:", EnemyManager.enemies[j]);
-						//	trace("myAvatar",myAvatar);
-						//	trace("myAvatar.getcollisiondamage",myAvatar.getCollisionDamage());
+						//if the enemy is vulnerable, do nothing on collisions
+						if ( EnemyManager.enemies[j].getIsVulnerable() == true) {
+							//trace("enemy is vulnerable");
+							if (KeyInputManager.getUpKey() == true) {
+								EnemyManager.enemies[j].setRechargePause(true);
+							}
+							if (utilities.Mathematics.RectangleCollision.isRectangleOnTop(myAvatar, EnemyManager.enemies[j]) == false) {
+								trace("vulnerable and not on top");
+								
+							}else {
+								trace("vulnerable and on top");
+								myAvatar.jumpingEnded();
+								myAvatar.jump();
+								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
+							}
+						}else{
+							//if the avatar is invincible, damage the enemy regardless of any other states
+							//EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
+							//resolves the collision & returns if this touched the top of the other object
 							
-	 						EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
-							myAvatar.setBounceDirection(collisionDirection);
-							//if you are invincible, this will cause the enemy to take damage, else it will do nothing
-							myAvatar.takeDamage(EnemyManager.enemies[j].getCollisionDamage() );
-							//if you are invincible, you will instant kill the enemy, else it will do nothing
-							
+							//if the avatar is on top of the enemy, then damage it and bounce the avatar
+							var collisionDirection:String = "";
+							collisionDirection = utilities.Mathematics.RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j]);
+							if (collisionDirection=="top") {
+								myAvatar.jumpingEnded();
+								myAvatar.jump();
+								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
+								EnemyManager.enemies[j].setIsVulnerable(true);
+							//if the avatar touches the enemy on anything but the top, the avatar takes damage
+							}else {
+								
+								EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
+								myAvatar.setBounceDirection(collisionDirection);
+								//if you are invincible, this will cause the enemy to take damage, else it will do nothing
+								myAvatar.takeDamage(EnemyManager.enemies[j].getCollisionDamage() );
+								//if you are invincible, you will instant kill the enemy, else it will do nothing
+							}
 						}
 					}
 					//make sure the avatar and his hitbox exist before checking against them
