@@ -21,8 +21,10 @@
 	import br.com.stimuli.loading.BulkLoader;
 	import br.com.stimuli.loading.BulkProgressEvent;
 	import br.com.stimuli.loading.lazyloaders.LazyXMLLoader;
-
-	public class Main extends MovieClip{
+	
+	[SWF(width = "450", height = "200", backgroundColor = "#000000", frameRate = "30")]
+//	[SWF(backgroundColor="0xec9900" , widthPercent="100" , heightPercent="100")]
+	public class Main extends Sprite{
 	public var loader:LazyXMLLoader;
 	public var _loadingSWF:DisplayObject;
 		

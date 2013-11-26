@@ -32,6 +32,8 @@
 			assignedGraphic[0] = graphic;
 			assignedGraphic[0].swf_child.clickToStart.visible = true;
 			assignedGraphic[0].swf_child.startButtons.visible = false;
+			assignedGraphic[0].swf_child.startButtons.btn_continue.stop();
+			assignedGraphic[0].swf_child.startButtons.btn_newGame.stop();
 			//Game.setGameState("cutSceneFullyLoaded");
 		}
 		

@@ -86,14 +86,15 @@
 			}
 		}
 		
-		public static function stayAttachedToAvatar():void{
+		public static function stayAttachedToAvatar():void {
+			var buffer:int = 3;
  			for each(var enemy:MovieClip in enemies) {
 				//trace(enemy.getThrowable());
 				if (KeyInputManager.getUpKey() == false) {
 					enemy.setThrowable(true);
 				}
 				if (enemy.getIsAttachedToAvatar() == true) {
-					trace("is attached to avatar");
+					//trace("is attached to avatar");
 					if (KeyInputManager.getUpKey() == true && enemy.getThrowable() == true) {
 						//trace("is throwable");
 						enemy.setAttachToAvatar(false);
@@ -101,7 +102,7 @@
 						enemy.beThrown();
 					}else {
 						enemy.x = AvatarManager.avatars[0].x-25;
-						enemy.y = AvatarManager.avatars[0].y-70;
+						enemy.y = AvatarManager.avatars[0].y-enemy.height-buffer;
 					}
 				}
 			}

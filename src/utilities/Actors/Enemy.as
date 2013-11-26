@@ -54,7 +54,7 @@
 		}
 		
 		public function beThrown():void {
-			xVelocity = 20;
+			xVelocity = 45;
 			yVelocity = -20;
 			applyVector();
 			rechargePause = false;
@@ -64,7 +64,7 @@
 		
 		//if the enemy is not stunned, then move forward
 		public function applyVector():void {
-			if (!isVulnerable) {	
+			if (!isVulnerable) {
 				this.x += xVelocity;
 				this.y += yVelocity;
 			}
