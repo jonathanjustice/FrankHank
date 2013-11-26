@@ -19,6 +19,8 @@
 			//addDynamicBlocker();
 			addClickHandler();
 			addOverHandler();
+			addDownHandler();
+			addUpHandler();
 			addOutHandler();
 			mouseEnabledHandler();
 			addScreenToUIContainer();
@@ -52,8 +54,8 @@
 					break;
 				case "hitbox_continue":
 					trace("clicked btn_continue");
-					//removeThisScreen();
-					//utilities.Engine.Game.startGame("start");
+					removeThisScreen();
+					utilities.Engine.Game.setGameState("continueCodeScreen");
 					//do continue-y stuff
 					break;
 				

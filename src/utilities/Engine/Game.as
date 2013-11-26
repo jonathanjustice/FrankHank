@@ -74,6 +74,10 @@
 					UIManager.openStartScreen();
 					resetGameValues();
 					break;
+				case "continueCodeScreen":
+					UIManager.openContinueCodeScreen();
+					resetGameValues();
+					break;
 				case "startLevelLoad":
 					//doshit
 					//trace("startLevelLoad");

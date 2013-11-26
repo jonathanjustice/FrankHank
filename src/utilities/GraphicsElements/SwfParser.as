@@ -81,6 +81,7 @@
 		private var ui_levelFailed:String = new String("../src/assets/ui/swf_levelFailed.swf");
 		private var ui_lives:String = new String("../src/assets/ui/swf_lives.swf");
 		private var ui_start:String = new String("../src/assets/ui/swf_start.swf");
+		private var ui_continueCode:String = new String("../src/assets/ui/swf_continueCode.swf");
 		private var swf_cutScene_1:String = new String("../src/assets/cutScenes/swf_cutScene_1.swf");
 		private var swf_cutScene_2:String = new String("../src/assets/cutScenes/swf_cutScene_2.swf");
 		private var swf_cutScene_3:String = new String("../src/assets/cutScenes/swf_cutScene_3.swf");
@@ -395,6 +396,9 @@
 				case "ui_start":
 					filePath = ui_start;
 					break;
+				case "ui_continueCode":
+					filePath = ui_continueCode;
+					break;
 				case "ui_loadingScreen":
 					filePath = ui_loadingScreen;
 					break;
@@ -431,6 +435,7 @@
 				case "swf_cutScene_level_1_mid":
 					filePath = swf_cutScene_level_1_mid;
 					break;
+					
 			}
 			var loader:swfLoader = new swfLoader();
 			loader.beginLoad(swfParent, filePath);
