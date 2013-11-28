@@ -26,7 +26,7 @@
 		public function TankEnemy(newX:int, newY:int) {
 			this.x = newX;
 			this.y = newY;
-			xVelocity = -5;
+			xVelocity = 5;
 			originalXVelocity = xVelocity;
 			health = 2;
 			maximumHealth = 2;
@@ -65,11 +65,11 @@
 			}
 			trace("xvel",xVelocity);
 			trace("abs svel",Math.abs(xVelocity));
-			if (xVelocity > 5) {
-				xVelocity -= .5;
+			if (xVelocity > originalXVelocity) {
+				xVelocity *= .9;
 			}
-			if (xVelocity < -5) {
-				xVelocity -= .5;
+			if (xVelocity < -originalXVelocity) {
+				xVelocity *= .9;
 			}
 		}
 		

@@ -23,10 +23,20 @@
 			return filePath;
 		}
 		
+		public function stopAllButtonsFromAnimating():void {
+			for (var i:int = 0; i < assignedGraphic[0].swf_child.numChildren; i++) {
+				if (assignedGraphic[0].swf_child.getChildAt(i) is MovieClip) {	
+					assignedGraphic[0].swf_child.getChildAt(i).gotoAndStop(1);;
+				}
+			}
+		}
+		
 		public function setUp():void {
 			addDynamicBlocker();
 			addClickHandler();
 			addOverHandler();
+			addDownHandler();
+			addUpHandler();
 			addOutHandler();
 			mouseEnabledHandler();
 			addScreenToUIContainer();
@@ -59,7 +69,39 @@
 		}
 		
 		public function clickHandler(event:MouseEvent):void{
-			
+			//defined in other classes
+		}
+		
+		//MOUSING DOWN
+		public function addDownHandler():void{
+			this.addEventListener(MouseEvent.MOUSE_DOWN, downHandler);
+		}
+		
+		public function removeDownHandler():void{
+			this.removeEventListener(MouseEvent.MOUSE_DOWN, downHandler);
+		}
+		
+		public function downHandler(event:MouseEvent):void {
+			//trace(event.target.name);
+			if (event.target.name.indexOf("hitbox") != -1) {
+				event.target.parent.gotoAndStop("clicked");
+			}
+		}
+		
+		//MOUSING UP
+		public function addUpHandler():void{
+			this.addEventListener(MouseEvent.MOUSE_UP, upHandler);
+		}
+		
+		public function removeUpHandler():void{
+			this.removeEventListener(MouseEvent.MOUSE_UP, upHandler);
+		}
+		
+		public function upHandler(event:MouseEvent):void {
+			//trace(event.target.name);
+			if (event.target.name.indexOf("hitbox") != -1) {
+				event.target.parent.gotoAndStop("up");
+			}
 		}
 		
 		//MOUSEING OVER
@@ -71,8 +113,11 @@
 			this.removeEventListener(MouseEvent.MOUSE_OVER, overHandler);
 		}
 		
-		public function overHandler(event:MouseEvent):void{
-			
+		public function overHandler(event:MouseEvent):void {
+			//trace(event.target.name);
+			if (event.target.name.indexOf("hitbox") != -1) {
+				event.target.parent.gotoAndStop("over");
+			}
 		}
 		
 		public function mouseEnabledHandler():void{
@@ -88,8 +133,11 @@
 			this.removeEventListener(MouseEvent.MOUSE_OUT, outHandler);
 		}
 		
-		public function outHandler(event:MouseEvent):void{
-			
+		public function outHandler(event:MouseEvent):void {
+			//trace(event.target.name);
+			if (event.target.name.indexOf("hitbox") != -1) {
+				event.target.parent.gotoAndStop("up");
+			}
 		}
 		
 		private function addDynamicBlocker():void{

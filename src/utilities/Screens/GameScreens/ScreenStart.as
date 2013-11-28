@@ -19,6 +19,8 @@
 			//addDynamicBlocker();
 			addClickHandler();
 			addOverHandler();
+			addDownHandler();
+			addUpHandler();
 			addOutHandler();
 			mouseEnabledHandler();
 			addScreenToUIContainer();
@@ -30,6 +32,8 @@
 			assignedGraphic[0] = graphic;
 			assignedGraphic[0].swf_child.clickToStart.visible = true;
 			assignedGraphic[0].swf_child.startButtons.visible = false;
+			assignedGraphic[0].swf_child.startButtons.btn_continue.stop();
+			assignedGraphic[0].swf_child.startButtons.btn_newGame.stop();
 			//Game.setGameState("cutSceneFullyLoaded");
 		}
 		
@@ -37,23 +41,22 @@
 			//trace("target:", event.target.name);
 			switch (event.target.name){
 				case assignedGraphic[0].swf_child:
-					trace("clicked parent");
+					//trace("clicked parent");
 					break;
-					
 				case "hitbox_clickToStart":
-					trace("clicked hitbox_clickToStart");
+					//trace("clicked hitbox_clickToStart");
 					assignedGraphic[0].swf_child.clickToStart.visible = false;
 					assignedGraphic[0].swf_child.startButtons.visible = true;
 					break;
 				case "hitbox_newGame":
-					trace("clicked btn_newGame");
+					//trace("clicked btn_newGame");
 					removeThisScreen();
 					utilities.Engine.Game.startGame("start");
 					break;
 				case "hitbox_continue":
-					trace("clicked btn_continue");
-					//removeThisScreen();
-					//utilities.Engine.Game.startGame("start");
+					//trace("clicked btn_continue");
+					removeThisScreen();
+					utilities.Engine.Game.setGameState("continueCodeScreen");
 					//do continue-y stuff
 					break;
 				

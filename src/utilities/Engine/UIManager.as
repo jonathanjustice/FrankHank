@@ -1,4 +1,5 @@
 ﻿package utilities.Engine{
+	import utilities.Screens.GameScreens.ContinueCode;
 	import utilities.Screens.GameScreens.GameOver;
 	import utilities.Screens.GameScreens.LetterBox;
 	import utilities.Screens.GameScreens.LevelComplete;
@@ -23,6 +24,7 @@
 		private static var screen_Lives:MovieClip;
 		private static var screen_LetterBox:MovieClip;
 		
+		private static var screen_ContinueCode:MovieClip;
 		private static var screen_Start:MovieClip;
 		private static var _instance:UIManager;
 		
@@ -48,6 +50,11 @@
 		
 		public static function openStartScreen():void{
 			screen_Start = new ScreenStart();
+			//trace("start");
+		}
+		
+		public static function openContinueCodeScreen():void{
+			screen_ContinueCode = new ContinueCode();
 			//trace("start");
 		}
 		
