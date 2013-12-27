@@ -146,7 +146,7 @@
 								break;
 							case "platform":
 								if (utilities.Mathematics.RectangleCollision.testCollisionWithPlatform(myAvatar, LevelManager.walls[i]) == true) {
-									trace("platform");
+									//trace("platform");
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 								}

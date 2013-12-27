@@ -53,6 +53,9 @@
 		private static var bg_speed_2:Number = -0.35;
 		public static var jsonParser:JsonParser;
 		
+		public var desiredX:Number = 0;
+		public var desiredY:Number = 0;
+		public var lerping:Boolean = false;
 		//public var player:Player;
 		public var hero:MovieClip;
 		//Not adding objects directly to stage so that I can manipulate the world globally when needed
@@ -310,81 +313,67 @@
 			avatarPoint.y = avatar.y;
 			avatarPoint = avatar.parent.localToGlobal(avatarPoint);
 			
-			if(avatarVels.x > 0){
-				cameraWindow.scaleToMotion("right");
-			}
-			if(avatarVels.x < 0){
-				cameraWindow.scaleToMotion("left");
-			}
-			//running left
+			
+			//gameContainer.x -= avatar.getVelocity().x;
+			
+			lerping = false;
 			if (avatarPoint.x < cameraWindow.x) {
-				
-				if (avatarPoint.x < cameraWindow.x - cameraBuffer) {
-					if (avatarVels.x >= 0) {
-						//do nothing
-					}else {
-						//trace("moving left");
-						gameContainer.x += cameraSpeed;
-						
-					}
-					//
-				}
-				gameContainer.x -= avatar.getVelocity().x;
-				for (var i:int = 0; i < LevelManager.arts.length; i++ ) {
-					//trace(LevelManager.arts[i].getParallaxLevel());
-					switch(LevelManager.arts[i].getParallaxLevel()) {
-						case 0:
-							//art += cameraSpeed;
-							break;
-						case 1:
-							LevelManager.arts[i].x -= avatar.getVelocity().x * bg_speed_1;
-							break;
-						case 2:
-							LevelManager.arts[i].x -= avatar.getVelocity().x * bg_speed_2;
-							break;
-					}
-				}
+				trace("LEFT");
+				lerping = true;
+				desiredX = avatarPoint.x;
+				lerpX();
 			}
-			//running right
-			if (avatarPoint.x + avatar.width > cameraWindow.x + cameraWindow.width ) {
-				if (avatarPoint.x + avatar.width > cameraWindow.x + cameraWindow.width + cameraBuffer) {
-					if (avatarVels.x <= 0) {
-						//do nothing
-					}else {
-						//trace("moving right");
-						
-						gameContainer.x -= cameraSpeed;
-					}
-				}
-				gameContainer.x -= avatar.getVelocity().x;
-				for (var j:int = 0; j < LevelManager.arts.length; j++ ) {
-				//	trace(LevelManager.arts[j].getParallaxLevel());
-					switch(LevelManager.arts[j].getParallaxLevel()) {
-						case 0:
-							//art += cameraSpeed;
-							break;
-						case 1:
-							LevelManager.arts[j].x -= avatar.getVelocity().x * bg_speed_1;
-							break;
-						case 2:
-							LevelManager.arts[j].x -= avatar.getVelocity().x * bg_speed_2;
-							break;
-					}
-				}
+			if (avatarPoint.x  > cameraWindow.x + cameraWindow.width) {	
+				trace("RIGHT");
+				lerping = true;
+				desiredX = avatarPoint.x - cameraWindow.width;
+				lerpX();
 			}
-		
+			
 			if (avatarPoint.y < cameraWindow.y) {
-				trace("touching top of screen");
-				trace(avatar.getAdditionalYVelocity());
-				gameContainer.y -= avatar.getVelocity().y + avatar.getAdditionalYVelocity()*10;
-				
+				trace("TOP");
+				lerping = true;
+				desiredY = avatarPoint.y;
+				lerpY();
 			}
-			if (avatarPoint.y + avatar.height > cameraWindow.y + cameraWindow.height) {
-				gameContainer.y -= avatar.getVelocity().y + avatar.getAdditionalYVelocity()*10;
-				
+			if (avatarPoint.y + avatar.height  > cameraWindow.y + cameraWindow.height) {	
+				trace("BOTTOM");
+				lerping = true;
+				desiredY = avatarPoint.y + avatar.height - cameraWindow.height;
+				lerpY();
+			}
+			//lerpToPosition();
+		}
+		
+		public function lerpY():void {
+			var multiplierY:Number = .35;
+			if(lerping){
+				var lerpAmountY:Number = (cameraWindow.y - desiredY) * multiplierY;
+				gameContainer.y += lerpAmountY;
 			}
 		}
 		
+		public function lerpX():void {
+			var multiplierX:Number = .35;
+			if(lerping){
+				var lerpAmountX:Number = (cameraWindow.x - desiredX) * multiplierX;
+				gameContainer.x += lerpAmountX;
+				for (var i:int = 0; i < LevelManager.arts.length; i++ ) {
+				//trace(LevelManager.arts[i].getParallaxLevel());
+				switch(LevelManager.arts[i].getParallaxLevel()) {
+					case 0:
+						//art += cameraSpeed;
+						break;
+					case 1:
+						LevelManager.arts[i].x += lerpAmountX * bg_speed_1;
+						break;
+					case 2:
+						LevelManager.arts[i].x += lerpAmountX * bg_speed_2;
+						break;
+				}
+			}
+			}
+		}
 		public static function resetGameContainerCoordinates():void {
 			//trace("resetGameContainerCoordinates");
 			gameContainer.x = 0;

@@ -54,7 +54,7 @@
 			//this.height = tempHeight;
 			//this.hitbox.width = this.width;
 			//this.hitbox.height = this.height;
-			//this.visible = false;
+			this.visible = false;
 			trace("WALL: this.width",this.width);
 			trace("WALL: this.hitbox.width",this.hitbox.width);
 			
