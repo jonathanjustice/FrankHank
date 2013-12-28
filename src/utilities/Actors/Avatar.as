@@ -150,29 +150,31 @@
 		
 		
 		public function getVelocityFromKeyInputManager():void{
-			KeyInputManager.setSimpleVelocityViaKeys();
 			var velocityMod: Number = KeyInputManager.getMyVelocityX();
-			//limit max velocity
-			if (Math.abs(xVelocity) < maxVelocity) {
+			//verify key press is the right direction before application of velocity
+			//set the direction i should be facing
+			if (KeyInputManager.getLeftArrowKey()==true) {
 				xVelocity += velocityMod * velocityIncrease;
-			}
-			if (velocityMod < 0) {
 				directionLastFaced = "LEFT";
 			}
-			if (velocityMod > 0) {
+			if (KeyInputManager.getRightArrowKey()==true) {
+				xVelocity += velocityMod * velocityIncrease;
 				directionLastFaced = "RIGHT";
 			}
-			//yVelocity += KeyInputManager.getMyVelocityY() * velocityIncrease*5;
-			
+			//limit max velocity
+			if (xVelocity > maxVelocity) {
+				xVelocity = maxVelocity;
+			}
+			if (xVelocity < -maxVelocity) {
+				xVelocity = -maxVelocity;
+			}
 			//if you are not pressing a button to run, then you slowdown
 			if (KeyInputManager.getMyVelocityX() == 0) {
-				//xVelocity = 0;
 				xVelocity *= velocityDecrease;
 				if (xVelocity <= .5 && xVelocity >= -.5) {
 					xVelocity = 0;
 				}
 			}
-			
 				setDirectionToFace(directionLastFaced);
 		}
 		

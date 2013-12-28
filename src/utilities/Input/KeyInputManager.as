@@ -59,8 +59,7 @@
 		}
 		
 		public function keyDownHandler(e:KeyboardEvent):void {
-			//Key_left_2 = false;
-			//Key_right_2 = false;
+			trace(e.keyCode);
 			if(isKeysEnabled == true){
 				//trace(e.keyCode);
 				if(e.keyCode == KeyCodes.key_RIGHT_BRACKET){
@@ -75,16 +74,16 @@
 				if(e.keyCode == KeyCodes.key_X){
 					Key_X=true;
 				}
-				if(e.keyCode == 37){
+				if (e.keyCode == 37) {
+					trace("left");
 					Key_left_2 = true;
-					Key_right_2 = false;
 				}
 				if(e.keyCode == 38){
 					Key_up_2 = true;
 				}
-				if(e.keyCode == 39){
+				if (e.keyCode == 39) {
+					trace("right");
 					Key_right_2 = true;
-					Key_left_2 = false;
 				}
 				if(e.keyCode == 40){
 					Key_down_2=true;
@@ -139,16 +138,12 @@
 					Key_X = false;
 				}
 				if(e.keyCode == 37){
-					
 					Key_left_2 = false;
-					Key_right_2 = false;
 				}
 				if(e.keyCode == 38){
 					Key_up_2=false;
 				}
 				if(e.keyCode == 39){
-					
-					Key_left_2 = false;
 					Key_right_2 = false;
 				}
 				if(e.keyCode == 40){
@@ -202,7 +197,7 @@
 		}
 		
 		public static function setSimpleVelocityViaKeys():void{
-			
+			myVelocityX = 0;
 			if(Key_up_2 == false && Key_down_2 == false){
 				myVelocityY = 0;
 			}
@@ -223,11 +218,11 @@
 				myVelocityX = 1;
 				aimAngle = 90;
 			}
-			if(Key_left_2 == true && Key_right_2 == true){
+			/*if(Key_left_2 == true && Key_right_2 == true){
 				myVelocityX = 0;
 				Key_left_2 = false;
 				Key_right_2 = false;
-			}
+			}*/
 		}
 		
 		public static function setSimpleAngleViaKeys():void{
@@ -282,9 +277,19 @@
 			return Key_rightBracket;
 		}
 		
-			public static function getUpKey():Boolean{
+		public static function getUpKey():Boolean{
 			//trace("space" + Key_space);
 			return Key_up_2;
+		}
+		
+		public static function getLeftArrowKey():Boolean{
+			//trace("space" + Key_space);
+			return Key_left_2;
+		}
+		
+		public static function getRightArrowKey():Boolean{
+			//trace("space" + Key_space);
+			return Key_right_2;
 		}
 		
 		public static function getSpace():Boolean{
