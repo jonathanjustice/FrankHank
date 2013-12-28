@@ -151,9 +151,16 @@
 		
 		public function getVelocityFromKeyInputManager():void{
 			KeyInputManager.setSimpleVelocityViaKeys();
+			var velocityMod: Number = KeyInputManager.getMyVelocityX();
 			//limit max velocity
 			if (Math.abs(xVelocity) < maxVelocity) {
-				xVelocity += KeyInputManager.getMyVelocityX() * velocityIncrease;
+				xVelocity += velocityMod * velocityIncrease;
+			}
+			if (velocityMod < 0) {
+				directionLastFaced = "LEFT";
+			}
+			if (velocityMod > 0) {
+				directionLastFaced = "RIGHT";
 			}
 			//yVelocity += KeyInputManager.getMyVelocityY() * velocityIncrease*5;
 			
@@ -165,6 +172,8 @@
 					xVelocity = 0;
 				}
 			}
+			
+				setDirectionToFace(directionLastFaced);
 		}
 		
 		public function getRotationFromKeyInputManager():void{

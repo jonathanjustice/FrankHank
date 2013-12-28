@@ -1,8 +1,10 @@
 ﻿package utilities.Actors{
 	//import air.update.utils.VersionUtils;
+	import flash.geom.Rectangle;
 	import flash.display.AVM1Movie;
 	import flash.display.MovieClip;
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import utilities.Effects.FeedbackTextField;
 	import utilities.Screens.progressBar;
@@ -28,6 +30,7 @@
 	import utilities.objects.GameObject;
 	import utilities.Saving_And_Loading.swfLoader;
 	public class Actor extends GameObject {
+		public var directionLastFaced:String = "RIGHT";
 		public var attachedArt:MovieClip = new MovieClip;
 		public var hitbox:MovieClip = new MovieClip;
 		public var hitzone:MovieClip = new MovieClip;
@@ -486,6 +489,20 @@
 			animationState = animState;
 		}
 		
+		public function setDirectionToFace(direction:String):void {
+			directionLastFaced = direction;
+			switch(directionLastFaced) {
+				case "LEFT":
+					assignedGraphic[0].swf_child.anim.scaleX = Math.abs(assignedGraphic[0].swf_child.anim.scaleX)*-1;
+					break;
+				case "RIGHT":
+					assignedGraphic[0].swf_child.anim.scaleX = Math.abs(assignedGraphic[0].swf_child.anim.scaleX);
+					break;
+				
+				
+			}
+		}
+		
 		public function getLocation():Point{
 			var point:Point=new Point(this.x,this.y);
 			return point;
@@ -680,6 +697,17 @@
 		
 		public function setMaxGravity(newMax:int):void {
 			maxGravity = newMax;
+		}
+		
+		//disgusting hack ONLY ONLY ONLY if you don't have access to the FLA to edit the registration point. AVOID USING AT ALL COSTS.
+		public function changeRegistrationPoint(displayObject:DisplayObjectContainer,x:Number,y:Number):void {
+			var r:Rectangle = displayObject.getRect(displayObject);
+			for (var i:int=0; i<displayObject.numChildren; i++) {
+				displayObject.getChildAt(i).x-=r.x+x;
+				displayObject.getChildAt(i).y-=r.y+y;
+			}
+			displayObject.x+=r.x+x;
+			displayObject.y+=r.y+y;
 		}
 		
 		public function drawGraphicDefaultSmallRectangle():Sprite {

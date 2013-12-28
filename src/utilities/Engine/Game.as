@@ -318,26 +318,26 @@
 			
 			lerping = false;
 			if (avatarPoint.x < cameraWindow.x) {
-				trace("LEFT");
+				//trace("LEFT");
 				lerping = true;
 				desiredX = avatarPoint.x;
 				lerpX();
 			}
 			if (avatarPoint.x  > cameraWindow.x + cameraWindow.width) {	
-				trace("RIGHT");
+				//trace("RIGHT");
 				lerping = true;
 				desiredX = avatarPoint.x - cameraWindow.width;
 				lerpX();
 			}
 			
 			if (avatarPoint.y < cameraWindow.y) {
-				trace("TOP");
+				//trace("TOP");
 				lerping = true;
 				desiredY = avatarPoint.y;
 				lerpY();
 			}
 			if (avatarPoint.y + avatar.height  > cameraWindow.y + cameraWindow.height) {	
-				trace("BOTTOM");
+				//trace("BOTTOM");
 				lerping = true;
 				desiredY = avatarPoint.y + avatar.height - cameraWindow.height;
 				lerpY();
