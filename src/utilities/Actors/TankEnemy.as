@@ -62,7 +62,7 @@
 			//trace("abs svel",Math.abs(xVelocity));
 			if (Math.abs(xVelocity) > Math.abs(originalXVelocity)) {
 				xVelocity *= .97;
-				trace("too fast ");
+			//	trace("too fast ");
 			}
 		}
 		

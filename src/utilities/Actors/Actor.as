@@ -442,7 +442,7 @@
 		public function playAnimation(animation:String):void {
 			//trace(assignedGraphic[0]);
 			//trace(assignedGraphic[0].swf_child);
-			trace("play animation")
+			//trace("play animation")
 			assignedGraphic[0].swf_child.gotoAndStop(animation);
 			
 			//trace("Actor:",this, "Animation:",animation);
@@ -450,9 +450,9 @@
 		}
 		
 		public function listenForStopFrame():void {
-			trace("listen");
+			//trace("listen");
 			if (assignedGraphic[0].swf_child.anim.currentLabel == "stop") {
-				trace("current label was stop");
+				//trace("current label was stop");
 				assignedGraphic[0].swf_child.anim.stop();
 			}
 		}
@@ -498,6 +498,10 @@
 			animationState = animState;
 		}
 		
+		public function getDirectionToFace():String {
+			return directionLastFaced;
+		}
+		
 		public function setDirectionToFace(direction:String):void {
 			directionLastFaced = direction;
 			switch(directionLastFaced) {
@@ -507,8 +511,6 @@
 				case "RIGHT":
 					assignedGraphic[0].swf_child.anim.scaleX = Math.abs(assignedGraphic[0].swf_child.anim.scaleX);
 					break;
-				
-				
 			}
 		}
 		

@@ -55,11 +55,16 @@
 			//setPreviousPosition();
 		}
 		
-		public function beThrown():void {
+		public function beThrown(directionToBeThrownIn:String):void {
+			trace("directionToBeThrownIn",directionToBeThrownIn);
+			if (directionToBeThrownIn == "LEFT") {
+				xVelocity = -25;
+			}else if (directionToBeThrownIn == "RIGHT") {
+				xVelocity = 25;
+			}
+			yVelocity = -25;
 			setIsBeingThrown(true);
 			this.y -= 30 ;
-			xVelocity = 25;
-			yVelocity = -15;
 			//applyVector();
 			rechargePause = false;
 			health = maximumHealth;
@@ -76,7 +81,7 @@
 			//trace("abs svel",Math.abs(xVelocity));
 			if (Math.abs(xVelocity) > Math.abs(originalXVelocity)) {
 				xVelocity *= .99;
-				trace("too fast ");
+				//trace("too fast ");
 			}
 		}
 		
