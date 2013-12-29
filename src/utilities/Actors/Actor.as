@@ -442,10 +442,19 @@
 		public function playAnimation(animation:String):void {
 			//trace(assignedGraphic[0]);
 			//trace(assignedGraphic[0].swf_child);
+			trace("play animation")
 			assignedGraphic[0].swf_child.gotoAndStop(animation);
-			assignedGraphic[0].swf_child.anim.play();
+			
 			//trace("Actor:",this, "Animation:",animation);
 			
+		}
+		
+		public function listenForStopFrame():void {
+			trace("listen");
+			if (assignedGraphic[0].swf_child.anim.currentLabel == "stop") {
+				trace("current label was stop");
+				assignedGraphic[0].swf_child.anim.stop();
+			}
 		}
 		
 		/*

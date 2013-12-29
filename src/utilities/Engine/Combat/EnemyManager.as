@@ -138,6 +138,7 @@
 							enemy.resetGravity();
 						}
 						if (collisionSide == "top") {
+							enemy.setIsBeingThrown(false);
 							enemy.setNumberOfWallsBeingTouched(1);
 							enemy.resetGravity();
 							if (enemy is TankEnemy || enemy is SpiderEnemy) {

@@ -49,6 +49,7 @@
 			//checkForDamage();
 			checkForDeathFlag();
 			rechargeHealth();
+			listenForStopFrame();
 			
 		}
 		

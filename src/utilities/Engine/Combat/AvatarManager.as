@@ -201,7 +201,7 @@
 					//checks for collision
 				//	trace("enemies:", EnemyManager.enemies[j]);
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, EnemyManager.enemies[j]) == true) {
-						//if the enemy is vulnerable, do nothing on collisions
+						//if the enemy is vulnerable, do nothing on bottom/left/right collisions
 						if ( EnemyManager.enemies[j].getIsVulnerable() == true) {
 							//trace("enemy is vulnerable");
 							if (KeyInputManager.getUpKey() == true) {
@@ -212,6 +212,7 @@
 							
 							if (utilities.Mathematics.RectangleCollision.isRectangleOnTop(myAvatar, EnemyManager.enemies[j]) == false) {
 								trace("vulnerable and not on top");
+								//this is whats causing me to drop in the middle of enemies maybe, because i messed with the function that keeps enemies on platforms?
 								
 								
 							}else {
@@ -237,12 +238,13 @@
 								EffectsManager.getInstance().newEffect_FeedbackTextField(EnemyManager.enemies[j].getPreviousPosition().x + EnemyManager.enemies[j].width/2, EnemyManager.enemies[j].getPreviousPosition().y );
 							//if the avatar touches the enemy on anything but the top, the avatar takes damage
 							}else {
-								
-								EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
-								myAvatar.setBounceDirection(collisionDirection);
-								//if you are invincible, this will cause the enemy to take damage, else it will do nothing
-								myAvatar.takeDamage(EnemyManager.enemies[j].getCollisionDamage() );
-								//if you are invincible, you will instant kill the enemy, else it will do nothing
+								if(EnemyManager.enemies[j].getIsBeingThrown() == false){
+									EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
+									myAvatar.setBounceDirection(collisionDirection);
+									//if you are invincible, this will cause the enemy to take damage, else it will do nothing
+									myAvatar.takeDamage(EnemyManager.enemies[j].getCollisionDamage() );
+									//if you are invincible, you will instant kill the enemy, else it will do nothing
+								}
 							}
 						}
 					}

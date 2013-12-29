@@ -48,7 +48,7 @@
 			//checkForDamage();
 			checkForDeathFlag();
 			rechargeHealth();
-			
+			listenForStopFrame();
 		}
 		
 		public override function applyVector():void {

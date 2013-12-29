@@ -24,6 +24,7 @@
 		private var isVulnerable:Boolean = false;
 		private var isAttachedToAvatar:Boolean = false;
 		private var throwable:Boolean = false;
+		private var isBeingThrown:Boolean = false;
 		public var originalXVelocity:int;
 		
 		
@@ -47,6 +48,7 @@
 		public function updateLoop():void{
 			//setQuadTreeNode();
 			applyVector();
+			listenForStopFrame();
 			//doStuffToEnemyOverTime();
 			//checkForDamage();
 			//checkForDeathFlag();
@@ -54,9 +56,10 @@
 		}
 		
 		public function beThrown():void {
+			setIsBeingThrown(true);
 			this.y -= 30 ;
-			xVelocity = 20;
-			yVelocity = -25;
+			xVelocity = 25;
+			yVelocity = -15;
 			//applyVector();
 			rechargePause = false;
 			health = maximumHealth;
@@ -75,6 +78,14 @@
 				xVelocity *= .99;
 				trace("too fast ");
 			}
+		}
+		
+		public function setIsBeingThrown(newState:Boolean):void {
+			isBeingThrown = newState;
+		}
+		
+		public function getIsBeingThrown():Boolean {
+			return isBeingThrown;
 		}
 		
 		public function getThrowable():Boolean {
