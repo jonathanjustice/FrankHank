@@ -6,7 +6,7 @@
 	import flash.media.SoundTransform;
 	import flash.media.SoundMixer;
 	import flash.net.URLRequest; 
-	//import JSON;
+	import JSON;
 	public class SoundManager extends MovieClip{
 		
 		private static var JSON_sounds:Object;
@@ -16,8 +16,8 @@
 		
 		public function SoundManager(singletonEnforcer:SingletonEnforcer){
 			//createNewSoundObject(filePath);
-			//get_sounds_from_JsonParser();
-			//trace("filePath",filePath);
+			get_sounds_from_JsonParser();
+			trace("filePath",filePath);
 			//stop_a_sound_channel(filePath);
 		}
 		

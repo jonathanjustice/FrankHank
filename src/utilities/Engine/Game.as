@@ -51,7 +51,7 @@
 		private static var bg_speed_0:Number = 0;
 		private static var bg_speed_1:Number = -0.25;
 		private static var bg_speed_2:Number = -0.35;
-		//public static var jsonParser:JsonParser;
+		public static var jsonParser:JsonParser;
 		
 		public var desiredX:Number = 0;
 		public var desiredY:Number = 0;
@@ -68,7 +68,7 @@
 			createGameContainer();
 			setUpCameraWindow();
 			createQuadTree();
-			//jsonParser = new JsonParser();
+			jsonParser = new JsonParser();
 			Main.theStage.addEventListener(StateMachineEvent.TEST_EVENT, testEvent);
 			Main.theStage.addEventListener(StateMachineEvent.BOOT, boot);
 		}
@@ -450,9 +450,9 @@
 		public static function getAnimationManager():AnimationManager {
 			return animationManager;
 		}
-		/*
+		
 		public function getJsonParser():JsonParser {
 			return jsonParser;
-		}*/
+		}
 	}
 }

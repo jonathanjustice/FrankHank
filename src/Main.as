@@ -18,14 +18,14 @@
 	import flash.system.ApplicationDomain;
 	
 	/*bulk loader*/
-	//import br.com.stimuli.loading.BulkLoader;
-	//import br.com.stimuli.loading.BulkProgressEvent;
-	//import br.com.stimuli.loading.lazyloaders.LazyXMLLoader;
+	import br.com.stimuli.loading.BulkLoader;
+	import br.com.stimuli.loading.BulkProgressEvent;
+	import br.com.stimuli.loading.lazyloaders.LazyXMLLoader;
 	
-	[SWF(width = "750", height = "500", backgroundColor = "#000000", frameRate = "30")]
+	[SWF(width = "450", height = "200", backgroundColor = "#000000", frameRate = "30")]
 //	[SWF(backgroundColor="0xec9900" , widthPercent="100" , heightPercent="100")]
 	public class Main extends Sprite{
-	//public var loader:LazyXMLLoader;
+	public var loader:LazyXMLLoader;
 	public var _loadingSWF:DisplayObject;
 		
 		public static var theStage:Object;
