@@ -30,9 +30,9 @@
 			return effects;
 		}
 		
-		public function newEffect_FeedbackTextField(spawnX:int, spawnY:int):void {
+		public function newEffect_FeedbackTextField(spawnX:int, spawnY:int,effectText:String):void {
 			//trace("new effect");
-			var feedbackTextField:FeedbackTextField = new FeedbackTextField(spawnX,spawnY);
+			var feedbackTextField:FeedbackTextField = new FeedbackTextField(spawnX,spawnY,effectText);
 		}
 		
 		

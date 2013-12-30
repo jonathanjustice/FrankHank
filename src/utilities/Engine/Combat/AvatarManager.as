@@ -2,6 +2,7 @@
 	import flash.display.MovieClip;
 	import utilities.Actors.Bullet;
 	import utilities.dataModels.LevelProgressModel;
+	import utilities.Effects.Effect;
 	import utilities.Engine.BasicManager;
 	import utilities.Engine.DefaultManager;
 	import utilities.Actors.Avatar;
@@ -53,7 +54,6 @@
 	
 		public static function updateLoop():void {
 			for each(var myAvatar:Avatar in avatars){
-			//trace(myAvatar.getAdditionalYVelocity());
 				var isTouchingWall:Boolean = false;
 				var additionalVelocity:int = 0;
 				myAvatar.updateLoop();
@@ -93,22 +93,18 @@
 					}
 				}
 				//collide with triggers
-				/*for (var e:int = 0; e < LevelManager.triggers_endZones.length; e++) {
-					//trace("end zone here");
+				for (var e:int = 0; e < LevelManager.triggers_endZones.length; e++) {
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_endZones[e]) == true) {
 						LevelManager.triggers_endZones[e].takeDamage(1);
 						LevelManager.triggers_endZones[e].checkForDeathFlag();
-						//trace("touched end zone trigger");
 					}
-				}*/
-				/*for (var f:int = 0; f < LevelManager.triggers_cutScenes.length; f++) {
-					//trace("cut scene trigger here");
+				}
+				for (var f:int = 0; f < LevelManager.triggers_cutScenes.length; f++) {
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_cutScenes[f]) == true) {
 						LevelManager.triggers_cutScenes[f].takeDamage(1);
 						LevelManager.triggers_cutScenes[f].checkForDeathFlag();
-						//trace("touched cut scene trigger");
 					}
-				}*/
+				}
 				
 				//collide walls & avatar
 				for (var h:int = 0; h < LevelManager.triggerableWalls.length; h++) {
@@ -121,7 +117,6 @@
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.triggerableWalls[h]) == "top") {
 									additionalVelocity = LevelManager.triggerableWalls[h].getVelocity().y;
 									isTouchingWall = true;
-									//trace("triggeredWall");
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 								}
@@ -199,7 +194,6 @@
 				//collide enemies & avatar
 				for (var j:int = 0; j < EnemyManager.enemies.length; j++) {
 					//checks for collision
-				//	trace("enemies:", EnemyManager.enemies[j]);
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, EnemyManager.enemies[j]) == true) {
 						//if the enemy is vulnerable, do nothing on bottom/left/right collisions
 						if ( EnemyManager.enemies[j].getIsVulnerable() == true) {
@@ -213,21 +207,19 @@
 							if (utilities.Mathematics.RectangleCollision.isRectangleOnTop(myAvatar, EnemyManager.enemies[j]) == false) {
 								trace("vulnerable and not on top");
 								//this is whats causing me to drop in the middle of enemies maybe, because i messed with the function that keeps enemies on platforms?
-								
-								
 							}else {
-								trace("vulnerable and on top");
+								//trace("vulnerable and on top");
 								myAvatar.jumpingEnded();
 								myAvatar.jump();
 								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
-								EffectsManager.getInstance().newEffect_FeedbackTextField(EnemyManager.enemies[j].x + EnemyManager.enemies[j].width/2, EnemyManager.enemies[j].y );
+								EffectsManager.getInstance().newEffect_FeedbackTextField(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y,"HANKED!");
 							}
 						}else{
 							//if the avatar is invincible, damage the enemy regardless of any other states
 							//EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
 							//resolves the collision & returns if this touched the top of the other object
 							
-							//if the avatar is on top of the enemy, then damage it and bounce the avatar
+							//if the avatar is on top of the enemy and the enemy is not in the vulnerable state, then damage it and bounce the avatar
 							var collisionDirection:String = "";
 							collisionDirection = utilities.Mathematics.RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j]);
 							if (collisionDirection=="top") {
@@ -235,7 +227,7 @@
 								myAvatar.jump();
 								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
 								EnemyManager.enemies[j].setIsVulnerable(true);
-								EffectsManager.getInstance().newEffect_FeedbackTextField(EnemyManager.enemies[j].getPreviousPosition().x + EnemyManager.enemies[j].width/2, EnemyManager.enemies[j].getPreviousPosition().y );
+								EffectsManager.getInstance().newEffect_FeedbackTextField(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y,"FRANKED!");
 							//if the avatar touches the enemy on anything but the top, the avatar takes damage
 							}else {
 								if(EnemyManager.enemies[j].getIsBeingThrown() == false){
@@ -274,9 +266,9 @@
 		}
 		
 		public function getAvatar():MovieClip {
-			trace("avatars[0]", avatars[0]);
+		/*	trace("avatars[0]", avatars[0]);
 			trace("avatars",avatars);
-			trace("avatars.numChildren",avatars.numChildren);
+			trace("avatars.numChildren",avatars.numChildren);*/
 			return avatars[0];
 		}
 		

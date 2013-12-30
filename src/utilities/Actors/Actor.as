@@ -48,7 +48,8 @@
 		private var progressBarGraphic:MovieClip;
 		private var highLight:MovieClip;
 		private var mass:Number;
-		private var previousPosition:Point = new Point(0,0);
+		private var previousPosition:Point = new Point(0, 0);
+		private var velocity:Point = new Point(0, 0);//replace xVelocity and yVelocity with this
 		private var quadTreeNode:int;
 		private var weaponStats:Object;
 		private var actorGraphic:MovieClip;
@@ -196,10 +197,10 @@
 		}
 		
 		public function defineHitbox(newHitbox:MovieClip):void {
-			trace("-------------------------------------definehitbox",this);
-			trace("-------------------------------------hitbox",hitbox);
+			//trace("-------------------------------------definehitbox",this);
+			//trace("-------------------------------------hitbox",hitbox);
 			hitbox = newHitbox as MovieClip;
-			trace("------------------------------------------------------hitbox",hitbox);
+			//trace("------------------------------------------------------hitbox",hitbox);
 			hitbox.visible = false;
 		}
 		
@@ -207,6 +208,7 @@
 			return hitbox;
 		}
 		
+		//add actor to array at 0 unless otherwise specified
 		public function addActorToGameEngine(graphic:DisplayObject, array:Array, spliceIndex:int = 0):void {
 			
 			//spliceIndex = array.length;
@@ -215,39 +217,35 @@
 			this.addChild(graphic);
 			utilities.Engine.Game.gameContainer.addChild(this);
 			setIsSwfLoaded(true);
-			//array.push(this);
 			array.splice(spliceIndex, 0, this);
 			try {
-				if (assignedGraphic[0].swf_child.getChildByName("hitbox") == null) { //code; }
+				if (assignedGraphic[0].swf_child.getChildByName("hitbox") == null) {
 					//trace("it does not have a hitbox");
 				}else {
-					trace("it has a hitbox");
-					trace(this);
 						hitbox = this.assignedGraphic[0].swf_child.hitbox;
 						this.assignedGraphic[0].swf_child.removeChild(hitbox);
 						this.addChildAt(hitbox,0);
-					//	hitzone = this.assignedGraphic[0].swf_child.hitzone;
 				}
 			}catch (error:Error ) {
 				//it does not have a hitbox
 			}
 			try {
-				if (assignedGraphic[0].swf_child.getChildByName("hitzone") == null) { //code; }
-					//trace("it does not have a hitbox");
+				if (assignedGraphic[0].swf_child.getChildByName("hitzone") == null) {
+					//trace("it does not have a hitzone");
 				}else {
 					trace("it has a hitzone");
 						hitzone = this.assignedGraphic[0].swf_child.hitzone;
 				}
 			}catch (error:Error ) {
-				//it does not have a hitbox
+				//it does not have a hitzone
 			}
 			
 			setPreviousPosition();
 		}
 		
 		public function removeActorFromGameEngine(actor:MovieClip, array:Array):void {
-			trace("actor",actor);
-			trace("array",array);
+			//trace("actor",actor);
+			//trace("array",array);
 			actor.availableForTargeting=false;
 			var index:int = array.indexOf(actor);
 			array.splice(index,1);
@@ -525,6 +523,11 @@
 			previousPosition.y = this.y + hitbox.y;
 		}
 		
+		public function setIntialPreviousPosition(spawnPosition:Point):void {
+			previousPosition.x = spawnPosition.x
+			previousPosition.y = spawnPosition.y
+		}
+		
 		//useful for collision detection
 		//in case the object gets into an invalid location
 		//you can use this to put it back where it was if a new location cannot be resolved
@@ -683,8 +686,11 @@
 		}
 		
 		public function getVelocity():Point {
-			var velocityPoint:Point = new Point(xVelocity,yVelocity);
-			return velocityPoint;
+			//var velocityPoint:Point = new Point(xVelocity,yVelocity);
+			
+			velocity.x = xVelocity;
+			velocity.y = yVelocity;
+			return velocity;
 		}
 		
 		//this is normall for when you touch a platform or wall above you

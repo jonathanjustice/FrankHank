@@ -59,7 +59,7 @@
 		}
 		
 		public function keyDownHandler(e:KeyboardEvent):void {
-			trace(e.keyCode);
+			//trace(e.keyCode);
 			if(isKeysEnabled == true){
 				//trace(e.keyCode);
 				if(e.keyCode == KeyCodes.key_RIGHT_BRACKET){
@@ -75,14 +75,12 @@
 					Key_X=true;
 				}
 				if (e.keyCode == 37) {
-					trace("left");
 					Key_left_2 = true;
 				}
 				if(e.keyCode == 38){
 					Key_up_2 = true;
 				}
 				if (e.keyCode == 39) {
-					trace("right");
 					Key_right_2 = true;
 				}
 				if(e.keyCode == 40){
@@ -114,9 +112,6 @@
 					Key_W=true;
 				}
 			}
-		//	trace("DOWN------------------------------------DOWN: ", e.keyCode);
-		//	trace("Key_right_2", Key_right_2);
-		//	trace("Key_left_2", Key_left_2);
 			setSimpleAngleViaKeys();
 			setSimpleVelocityViaKeys();
 			setSimpleRotationViaKeys();
@@ -174,9 +169,6 @@
 				if(e.keyCode == 87){
 					Key_W=false;
 				}
-			//	trace("UP------------------------------------UP: ", e.keyCode);
-			//	trace("Key_right_2", Key_right_2);
-			//	trace("Key_left_2", Key_left_2);
 				setSimpleAngleViaKeys();
 				setSimpleVelocityViaKeys();
 				setSimpleRotationViaKeys();
@@ -273,27 +265,23 @@
 		}
 		
 		public static function getRightBracket():Boolean{
-			//trace("space" + Key_space);
+			//trace("right bracket" + Key_rightBracket);
 			return Key_rightBracket;
 		}
 		
 		public static function getUpKey():Boolean{
-			//trace("space" + Key_space);
 			return Key_up_2;
 		}
 		
 		public static function getLeftArrowKey():Boolean{
-			//trace("space" + Key_space);
 			return Key_left_2;
 		}
 		
 		public static function getRightArrowKey():Boolean{
-			//trace("space" + Key_space);
 			return Key_right_2;
 		}
 		
 		public static function getSpace():Boolean{
-			//trace("space" + Key_space);
 			return Key_space;
 		}
 		

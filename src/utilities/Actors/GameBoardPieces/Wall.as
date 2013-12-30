@@ -46,18 +46,9 @@
 		
 		public function assignGraphic(graphic:DisplayObject):void {
 			addActorToGameEngine(graphic, LevelManager.walls);
-			//graphic = hitbox;
-			
 			this.hitbox.width = this.tempWidth;
 			this.hitbox.height = this.tempHeight;
-			//this.width = tempWidth;
-			//this.height = tempHeight;
-			//this.hitbox.width = this.width;
-			//this.hitbox.height = this.height;
 			this.visible = false;
-			trace("WALL: this.width",this.width);
-			trace("WALL: this.hitbox.width",this.hitbox.width);
-			
 		}
 		
 		public function updateLoop():void{
@@ -65,7 +56,7 @@
 		}
 		
 		public function wallTest():void {
-			trace("fuck yeah it worked");
+			//deprecated
 		}
 		
 		public function defineBounds(newWidth:Number,newHeight:Number):void {

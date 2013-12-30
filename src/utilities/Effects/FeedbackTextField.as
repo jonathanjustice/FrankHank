@@ -56,15 +56,12 @@ package utilities.Effects {
 			fake_swf_child.addChild(textField);
 			fake_swf_child.addChild(hitbox);
 			
-			trace("createNewHitBox-----------------------------------------hitbox.parent",hitbox.parent,"parent should NOT be null here");
+			//trace("createNewHitBox-----------------------------------------hitbox.parent",hitbox.parent,"parent should NOT be null here");
 			assignGraphic(fake_swf_child);
 		
 			setNewTextFormat();
-			//trace("attempting to add new textfield");
-			textField.x = x;
-			textField.y = y;
-			textField.x -= this.width/2;
-			textField.y -= this.height/2;
+			this.x = x- this.width/2;
+			this.y = y - this.height/2;
 		}
 		
 		//ONLY USE WEBSAFE FONTS
