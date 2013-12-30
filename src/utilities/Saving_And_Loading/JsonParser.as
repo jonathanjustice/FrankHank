@@ -1,4 +1,4 @@
-package utilities.Saving_And_Loading {
+﻿package utilities.Saving_And_Loading {
 	import flash.events.*;
 	import flash.system.Security;
 	import flash.display.DisplayObject;
@@ -10,20 +10,20 @@ package utilities.Saving_And_Loading {
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import JSON;
+	//import JSON;
 	import flash.net.URLLoader;
 	
 	public class JsonParser {
 		private var JSON_ASSETS_SWF:String = new String("../src/assets/json/json_assets_swf.json");
 		private var JSON_ASSETS_MP3:String = new String("../src/assets/json/json_assets_mp3.json");
-		private static var data_swf:JSON;
+		//private static var data_swf:JSON;
 		private static var data_mp3:Object;
 		private static var data:Object;
 		public function JsonParser() {
 			trace("hello world");
-			loadJSON(JSON_ASSETS_MP3);
+			//loadJSON(JSON_ASSETS_MP3);
 		}
-		
+		/*
 		//creater a new loader object
 		//create a new request
 		//add listener for completing the load
@@ -57,6 +57,6 @@ package utilities.Saving_And_Loading {
 		
 		public function getData_swf():Object {
 			return data_swf;
-		}
+		}*/
 	}
 }
