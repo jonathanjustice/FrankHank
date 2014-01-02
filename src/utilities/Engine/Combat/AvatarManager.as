@@ -193,49 +193,50 @@
 				}
 				//collide enemies & avatar
 				for (var j:int = 0; j < EnemyManager.enemies.length; j++) {
-					//checks for collision
+					//checks for collision between hitboxes
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, EnemyManager.enemies[j]) == true) {
 						//if the enemy is vulnerable, do nothing on bottom/left/right collisions
 						if ( EnemyManager.enemies[j].getIsVulnerable() == true) {
-							//trace("enemy is vulnerable");
+							//you pressed the up key to pick up the enemy while it was vulnerable
 							if (KeyInputManager.getUpKey() == true) {
 								EnemyManager.enemies[j].setAttachToAvatar(true);
 								EnemyManager.enemies[j].setRechargePause(true);
 								EnemyManager.enemies[j].setThrowable(false)
 							}
 							
-							if (utilities.Mathematics.RectangleCollision.isRectangleOnTop(myAvatar, EnemyManager.enemies[j]) == false) {
+							//you jump on the enemy while it is vulnerable
+							var collisionWithEnemyDirection:String = RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j],false);
+							if(collisionWithEnemyDirection=="top"){
 								trace("vulnerable and not on top");
 								//this is whats causing me to drop in the middle of enemies maybe, because i messed with the function that keeps enemies on platforms?
-							}else {
-								//trace("vulnerable and on top");
+								trace("vulnerable and on top");
 								myAvatar.jumpingEnded();
 								myAvatar.jump();
 								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
 								EffectsManager.getInstance().newEffect_FeedbackTextField(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y,"HANKED!");
+							//you touch the enemy on anywhere but its top side
+							}else {
+								//you pass through the enemy
 							}
 						}else{
-							//if the avatar is invincible, damage the enemy regardless of any other states
-							//EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
 							//resolves the collision & returns if this touched the top of the other object
 							
 							//if the avatar is on top of the enemy and the enemy is not in the vulnerable state, then damage it and bounce the avatar
 							var collisionDirection:String = "";
-							collisionDirection = utilities.Mathematics.RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j]);
+							collisionDirection = utilities.Mathematics.RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j],false);
 							if (collisionDirection=="top") {
 								myAvatar.jumpingEnded();
 								myAvatar.jump();
 								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
 								EnemyManager.enemies[j].setIsVulnerable(true);
 								EffectsManager.getInstance().newEffect_FeedbackTextField(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y,"FRANKED!");
-							//if the avatar touches the enemy on anything but the top, the avatar takes damage
+							//if the enemy is NOT vulnerable and the avatar touches the enemy on anything but the top, the avatar takes damage
 							}else {
 								if(EnemyManager.enemies[j].getIsBeingThrown() == false){
 									EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
 									myAvatar.setBounceDirection(collisionDirection);
-									//if you are invincible, this will cause the enemy to take damage, else it will do nothing
+									//if you are invincible, this will cause the enemy to take damage, otherwise it will do nothing
 									myAvatar.takeDamage(EnemyManager.enemies[j].getCollisionDamage() );
-									//if you are invincible, you will instant kill the enemy, else it will do nothing
 								}
 							}
 						}

@@ -150,7 +150,7 @@
 							enemy.resetGravity();
 							if (enemy is TankEnemy || enemy is SpiderEnemy) {
 								//if a tank enemy reaches the end of a platform, make it turn around instead of falling off 
-								if (RectangleCollision.isRectangleOnTop(enemy, LevelManager.walls[i]) && enemy.getNumberOfWallsBeingTouched() == 1) {
+								if (RectangleCollision.isRectangleOnTopAndTryingToExceedBoundsOfLowerRectangle(enemy, LevelManager.walls[i]) && enemy.getNumberOfWallsBeingTouched() == 1) {
 									enemy.reverseVelecityX();
 									enemy.x = enemy.getPreviousPosition().x;
 									enemy.x += enemy.xVelocity * 2;

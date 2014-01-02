@@ -28,7 +28,7 @@ package utilities.Mathematics{
 		 }
 		 
 		
-		public static function testCollision(movable:MovieClip, stationary:MovieClip):String {
+		public static function testCollision(movable:MovieClip, stationary:MovieClip,resolveCollisions:Boolean=true):String {
 			var collisionEjectDistance:Number = 1;//don't get stuck in the other rectangle
 			var collidedWithTop:Boolean = false;
 			var collisionSide:String = "";
@@ -36,30 +36,35 @@ package utilities.Mathematics{
 			//moveable is above stationary
 			if (movable.getPreviousPosition().y + movable.hitbox.height <= stationary.getPreviousPosition().y) {
 				collisionSide = "top";
-				movable.y = stationary.y - movable.hitbox.height - (collisionEjectDistance - stationary.yVelocity);
-				//movable.y -= stationary.yVelocity;
-	 			movable.x += stationary.xVelocity *2;
-				
+				if(resolveCollisions == true){
+					movable.y = stationary.y - movable.hitbox.height - (collisionEjectDistance - stationary.yVelocity);
+					//movable.y -= stationary.yVelocity;
+					movable.x += stationary.xVelocity *2;
+				}
 			}
 			//movable is below stationary
 			else if (movable.getPreviousPosition().y >= stationary.getPreviousPosition().y + stationary.hitbox.height) {
-				movable.y = stationary.y + stationary.hitbox.height + collisionEjectDistance *2;
 				collisionSide = "bottom";
-				movable.reduceJumpSpeed();
-				
+				if(resolveCollisions == true){
+					movable.y = stationary.y + stationary.hitbox.height + collisionEjectDistance *2;
+					movable.reduceJumpSpeed();
+				}	
 			}
 			//moveable's is to the left
 			else if (movable.getPreviousPosition().x + movable.hitbox.width <= stationary.getPreviousPosition().x) {
-				movable.x = stationary.x - movable.hitbox.width - collisionEjectDistance;
 				collisionSide = "left";
+				if(resolveCollisions == true){
+					movable.x = stationary.x - movable.hitbox.width - collisionEjectDistance;
+				}
 				//trace("stationary.getPreviousPosition().x",stationary.getPreviousPosition().x);
 				
 			}
 			//moveable is to the right
 			else if (movable.getPreviousPosition().x >= stationary.getPreviousPosition().x + stationary.hitbox.width) {
-				movable.x = stationary.x + stationary.hitbox.width + collisionEjectDistance;
 				collisionSide = "right";
-				
+				if (resolveCollisions == true) {
+					movable.x = stationary.x + stationary.hitbox.width + collisionEjectDistance;
+				}	
 			}
 			else{
 				//trace("else, this should never fire, if it does, WHAT DID YOU DO?");
@@ -68,7 +73,8 @@ package utilities.Mathematics{
 			return collisionSide;
 		}
 		
-		public static function isRectangleOnTop(movable:MovieClip, stationary:MovieClip):Boolean {
+		//check to see if you are on top of something and partially past its boundaries, usually for forcing something to turn around if it is going to go over the edge
+		public static function isRectangleOnTopAndTryingToExceedBoundsOfLowerRectangle(movable:MovieClip, stationary:MovieClip):Boolean {
 			var isOnTop:Boolean = false;
 			if (movable.getPreviousPosition().y + movable.hitbox.height<= stationary.y) {
 				if (movable.getPreviousPosition().x + movable.hitbox.width + movable.xVelocity >= stationary.getPreviousPosition().x + stationary.hitbox.width) {
