@@ -101,12 +101,13 @@
 						enemy.setIsVulnerable(false);
 						enemy.beThrown(AvatarManager.avatars[0].getDirectionToFace());
 					}else {
+						//the enemy needs to face the opposite direction of the avatar
 						var directionEdgeCaseGarbage:String = AvatarManager.avatars[0].getDirectionToFace();
 						if (directionEdgeCaseGarbage == "LEFT") {
-							enemy.x = AvatarManager.avatars[0].x;
+							enemy.x = AvatarManager.avatars[0].x + AvatarManager.avatars[0].hitbox.width/2;
 							enemy.setDirectionToFace("RIGHT");
 						}else {
-							enemy.x = AvatarManager.avatars[0].x + AvatarManager.avatars[0].hitbox.width;
+							enemy.x = AvatarManager.avatars[0].x - AvatarManager.avatars[0].hitbox.width/2;
 							enemy.setDirectionToFace("LEFT");
 						}
 						enemy.y = AvatarManager.avatars[0].y - enemy.height - buffer;
@@ -151,7 +152,12 @@
 							if (enemy is TankEnemy || enemy is SpiderEnemy) {
 								//if a tank enemy reaches the end of a platform, make it turn around instead of falling off 
 								if (RectangleCollision.isRectangleOnTopAndTryingToExceedBoundsOfLowerRectangle(enemy, LevelManager.walls[i]) && enemy.getNumberOfWallsBeingTouched() == 1) {
-									enemy.reverseVelecityX();
+									if (enemy.x > LevelManager.walls[i].x) {
+										enemy.xVelocity = Math.abs(enemy.xVelocity) * -1;
+									}
+									if (enemy.x < LevelManager.walls[i].x) {
+										enemy.xVelocity = Math.abs(enemy.xVelocity);
+									}
 									enemy.x = enemy.getPreviousPosition().x;
 									enemy.x += enemy.xVelocity * 2;
 								}

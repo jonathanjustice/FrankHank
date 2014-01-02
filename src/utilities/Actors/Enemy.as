@@ -76,6 +76,11 @@
 			this.y += yVelocity;
 			if (!isVulnerable) {
 				this.x += xVelocity;
+				if (xVelocity > 0) {
+					setDirectionToFace("RIGHT");
+				}else{
+					setDirectionToFace("LEFT");
+				}
 			}
 			//trace("xvel",xVelocity);
 			//trace("abs svel",Math.abs(xVelocity));

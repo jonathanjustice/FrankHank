@@ -201,7 +201,7 @@
 			//trace("-------------------------------------hitbox",hitbox);
 			hitbox = newHitbox as MovieClip;
 			//trace("------------------------------------------------------hitbox",hitbox);
-			hitbox.visible = false;
+			hitbox.visible = true;
 		}
 		
 		public function getHitbox():MovieClip {
@@ -504,10 +504,12 @@
 			directionLastFaced = direction;
 			switch(directionLastFaced) {
 				case "LEFT":
-					assignedGraphic[0].swf_child.anim.scaleX = Math.abs(assignedGraphic[0].swf_child.anim.scaleX)*-1;
+					assignedGraphic[0].swf_child.anim.scaleX = Math.abs(assignedGraphic[0].swf_child.anim.scaleX) * -1;
+					assignedGraphic[0].swf_child.anim.x = 0+assignedGraphic[0].swf_child.anim.width;
 					break;
 				case "RIGHT":
 					assignedGraphic[0].swf_child.anim.scaleX = Math.abs(assignedGraphic[0].swf_child.anim.scaleX);
+					assignedGraphic[0].swf_child.anim.x = 0;
 					break;
 			}
 		}
