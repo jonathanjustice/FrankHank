@@ -104,10 +104,10 @@
 						//the enemy needs to face the opposite direction of the avatar
 						var directionEdgeCaseGarbage:String = AvatarManager.avatars[0].getDirectionToFace();
 						if (directionEdgeCaseGarbage == "LEFT") {
-							enemy.x = AvatarManager.avatars[0].x + AvatarManager.avatars[0].hitbox.width/2;
+							enemy.x = AvatarManager.avatars[0].x ;
 							enemy.setDirectionToFace("RIGHT");
 						}else {
-							enemy.x = AvatarManager.avatars[0].x - AvatarManager.avatars[0].hitbox.width/2;
+							enemy.x = AvatarManager.avatars[0].x ;
 							enemy.setDirectionToFace("LEFT");
 						}
 						enemy.y = AvatarManager.avatars[0].y - enemy.height - buffer;
