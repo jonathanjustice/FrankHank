@@ -10,6 +10,7 @@
 	import utilities.Actors.GameBoardPieces.Trigger_EndZone;
 	import utilities.Actors.GameBoardPieces.Trigger_CutScene;
 	import utilities.Actors.GameBoardPieces.Trigger_EngineCutScene;
+	import utilities.Actors.GameBoardPieces.Trigger_CameraLock;
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Actors.GoonEnemy;
 	import utilities.Actors.Coin;
@@ -206,6 +207,9 @@
 							break;
 						case "trigger_EndZone":
 							var trigger_EndZone:Trigger_EndZone = new Trigger_EndZone(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
+							break;
+						case "trigger_CameraLock":
+							var trigger_CameraLock:Trigger_CameraLock = new Trigger_CameraLock(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
 							break;
 						case "trigger_EngineCutScene":
 							var trigger_EngineCutScene:Trigger_EngineCutScene = new Trigger_EngineCutScene(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
