@@ -63,7 +63,7 @@
 			//trace("newIndex", newIndex);
 			//trace(triggerableWalls);
 			//trace(triggerableWalls[newIndex]);
- 			triggerableWalls[newIndex].setIsActive(true);
+  			triggerableWalls[newIndex].setIsActive(true);
 		}
 		
 		
