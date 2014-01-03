@@ -1,0 +1,17 @@
+{
+	"screens": [
+		{ "name":"ui_letterBox" , "filePath":"../src/assets/ui/swf_letterBox.swf" },
+		{ "name":"ui_loadingScreen" , "filePath":"../src/assets/ui/swf_loadingScreen.swf" },
+		{ "name":"ui_levelComplete" , "filePath":"../src/assets/ui/swf_levelComplete.swf" },
+		{ "name":"ui_gameOver" , "filePath":"../src/assets/ui/swf_gameOver.swf" },
+		{ "name":"ui_levelFailed" , "filePath":"../src/assets/ui/swf_levelFailed.swf" },
+		{ "name":"ui_lives" , "filePath":"../src/assets/ui/swf_lives.swf" },
+		{ "name":"ui_start" , "filePath":"../src/assets/ui/swf_start.swf" },
+		{ "name":"ui_continueCode" , "filePath":"../src/assets/ui/swf_continueCode.swf" },
+		{ "name":"swf_cutScene_1" , "filePath":"../src/assets/cutScenes/swf_cutScene_1.swf" },
+		{ "name":"swf_cutScene_2" , "filePath":"../src/assets/cutScenes/swf_cutScene_2.swf" },
+		{ "name":"swf_cutScene_3" , "filePath":"../src/assets/cutScenes/swf_cutScene_3.swf" },
+		{ "name":"swf_cutScene_4" , "filePath":"../src/assets/cutScenes/swf_cutScene_4.swf" },
+		{ "name":"swf_cutScene_5" , "filePath":"../src/assets/cutScenes/swf_cutScene_5.swf" }
+	]
+}

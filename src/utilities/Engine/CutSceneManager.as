@@ -107,6 +107,8 @@
 		public function loadSceneFromName(sceneName:String):void {
 			scene = new utilities.Screens.GameScreens.CutScene(sceneName);
 			cutScenes.push(scene);
+			trace("cutScenes", cutScenes);
+			trace("cutScenes[0]", cutScenes[0]);
 		}
 		
 		public function deselectActors():void {

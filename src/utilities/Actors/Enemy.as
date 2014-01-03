@@ -1,4 +1,5 @@
 ﻿package utilities.Actors{
+	import flash.display.MovieClip;
 	import utilities.Engine.Game;
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Input.KeyInputManager;
@@ -18,8 +19,13 @@
 		private var numberOfWallsBeingTouched:int = 0;
 		private var isRechargingHealth:Boolean = false;
 		private var rechargeHealthTimer:int = 0;
-		private var rechargeHealthTime:int = 90;
+		private var rechargeHealthTime:int = 120;
+		private var rechargePause:Boolean = false;
 		private var isVulnerable:Boolean = false;
+		private var isAttachedToAvatar:Boolean = false;
+		private var throwable:Boolean = false;
+		private var isBeingThrown:Boolean = false;
+		public var originalXVelocity:int;
 		
 		
 		//private var availableForTargeting:Boolean=true;
@@ -29,6 +35,7 @@
 		public function Enemy(){
 			setUp();
 			setCollisionDamage(1);
+			originalXVelocity = xVelocity;
 			//health=1;
 		}
 		
@@ -40,19 +47,71 @@
 		
 		public function updateLoop():void{
 			//setQuadTreeNode();
-			//applyVector();
+			applyVector();
+			listenForStopFrame();
 			//doStuffToEnemyOverTime();
 			//checkForDamage();
 			//checkForDeathFlag();
 			//setPreviousPosition();
 		}
 		
+		public function beThrown(directionToBeThrownIn:String):void {
+			trace("directionToBeThrownIn",directionToBeThrownIn);
+			if (directionToBeThrownIn == "LEFT") {
+				xVelocity = -25;
+			}else if (directionToBeThrownIn == "RIGHT") {
+				xVelocity = 25;
+			}
+			yVelocity = -25;
+			setIsBeingThrown(true);
+			this.y -= 30 ;
+			//applyVector();
+			rechargePause = false;
+			health = maximumHealth;
+			isRechargingHealth = false;
+		}
+		
 		//if the enemy is not stunned, then move forward
 		public function applyVector():void {
-			if (!isVulnerable) {	
+			this.y += yVelocity;
+			if (!isVulnerable) {
 				this.x += xVelocity;
-				this.y += yVelocity;
+				if (xVelocity > 0) {
+					setDirectionToFace("RIGHT");
+				}else{
+					setDirectionToFace("LEFT");
+				}
 			}
+			//trace("xvel",xVelocity);
+			//trace("abs svel",Math.abs(xVelocity));
+			if (Math.abs(xVelocity) > Math.abs(originalXVelocity)) {
+				xVelocity *= .99;
+				//trace("too fast ");
+			}
+		}
+		
+		public function setIsBeingThrown(newState:Boolean):void {
+			isBeingThrown = newState;
+		}
+		
+		public function getIsBeingThrown():Boolean {
+			return isBeingThrown;
+		}
+		
+		public function getThrowable():Boolean {
+			return throwable;
+		}
+		
+		public function setThrowable(newState:Boolean):void {
+			throwable = newState;
+		}
+		
+		public function getIsAttachedToAvatar():Boolean {
+			return isAttachedToAvatar;
+		}
+		
+		public function setAttachToAvatar(newState:Boolean):void {
+			isAttachedToAvatar = newState;
 		}
 		
 		public function collidedWithAvatar():void {
@@ -117,11 +176,13 @@
 		public function rechargeHealth():void {
 			if (health < maximumHealth) {
 				isRechargingHealth = true;
-				isVulnerable = true;
 			}
+			//recharge health unless recharging is paused, usually due to being stunned / vulnerable
 			if (isRechargingHealth) {
 				//trace("isRecharging");
-				rechargeHealthTimer++;
+				if (rechargePause == false) {
+					rechargeHealthTimer++;
+				}
 			}
 			if (rechargeHealthTimer >= rechargeHealthTime) {
 				//trace("recharge Time Complete");
@@ -131,8 +192,27 @@
 					//trace("maxmimum health reached");
 					health = maximumHealth;
 					isRechargingHealth = false;
-					isVulnerable = false;
+					setIsVulnerable(false);
 				}
+			}
+		}
+		
+		public function getRechargePause():Boolean {
+			return rechargePause;
+		}
+		
+		public function setRechargePause(newState:Boolean):void{
+			rechargePause = newState;
+		}
+		public function setIsVulnerable(newState:Boolean):void {
+			//trace("setisVulnerable",newState);
+			isVulnerable = newState;
+			if (isVulnerable == true) {
+				playAnimation("vulnerable")
+			}
+			if (isVulnerable == false) {
+				playAnimation("walk")
+				
 			}
 		}
 		

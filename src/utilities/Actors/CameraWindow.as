@@ -20,12 +20,14 @@
 		private var filePath:String = "";
 		public function CameraWindow() {
 			defineGraphicsDefaultRectangle();
-			this.x = 175;
-			this.y = 50;
-			this.scaleX = 5;
-			this.scaleY = 5;
+			this.x = 250;
+			this.y = 140;
+			this.scaleX = 1;
+			this.scaleY = 2.2;
 			this.visible = false;
-			this.alpha = .25;
+			//this.alpha = .25;
+			this.mouseChildren = false;
+			this.mouseEnabled = false;
 		}
 		
 		public override function getFilePath():String {

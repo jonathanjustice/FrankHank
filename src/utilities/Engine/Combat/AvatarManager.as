@@ -2,14 +2,17 @@
 	import flash.display.MovieClip;
 	import utilities.Actors.Bullet;
 	import utilities.dataModels.LevelProgressModel;
+	import utilities.Effects.Effect;
 	import utilities.Engine.BasicManager;
 	import utilities.Engine.DefaultManager;
 	import utilities.Actors.Avatar;
 	import utilities.Engine.IManager;
 	import utilities.Engine.LevelManager;
+	import utilities.Engine.EffectsManager
 	import utilities.Engine.Combat.PowerupManager;
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Mathematics.RectangleCollision;
+	import utilities.Input.KeyInputManager;
 	import flash.geom.Point;
 	public class AvatarManager extends BasicManager implements IManager {
 		private static var _instance:AvatarManager;
@@ -51,7 +54,6 @@
 	
 		public static function updateLoop():void {
 			for each(var myAvatar:Avatar in avatars){
-			//trace(myAvatar.getAdditionalYVelocity());
 				var isTouchingWall:Boolean = false;
 				var additionalVelocity:int = 0;
 				myAvatar.updateLoop();
@@ -87,24 +89,20 @@
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers[d]) == true) {
 						LevelManager.triggers[d].takeDamage(1);
 						LevelManager.triggers[d].checkForDeathFlag();
-						//trace("touched trigger");
+						//trace("touched moveable wall trigger");
 					}
 				}
 				//collide with triggers
 				for (var e:int = 0; e < LevelManager.triggers_endZones.length; e++) {
-					//trace("end zone here");
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_endZones[e]) == true) {
 						LevelManager.triggers_endZones[e].takeDamage(1);
 						LevelManager.triggers_endZones[e].checkForDeathFlag();
-						//trace("touched trigger");
 					}
 				}
 				for (var f:int = 0; f < LevelManager.triggers_cutScenes.length; f++) {
-					//trace("cut scene trigger here");
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_cutScenes[f]) == true) {
 						LevelManager.triggers_cutScenes[f].takeDamage(1);
 						LevelManager.triggers_cutScenes[f].checkForDeathFlag();
-						trace("touched cut scene trigger");
 					}
 				}
 				
@@ -119,16 +117,8 @@
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.triggerableWalls[h]) == "top") {
 									additionalVelocity = LevelManager.triggerableWalls[h].getVelocity().y;
 									isTouchingWall = true;
-									//trace("triggeredWall");
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
-									
-									
-									
-									
-									
-									
-									//reduceJumpSpeed.yVelocity();
 								}
 								break;
 						}
@@ -203,23 +193,52 @@
 				}
 				//collide enemies & avatar
 				for (var j:int = 0; j < EnemyManager.enemies.length; j++) {
-					//checks for collision
+					//checks for collision between hitboxes
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, EnemyManager.enemies[j]) == true) {
-						//if the avatar is invincible, damage the enemy
-						//EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
-						//resolves the collision & returns if this touched the top of the other object
-						var collisionDirection:String = "";
-						collisionDirection = utilities.Mathematics.RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j]);
-						if (collisionDirection=="top") {
-							myAvatar.jumpingEnded();
-							myAvatar.jump();
-							EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
-						}else {
-							myAvatar.setBounceDirection(collisionDirection);
-							//if you are invincible, this will cause the enemy to take damage, else it will do nothing
-							myAvatar.takeDamage(EnemyManager.enemies[j].getCollisionDamage() );
-							//if you are invincible, you will instant kill the enemy, else it will do nothing
-							EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
+						//if the enemy is vulnerable, do nothing on bottom/left/right collisions
+						if ( EnemyManager.enemies[j].getIsVulnerable() == true) {
+							//you pressed the up key to pick up the enemy while it was vulnerable
+							if (KeyInputManager.getUpKey() == true) {
+								EnemyManager.enemies[j].setAttachToAvatar(true);
+								EnemyManager.enemies[j].setRechargePause(true);
+								EnemyManager.enemies[j].setThrowable(false)
+							}
+							
+							//you jump on the enemy while it is vulnerable
+							var collisionWithEnemyDirection:String = RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j],false);
+							if(collisionWithEnemyDirection=="top"){
+								trace("vulnerable and not on top");
+								//this is whats causing me to drop in the middle of enemies maybe, because i messed with the function that keeps enemies on platforms?
+								trace("vulnerable and on top");
+								myAvatar.jumpingEnded();
+								myAvatar.jump();
+								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
+								EffectsManager.getInstance().newEffect_FeedbackTextField(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y,"HANKED!");
+							//you touch the enemy on anywhere but its top side
+							}else {
+								//you pass through the enemy
+							}
+						}else{
+							//resolves the collision & returns if this touched the top of the other object
+							
+							//if the avatar is on top of the enemy and the enemy is not in the vulnerable state, then damage it and bounce the avatar
+							var collisionDirection:String = "";
+							collisionDirection = utilities.Mathematics.RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j],false);
+							if (collisionDirection=="top") {
+								myAvatar.jumpingEnded();
+								myAvatar.jump();
+								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
+								EnemyManager.enemies[j].setIsVulnerable(true);
+								EffectsManager.getInstance().newEffect_FeedbackTextField(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y,"FRANKED!");
+							//if the enemy is NOT vulnerable and the avatar touches the enemy on anything but the top, the avatar takes damage
+							}else {
+								if(EnemyManager.enemies[j].getIsBeingThrown() == false){
+									EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
+									myAvatar.setBounceDirection(collisionDirection);
+									//if you are invincible, this will cause the enemy to take damage, otherwise it will do nothing
+									myAvatar.takeDamage(EnemyManager.enemies[j].getCollisionDamage() );
+								}
+							}
 						}
 					}
 					//make sure the avatar and his hitbox exist before checking against them
@@ -240,13 +259,21 @@
 		private static function createAvatar():void {
 			avatar = new utilities.Actors.Avatar(0,0);
 			avatars.push(avatar);
+			//trace();
 		}
 		
 		public function getArray():Array{
 			return avatars;
 		}
 		
-		public function getAvatar():MovieClip{
+		public function getAvatar():MovieClip {
+		/*	trace("avatars[0]", avatars[0]);
+			trace("avatars",avatars);
+			trace("avatars.numChildren",avatars.numChildren);*/
+			return avatars[0];
+		}
+		
+		public static function getAvatarForCheats():MovieClip{
 			return avatars[0];
 		}
 	}

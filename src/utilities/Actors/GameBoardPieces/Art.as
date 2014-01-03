@@ -1,4 +1,5 @@
 ﻿package utilities.Actors.GameBoardPieces{
+	import flash.display.MovieClip;
 	import utilities.Actors.Actor;
 	import utilities.Actors.SelectableActor;
 	import flash.display.DisplayObject;
@@ -11,6 +12,8 @@
 			this.x = newX;
 			this.y = newY;
 			this.alpha = 1;
+			hitbox = newGraphic as MovieClip;
+			this.addChild(hitbox);
 			assignGraphic(newGraphic);
 			//this.addChild(newGraphic);
 			parallaxLevel = parallaxingLevel;
@@ -21,13 +24,18 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
+			//var hitbox:MovieClip = new MovieClip();
+			
+			//hitbox.x = 0;
+			//hitbox.y = 0;
+			
 			graphic.x = 0
 			graphic.y = 0;
 			addActorToGameEngine(graphic,LevelManager.arts);
 		}
 		
 		public function setUp():void{
-			setPreviousPosition();
+			//setPreviousPosition();
 		}
 		
 		public function updateLoop():void{

@@ -5,6 +5,7 @@
 	import utilities.Actors.CameraWindow;
 	import utilities.Engine.Combat.PowerupManager;
 	import utilities.GraphicsElements.Animation;
+	import utilities.Saving_And_Loading.JsonParser;
 	import utilities.Screens.GameContainer;
 	import utilities.Engine.ResourceManager;
 	import utilities.Engine.Builders.LevelBuilder;
@@ -15,12 +16,14 @@
 	import utilities.Engine.Combat.AvatarManager;
 	import utilities.Engine.Combat.AnimationManager;
 	import utilities.Engine.Combat.SaveDataManager;
+	import utilities.Engine.CheatManager;
 	import utilities.Audio.SoundManager;
 	import utilities.Actors.Avatar;
 	import utilities.Mathematics.QuadTree;
 	import utilities.dataModels.LevelProgressModel;
 	import utilities.Engine.Combat.AnimationManager;
 	import utilities.Actors.GameBoardPieces.Art;
+	import utilities.customEvents.*;
 	
 	public class Game extends MovieClip{
 		public static var theGame:Game;
@@ -38,6 +41,7 @@
 		public static var levelManager:LevelManager;
 		public static var soundManager:SoundManager;
 		public static var saveDataManager:SaveDataManager;
+		public static var cheatManager:CheatManager;
 		public static var avatar:Avatar;
 		private static var quadTree:QuadTree;
 		private static var gamePaused:Boolean = true;
@@ -47,7 +51,11 @@
 		private static var bg_speed_0:Number = 0;
 		private static var bg_speed_1:Number = -0.25;
 		private static var bg_speed_2:Number = -0.35;
+		public static var jsonParser:JsonParser;
 		
+		public var desiredX:Number = 0;
+		public var desiredY:Number = 0;
+		public var lerping:Boolean = false;
 		//public var player:Player;
 		public var hero:MovieClip;
 		//Not adding objects directly to stage so that I can manipulate the world globally when needed
@@ -60,6 +68,17 @@
 			createGameContainer();
 			setUpCameraWindow();
 			createQuadTree();
+			jsonParser = new JsonParser();
+			Main.theStage.addEventListener(StateMachineEvent.TEST_EVENT, testEvent);
+			Main.theStage.addEventListener(StateMachineEvent.BOOT, boot);
+		}
+		
+		public function testEvent(e:StateMachineEvent):void {
+			trace("testEvent Fired in Game!")
+		}
+		
+		public function boot(e:StateMachineEvent):void {
+			trace("boot Fired in Game!")
 		}
 		
 		public static function setGameState(newState:String,filePathName:String =""):void {
@@ -70,6 +89,10 @@
 					break;
 				case "startScreen":
 					UIManager.openStartScreen();
+					resetGameValues();
+					break;
+				case "continueCodeScreen":
+					UIManager.openContinueCodeScreen();
 					resetGameValues();
 					break;
 				case "startLevelLoad":
@@ -102,18 +125,19 @@
 					//doshit
 					break;
 				case "levelFailed":
-					//trace("level failed ");
-					LevelManager.getInstance().setIsLevelActive(false);
-					UIManager.getInstance().openLevelFailedScreen();
+					trace("setGameState: level failed ");
+					disableMasterLoop();
 					UIManager.getInstance().removeLivesScreen();
-					LevelManager.getInstance().setIsLevelFailed(true);
+					LevelManager.getInstance().levelFailed();
+					
 					break;
 				case "gameOver":
-				//	trace("setGameState gameOver");
+					trace("setGameState: gameOver");
 					LevelManager.getInstance().setIsLevelComplete(false);
-					UIManager.getInstance().openGameOverScreen();
 					UIManager.getInstance().removeLivesScreen();
+					UIManager.getInstance().openGameOverScreen();
 					LevelManager.getInstance().setIsLevelComplete(true);
+				
 					break;
 				case "gameWon":
 					//doshit
@@ -137,7 +161,7 @@
 				/* capstone cutScenes */
 				case "startCutSceneLoad":
 					//doshit
-					//trace("Game: startCutSceneLoad");
+					trace("Game: startCutSceneLoad");
 					disableMasterLoop();
 					CutSceneManager.getInstance().loadSceneBasedOnLevelProgress();
 					break;
@@ -157,7 +181,6 @@
 					//trace("Game: cutSceneComplete");
 					CutSceneManager.getInstance().setIsSceneActive(false);
 					CutSceneManager.getInstance().setIsSceneComplete(false);
-					trace("LevelManager.getInstance().getIsLevelComplete == true",LevelManager.getInstance().getIsLevelComplete == true);
 					if (LevelManager.getInstance().getIsLevelComplete() == false) {
 						enableMasterLoop();
 					}else if (LevelManager.getInstance().getIsLevelComplete() == true) {
@@ -244,7 +267,7 @@
 		}
 		
 		public static function enableMasterLoop():void {
-			trace("enabling master loop");
+			//trace("enabling master loop");
 			gamePaused=false;
 			gameContainer.addEventListener(Event.ENTER_FRAME, masterLoop);
 		}
@@ -275,6 +298,7 @@
 			SoundManager.getInstance();
 			SaveDataManager.getInstance();
 			AnimationManager.getInstance();
+			CheatManager.getInstance();
 		}
 		
 		
@@ -289,81 +313,67 @@
 			avatarPoint.y = avatar.y;
 			avatarPoint = avatar.parent.localToGlobal(avatarPoint);
 			
-			if(avatarVels.x > 0){
-				cameraWindow.scaleToMotion("right");
-			}
-			if(avatarVels.x < 0){
-				cameraWindow.scaleToMotion("left");
-			}
-			//running left
+			
+			//gameContainer.x -= avatar.getVelocity().x;
+			
+			lerping = false;
 			if (avatarPoint.x < cameraWindow.x) {
-				
-				if (avatarPoint.x < cameraWindow.x - cameraBuffer) {
-					if (avatarVels.x >= 0) {
-						//do nothing
-					}else {
-						//trace("moving left");
-						gameContainer.x += cameraSpeed;
-						
-					}
-					//
-				}
-				gameContainer.x -= avatar.getVelocity().x;
-				for (var i:int = 0; i < LevelManager.arts.length; i++ ) {
-					//trace(LevelManager.arts[i].getParallaxLevel());
-					switch(LevelManager.arts[i].getParallaxLevel()) {
-						case 0:
-							//art += cameraSpeed;
-							break;
-						case 1:
-							LevelManager.arts[i].x -= avatar.getVelocity().x * bg_speed_1;
-							break;
-						case 2:
-							LevelManager.arts[i].x -= avatar.getVelocity().x * bg_speed_2;
-							break;
-					}
-				}
+				//trace("LEFT");
+				lerping = true;
+				desiredX = avatarPoint.x;
+				lerpX();
 			}
-			//running right
-			if (avatarPoint.x + avatar.width > cameraWindow.x + cameraWindow.width ) {
-				if (avatarPoint.x + avatar.width > cameraWindow.x + cameraWindow.width + cameraBuffer) {
-					if (avatarVels.x <= 0) {
-						//do nothing
-					}else {
-						//trace("moving right");
-						
-						gameContainer.x -= cameraSpeed;
-					}
-				}
-				gameContainer.x -= avatar.getVelocity().x;
-				for (var j:int = 0; j < LevelManager.arts.length; j++ ) {
-				//	trace(LevelManager.arts[j].getParallaxLevel());
-					switch(LevelManager.arts[j].getParallaxLevel()) {
-						case 0:
-							//art += cameraSpeed;
-							break;
-						case 1:
-							LevelManager.arts[j].x -= avatar.getVelocity().x * bg_speed_1;
-							break;
-						case 2:
-							LevelManager.arts[j].x -= avatar.getVelocity().x * bg_speed_2;
-							break;
-					}
-				}
+			if (avatarPoint.x  > cameraWindow.x + cameraWindow.width) {	
+				//trace("RIGHT");
+				lerping = true;
+				desiredX = avatarPoint.x - cameraWindow.width;
+				lerpX();
 			}
-		
+			
 			if (avatarPoint.y < cameraWindow.y) {
-				trace("touching top of screen");
-				trace(avatar.getAdditionalYVelocity());
-				gameContainer.y -= avatar.getVelocity().y + avatar.getAdditionalYVelocity()*10;
-				
+				//trace("TOP");
+				lerping = true;
+				desiredY = avatarPoint.y;
+				lerpY();
 			}
-			if (avatarPoint.y + avatar.height > cameraWindow.y + cameraWindow.height) {
-				gameContainer.y -= avatar.getVelocity().y + avatar.getAdditionalYVelocity()*10;
-				
+			if (avatarPoint.y + avatar.height  > cameraWindow.y + cameraWindow.height) {	
+				//trace("BOTTOM");
+				lerping = true;
+				desiredY = avatarPoint.y + avatar.height - cameraWindow.height;
+				lerpY();
+			}
+			//lerpToPosition();
+		}
+		
+		public function lerpY():void {
+			var multiplierY:Number = .35;
+			if(lerping){
+				var lerpAmountY:Number = (cameraWindow.y - desiredY) * multiplierY;
+				gameContainer.y += lerpAmountY;
 			}
 		}
 		
+		public function lerpX():void {
+			var multiplierX:Number = .35;
+			if(lerping){
+				var lerpAmountX:Number = (cameraWindow.x - desiredX) * multiplierX;
+				gameContainer.x += lerpAmountX;
+				for (var i:int = 0; i < LevelManager.arts.length; i++ ) {
+				//trace(LevelManager.arts[i].getParallaxLevel());
+				switch(LevelManager.arts[i].getParallaxLevel()) {
+					case 0:
+						//art += cameraSpeed;
+						break;
+					case 1:
+						LevelManager.arts[i].x += lerpAmountX * bg_speed_1;
+						break;
+					case 2:
+						LevelManager.arts[i].x += lerpAmountX * bg_speed_2;
+						break;
+				}
+			}
+			}
+		}
 		public static function resetGameContainerCoordinates():void {
 			//trace("resetGameContainerCoordinates");
 			gameContainer.x = 0;
@@ -376,19 +386,14 @@
 				framesSinceGameStart ++;
 				//trace("Game: masterLoop: before any update loops");
 				AvatarManager.updateLoop();
-				//trace("Game: masterLoop: AvatarManager");
 				BulletManager.updateLoop();
-				//trace("Game: masterLoop: BulletManager");
 				EnemyManager.updateLoop();
-				//trace("Game: masterLoop: EnemyManager");
 				LootManager.updateLoop();
-				//trace("Game: masterLoop: LootManager");
 				//updateCombatManager();
 				UIManager.updateLoop();
-				//trace("Game: masterLoop: UIManager");
 				LevelManager.getInstance().updateLoop();
-				//trace("Game: masterLoop: LevelManager");
-				//LevelManager.getInstance().setIsLevelActive(true);
+				CheatManager.getInstance().updateLoop();
+				EffectsManager.getInstance().updateLoop();
 			}else{
 				//can use this section for when the game is paused but I still need to update UI stuff
 			}
@@ -444,6 +449,10 @@
 		
 		public static function getAnimationManager():AnimationManager {
 			return animationManager;
+		}
+		
+		public function getJsonParser():JsonParser {
+			return jsonParser;
 		}
 	}
 }

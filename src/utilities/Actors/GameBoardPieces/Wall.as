@@ -14,13 +14,15 @@
 			setUp();
 			tempWidth = newWidth;
 			tempHeight = newHeight;
+			this.x = newX;
+			this.y = newY;
 			/*print(String("newX: " + newX + " newY: " + newY + " newWidth: " + newWidth + " newHeight: " + newHeight)); 
 			this.scaleX = newWidth;
 			this.scaleY = newHeight;
-			this.x = newX;
-			this.y = newY;
+			
 			print(String("newX: " + x + " newY: " + y + " newWidth: " + scaleX + " newHeight: " + scaleY)); 
-		*/}
+			*/
+		}
 		
 		public function setUp():void{
 			defineGraphics("wall", false);
@@ -44,19 +46,17 @@
 		
 		public function assignGraphic(graphic:DisplayObject):void {
 			addActorToGameEngine(graphic, LevelManager.walls);
-			graphic = hitbox;
-			this.scaleX = tempWidth;
-			this.scaleY = tempHeight;
+			this.hitbox.width = this.tempWidth;
+			this.hitbox.height = this.tempHeight;
 			this.visible = false;
-			
 		}
 		
 		public function updateLoop():void{
-			
+			setPreviousPosition();
 		}
 		
 		public function wallTest():void {
-			trace("fuck yeah it worked");
+			//deprecated
 		}
 		
 		public function defineBounds(newWidth:Number,newHeight:Number):void {

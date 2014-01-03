@@ -11,8 +11,6 @@
 	public class MovingWall extends SelectableActor{
 		private var isBulletBlocker:Boolean = false;
 		private var filePath:String = "../src/assets/actors/swf_wall.swf";
-		private var tempWidth:Number = 0;
-		private var tempHeight:Number = 0;
 		private var wallType:String = "platform";
 		private var currentNode:MovieClip;
 		private var nodeSequencing:String = "forward";
@@ -32,18 +30,14 @@
 		//create a var tween
 		
 		public function MovingWall(newX:int, newY:int, newWidth:Number, newHeight:Number, newWallType:String, newIndex:int = 0) {
+			this.x = newX;
+			this.y = newY;
 			setType(newWallType);
 			triggerIndex = newIndex;
 			setUp();
-			tempWidth = newWidth;
-			tempHeight = newHeight;
-			/*print(String("newX: " + newX + " newY: " + newY + " newWidth: " + newWidth + " newHeight: " + newHeight)); 
-			this.scaleX = newWidth;
-			this.scaleY = newHeight;
-			this.x = newX;
-			this.y = newY;
-			print(String("newX: " + x + " newY: " + y + " newWidth: " + scaleX + " newHeight: " + scaleY)); 
-		*/}
+			setNewTarget();
+			defineInitialPoint();
+		}
 		
 		public override function getFilePath():String {
 			return filePath;
@@ -80,10 +74,7 @@
 		
 		public function assignGraphic(graphic:DisplayObject):void {
 			/*trace("------------------------------");
-			this.hitbox.width = tempWidth;
-			this.hitbox.height = tempHeight;
-			//this.attachedArt.scaleX = 1/tempWidth;
-			//this.attachedArt.scaleY = 1/tempHeight;
+			
 			trace("this.scaleX", this.scaleX);
 			trace("this.scaleY", this.scaleY);
 			trace("this.attachedArt.scaleX", this.attachedArt.scaleX);

@@ -6,8 +6,8 @@
     <movie input="" />
     <movie path="bin-debug\FrankHank.swf" />
     <movie fps="30" />
-    <movie width="800" />
-    <movie height="600" />
+    <movie width="750" />
+    <movie height="500" />
     <movie version="3" />
     <movie minorVersion="5" />
     <movie platform="AIR" />

@@ -14,6 +14,8 @@
 	import utilities.Actors.Coin;
 	import utilities.Actors.Loot;
 	import flash.geom.Point;
+	import flash.events.*;
+	import utilities.customEvents.*;
 	public class LevelManager extends BasicManager implements IManager{
 		private var tempArray:Array = new Array();
 		public static var level:MovieClip;
@@ -114,6 +116,9 @@
 			for each(var loot:Loot in coins){
 				loot.updateLoop();
 			}
+			for each(var wall:MovieClip in walls){
+				wall.updateLoop();
+			}
 			/*for each(var savePoint:SavePoint in savePoints){
 				savePoint.updateLoop();
 			}*/
@@ -140,7 +145,8 @@
 		
 		public function setIsLevelActive(activeStatus:Boolean):void {
 			isLevelActive = activeStatus;
-			//trace(("isLevelActive:",String(isLevelActive)));
+			isLevelComplete = false;
+			isLevelFailed = false;
 		}
 		
 		public function getisLevelActive():Boolean {
@@ -148,6 +154,7 @@
 		}
 		
 		private function levelCompleted():void {
+			trace("levelCompleted");
 			clearLevel();
 		//	if (EnemyManager.enemies.length == 0) {
 				LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1);
@@ -156,15 +163,18 @@
 		//	}
 		}
 		
-		private function levelFailed():void {
-			trace("LEVEL FAILED");
+		public function levelFailed():void {
 			Game.setLives(Game.getLives() - 1);
 			clearLevel();
-			if (Game.getLives() >= 0 ){
-				setIsLevelFailed(false);
+			if (Game.getLives() >= 0 ) {
+				//print("Game.getLives() was >= 0");
+				//print("AvatarManager.getInstance()" + String(AvatarManager.getInstance()));
+				//LevelManager._instance.setIsLevelComplete(false);
+				//LevelManager._instance.setIsLevelActive(false);
+				
 				LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress());
-				LevelManager._instance.setIsLevelComplete(false);
-				//Game.setGameState("startLevelLoad");
+				Game.setGameState("startLevelLoad");
+				LevelManager._instance.setIsLevelFailed(false);
 			}
 			/*else if (Game.getLives() <= 0) {
 				setIsLevelFailed(false);
@@ -178,6 +188,7 @@
 		
 		private function clearLevel():void {
 			Game.disableMasterLoop();
+			EffectsManager.getInstance().destroyArray(EffectsManager.effects);
 			LootManager.getInstance().destroyArray(LootManager.lootDrops);
 			LootManager.getInstance().destroyArray(LootManager.treasureChests);
 			EnemyManager.getInstance().destroyArray(EnemyManager.enemies);
@@ -202,8 +213,20 @@
 			
 		}
 		
+		
+		
+		
+		public function testEvent(e:StateMachineEvent):void {
+			trace("testEvent Fired!")
+		}
+		
 		public function loadLevel():void {
+			addEventListener(StateMachineEvent.TEST_EVENT, testEvent);
+			Main.theStage.dispatchEvent(new StateMachineEvent("testEvent"));
+			Main.theStage.dispatchEvent(new StateMachineEvent("boot"));
+			print("loadLevel : 1");
 			LevelManager._instance.setIsLevelComplete(false);
+			//print("loadLevel");
 			var levelName:String = String(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1 );
 			levelName = "lvl_" + levelName;
 			//print("levelName:" +levelName);
@@ -229,9 +252,13 @@
 		public function getIsLevelComplete():Boolean{
 			return isLevelComplete;
 		}
-		
-		public function setIsLevelComplete(completeState:Boolean):void{
+	
+		public function setIsLevelComplete(completeState:Boolean):void {
+			
+			//trace("SETTING IS LEVEL COMPLETE");
+			//trace(completeState);
 			isLevelComplete = completeState;
+			//print("setIsLevelComplete");
 		}
 		
 		public function getIsLevelFailed():Boolean{

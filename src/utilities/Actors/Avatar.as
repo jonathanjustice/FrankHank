@@ -31,7 +31,7 @@
 		private var shootingTimer:int = 0;
 		private var currentDelay:int = 0;
 		private var delay:int = 15;
-		private var avatarHealth:int = 1;
+		private var avatarHealth:int = 10;
 		private var additionalYVelocityForCamera:int = 0;
 		
 		
@@ -41,6 +41,9 @@
 			this.x = newX,
 			this.y = newY;
 			setUp();
+			trace("-----------AVATAR------------");
+			trace(newX);
+			trace(newY);
 			
 		}
 		
@@ -147,21 +150,32 @@
 		
 		
 		public function getVelocityFromKeyInputManager():void{
-			KeyInputManager.setSimpleVelocityViaKeys();
-			//limit max velocity
-			if (Math.abs(xVelocity) < maxVelocity) {
-				xVelocity += KeyInputManager.getMyVelocityX() * velocityIncrease;
+			var velocityMod: Number = KeyInputManager.getMyVelocityX();
+			//verify key press is the right direction before application of velocity
+			//set the direction i should be facing
+			if (KeyInputManager.getLeftArrowKey()==true) {
+				xVelocity += velocityMod * velocityIncrease;
+				directionLastFaced = "LEFT";
 			}
-			//yVelocity += KeyInputManager.getMyVelocityY() * velocityIncrease*5;
-			
+			if (KeyInputManager.getRightArrowKey()==true) {
+				xVelocity += velocityMod * velocityIncrease;
+				directionLastFaced = "RIGHT";
+			}
+			//limit max velocity
+			if (xVelocity > maxVelocity) {
+				xVelocity = maxVelocity;
+			}
+			if (xVelocity < -maxVelocity) {
+				xVelocity = -maxVelocity;
+			}
 			//if you are not pressing a button to run, then you slowdown
 			if (KeyInputManager.getMyVelocityX() == 0) {
-				//xVelocity = 0;
 				xVelocity *= velocityDecrease;
 				if (xVelocity <= .5 && xVelocity >= -.5) {
 					xVelocity = 0;
 				}
 			}
+				setDirectionToFace(directionLastFaced);
 		}
 		
 		public function getRotationFromKeyInputManager():void{

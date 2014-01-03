@@ -1,6 +1,7 @@
 ﻿package utilities.Engine.Combat{
 	
 	import utilities.Actors.Actor;
+	import utilities.Actors.SpiderEnemy;
 	import utilities.Engine.DefaultManager;
 	import flash.display.MovieClip;
 	import flash.geom.Point;
@@ -8,6 +9,7 @@
 	import utilities.Engine.Game;
 	import utilities.Engine.BasicManager;
 	import utilities.Mathematics.MathFormulas;
+	import utilities.Mathematics.RectangleCollision;
 	import utilities.Screens.xpBarSystem;
 	import utilities.Actors.Enemy;
 	import utilities.Actors.AFSEnemy;
@@ -15,6 +17,7 @@
 	import utilities.Actors.TankEnemy;
 	import utilities.Actors.Bullet;
 	import utilities.Engine.LevelManager;
+	import utilities.Input.KeyInputManager;
 	public class EnemyManager extends BasicManager implements IManager{
 		
 		private var xVelocity:Number;
@@ -69,7 +72,8 @@
 
 			checkForCollisionWithBullets();
 			checkForCollisionWithWall();
-			FPO_checkForLevelComplete();
+			stayAttachedToAvatar();
+			//FPO_checkForLevelComplete();
 		}
 		
 		public static function FPO_checkForLevelComplete():void {
@@ -79,6 +83,36 @@
 				//trace("enemy manager: no enemies left");
 				LevelManager.getInstance().setIsLevelComplete(true);
 				LevelManager.getInstance().checkLevelObjectives();
+			}
+		}
+		
+		public static function stayAttachedToAvatar():void {
+			var buffer:int = 3;
+ 			for each(var enemy:MovieClip in enemies) {
+				//trace(enemy.getThrowable());
+				if (KeyInputManager.getUpKey() == false) {
+					enemy.setThrowable(true);
+				}
+				if (enemy.getIsAttachedToAvatar() == true) {
+					//trace("is attached to avatar");
+					if (KeyInputManager.getUpKey() == true && enemy.getThrowable() == true) {
+						//trace("is throwable");
+						enemy.setAttachToAvatar(false);
+						enemy.setIsVulnerable(false);
+						enemy.beThrown(AvatarManager.avatars[0].getDirectionToFace());
+					}else {
+						//the enemy needs to face the opposite direction of the avatar
+						var directionEdgeCaseGarbage:String = AvatarManager.avatars[0].getDirectionToFace();
+						if (directionEdgeCaseGarbage == "LEFT") {
+							enemy.x = AvatarManager.avatars[0].x ;
+							enemy.setDirectionToFace("RIGHT");
+						}else {
+							enemy.x = AvatarManager.avatars[0].x ;
+							enemy.setDirectionToFace("LEFT");
+						}
+						enemy.y = AvatarManager.avatars[0].y - enemy.height - buffer;
+					}
+				}
 			}
 		}
 		
@@ -106,18 +140,24 @@
 				for(var i:int = 0; i<LevelManager.walls.length;i++){
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(enemy, LevelManager.walls[i]) == true) {
 						//resolves the collision & returns if this touched the top of the other object
-						var collisionSide:String = utilities.Mathematics.RectangleCollision.testCollision(enemy, LevelManager.walls[i]);
+						var collisionSide:String = RectangleCollision.testCollision(enemy, LevelManager.walls[i]);
 						if (collisionSide == "left" || collisionSide == "right") {
 							enemy.reverseVelecityX();
 							enemy.resetGravity();
 						}
 						if (collisionSide == "top") {
+							enemy.setIsBeingThrown(false);
 							enemy.setNumberOfWallsBeingTouched(1);
 							enemy.resetGravity();
-							if (enemy is TankEnemy) {
+							if (enemy is TankEnemy || enemy is SpiderEnemy) {
 								//if a tank enemy reaches the end of a platform, make it turn around instead of falling off 
-								if (utilities.Mathematics.RectangleCollision.isRectangleOnTop(enemy, LevelManager.walls[i]) && enemy.getNumberOfWallsBeingTouched() == 1) {
-									enemy.reverseVelecityX();
+								if (RectangleCollision.isRectangleOnTopAndTryingToExceedBoundsOfLowerRectangle(enemy, LevelManager.walls[i]) && enemy.getNumberOfWallsBeingTouched() == 1) {
+									if (enemy.x > LevelManager.walls[i].x) {
+										enemy.xVelocity = Math.abs(enemy.xVelocity) * -1;
+									}
+									if (enemy.x < LevelManager.walls[i].x) {
+										enemy.xVelocity = Math.abs(enemy.xVelocity);
+									}
 									enemy.x = enemy.getPreviousPosition().x;
 									enemy.x += enemy.xVelocity * 2;
 								}

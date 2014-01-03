@@ -1,4 +1,5 @@
 ﻿package utilities.Actors{
+	import flash.display.MovieClip;
 	import utilities.Engine.Game;
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Input.KeyInputManager;
@@ -14,7 +15,7 @@
 		private var spawnTime:Number;
 		private var lifeSpan:Number = 2;//3 seconds
 		private var isGravitySystemEnabled:Boolean = true;
-		
+		//private var hitbox:MovieClip;
 		
 		//private var availableForTargeting:Boolean=true;
 		
@@ -23,11 +24,12 @@
 		public function TankEnemy(newX:int, newY:int) {
 			this.x = newX;
 			this.y = newY;
-			xVelocity = -5;
+			xVelocity = 5;
+			originalXVelocity = xVelocity;
 			health = 2;
 			maximumHealth = 2;
 			setUp();
-			defineGraphics("tank", false);
+			defineGraphics();
 		}
 		
 		public override function getFilePath():String {
@@ -35,7 +37,8 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			addActorToGameEngine(graphic,EnemyManager.enemies);
+			addActorToGameEngine(graphic, EnemyManager.enemies);
+			//playAnimation("walk");
 		}
 		
 		public override function updateLoop():void {
@@ -46,15 +49,25 @@
 			//checkForDamage();
 			checkForDeathFlag();
 			rechargeHealth();
+			listenForStopFrame();
 			
 		}
 		
 		public override function applyVector():void {
 			this.y += yVelocity;
-			//if vulnerable stop walking around
-			if (!getIsVulnerable()) {	
+			if (!getIsVulnerable()) {
 				this.x += xVelocity;
-				
+				if (xVelocity > 0) {
+					setDirectionToFace("RIGHT");
+				}else{
+					setDirectionToFace("LEFT");
+				}
+			}
+			//trace("xvel",xVelocity);
+			//trace("abs svel",Math.abs(xVelocity));
+			if (Math.abs(xVelocity) > Math.abs(originalXVelocity)) {
+				xVelocity *= .97;
+			//	trace("too fast ");
 			}
 		}
 		
