@@ -302,44 +302,41 @@
 		}
 		
 		
-		public function moveGameContainer(avatar:MovieClip):void {
+		public function moveGameContainer(actor:MovieClip):void {
 			var cameraBuffer:int = 25;
 			var cameraSpeed:int = 12;
-			var avatarVels:Point = new Point();
-			avatarVels = avatar.getVelocity();
-			//print(String(avatarVels));
-			var avatarPoint:Point = new Point();
-			avatarPoint.x = avatar.x;
-			avatarPoint.y = avatar.y;
-			avatarPoint = avatar.parent.localToGlobal(avatarPoint);
+			var actorPoint:Point = new Point();
+			actorPoint.x = actor.x;
+			actorPoint.y = actor.y;
+			actorPoint = actor.parent.localToGlobal(actorPoint);
 			
 			
 			//gameContainer.x -= avatar.getVelocity().x;
 			
 			lerping = false;
-			if (avatarPoint.x < cameraWindow.x) {
+			if (actorPoint.x < cameraWindow.x) {
 				//trace("LEFT");
 				lerping = true;
-				desiredX = avatarPoint.x;
+				desiredX = actorPoint.x;
 				lerpX();
 			}
-			if (avatarPoint.x  > cameraWindow.x + cameraWindow.width) {	
+			if (actorPoint.x  > cameraWindow.x + cameraWindow.width) {	
 				//trace("RIGHT");
 				lerping = true;
-				desiredX = avatarPoint.x - cameraWindow.width;
+				desiredX = actorPoint.x - cameraWindow.width;
 				lerpX();
 			}
 			
-			if (avatarPoint.y < cameraWindow.y) {
+			if (actorPoint.y < cameraWindow.y) {
 				//trace("TOP");
 				lerping = true;
-				desiredY = avatarPoint.y;
+				desiredY = actorPoint.y;
 				lerpY();
 			}
-			if (avatarPoint.y + avatar.height  > cameraWindow.y + cameraWindow.height) {	
+			if (actorPoint.y + actor.height  > cameraWindow.y + cameraWindow.height) {	
 				//trace("BOTTOM");
 				lerping = true;
-				desiredY = avatarPoint.y + avatar.height - cameraWindow.height;
+				desiredY = actorPoint.y + actor.height - cameraWindow.height;
 				lerpY();
 			}
 			//lerpToPosition();
