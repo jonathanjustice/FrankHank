@@ -25,11 +25,11 @@
 			assignedGraphic[0] = graphic;
 			//Game.setGameState("cutSceneFullyLoaded");
 			startTimerToNextLevel();
-			setLivesDisplay();
+			updateScreenDisplay();
 		}
 		
 			
-		public function setLivesDisplay():void {
+		public function updateScreenDisplay():void {
 			var livesDisplay:String = "";
 			livesDisplay = "x" + String(Game.getLives());
 			assignedGraphic[0].swf_child.txt_lives.text = livesDisplay;

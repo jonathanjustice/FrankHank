@@ -268,6 +268,10 @@
 			}
 		}
 		
+		public function createExtraLifeTextFeecbackText():void {
+			EffectsManager.getInstance().newEffect_FeedbackTextField(getAvatar().x + getAvatar().width/2,getAvatar().getPreviousPosition().y,"EXTRA LIFE!");
+		}
+		
 		//deprecated
 		private static function createAvatar():void {
 			avatar = new utilities.Actors.Avatar(0,0);

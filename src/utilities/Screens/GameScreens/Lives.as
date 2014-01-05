@@ -18,7 +18,7 @@
 			this.addChild(graphic);
 			assignedGraphic[0] = graphic;
 			//Game.setGameState("cutSceneFullyLoaded");
-			setLivesDisplay();
+			updateScreenDisplay();
 		}
 		
 		public override function getFilePath():String {
@@ -34,10 +34,21 @@
 			addScreenToUIContainer();
 		}
 		
+		public function updateScreenDisplay():void {
+			setLivesDisplay();
+			setCoinsDisplay();
+		}
+		
 		public function setLivesDisplay():void {
 			var livesDisplay:String = "";
 			livesDisplay = "x" + String(Game.getLives());
 			assignedGraphic[0].swf_child.txt_lives.text = livesDisplay;
+		}
+		
+		public function setCoinsDisplay():void {
+			var coinsDisplay:String = "";
+			coinsDisplay = "x" + String(Game.getCoins());
+			assignedGraphic[0].swf_child.txt_coins.text = coinsDisplay;
 		}
 		
 		public override function clickHandler(event:MouseEvent):void{

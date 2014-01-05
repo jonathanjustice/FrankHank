@@ -21,6 +21,7 @@
 	import utilities.Actors.Avatar;
 	import utilities.Mathematics.QuadTree;
 	import utilities.dataModels.LevelProgressModel;
+	import utilities.dataModels.ResourceModel;
 	import utilities.Engine.Combat.AnimationManager;
 	import utilities.Actors.GameBoardPieces.Art;
 	import utilities.customEvents.*;
@@ -28,6 +29,7 @@
 	public class Game extends MovieClip{
 		public static var theGame:Game;
 		public static var lives:int = 3;
+		public static var coins:int = 0;
 		public static var originaLives:int = 3;
 		public static var resourceManager:ResourceManager;
 		public static var powerupManager:PowerupManager;
@@ -418,6 +420,11 @@
 		
 		public static function getLives():int {
 			return lives;
+		}
+		
+		public static function getCoins():int {
+			coins = ResourceModel.getInstance().getCoins();
+			return coins;
 		}
 		
 		public static function getContinueCode():String {
