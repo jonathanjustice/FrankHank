@@ -83,7 +83,7 @@
 						}
 					}
 				}
-				//collide with triggers
+				//collide with trigger to trigger moving wall
 				for (var d:int = 0; d < LevelManager.triggers.length; d++) {
 					//trace("triggers here");
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers[d]) == true) {
@@ -92,13 +92,14 @@
 						//trace("touched moveable wall trigger");
 					}
 				}
-				//collide with triggers
+				//collide with triggers for endzone
 				for (var e:int = 0; e < LevelManager.triggers_endZones.length; e++) {
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_endZones[e]) == true) {
 						LevelManager.triggers_endZones[e].takeDamage(1);
 						LevelManager.triggers_endZones[e].checkForDeathFlag();
 					}
 				}
+				//collide with trigger for cutscenes
 				for (var f:int = 0; f < LevelManager.triggers_cutScenes.length; f++) {
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_cutScenes[f]) == true) {
 						LevelManager.triggers_cutScenes[f].takeDamage(1);
@@ -106,8 +107,19 @@
 					}
 				}
 				
-				//collide walls & avatar
+				//collide with trigger for cutscenes
+				for (var g:int = 0; g < LevelManager.triggers_cameraLocks.length; g++) {
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_cameraLocks[g]) == true) {
+						LevelManager.triggers_cameraLocks[g].takeDamage(1);
+						LevelManager.triggers_cameraLocks[g].checkForDeathFlag();
+						trace("tell camera to lock");
+					}
+					trace("1");
+				}
+				
+				//collide with a wall that was triggered to move
 				for (var h:int = 0; h < LevelManager.triggerableWalls.length; h++) {
+					trace("2");
 					if (LevelManager.triggerableWalls[h].getType() == "triggeredWall") {
 						LevelManager.triggerableWalls[h].updateLoop();
 					}
@@ -123,6 +135,7 @@
 								break;
 						}
 					}
+					trace("3");
 				}
 				//collide walls & avatar
 				for (var i:int = 0; i < LevelManager.walls.length; i++) {

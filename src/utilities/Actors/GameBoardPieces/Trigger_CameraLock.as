@@ -58,8 +58,8 @@
 			
 			this.scaleX = tempWidth;
 			this.scaleY = tempHeight;
-			//this.visible = false;
-			addActorToGameEngine(graphic, LevelManager.triggers_cutScenes);
+			this.visible = false;
+			addActorToGameEngine(graphic, LevelManager.triggers_cameraLocks);
 			graphic = hitbox;
 		}
 		
