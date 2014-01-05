@@ -52,6 +52,9 @@
 		private static var bg_speed_1:Number = -0.25;
 		private static var bg_speed_2:Number = -0.35;
 		public static var jsonParser:JsonParser;
+		private static var lerpMultiplier:Point = new Point;
+		private static var lerpMultiplier_followAvatar:Number = .35;
+		private static var lerpMultiplier_cameraLock:Number = .05;
 		
 		public var desiredX:Number = 0;
 		public var desiredY:Number = 0;
@@ -111,9 +114,14 @@
 					UIManager.getInstance().openLivesScreen();
 					UIManager.getInstance().closeLoadingScreen();
 					enableMasterLoop();
+					setLerpMultiplier(lerpMultiplier_followAvatar, lerpMultiplier_followAvatar);
 					
 					break;
 				case "inLevel":
+					//doshit
+					break;
+				case "lockCamera":
+					setLerpMultiplier(lerpMultiplier_cameraLock, lerpMultiplier_cameraLock);
 					//doshit
 					break;
 				case "levelComplete":
@@ -306,8 +314,17 @@
 			var cameraBuffer:int = 25;
 			var cameraSpeed:int = 12;
 			var actorPoint:Point = new Point();
-			actorPoint.x = actor.x;
-			actorPoint.y = actor.y;
+			if (getGameState() == "lockCamera") {
+				var cameraLockZone:MovieClip = LevelManager.getInstance().getCameraLockZone();
+				//use the trigger block
+				actorPoint.x = cameraLockZone.x + cameraLockZone.width/2;
+				actorPoint.y = cameraLockZone.y + cameraLockZone.height/2;
+			}else {
+				//use the player instead
+				actorPoint.x = actor.x;
+				actorPoint.y = actor.y;
+			}
+		
 			actorPoint = actor.parent.localToGlobal(actorPoint);
 			
 			
@@ -342,18 +359,23 @@
 			//lerpToPosition();
 		}
 		
+		public static function setLerpMultiplier(newXMultiplier:Number, newYMultiplier:Number):void {
+			trace("setting lerp");
+			lerpMultiplier.x = newXMultiplier;
+			lerpMultiplier.y = newYMultiplier;
+		}
+		
 		public function lerpY():void {
-			var multiplierY:Number = .35;
 			if(lerping){
-				var lerpAmountY:Number = (cameraWindow.y - desiredY) * multiplierY;
+				var lerpAmountY:Number = (cameraWindow.y - desiredY) * lerpMultiplier.y;
 				gameContainer.y += lerpAmountY;
 			}
 		}
 		
 		public function lerpX():void {
-			var multiplierX:Number = .35;
-			if(lerping){
-				var lerpAmountX:Number = (cameraWindow.x - desiredX) * multiplierX;
+			if (lerping) {
+				trace("lerpMultiplier.x",lerpMultiplier.x)
+				var lerpAmountX:Number = (cameraWindow.x - desiredX) * lerpMultiplier.x;
 				gameContainer.x += lerpAmountX;
 				for (var i:int = 0; i < LevelManager.arts.length; i++ ) {
 				//trace(LevelManager.arts[i].getParallaxLevel());

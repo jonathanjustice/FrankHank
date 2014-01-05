@@ -19,11 +19,12 @@
 			setUp();
 			tempWidth = newWidth;
 			tempHeight = newHeight;
+			this.x = newX;
+			this.y = newY;
 			/*print(String("newX: " + newX + " newY: " + newY + " newWidth: " + newWidth + " newHeight: " + newHeight)); 
 			this.scaleX = newWidth;
 			this.scaleY = newHeight;
-			this.x = newX;
-			this.y = newY;
+			
 			print(String("newX: " + x + " newY: " + y + " newWidth: " + scaleX + " newHeight: " + scaleY)); 
 		*/}
 		
@@ -39,7 +40,8 @@
 			//overriden by each individual class
 			//used for feedback mostly
 			//LevelManager.getInstance().setIsLevelComplete(true);
-			Game.setGameState("lockCamera",cutSceneName);
+			Game.setGameState("lockCamera", cutSceneName);
+			LevelManager.getInstance().setCameraLockZone(this);
 		}
 		
 		public function setType(newType:String):void {
@@ -58,8 +60,8 @@
 			
 			this.scaleX = tempWidth;
 			this.scaleY = tempHeight;
-			//this.visible = false;
-			addActorToGameEngine(graphic, LevelManager.triggers_cutScenes);
+			this.visible = false;
+			addActorToGameEngine(graphic, LevelManager.triggers_cameraLocks);
 			graphic = hitbox;
 		}
 		

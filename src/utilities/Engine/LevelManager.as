@@ -35,6 +35,7 @@
 		private var isLevelFailed:Boolean = false;
 		private static var _instance:LevelManager;
 		private var isLevelActive:Boolean = false;
+		private var cameraLockZone:MovieClip = new MovieClip();
 		
 		//Singleton Design Pattern features
 		public function LevelManager(singletonEnforcer:SingletonEnforcer){
@@ -65,7 +66,7 @@
 			//trace("newIndex", newIndex);
 			//trace(triggerableWalls);
 			//trace(triggerableWalls[newIndex]);
-  			triggerableWalls[newIndex].setIsActive(true);
+   			triggerableWalls[newIndex].setIsActive(true);
 		}
 		
 		
@@ -76,6 +77,14 @@
 		
 		public function getTriggers_cameraLocks():Array{
 			return triggers_cameraLocks;
+		}
+		
+		public function setCameraLockZone(newLockZone:MovieClip):void {
+			cameraLockZone = newLockZone;
+		}
+		
+		public function getCameraLockZone():MovieClip {
+			return cameraLockZone;
 		}
 		
 		public function getTriggers_endZones():Array{

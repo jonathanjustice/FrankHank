@@ -18,6 +18,7 @@
 	import utilities.Actors.GameBoardPieces.Trigger;
 	import utilities.Actors.GameBoardPieces.Trigger_CutScene;
 	import utilities.Actors.GameBoardPieces.Trigger_EndZone;
+	import utilities.Actors.GameBoardPieces.Trigger_CameraLock;
 	import utilities.GraphicsElements.SwfParser;
 	import utilities.GraphicsElements.Animation;
 	import utilities.Mathematics.MathFormulas;
@@ -334,6 +335,8 @@
 					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers_cutScenes());
 				}else if(this is Trigger_EndZone){
 					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers_endZones());
+				}else if(this is Trigger_CameraLock){
+					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers_cameraLocks());
 				}else if (this is FeedbackTextField) {
 					removeActorFromGameEngine(this,EffectsManager.getInstance().getEffects());
 				}
