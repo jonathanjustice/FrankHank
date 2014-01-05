@@ -205,7 +205,7 @@
 							var movingWall:MovingWall = new MovingWall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height, "movingWall");
 							sortNodes(movingWall, tempArray[j]);
 							break;
-						case "trigger_EndZone":
+						case "triggerEndZone":
 							var trigger_EndZone:Trigger_EndZone = new Trigger_EndZone(tempArray[j].x, tempArray[j].y, tempArray[j].width, tempArray[j].height);
 							trace("6", tempArray[j].name);
 							break;
@@ -213,7 +213,7 @@
 							var trigger_CameraLock:Trigger_CameraLock = new Trigger_CameraLock(tempArray[j].x, tempArray[j].y, tempArray[j].width, tempArray[j].height);
 							trace("5", tempArray[j].name);
 							break;
-						case "trigger_EngineCutScene":
+						case "triggerEngineCutScene":
 							var trigger_EngineCutScene:Trigger_EngineCutScene = new Trigger_EngineCutScene(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
 							trigger_EngineCutScene.x = tempArray[j].x;
 							trigger_EngineCutScene.y = tempArray[j].y;
@@ -254,7 +254,7 @@
 							var invinviblePowerup:Powerup_invincible = new Powerup_invincible(tempArray[j].x,tempArray[j].y);
 							break;
 					}
-					if (tempArray[j].name.indexOf("trigger_CutScene_") != -1) {
+					if (tempArray[j].name.indexOf("triggerCutScene_") != -1) {
 						trace("1", tempArray[j].name);
 						var cutSceneName:String = tempArray[j].name;
 						
