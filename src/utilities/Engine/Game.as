@@ -360,7 +360,6 @@
 		}
 		
 		public static function setLerpMultiplier(newXMultiplier:Number, newYMultiplier:Number):void {
-			trace("setting lerp");
 			lerpMultiplier.x = newXMultiplier;
 			lerpMultiplier.y = newYMultiplier;
 		}
@@ -374,7 +373,6 @@
 		
 		public function lerpX():void {
 			if (lerping) {
-				trace("lerpMultiplier.x",lerpMultiplier.x)
 				var lerpAmountX:Number = (cameraWindow.x - desiredX) * lerpMultiplier.x;
 				gameContainer.x += lerpAmountX;
 				for (var i:int = 0; i < LevelManager.arts.length; i++ ) {

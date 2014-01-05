@@ -234,7 +234,7 @@
 				if (assignedGraphic[0].swf_child.getChildByName("hitzone") == null) {
 					//trace("it does not have a hitzone");
 				}else {
-					trace("it has a hitzone");
+					//trace("it has a hitzone");
 						hitzone = this.assignedGraphic[0].swf_child.hitzone;
 				}
 			}catch (error:Error ) {
@@ -328,6 +328,8 @@
 				}else if(this is Powerup_default){
 					removeActorFromGameEngine(this,PowerupManager.getInstance().getArray());
 				}else if(this is Coin){
+					removeActorFromGameEngine(this,LevelManager.getInstance().getCoins());
+				}else if(this is Gem){
 					removeActorFromGameEngine(this,LevelManager.getInstance().getCoins());
 				}else if(this is Trigger){
 					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers());

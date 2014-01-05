@@ -12,7 +12,6 @@
 		private var applyXP:Boolean=false;
 		private var xpToApply:int=0;
 		private var spawnTime:Number;
-		private var moneyValue:int = 50;
 		//private var lifeSpan:Number = 2;//3 seconds
 		
 		
@@ -26,14 +25,11 @@
 			health = 1;
 			this.x = newX - this.x;
 			this.y = newY - this.y;
+			setMoneyValue(50);
 		}
 		
 		public override function getFilePath():String {
 			return filePath;
-		}
-		
-		public function getMoneyValue():int {
-			return moneyValue;
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {

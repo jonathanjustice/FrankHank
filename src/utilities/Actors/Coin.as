@@ -12,7 +12,6 @@
 		private var applyXP:Boolean=false;
 		private var xpToApply:int=0;
 		private var spawnTime:Number;
-		private var moneyValue:int = 50;
 		//private var lifeSpan:Number = 2;//3 seconds
 		
 		
@@ -25,15 +24,12 @@
 			defineGraphics("coin",false);
 			this.x = newX,
 			this.y = newY;
-			health=1;
+			health = 1;
+			setMoneyValue(1);
 		}
 		
 		public override function getFilePath():String {
 			return filePath;
-		}
-		
-		public function getMoneyValue():int {
-			return moneyValue;
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
@@ -71,11 +67,7 @@
          	spawnTime = getTimer();
 			//trace("spawnTime",spawnTime);
         }
-		/*
-		public function takeDamage(amount:int):void{
-			health -= amount;
-		}
-		*/
+		
 		public function markKillWithXpFlag():void{
 			markDeathFlag();
 			applyXP = true;
