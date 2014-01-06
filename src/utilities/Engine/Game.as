@@ -25,6 +25,7 @@
 	import utilities.Engine.Combat.AnimationManager;
 	import utilities.Actors.GameBoardPieces.Art;
 	import utilities.customEvents.*;
+	import utilities.Input.KeyInputManager;
 	
 	public class Game extends MovieClip{
 		public static var theGame:Game;
@@ -124,8 +125,46 @@
 					break;
 				case "lockCamera":
 					setLerpMultiplier(lerpMultiplier_cameraLock, lerpMultiplier_cameraLock);
+					//everything else is the same, just camera doesn't track
+					break;
+					//in engine cutscenes
+					
+					
+					
+					
+					
+				case "lockCameraAndAutomateAvatar":
+					KeyInputManager.setIsKeysEnabled(false);
+					setLerpMultiplier(lerpMultiplier_cameraLock, lerpMultiplier_cameraLock);
+					var cameraLockZone:MovieClip = LevelManager.getInstance().getTriggers_cameraLocks()[0];
+					var actorPoint:Point = new Point();
+					actorPoint.x = cameraLockZone.x + cameraLockZone.width/2;
+					actorPoint.y = cameraLockZone.y + cameraLockZone.height / 2;
+					trace("actorPoint",actorPoint)
+					//actorPoint = cameraLockZone.parent.localToGlobal(actorPoint);
+					AvatarManager.getAvatar().setLerpTarget(actorPoint);
+					AvatarManager.getAvatar().setLerping(true);
 					//doshit
 					break;
+				case "unlockAvatar":
+					KeyInputManager.setIsKeysEnabled(true);
+					setLerpMultiplier(lerpMultiplier_cameraLock, lerpMultiplier_cameraLock);
+					//var cameraLockZone:MovieClip = LevelManager.getInstance().getTriggers_cameraLocks()[0];
+				//	var actorPoint:Point = new Point();
+					//actorPoint.x = cameraLockZone.x + cameraLockZone.width/2;
+					//actorPoint.y = cameraLockZone.y + cameraLockZone.height / 2;
+					//trace("actorPoint",actorPoint)
+					//actorPoint = cameraLockZone.parent.localToGlobal(actorPoint);
+					//AvatarManager.getAvatar().setLerpTarget(actorPoint);
+					//AvatarManager.getAvatar().setLerping(true);
+					//doshit
+					break;
+					
+					
+					
+					
+					
+					
 				case "levelComplete":
 					LevelManager.getInstance().setIsLevelActive(false);
 					UIManager.getInstance().openLevelCompleteScreen();
@@ -153,7 +192,6 @@
 					//doshit
 					break;
 					
-				/*  in-engine cutscenes  */
 					
 					
 				/*  in-level cutscenes  */
@@ -316,11 +354,11 @@
 			var cameraBuffer:int = 25;
 			var cameraSpeed:int = 12;
 			var actorPoint:Point = new Point();
-			if (getGameState() == "lockCamera") {
+			if (getGameState() == "lockCamera" || getGameState() == "lockCameraAndAutomateAvatar") {
 				var cameraLockZone:MovieClip = LevelManager.getInstance().getCameraLockZone();
 				//use the trigger block
 				actorPoint.x = cameraLockZone.x + cameraLockZone.width/2;
-				actorPoint.y = cameraLockZone.y + cameraLockZone.height/2;
+				actorPoint.y = cameraLockZone.y + cameraLockZone.height / 2;
 			}else {
 				//use the player instead
 				actorPoint.x = actor.x;
@@ -379,20 +417,21 @@
 				gameContainer.x += lerpAmountX;
 				for (var i:int = 0; i < LevelManager.arts.length; i++ ) {
 				//trace(LevelManager.arts[i].getParallaxLevel());
-				switch(LevelManager.arts[i].getParallaxLevel()) {
-					case 0:
-						//art += cameraSpeed;
-						break;
-					case 1:
-						LevelManager.arts[i].x += lerpAmountX * bg_speed_1;
-						break;
-					case 2:
-						LevelManager.arts[i].x += lerpAmountX * bg_speed_2;
-						break;
+					switch(LevelManager.arts[i].getParallaxLevel()) {
+						case 0:
+							//art += cameraSpeed;
+							break;
+						case 1:
+							LevelManager.arts[i].x += lerpAmountX * bg_speed_1;
+							break;
+						case 2:
+							LevelManager.arts[i].x += lerpAmountX * bg_speed_2;
+							break;
+					}
 				}
 			}
-			}
 		}
+		
 		public static function resetGameContainerCoordinates():void {
 			//trace("resetGameContainerCoordinates");
 			gameContainer.x = 0;

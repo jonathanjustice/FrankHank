@@ -40,7 +40,7 @@
 			//overriden by each individual class
 			//used for feedback mostly
 			//LevelManager.getInstance().setIsLevelComplete(true);
-			Game.setGameState("lockCamera", cutSceneName);
+			Game.setGameState("lockCameraAndAutomateAvatar", cutSceneName);
 			LevelManager.getInstance().setCameraLockZone(this);
 		}
 		

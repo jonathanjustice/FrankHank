@@ -287,7 +287,7 @@
 			return avatars;
 		}
 		
-		public function getAvatar():MovieClip {
+		public static function getAvatar():MovieClip {
 		/*	trace("avatars[0]", avatars[0]);
 			trace("avatars",avatars);
 			trace("avatars.numChildren",avatars.numChildren);*/

@@ -87,12 +87,17 @@
 		private var fireProjectileTimer:int = 0;
 		private var behaviorState:String = "idle"
 		private var filePath:String = "";
+		public var lerpTarget:Point = new Point();
+		public var lerpAmount:Point = new Point();
+		public var lerpMultiplier:Point = new Point();
+		public var lerping:Boolean = false;
 		
 		public function Actor() {
 			
 			defineWeaponStats();
 			setAnimationState("idle");
 			//print(this);
+			
 		}
 		
 		public function attachAdditionalArt(artToAttach:MovieClip):void {
@@ -252,6 +257,41 @@
 			array.splice(index,1);
 			utilities.Engine.Game.gameContainer.removeChild(actor);
 			actor.setTargetToFalse();
+		}
+		
+		public  function setLerpTarget(newTarget:Point ):void {
+			lerpTarget = newTarget;
+			trace("lerpTarget:", lerpTarget);
+			trace("this:", this.x, this.y);
+		}
+		
+		public function getLerpTarget():Point {
+			return lerpTarget;
+		}
+		
+		public  function setLerping(newState:Boolean ):void {
+			lerping = newState;
+		}
+		
+		public function getLerping():Boolean {
+			return lerping;
+		}
+		
+		public function lerpToTarget():void {
+			if (lerping) {
+				trace("lerping",lerping);
+				lerpAmount.x = (this.x - lerpTarget.x) * lerpMultiplier.x;
+				this.x -= lerpAmount.x;
+				lerpAmount.y = (this.y - lerpTarget.y) * lerpMultiplier.y;
+				this.y -= lerpAmount.y;
+				trace("lerpAmount",lerpAmount);
+			}
+		}
+		
+		
+		public  function setLerpMultiplier(newXMultiplier:Number, newYMultiplier:Number):void {
+			lerpMultiplier.x = newXMultiplier;
+			lerpMultiplier.y = newYMultiplier;
 		}
 		
 		public function takeDamage(amount:Number):void {

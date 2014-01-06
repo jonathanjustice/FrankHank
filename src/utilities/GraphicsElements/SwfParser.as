@@ -212,6 +212,7 @@
 							break;
 						case "triggerCameraLock":
 							var trigger_CameraLock:Trigger_CameraLock = new Trigger_CameraLock(tempArray[j].x, tempArray[j].y, tempArray[j].width, tempArray[j].height);
+							trace("trigger_CameraLock----------",tempArray[j].x, tempArray[j].y);
 							break;
 						case "triggerEngineCutScene":
 							var trigger_EngineCutScene:Trigger_EngineCutScene = new Trigger_EngineCutScene(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
