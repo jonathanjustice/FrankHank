@@ -26,17 +26,27 @@
 		private var originalYVelocity:int = 3;
 		private var triggeredWallXVelocity:int = 0;
 		private var triggeredWallYVelocity:int = 20;
+		private var tempWidth:Number = 0;
+		private var tempHeight:Number = 0;
 		 
 		//create a var tween
 		
 		public function MovingWall(newX:int, newY:int, newWidth:Number, newHeight:Number, newWallType:String, newIndex:int = 0) {
+			
+			setType(newWallType);
+			setUp();
+			tempWidth = newWidth;
+			tempHeight = newHeight;
 			this.x = newX;
 			this.y = newY;
-			setType(newWallType);
 			triggerIndex = newIndex;
-			setUp();
+			
+			
+			trace("tempWidth",tempWidth);
+			trace("tempHeight",tempHeight);
 			setNewTarget();
 			defineInitialPoint();
+			
 		}
 		
 		public override function getFilePath():String {
@@ -51,7 +61,8 @@
 			yVelocity = 3;
 			originalXVelocity = xVelocity;
 			originalYVelocity = yVelocity;
-			
+			xVelocity = 0;
+			yVelocity = 0;
 			
 			//this.visible = false;
 			
@@ -82,7 +93,12 @@
 			
 			trace("------------------------------");*/
 			//this.visible = false;
-			
+		/*	this.hitbox.scaleX = this.tempWidth*2;
+			this.hitbox.scaleY = this.tempHeight*2;
+			trace("assignGraphic")
+			trace("this.hitbox.width", this.hitbox.width);
+			trace("this.hitbox.height", this.hitbox.height);*/
+			//this.visible = false;
 			if (wallType == "triggeredWall") {
 				isActive = false;
 				triggerable = true;
@@ -92,9 +108,12 @@
 				originalXVelocity = xVelocity;
 				originalYVelocity = yVelocity;
 				addActorToGameEngine(graphic, LevelManager.triggerableWalls, triggerIndex);
+				addActorToGameEngine(graphic, LevelManager.walls);
 			}else {
 				addActorToGameEngine(graphic, LevelManager.walls);
 			}
+			this.hitbox.width = this.tempWidth;
+			this.hitbox.height = this.tempHeight;
 			//defineGraphicsDefaultSmallRectangle();
 		}
 		
@@ -103,6 +122,8 @@
 		}
 		
 		public function updateLoop():void {
+			//trace("x",this.x + this.hitbox.x);
+			//trace("y",this.y + this.hitbox.y);
 			setPreviousPosition();
 			if (isActive == true) {	
 				moveToNextNode();

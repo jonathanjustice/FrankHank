@@ -114,28 +114,29 @@
 						LevelManager.triggers_cameraLocks[g].checkForDeathFlag();
 						trace("tell camera to lock");
 					}
-					trace("1");
 				}
 				
 				//collide with a wall that was triggered to move
 				for (var h:int = 0; h < LevelManager.triggerableWalls.length; h++) {
-					trace("2");
 					if (LevelManager.triggerableWalls[h].getType() == "triggeredWall") {
 						LevelManager.triggerableWalls[h].updateLoop();
 					}
-					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggerableWalls[h]) == true) {
+					/*if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggerableWalls[h]) == true) {
+						trace("touched triggered wall");
 						switch (LevelManager.triggerableWalls[h].getType()){
 							case "triggeredWall":
-								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.triggerableWalls[h]) == "top") {
-									additionalVelocity = LevelManager.triggerableWalls[h].getVelocity().y;
-									isTouchingWall = true;
+								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.triggerableWalls[h]) == "top",true) {
+									trace("hitbox width: ",LevelManager.triggerableWalls[h].hitbox.width);
+									trace("hitbox height: ",LevelManager.triggerableWalls[h].hitbox.height);
+									trace("TOP -- touched triggered wall");
+									//additionalVelocity = LevelManager.triggerableWalls[h].getVelocity().y;
+									//isTouchingWall = true;
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 								}
 								break;
 						}
-					}
-					trace("3");
+					}*/
 				}
 				//collide walls & avatar
 				for (var i:int = 0; i < LevelManager.walls.length; i++) {
@@ -149,18 +150,18 @@
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
-									//trace("standard");
+									//trace("touched standard");
 								}
 								break;
 							case "platform":
 								if (utilities.Mathematics.RectangleCollision.testCollisionWithPlatform(myAvatar, LevelManager.walls[i]) == true) {
-									//trace("platform");
+									//trace("touched platform");
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 								}
 								break;
 							case "movingWall":
-								//trace("movingWall");
+								//trace("touched movingWall");
 								//trace(LevelManager.walls[i].name);
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
 									additionalVelocity = LevelManager.walls[i].getVelocity().y;
@@ -170,13 +171,27 @@
 								}
 								break;
 							case "movingPlatform":
-								if (utilities.Mathematics.RectangleCollision.testCollisionWithPlatform(myAvatar, LevelManager.walls[i]) == true) {
+								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
+									
+								//trace("touched movingPlatform");
 									additionalVelocity = LevelManager.walls[i].getVelocity().y;
 									isTouchingWall = true;
 									//trace("movingPlatform");
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 									
+								}
+								break;
+							case "triggeredWall":
+								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
+									trace(LevelManager.walls[i]);
+									//trace("hitbox width: ",LevelManager.walls[i].hitbox.width);
+									//trace("hitbox height: ",LevelManager.walls[i].hitbox.height);
+									//trace("TOP -- touched triggered wall");
+									//additionalVelocity = LevelManager.triggerableWalls[i].getVelocity().y;
+									//isTouchingWall = true;
+									myAvatar.jumpingEnded();
+									myAvatar.resetGravity();
 								}
 								break;
 						}

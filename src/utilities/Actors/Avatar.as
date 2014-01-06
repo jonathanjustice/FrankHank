@@ -103,6 +103,7 @@
 		}
 		
 		public function updateLoop():void {
+			
 			if (getIsSwfLoaded() == true) {
 				//trace("health",health);
 				animationLogic();
@@ -133,6 +134,9 @@
 				}
 				punch();
 			}
+			
+			//trace("avatar x",this.x + this.hitbox.x + this.hitbox.width);
+			//trace("avatar y",this.y + this.hitbox.y + this.hitbox.height);
 		}
 		
 		/*public override function Point_Actor_At_Target(target:Point):void{

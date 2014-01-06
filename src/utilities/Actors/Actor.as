@@ -33,7 +33,7 @@
 	public class Actor extends GameObject {
 		public var directionLastFaced:String = "RIGHT";
 		public var attachedArt:MovieClip = new MovieClip;
-		public var hitbox:MovieClip = new MovieClip;
+		public var hitbox:MovieClip = new MovieClip();
 		public var hitzone:MovieClip = new MovieClip;
 		private var nodes:Array = new Array;
 		public var isGraphicLoaded:Boolean = false;

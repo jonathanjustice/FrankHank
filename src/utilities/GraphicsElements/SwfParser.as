@@ -163,8 +163,10 @@
 				}
 				
 			}
-			if (objectToSort.contains(objectToSort.hitbox)) {
-				objectToSort.removeChild(objectToSort.hitbox);
+			for (var m:int = 0; m < objectToSort.numChildren; m++) {
+				if (objectToSort.getChildAt(m).name == "hitbox") {
+					objectToSort.removeChild(objectToSort.getChildAt(m));
+				}
 			}
 			
 			
@@ -207,18 +209,15 @@
 							break;
 						case "triggerEndZone":
 							var trigger_EndZone:Trigger_EndZone = new Trigger_EndZone(tempArray[j].x, tempArray[j].y, tempArray[j].width, tempArray[j].height);
-							trace("6", tempArray[j].name);
 							break;
 						case "triggerCameraLock":
 							var trigger_CameraLock:Trigger_CameraLock = new Trigger_CameraLock(tempArray[j].x, tempArray[j].y, tempArray[j].width, tempArray[j].height);
-							trace("5", tempArray[j].name);
 							break;
 						case "triggerEngineCutScene":
 							var trigger_EngineCutScene:Trigger_EngineCutScene = new Trigger_EngineCutScene(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
 							trigger_EngineCutScene.x = tempArray[j].x;
 							trigger_EngineCutScene.y = tempArray[j].y;
 							//wall.setType("standard");
-							trace("4", tempArray[j].name);
 							break;
 						case "avatar":
 							var avatar:Avatar = new Avatar(tempArray[j].x, tempArray[j].y);
@@ -255,7 +254,6 @@
 							break;
 					}
 					if (tempArray[j].name.indexOf("triggerCutScene_") != -1) {
-						trace("1", tempArray[j].name);
 						var cutSceneName:String = tempArray[j].name;
 						
 						//trace(cutSceneName.slice(17, cutSceneName.length)); // output: !!!
@@ -270,7 +268,6 @@
 						//wall.setType("standard");
 					}
 					if (tempArray[j].name.indexOf("trigger_") != -1) {
-						trace("2", tempArray[j].name);
 						var trigger_Index:int = tempArray[j].name.charAt(8);
 						//trace("triggerIndex",triggerIndex);
 						var trigger:Trigger = new Trigger(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height,trigger_Index);
@@ -279,7 +276,6 @@
 						
 					}
 					if (tempArray[j].name.indexOf("triggeredWall_") != -1) {
-						trace("3", tempArray[j].name);
 						var triggeredWallIndex:int = tempArray[j].name.charAt(14);
 						var triggeredWall:MovingWall = new MovingWall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height,"triggeredWall",triggeredWallIndex);
 						sortNodes(triggeredWall, tempArray[j]);
