@@ -121,22 +121,22 @@
 					if (LevelManager.triggerableWalls[h].getType() == "triggeredWall") {
 						LevelManager.triggerableWalls[h].updateLoop();
 					}
-					/*if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggerableWalls[h]) == true) {
-						trace("touched triggered wall");
-						switch (LevelManager.triggerableWalls[h].getType()){
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggerableWalls[i]) == true) {
+						switch (LevelManager.triggerableWalls[i].getType()){
 							case "triggeredWall":
-								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.triggerableWalls[h]) == "top",true) {
-									trace("hitbox width: ",LevelManager.triggerableWalls[h].hitbox.width);
-									trace("hitbox height: ",LevelManager.triggerableWalls[h].hitbox.height);
-									trace("TOP -- touched triggered wall");
-									//additionalVelocity = LevelManager.triggerableWalls[h].getVelocity().y;
+								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.triggerableWalls[h]) == "top") {
+									trace(LevelManager.triggerableWalls[h]);
+									//trace("hitbox width: ",LevelManager.walls[i].hitbox.width);
+									//trace("hitbox height: ",LevelManager.walls[i].hitbox.height);
+									//trace("TOP -- touched triggered wall");
+									//additionalVelocity = LevelManager.triggerableWalls[i].getVelocity().y;
 									//isTouchingWall = true;
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 								}
 								break;
 						}
-					}*/
+					}
 				}
 				//collide walls & avatar
 				for (var i:int = 0; i < LevelManager.walls.length; i++) {
@@ -182,18 +182,7 @@
 									
 								}
 								break;
-							case "triggeredWall":
-								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
-									trace(LevelManager.walls[i]);
-									//trace("hitbox width: ",LevelManager.walls[i].hitbox.width);
-									//trace("hitbox height: ",LevelManager.walls[i].hitbox.height);
-									//trace("TOP -- touched triggered wall");
-									//additionalVelocity = LevelManager.triggerableWalls[i].getVelocity().y;
-									//isTouchingWall = true;
-									myAvatar.jumpingEnded();
-									myAvatar.resetGravity();
-								}
-								break;
+							
 						}
 					}
 					//collide bullets  & walls
