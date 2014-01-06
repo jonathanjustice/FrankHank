@@ -212,7 +212,6 @@
 							break;
 						case "triggerCameraLock":
 							var trigger_CameraLock:Trigger_CameraLock = new Trigger_CameraLock(tempArray[j].x, tempArray[j].y, tempArray[j].width, tempArray[j].height);
-							trace("trigger_CameraLock----------",tempArray[j].x, tempArray[j].y);
 							break;
 						case "triggerEngineCutScene":
 							var trigger_EngineCutScene:Trigger_EngineCutScene = new Trigger_EngineCutScene(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
@@ -256,11 +255,11 @@
 					}
 					if (tempArray[j].name.indexOf("triggerCutScene_") != -1) {
 						var cutSceneName:String = tempArray[j].name;
-						
+						trace("cutSceneName",cutSceneName);
 						//trace(cutSceneName.slice(17, cutSceneName.length)); // output: !!!
 						//get the name after the "cutScene_Trigger_" part
-						cutSceneName = cutSceneName.slice(17, cutSceneName.length);
-						//trace(cutSceneName);
+						cutSceneName = cutSceneName.slice(16, cutSceneName.length);
+						trace("cutSceneName",cutSceneName);
 						var trigger_CutScene_Index:int = tempArray[j].name.charAt(17);
 						//trace("triggerIndex",triggerIndex);
 						var trigger_CutScene:Trigger_CutScene = new Trigger_CutScene(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height,cutSceneName);
@@ -357,6 +356,7 @@
 			//trace("currentParent",currentParent);
 			isLevel = false;
 			
+				trace("filePath", filePath);
 			switch(filePath) {
 				case "ui_start":
 					filePath = ui_start;

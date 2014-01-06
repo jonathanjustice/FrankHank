@@ -197,9 +197,11 @@
 				/*  in-level cutscenes  */
 				case "startInGameCutScene":
 					//doshit
+					trace("Game: startInGameCutScene");
+					trace("Game: filePathName",filePathName);
 					disableMasterLoop();
 					CutSceneManager.getInstance().loadInGameCutScene(filePathName);
-					//trace("Game: startInGameCutScene");
+					trace("Game: startInGameCutScene");
 					break;	
 					
 				case "cutSceneCurrentlyLoading_Trigger":

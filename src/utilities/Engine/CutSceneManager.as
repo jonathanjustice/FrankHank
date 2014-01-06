@@ -87,8 +87,8 @@
 		}
 		
 		public function loadInGameCutScene(newSceneName:String ):void {
-			var sceneName:String = "swf_cutScene_" + newSceneName;
-			//trace("sceneName:---------------------------------------------------------------- ", sceneName );
+			var sceneName:String = "swf_cutScene_level_" + newSceneName + "_mid";
+			trace("sceneName:---------------------------------------------------------------- ", sceneName );
 			//print(sceneName);
 			loadSceneFromName(sceneName);
 			Game.setGameState("cutSceneCurrentlyLoading_Trigger"); 

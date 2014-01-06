@@ -15,7 +15,7 @@
 		public function Trigger_CutScene(newX:int, newY:int, newWidth:Number, newHeight:Number, newCutSceneName:String) {
 			//print("wewewewewe");
 			cutSceneName = newCutSceneName;
-		//	trace("cutSceneName", cutSceneName);
+			trace("trigger file cutSceneName", cutSceneName);
 			setUp();
 			tempWidth = newWidth;
 			tempHeight = newHeight;

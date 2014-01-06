@@ -42,8 +42,8 @@
 			triggerIndex = newIndex;
 			
 			
-			trace("tempWidth",tempWidth);
-			trace("tempHeight",tempHeight);
+			//trace("tempWidth",tempWidth);
+			//trace("tempHeight",tempHeight);
 			setNewTarget();
 			defineInitialPoint();
 			

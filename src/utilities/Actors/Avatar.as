@@ -50,12 +50,10 @@
 		public override function lerpToTarget():void {
 			if (lerping) {
 				AnimationManager.getInstance().updateAnimationState(this, "run");
-				trace("lerping",lerping);
 				lerpAmount.x = (this.x - lerpTarget.x) * lerpMultiplier.x;
 				this.x -= lerpAmount.x;
 				lerpAmount.y = (this.y - lerpTarget.y) * lerpMultiplier.y;
 				//this.y -= lerpAmount.y;
-				trace("lerpAmount", lerpAmount);
 				if (Math.abs(lerpAmount.x) < 3) {
 					lerping = false;
 					Game.setGameState("unlockAvatar");

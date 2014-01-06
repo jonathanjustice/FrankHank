@@ -121,11 +121,10 @@
 					if (LevelManager.triggerableWalls[h].getType() == "triggeredWall") {
 						LevelManager.triggerableWalls[h].updateLoop();
 					}
-					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggerableWalls[i]) == true) {
-						switch (LevelManager.triggerableWalls[i].getType()){
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggerableWalls[h]) == true) {
+						switch (LevelManager.triggerableWalls[h].getType()){
 							case "triggeredWall":
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.triggerableWalls[h]) == "top") {
-									trace(LevelManager.triggerableWalls[h]);
 									//trace("hitbox width: ",LevelManager.walls[i].hitbox.width);
 									//trace("hitbox height: ",LevelManager.walls[i].hitbox.height);
 									//trace("TOP -- touched triggered wall");
