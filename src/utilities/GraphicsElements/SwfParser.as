@@ -11,6 +11,7 @@
 	import utilities.Actors.GameBoardPieces.Trigger_CutScene;
 	import utilities.Actors.GameBoardPieces.Trigger_EngineCutScene;
 	import utilities.Actors.GameBoardPieces.Trigger_CameraLock;
+	import utilities.Actors.GameBoardPieces.Trigger_ActivateBoss;
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Actors.GoonEnemy;
 	import utilities.Actors.Coin;
@@ -21,6 +22,7 @@
 	import utilities.Actors.Powerup_invincible;
 	import utilities.Actors.SelectableActor;
 	import utilities.Actors.TankEnemy;
+	import utilities.Actors.BossEnemy;
 	import utilities.Actors.SpiderEnemy;
 	import utilities.Engine.Game;
 	import utilities.Engine.CutSceneManager;
@@ -213,6 +215,9 @@
 						case "triggerCameraLock":
 							var trigger_CameraLock:Trigger_CameraLock = new Trigger_CameraLock(tempArray[j].x, tempArray[j].y, tempArray[j].width, tempArray[j].height);
 							break;
+						case "triggerActivateBoss":
+							var trigger_ActivateBoss:Trigger_ActivateBoss = new Trigger_ActivateBoss(tempArray[j].x, tempArray[j].y, tempArray[j].width, tempArray[j].height);
+							break;
 						case "triggerEngineCutScene":
 							var trigger_EngineCutScene:Trigger_EngineCutScene = new Trigger_EngineCutScene(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
 							trigger_EngineCutScene.x = tempArray[j].x;
@@ -236,6 +241,9 @@
 							break;
 						case "tank":
 							var tank:TankEnemy = new TankEnemy(tempArray[j].x,tempArray[j].y);
+							break;
+						case "boss":
+							var boss:BossEnemy = new BossEnemy(tempArray[j].x,tempArray[j].y);
 							break;
 						case "spider":
 							var spider:SpiderEnemy = new SpiderEnemy(tempArray[j].x,tempArray[j].y);
@@ -280,7 +288,6 @@
 						var triggeredWall:MovingWall = new MovingWall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height,"triggeredWall",triggeredWallIndex);
 						sortNodes(triggeredWall, tempArray[j]);
 					}
-					
 				}
 			}else{
 				currentParent.addChild(graphic);
@@ -356,7 +363,7 @@
 			//trace("currentParent",currentParent);
 			isLevel = false;
 			
-				trace("filePath", filePath);
+			//trace("filePath", filePath);
 			switch(filePath) {
 				case "ui_start":
 					filePath = ui_start;

@@ -19,6 +19,7 @@
 	import utilities.Actors.GameBoardPieces.Trigger_CutScene;
 	import utilities.Actors.GameBoardPieces.Trigger_EndZone;
 	import utilities.Actors.GameBoardPieces.Trigger_CameraLock;
+	import utilities.Actors.GameBoardPieces.Trigger_ActivateBoss;
 	import utilities.GraphicsElements.SwfParser;
 	import utilities.GraphicsElements.Animation;
 	import utilities.Mathematics.MathFormulas;
@@ -353,7 +354,7 @@
 		//this would be a really nice place to start using Interfaces... hint hint hint
 		public function checkForDeathFlag():void{
 			if (markedForDeletion) {
-				trace("checkForDeathFlag",this);
+				//trace("checkForDeathFlag",this);
 				//delete it
 				if(this is Bullet){
 					removeActorFromGameEngine(this,BulletManager.getInstance().getArray());
@@ -379,8 +380,14 @@
 					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers_endZones());
 				}else if(this is Trigger_CameraLock){
 					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers_cameraLocks());
+				}else if(this is Trigger_ActivateBoss){
+					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers_activateBosses());
 				}else if (this is FeedbackTextField) {
 					removeActorFromGameEngine(this,EffectsManager.getInstance().getEffects());
+				}else if (this is Trigger) {
+					removeActorFromGameEngine(this,EffectsManager.getInstance().getEffects());
+				}else if (this is BossEnemy) {
+					removeActorFromGameEngine(this,LevelManager.getInstance().getBosses());
 				}
 			}
 		}

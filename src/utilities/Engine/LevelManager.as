@@ -28,6 +28,7 @@
 		
 		public static var triggers_cutScenes:Array;
 		public static var triggers_cameraLocks:Array;
+		public static var triggers_activateBosses:Array;
 		public static var arts:Array;
 		public static var coins:Array;
 		public static var savePoints:Array;
@@ -53,6 +54,7 @@
 			triggers_endZones = [];
 			triggers_cutScenes = [];
 			triggers_cameraLocks = [];
+			triggers_activateBosses = [];
 		}
 		
 		public static function getInstance():LevelManager {
@@ -77,6 +79,10 @@
 		
 		public function getTriggers_cameraLocks():Array{
 			return triggers_cameraLocks;
+		}
+		
+		public function getTriggers_activateBosses():Array{
+			return triggers_activateBosses;
 		}
 		
 		public function setCameraLockZone(newLockZone:MovieClip):void {
@@ -220,6 +226,7 @@
 			LevelManager.getInstance().destroyArray(LevelManager.triggers_endZones);
 			LevelManager.getInstance().destroyArray(LevelManager.triggers_cutScenes);
 			LevelManager.getInstance().destroyArray(LevelManager.triggers_cameraLocks);
+			LevelManager.getInstance().destroyArray(LevelManager.triggers_activateBosses);
 			Game.resetGameContainerCoordinates();
 			Game.setFramesSinceGameStart();
 		}

@@ -128,6 +128,13 @@
 					//everything else is the same, just camera doesn't track
 					break;
 					//in engine cutscenes
+				case "activateBoss":
+					trace("do boss stuff son");
+					setLerpMultiplier(lerpMultiplier_cameraLock, lerpMultiplier_cameraLock);
+					//setLerpMultiplier(lerpMultiplier_cameraLock, lerpMultiplier_cameraLock);
+					//everything else is the same, just camera doesn't track
+					break;
+					//in engine cutscenes
 					
 					
 					
@@ -349,6 +356,10 @@
 			SaveDataManager.getInstance();
 			AnimationManager.getInstance();
 			CheatManager.getInstance();
+		}
+		
+		public function shakeCamers():void {
+			trace("camera is shaking");
 		}
 		
 		

@@ -116,6 +116,14 @@
 					}
 				}
 				
+				for (var k:int = 0; k < LevelManager.triggers_activateBosses.length; k++) {
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_activateBosses[k]) == true) {
+						LevelManager.triggers_activateBosses[k].takeDamage(1);
+						LevelManager.triggers_activateBosses[k].checkForDeathFlag();
+						trace("tell boss to activate");
+					}
+				}
+				
 				//collide with a wall that was triggered to move
 				for (var h:int = 0; h < LevelManager.triggerableWalls.length; h++) {
 					if (LevelManager.triggerableWalls[h].getType() == "triggeredWall") {

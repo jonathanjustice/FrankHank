@@ -17,7 +17,7 @@
 		public function SoundManager(singletonEnforcer:SingletonEnforcer){
 			//createNewSoundObject(filePath);
 			get_sounds_from_JsonParser();
-			trace("filePath",filePath);
+			//trace("filePath",filePath);
 			//stop_a_sound_channel(filePath);
 		}
 		
