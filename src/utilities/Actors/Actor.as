@@ -387,7 +387,7 @@
 				}else if (this is Trigger) {
 					removeActorFromGameEngine(this,EffectsManager.getInstance().getEffects());
 				}else if (this is BossEnemy) {
-					removeActorFromGameEngine(this,LevelManager.getInstance().getBosses());
+					removeActorFromGameEngine(this,EnemyManager.getInstance().getBosses());
 				}
 			}
 		}
