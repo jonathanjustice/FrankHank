@@ -148,17 +148,11 @@
 		
 		//sort out nodes, put them into new array in sequence based on their number
 		private function sortNodes(actor:Actor, objectToSort:MovieClip):Array {
-			trace("SORT NODES-----------------------------");
-			trace("objectToSort.numChildren", objectToSort.numChildren);
 			var nodeArray:Array = new Array;
 			for (var n:int = 0; n < objectToSort.numChildren; n++) {
-				trace("n",n);
 				var myString:String = "";
 				
 				myString = String(objectToSort.getChildAt(n).name);
-				
-				trace("myString", myString);
-				
 				if (objectToSort.getChildAt(n).name.indexOf("node_") != -1) {	
 					var index:int = 0;
 					index = int(objectToSort.getChildAt(n).name.charAt(5));

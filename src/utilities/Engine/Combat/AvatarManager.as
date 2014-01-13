@@ -89,7 +89,6 @@
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers[d]) == true) {
 						LevelManager.triggers[d].takeDamage(1);
 						LevelManager.triggers[d].checkForDeathFlag();
-						//trace("touched moveable wall trigger");
 					}
 				}
 				//collide with triggers for endzone
@@ -133,10 +132,6 @@
 						switch (LevelManager.triggerableWalls[h].getType()){
 							case "triggeredWall":
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.triggerableWalls[h]) == "top") {
-									//trace("hitbox width: ",LevelManager.walls[i].hitbox.width);
-									//trace("hitbox height: ",LevelManager.walls[i].hitbox.height);
-									//trace("TOP -- touched triggered wall");
-									//isTouchingWall = true;
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 								}
@@ -157,43 +152,27 @@
 								//resolves the collision & returns if this touched the top of the other object
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
 									myAvatar.jumpingEnded();
-									//myAvatar.resetGravity();
-									//trace("touched standard");
 								}
 								break;
 							case "platform":
 								if (utilities.Mathematics.RectangleCollision.testCollisionWithPlatform(myAvatar, LevelManager.walls[i]) == true) {
-									//trace("touched platform");
 									myAvatar.jumpingEnded();
-									myAvatar.resetGravity();
 								}
 								break;
 							case "movingWall":
-								trace("touched movingWall");
-								
-								//trace(LevelManager.walls[i].name);
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
-									//additionalVelocity = LevelManager.walls[i].getVelocity().y;
-									//myAvatar.x += LevelManager.walls[i].getVelocity().x;
-									//myAvatar.xVelocity = LevelManager.walls[i].getVelocity().x;
 									var tempWallVelocity:Point = new Point();
 									tempWallVelocity.x = LevelManager.walls[i].getVelocity().x;
 									tempWallVelocity.y = LevelManager.walls[i].getVelocity().y;
 									isTouchingWall = true;
 									myAvatar.jumpingEnded();
-									myAvatar.resetGravity();
 									myAvatar.setIsRiding(true,tempWallVelocity); 
 								}
 								break;
 							case "movingPlatform":
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
-									
-								//trace("touched movingPlatform");
-									//additionalVelocity = LevelManager.walls[i].getVelocity().y;
 									isTouchingWall = true;
-									//trace("movingPlatform");
 									myAvatar.jumpingEnded();
-									myAvatar.resetGravity();
 									
 								}
 								break;
@@ -239,9 +218,6 @@
 							//you jump on the enemy while it is vulnerable
 							var collisionWithEnemyDirection:String = RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j],false);
 							if(collisionWithEnemyDirection=="top"){
-								//trace("vulnerable and not on top");
-								//this is whats causing me to drop in the middle of enemies maybe, because i messed with the function that keeps enemies on platforms?
-								//trace("vulnerable and on top");
 								myAvatar.jumpingEnded();
 								myAvatar.jump();
 								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());

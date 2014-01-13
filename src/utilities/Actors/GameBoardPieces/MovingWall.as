@@ -40,10 +40,6 @@
 			this.x = newX;
 			this.y = newY;
 			triggerIndex = newIndex;
-			
-			
-			//trace("tempWidth",tempWidth);
-			//trace("tempHeight",tempHeight);
 			setNewTarget();
 			defineInitialPoint();
 			
@@ -84,21 +80,6 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			/*trace("------------------------------");
-			
-			trace("this.scaleX", this.scaleX);
-			trace("this.scaleY", this.scaleY);
-			trace("this.attachedArt.scaleX", this.attachedArt.scaleX);
-			trace("this.attachedArt.scaleY", this.attachedArt.scaleY);
-			
-			trace("------------------------------");*/
-			//this.visible = false;
-		/*	this.hitbox.scaleX = this.tempWidth*2;
-			this.hitbox.scaleY = this.tempHeight*2;
-			trace("assignGraphic")
-			trace("this.hitbox.width", this.hitbox.width);
-			trace("this.hitbox.height", this.hitbox.height);*/
-			//this.visible = false;
 			if (wallType == "triggeredWall") {
 				isActive = false;
 				triggerable = true;
@@ -123,8 +104,6 @@
 		}
 		
 		public function updateLoop():void {
-			//trace("x",this.x + this.hitbox.x);
-			//trace("y",this.y + this.hitbox.y);
 			setPreviousPosition();
 			if (isActive == true) {	
 				moveToNextNode();
@@ -134,7 +113,7 @@
 		}
 		
 		public function setNewTarget():void {
-			trace("targetNode before setNewTarget", targetNode);
+			//trace("targetNode before setNewTarget", targetNode);
 			if (nodeSequencing == "forward") {
 				trace("is FORWARD")
 				//if reached last node switch to decrementing
@@ -144,29 +123,29 @@
 					if (triggerable) {
 						isActive = false;
 					}
-					trace("switch to backward and Dec");
-					trace("target node:  ", targetNode);
+					//trace("switch to backward and Dec");
+					//trace("target node:  ", targetNode);
 				}
 				//if incrementing, select next node
 				else if (targetNode < this.getNodes().length ) {
 					targetNode++;
-					trace("forward and Inc");
-					trace("target node:  ", targetNode);
+					//trace("forward and Inc");
+					//trace("target node:  ", targetNode);
 				}
 			}else if (nodeSequencing == "backward") {
-				trace("is BACKWARD")
+				//trace("is BACKWARD")
 				//if reached first node, switch to incrementing
 				if (targetNode == 0) {
 					nodeSequencing = "forward";
 					targetNode++;
-					trace("switch to forward and Inc");
-					trace("target node:  ", targetNode);
+					//trace("switch to forward and Inc");
+					//trace("target node:  ", targetNode);
 				}
 				//if decrementing, select next node
 				else if (targetNode > 0) {
 					targetNode--;
-					trace("backward and Dec");
-					trace("target node:  ", targetNode);
+					//trace("backward and Dec");
+					//trace("target node:  ", targetNode);
 				}
 				
 				
@@ -177,7 +156,7 @@
 			trace("yVelocity ", yVelocity);
 			trace(this.y - initialPoint.y);
 			trace(this.getNodes()[targetNode].y);*/
-			trace("targetNode before setNewTarget", targetNode);
+			//trace("targetNode before setNewTarget", targetNode);
 		}
 		
 		public function moveToNextNode():void {

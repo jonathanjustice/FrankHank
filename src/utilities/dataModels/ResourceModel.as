@@ -19,8 +19,12 @@ package utilities.dataModels {
 			
 		}
 		
-		private function upadteSavedDatas():void {
+		private function updateResources():void {
 			resourceData = [coins, premiumCoins];
+		}
+		
+		public function updateSavedDatas():void {
+			
 			//SharedObjects.getInstance().getSharedObject();
 			//SharedObjects.getInstance().saveObjectToDisk(savedDatas);
 			//SharedObjects.getInstance().getSharedObject();
@@ -50,7 +54,7 @@ package utilities.dataModels {
 		
 		public function setCoins(amount:int):void {
 			coins = amount;
-			upadteSavedDatas();
+			updateSavedDatas();
 		}
 		
 		public function addCoins(amount:int):void {
@@ -62,17 +66,18 @@ package utilities.dataModels {
 				AvatarManager.getInstance().createExtraLifeTextFeecbackText();
 				coins -= coinsRequiredForExtraLife;
 			}
-			upadteSavedDatas();
+			updateResources();
+			//updateSavedDatas();
 		}
 		
 		public function setPremiumCoins(amount:int):void {
 			premiumCoins = amount;
-			upadteSavedDatas();
+			updateSavedDatas();
 		}
 		
 		public function addPremiumCoins(amount:int):void {
 			premiumCoins += amount;
-			upadteSavedDatas();
+			updateSavedDatas();
 		}
 	}
 }

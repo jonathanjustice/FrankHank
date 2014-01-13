@@ -213,18 +213,8 @@
 		}
 		
 		public function applyVelocities():void {
-			
-			if (getIsRiding() == true) {
-				trace("isRiding");
-				//this.x += getRidingVelocity().x;
-				this.y += yVelocity;
-				this.x += xVelocity;
-			}else {
-				this.x += xVelocity;
-				this.y += yVelocity;
-				trace("Not Riding");
-			}
-			
+			this.y += yVelocity;
+			this.x += xVelocity;
 			Main.game.moveGameContainer(this);
 		}
 		

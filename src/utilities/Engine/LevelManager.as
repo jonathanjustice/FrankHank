@@ -11,6 +11,7 @@
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Actors.GameBoardPieces.Terrain;
 	import utilities.dataModels.LevelProgressModel;
+	import utilities.dataModels.ResourceModel;
 	import utilities.Actors.Coin;
 	import utilities.Actors.Loot;
 	import flash.geom.Point;
@@ -175,6 +176,7 @@
 		}
 		
 		private function levelCompleted():void {
+			ResourceModel.getInstance().updateSavedDatas();
 			//trace("levelCompleted");
 			clearLevel();
 		//	if (EnemyManager.enemies.length == 0) {
@@ -185,6 +187,7 @@
 		}
 		
 		public function levelFailed():void {
+			ResourceModel.getInstance().updateSavedDatas();
 			Game.setLives(Game.getLives() - 1);
 			clearLevel();
 			if (Game.getLives() >= 0 ) {
