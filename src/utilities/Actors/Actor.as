@@ -61,7 +61,7 @@
 		public var maximumHealth:Number = 1;
 		private var gravity:Number = 2;
 		private var originalGravity:Number = 0;
-		private var currentGravity:Number=0;
+		private var currentGravity:Number=1;
 		private var gravityModifier:Number = 2;
 		private var maxGravity:Number = 2;
 		private var hitBoxWidth:Number = 0;
@@ -83,6 +83,8 @@
 		private var collisionDamageOriginal:Number = 0;
 		private var isAvailableForCollisionWithNonWallActors:Boolean = false;
 		private var isShootingEnabled:Boolean = false;
+		private var isRiding:Boolean = false;
+		private var ridingVelocity:Point = new Point();
 		private var isGravitySystemEnabled:Boolean = true;
 		private var fireProjectileDelay:int = 9999;
 		private var fireProjectileTimer:int = 0;
@@ -99,6 +101,19 @@
 			setAnimationState("idle");
 			//print(this);
 			
+		}
+		
+		public function setIsRiding(newState:Boolean,newRidingVelocity:Point):void {
+			isRiding = newState;
+			ridingVelocity = newRidingVelocity;
+		}
+		
+		public function getIsRiding():Boolean {
+			return isRiding;
+		}
+		
+		public function getRidingVelocity():Point {
+			return ridingVelocity;
 		}
 		
 		public function attachAdditionalArt(artToAttach:MovieClip):void {
@@ -196,7 +211,8 @@
 		//usually from SwfParser
 		public function defineNodes(array:Array):void {
 			nodes = array;
-			//trace("nodes: ",nodes);
+			trace("defineNodes: this:", this, "nodes: ", nodes);
+			trace("nodes.length", nodes.length);
 		}
 		
 		public function getNodes():Array {

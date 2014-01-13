@@ -136,7 +136,6 @@
 									//trace("hitbox width: ",LevelManager.walls[i].hitbox.width);
 									//trace("hitbox height: ",LevelManager.walls[i].hitbox.height);
 									//trace("TOP -- touched triggered wall");
-									//additionalVelocity = LevelManager.triggerableWalls[i].getVelocity().y;
 									//isTouchingWall = true;
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
@@ -146,6 +145,8 @@
 					}
 				}
 				//collide walls & avatar
+				var fakePoint:Point = new Point(0, 0);
+				myAvatar.setIsRiding(false,fakePoint);
 				for (var i:int = 0; i < LevelManager.walls.length; i++) {
 					if (LevelManager.walls[i].getType() == "movingWall") {
 						LevelManager.walls[i].updateLoop();
@@ -156,7 +157,7 @@
 								//resolves the collision & returns if this touched the top of the other object
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
 									myAvatar.jumpingEnded();
-									myAvatar.resetGravity();
+									//myAvatar.resetGravity();
 									//trace("touched standard");
 								}
 								break;
@@ -168,20 +169,27 @@
 								}
 								break;
 							case "movingWall":
-								//trace("touched movingWall");
+								trace("touched movingWall");
+								
 								//trace(LevelManager.walls[i].name);
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
-									additionalVelocity = LevelManager.walls[i].getVelocity().y;
+									//additionalVelocity = LevelManager.walls[i].getVelocity().y;
+									//myAvatar.x += LevelManager.walls[i].getVelocity().x;
+									//myAvatar.xVelocity = LevelManager.walls[i].getVelocity().x;
+									var tempWallVelocity:Point = new Point();
+									tempWallVelocity.x = LevelManager.walls[i].getVelocity().x;
+									tempWallVelocity.y = LevelManager.walls[i].getVelocity().y;
 									isTouchingWall = true;
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
+									myAvatar.setIsRiding(true,tempWallVelocity); 
 								}
 								break;
 							case "movingPlatform":
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
 									
 								//trace("touched movingPlatform");
-									additionalVelocity = LevelManager.walls[i].getVelocity().y;
+									//additionalVelocity = LevelManager.walls[i].getVelocity().y;
 									isTouchingWall = true;
 									//trace("movingPlatform");
 									myAvatar.jumpingEnded();

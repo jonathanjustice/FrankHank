@@ -32,7 +32,7 @@ package utilities.Mathematics{
 		 
 		
 		public static function testCollision(movable:MovieClip, stationary:MovieClip,resolveCollisions:Boolean=true):String {
-			var collisionEjectDistance:Number = 1;//don't get stuck in the other rectangle
+			var collisionEjectDistance:Number = .5;//don't get stuck in the other rectangle
 			var collidedWithTop:Boolean = false;
 			var collisionSide:String = "";
 			

@@ -122,8 +122,7 @@
 				//trace("health",health);
 				animationLogic();
 				//setIsFalling(true);
-				getisJumpingFromInputManager();
-				applyVelocities();
+				
 				lerpToTarget();
 				applyGravity(getIsGravitySystemEnabled());
 				
@@ -131,7 +130,7 @@
 				//get key data
 				//getAnglesFromKeyInputManager();
 				//get the velocity
-				getVelocityFromKeyInputManager();
+			
 				//getRotationFromKeyInputManager();
 				//apply the velocities to the avatar
 				
@@ -147,6 +146,9 @@
 				if (getBehaviorState() == "shooting") {
 					
 				}
+				getVelocityFromKeyInputManager();
+				getisJumpingFromInputManager();
+				applyVelocities();
 				punch();
 			}
 			
@@ -189,10 +191,12 @@
 			}
 			//if you are not pressing a button to run, then you slowdown
 			if (KeyInputManager.getMyVelocityX() == 0) {
-				xVelocity *= velocityDecrease;
-				if (xVelocity <= .5 && xVelocity >= -.5) {
-					xVelocity = 0;
-				}
+				//if(getIsRiding() == false){
+					xVelocity *= velocityDecrease;
+					if (xVelocity <= .5 && xVelocity >= -.5) {
+						xVelocity = 0;
+					}
+				//}
 			}
 				setDirectionToFace(directionLastFaced);
 		}
@@ -209,8 +213,18 @@
 		}
 		
 		public function applyVelocities():void {
-			this.x += xVelocity;
-			this.y += yVelocity;
+			
+			if (getIsRiding() == true) {
+				trace("isRiding");
+				//this.x += getRidingVelocity().x;
+				this.y += yVelocity;
+				this.x += xVelocity;
+			}else {
+				this.x += xVelocity;
+				this.y += yVelocity;
+				trace("Not Riding");
+			}
+			
 			Main.game.moveGameContainer(this);
 		}
 		

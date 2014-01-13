@@ -148,26 +148,28 @@
 		
 		//sort out nodes, put them into new array in sequence based on their number
 		private function sortNodes(actor:Actor, objectToSort:MovieClip):Array {
+			trace("SORT NODES-----------------------------");
+			trace("objectToSort.numChildren", objectToSort.numChildren);
 			var nodeArray:Array = new Array;
 			for (var n:int = 0; n < objectToSort.numChildren; n++) {
+				trace("n",n);
 				var myString:String = "";
+				
 				myString = String(objectToSort.getChildAt(n).name);
+				
+				trace("myString", myString);
+				
 				if (objectToSort.getChildAt(n).name.indexOf("node_") != -1) {	
 					var index:int = 0;
 					index = int(objectToSort.getChildAt(n).name.charAt(5));
 					nodeArray.splice(index, 0, objectToSort.getChildAt(n));
+					trace("parsing nodes: index",index);
 				}
-				if (objectToSort.getChildAt(n).name == "hitbox") {
-					actor.defineHitbox(objectToSort.hitbox);
-				}
-				if (objectToSort.getChildAt(n).name == "art") {
-					actor.attachAdditionalArt(objectToSort.art);
-				}
-				
 			}
+			//Goddam fucking voodoo. There is no reason this should need to be a seperate loop. WTF why doesn't it work the other way?!?!
 			for (var m:int = 0; m < objectToSort.numChildren; m++) {
-				if (objectToSort.getChildAt(m).name == "hitbox") {
-					objectToSort.removeChild(objectToSort.getChildAt(m));
+				if (objectToSort.getChildAt(m).name == "art") {
+					actor.attachAdditionalArt(objectToSort.art);
 				}
 			}
 			

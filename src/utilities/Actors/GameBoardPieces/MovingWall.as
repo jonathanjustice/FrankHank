@@ -114,6 +114,7 @@
 			}
 			this.hitbox.width = this.tempWidth;
 			this.hitbox.height = this.tempHeight;
+			this.hitbox.visible = false;
 			//defineGraphicsDefaultSmallRectangle();
 		}
 		
@@ -133,6 +134,7 @@
 		}
 		
 		public function setNewTarget():void {
+			trace("targetNode before setNewTarget", targetNode);
 			if (nodeSequencing == "forward") {
 				trace("is FORWARD")
 				//if reached last node switch to decrementing
@@ -175,6 +177,7 @@
 			trace("yVelocity ", yVelocity);
 			trace(this.y - initialPoint.y);
 			trace(this.getNodes()[targetNode].y);*/
+			trace("targetNode before setNewTarget", targetNode);
 		}
 		
 		public function moveToNextNode():void {
@@ -186,9 +189,14 @@
 			trace("yVelocity ", yVelocity);
 			trace(this.y - initialPoint.y);
 			trace(this.getNodes()[targetNode].y);
-			
+			d
 			*/
 			if (horizontalMotion != "arrived") {
+				//trace(this.x);
+				//trace(initialPoint.x);
+				//trace("targetNode", targetNode);
+				//trace(this.getNodes());
+				//trace(this.getNodes()[targetNode].x);
 				if (this.x - initialPoint.x < this.getNodes()[targetNode].x) {
 					xVelocity = originalXVelocity;
 				}else if(this.x - initialPoint.x > this.getNodes()[targetNode].x){
@@ -216,16 +224,16 @@
 			*/
 			//if you are close to the targetPoint, align to the targetPoint
 			//trace("X",Math.abs(this.x - initialPoint.x - this.getNodes()[targetNode].x));
-			if (Math.abs(this.x - initialPoint.x - this.getNodes()[targetNode].x) < xVelocity * 1.1) {
+			if (Math.abs(this.x - initialPoint.x - this.getNodes()[targetNode].x) <= xVelocity * 1.1) {
 				horizontalMotion = "arrived";
 				xVelocity = 0;
-				//trace("horizontalMotion arrived");
+				trace("horizontalMotion arrived");
 			}
 			//trace("FUCK",Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y));
-			if (Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y) < yVelocity * 1.1) {
+			if (Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y) <= yVelocity * 1.1) {
 				verticalMotion = "arrived";
 				yVelocity = 0;
-				//trace("verticalMotion arrived");
+			//	trace("verticalMotion arrived");
 			}
 			
 			
