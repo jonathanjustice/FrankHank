@@ -25,7 +25,7 @@ package utilities.dataModels {
 			//SharedObjects.getInstance().saveObjectToDisk(savedDatas);
 			//SharedObjects.getInstance().getSharedObject();
 			SavedData.getInstance().saveProgressData(resourceData);
-			trace(resourceData);
+			//trace(resourceData);
 		}
 		
 		public static function getInstance():ResourceModel {

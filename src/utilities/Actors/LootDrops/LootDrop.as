@@ -17,7 +17,7 @@
 		}
 		
 		public static function setAmount(amt:int):void{
-			trace("set amount");
+			//trace("set amount");
 			//trace("amount",lootAmount);
 			//lootAmount = amt;
 		}

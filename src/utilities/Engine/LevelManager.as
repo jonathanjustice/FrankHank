@@ -175,7 +175,7 @@
 		}
 		
 		private function levelCompleted():void {
-			trace("levelCompleted");
+			//trace("levelCompleted");
 			clearLevel();
 		//	if (EnemyManager.enemies.length == 0) {
 				LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1);

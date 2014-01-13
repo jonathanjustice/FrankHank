@@ -262,8 +262,8 @@
 		
 		public  function setLerpTarget(newTarget:Point ):void {
 			lerpTarget = newTarget;
-			trace("lerpTarget:", lerpTarget);
-			trace("this:", this.x, this.y);
+			//trace("lerpTarget:", lerpTarget);
+			//trace("this:", this.x, this.y);
 		}
 		
 		public function getLerpTarget():Point {
@@ -280,12 +280,12 @@
 		
 		public function lerpToTarget():void {
 			if (lerping) {
-				trace("lerping",lerping);
+				//trace("lerping",lerping);
 				lerpAmount.x = (this.x - lerpTarget.x) * lerpMultiplier.x;
 				this.x -= lerpAmount.x;
 				lerpAmount.y = (this.y - lerpTarget.y) * lerpMultiplier.y;
 				this.y -= lerpAmount.y;
-				trace("lerpAmount",lerpAmount);
+				//trace("lerpAmount",lerpAmount);
 			}
 		}
 		
@@ -632,26 +632,6 @@
 		
 		public function get_hasTargetFlag():Boolean{
 			return hasTarget;
-		}
-		
-		public function get_hitBoxWidth():Number {
-			trace("get_hitBoxWidth",hitBoxWidth);
-			return hitBoxWidth;
-		}
-		
-		public function get_hitBoxHeight():Number {
-			trace("get_hitBoxHeight",hitBoxHeight);
-			return hitBoxHeight;
-		}
-		
-		public function setHitBoxWidth(size:Number):void{
-			hitBoxWidth = size;
-			trace("setHitBoxWidth",size);
-		}
-		
-		public function setHitBoxHeight(size:Number):void{
-			hitBoxHeight = size;
-			trace("hitBoxHeight",size);
 		}
 		
 		//if this actor is tracking a target

@@ -41,10 +41,6 @@
 			this.x = newX,
 			this.y = newY;
 			setUp();
-			trace("-----------AVATAR------------");
-			trace(newX);
-			trace(newY);
-			
 		}
 		
 		public override function lerpToTarget():void {

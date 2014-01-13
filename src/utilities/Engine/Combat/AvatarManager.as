@@ -112,7 +112,7 @@
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_cameraLocks[g]) == true) {
 						LevelManager.triggers_cameraLocks[g].takeDamage(1);
 						LevelManager.triggers_cameraLocks[g].checkForDeathFlag();
-						trace("tell camera to lock");
+						//trace("tell camera to lock");
 					}
 				}
 				
@@ -120,7 +120,7 @@
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_activateBosses[k]) == true) {
 						LevelManager.triggers_activateBosses[k].takeDamage(1);
 						LevelManager.triggers_activateBosses[k].checkForDeathFlag();
-						trace("tell boss to activate");
+						//trace("tell boss to activate");
 					}
 				}
 				
@@ -231,9 +231,9 @@
 							//you jump on the enemy while it is vulnerable
 							var collisionWithEnemyDirection:String = RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j],false);
 							if(collisionWithEnemyDirection=="top"){
-								trace("vulnerable and not on top");
+								//trace("vulnerable and not on top");
 								//this is whats causing me to drop in the middle of enemies maybe, because i messed with the function that keeps enemies on platforms?
-								trace("vulnerable and on top");
+								//trace("vulnerable and on top");
 								myAvatar.jumpingEnded();
 								myAvatar.jump();
 								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
