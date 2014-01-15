@@ -33,6 +33,7 @@
 		private var delay:int = 15;
 		private var avatarHealth:int = 10;
 		private var additionalYVelocityForCamera:int = 0;
+		private var isTouchingWall:Boolean = false;
 		
 		
 		private var filePath:String = "../src/assets/actors/swf_frank.swf";
@@ -41,6 +42,14 @@
 			this.x = newX,
 			this.y = newY;
 			setUp();
+		}
+		
+		public function getIsTouchingWall():Boolean {
+			return isTouchingWall;
+		}
+		
+		public function setIsTouchingWall(newState:Boolean):void {
+			isTouchingWall = newState;
 		}
 		
 		public override function lerpToTarget():void {
@@ -265,21 +274,12 @@
 			//trace("end");
 		}
 		
-		public function checkForFallingAnimation():void {
-			if (AvatarManager.getInstance().getIsTouchingWall() == false) {
-				if (getIsFalling() == false) {
-					setIsFalling(true)
-					AnimationManager.getInstance().updateAnimationState(this, "jump");
-				}
-			}
-		}
-		
 		public function animationLogic():void {
-			//checkForFallingAnimation();
 			//disgusting hack
 			listenForStopFrame();
 			//If running, disable idleing & play run 
-			if (getIsJumping() == false) {
+			if (getIsTouchingWall() == true) {
+				setIsFalling(false);
 				if (xVelocity != 0 && yVelocity == 0) {
 				setIsIdle(false);
 				setIdleTime(0);
@@ -309,14 +309,12 @@
 						setIdleTime(0);
 					}
 				}
-			}
-			/*if (AvatarManager.getInstance().getIsTouchingWall() == false) {
+			}else if (getIsTouchingWall() == false) {
 				if (getIsFalling() == false) {
-					setIsFalling(true)
-					AnimationManager.getInstance().updateAnimationState(this, "jump");
+					setIsFalling(true);
+					AnimationManager.getInstance().updateAnimationState(this, "fall");
 				}
-			}*/
-			
+			}
 		}
 		
 		public override function onTakeDamage():void {

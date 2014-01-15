@@ -19,17 +19,12 @@
 		public static var avatar:MovieClip;
 		public static var avatars:Array;
 		public static var isAvatarDoubleJumpEnabled:Boolean = false;
-		public static var isTouchingWall:Boolean = false;
 		public function AvatarManager(singletonEnforcer:SingletonEnforcer){
 			setUp();			
 		}
 		
 		public function getIsAvatarDoubleJumpEnabled():Boolean {
 			return isAvatarDoubleJumpEnabled;
-		}
-		
-		public function getIsTouchingWall():Boolean {
-			return isTouchingWall;
 		}
 		
 		public static function getInstance():AvatarManager {
@@ -58,10 +53,10 @@
 		}
 	
 		public static function updateLoop():void {
-			for each(var myAvatar:Avatar in avatars){
-				isTouchingWall = false;
+			for each(var myAvatar:Avatar in avatars) {
 				var additionalVelocity:int = 0;
 				myAvatar.updateLoop();
+				myAvatar.setIsTouchingWall(false);
 				//collide powersups & avatar
 				for (var a:int = 0; a < PowerupManager.powerups.length; a++) {
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, PowerupManager.powerups[a]) == true) {
@@ -157,13 +152,13 @@
 								//resolves the collision & returns if this touched the top of the other object
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
 									myAvatar.jumpingEnded();
-									isTouchingWall = true;
-									isTouchingWall = false;
+									myAvatar.setIsTouchingWall(true);
 								}
 								break;
 							case "platform":
 								if (utilities.Mathematics.RectangleCollision.testCollisionWithPlatform(myAvatar, LevelManager.walls[i]) == true) {
 									myAvatar.jumpingEnded();
+									myAvatar.setIsTouchingWall(true);
 								}
 								break;
 							case "movingWall":
@@ -171,14 +166,14 @@
 									var tempWallVelocity:Point = new Point();
 									tempWallVelocity.x = LevelManager.walls[i].getVelocity().x;
 									tempWallVelocity.y = LevelManager.walls[i].getVelocity().y;
-									isTouchingWall = true;
+									myAvatar.setIsTouchingWall(true);
 									myAvatar.jumpingEnded();
 									myAvatar.setIsRiding(true,tempWallVelocity); 
 								}
 								break;
 							case "movingPlatform":
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
-									isTouchingWall = true;
+									myAvatar.setIsTouchingWall(true);
 									myAvatar.jumpingEnded();
 									
 								}
