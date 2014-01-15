@@ -206,7 +206,7 @@
 			if (Math.abs(this.x - initialPoint.x - this.getNodes()[targetNode].x) <= xVelocity * 1.1) {
 				horizontalMotion = "arrived";
 				xVelocity = 0;
-				trace("horizontalMotion arrived");
+				//trace("horizontalMotion arrived");
 			}
 			//trace("FUCK",Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y));
 			if (Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y) <= yVelocity * 1.1) {
@@ -222,7 +222,7 @@
 				verticalMotion = "nope";
 				horizontalMotion = "nope";
 				setNewTarget();
-				trace("both arrived");
+				//trace("both arrived");
 			}
 			
 		}
