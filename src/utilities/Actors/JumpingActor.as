@@ -20,11 +20,13 @@
 		private var isJumpingEnabled:Boolean = true;
 		public var isDoubleJumpingEnabled:Boolean = false;
 		public var isJumping:Boolean = false;
+		public var jumpingInputSpeedModifier:Number = 1;
+		public var originalJumpingInputSpeedModifier:Number = 1;
 		
 		
 		private var filePath:String = "";
 		public function JumpingActor(){
-			
+			originalJumpingInputSpeedModifier = jumpingInputSpeedModifier;
 		}
 		
 		public function getisJumpingFromInputManager():void {
@@ -60,6 +62,7 @@
 		}
 		
 		public function jump():void {
+			jumpingInputSpeedModifier = .5;
 			setIdleTime(0);
 			setIdleImpatientTime(0);
 			setIsIdle(false);
@@ -77,6 +80,7 @@
 		
 		//called when this collides with a floor
 		public function jumpingEnded():void {
+			jumpingInputSpeedModifier = originalJumpingInputSpeedModifier;
 			isJumping = false;
 			currentJumpCount = 0;
 			resetGravity();
@@ -89,6 +93,10 @@
 				trace("xVelocity:",xVelocity);
 			}*/
 			//if the idle time is above 0 then don't do anythhing
+		}
+		
+		public function getJumpingInputSpeedModifier():Number {
+			return jumpingInputSpeedModifier;
 		}
 	}
 }

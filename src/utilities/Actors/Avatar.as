@@ -20,7 +20,7 @@
 		private var myAngle:Number=0;
 		private var velocityIncrease:Number = 3;
 		private var maxVelocity:Number = 18;
-		private var velocityDecrease:Number = .8;
+		private var velocityDecrease:Number = .7;
 		private var maxSpeed:Number=100;
 		public var xDiff:Number=0;
 		public var yDiff:Number = 0;
@@ -175,11 +175,11 @@
 			//verify key press is the right direction before application of velocity
 			//set the direction i should be facing
 			if (KeyInputManager.getLeftArrowKey()==true) {
-				xVelocity += velocityMod * velocityIncrease;
+				xVelocity += (velocityMod * velocityIncrease) * getJumpingInputSpeedModifier();
 				directionLastFaced = "LEFT";
 			}
 			if (KeyInputManager.getRightArrowKey()==true) {
-				xVelocity += velocityMod * velocityIncrease;
+				xVelocity += (velocityMod * velocityIncrease)* getJumpingInputSpeedModifier();
 				directionLastFaced = "RIGHT";
 			}
 			//limit max velocity
