@@ -115,7 +115,7 @@
 		public function setNewTarget():void {
 			//trace("targetNode before setNewTarget", targetNode);
 			if (nodeSequencing == "forward") {
-				trace("is FORWARD")
+				//trace("is FORWARD")
 				//if reached last node switch to decrementing
 				if (targetNode == this.getNodes().length - 1) {
 					nodeSequencing = "backward";

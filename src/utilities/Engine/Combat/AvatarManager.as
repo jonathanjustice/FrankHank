@@ -19,12 +19,17 @@
 		public static var avatar:MovieClip;
 		public static var avatars:Array;
 		public static var isAvatarDoubleJumpEnabled:Boolean = false;
+		public static var isTouchingWall:Boolean = false;
 		public function AvatarManager(singletonEnforcer:SingletonEnforcer){
 			setUp();			
 		}
 		
 		public function getIsAvatarDoubleJumpEnabled():Boolean {
 			return isAvatarDoubleJumpEnabled;
+		}
+		
+		public function getIsTouchingWall():Boolean {
+			return isTouchingWall;
 		}
 		
 		public static function getInstance():AvatarManager {
@@ -54,7 +59,7 @@
 	
 		public static function updateLoop():void {
 			for each(var myAvatar:Avatar in avatars){
-				var isTouchingWall:Boolean = false;
+				isTouchingWall = false;
 				var additionalVelocity:int = 0;
 				myAvatar.updateLoop();
 				//collide powersups & avatar
@@ -152,6 +157,8 @@
 								//resolves the collision & returns if this touched the top of the other object
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
 									myAvatar.jumpingEnded();
+									isTouchingWall = true;
+									isTouchingWall = false;
 								}
 								break;
 							case "platform":

@@ -262,27 +262,33 @@
 		
 		public override function endJumpAnimation():void {
 			AnimationManager.getInstance().updateAnimationState(this, "run");
-			trace("end");
+			//trace("end");
+		}
+		
+		public function checkForFallingAnimation():void {
+			if (AvatarManager.getInstance().getIsTouchingWall() == false) {
+				if (getIsFalling() == false) {
+					setIsFalling(true)
+					AnimationManager.getInstance().updateAnimationState(this, "jump");
+				}
+			}
 		}
 		
 		public function animationLogic():void {
+			//checkForFallingAnimation();
+			//disgusting hack
+			listenForStopFrame();
 			//If running, disable idleing & play run 
-			trace("xVelocity", xVelocity);
-			trace("yVelocity", yVelocity);
-			trace("isJumping", isJumping);
-			trace("getIdleTime", getIdleTime());
 			if (getIsJumping() == false) {
 				if (xVelocity != 0 && yVelocity == 0) {
 				setIsIdle(false);
 				setIdleTime(0);
 				AnimationManager.getInstance().updateAnimationState(this, "run");
-				trace("run");
 				//if you are not moving and have not already started idleing, then idle
 				
-				}else if (xVelocity == 0 && yVelocity == 0 && isJumping == false && getIdleTime() <= 5) {
+				}else if (xVelocity == 0 && yVelocity == 0 && getIsFalling() == false && isJumping == false && getIdleTime() <= 5) {
 					AnimationManager.getInstance().updateAnimationState(this, "idle");
 					setIsIdle(true);
-					trace("idle")
 				}
 				//If idleing, increment idle timer
 				if (getIsIdle()==true) {
@@ -304,6 +310,12 @@
 					}
 				}
 			}
+			/*if (AvatarManager.getInstance().getIsTouchingWall() == false) {
+				if (getIsFalling() == false) {
+					setIsFalling(true)
+					AnimationManager.getInstance().updateAnimationState(this, "jump");
+				}
+			}*/
 			
 		}
 		
