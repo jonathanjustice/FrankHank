@@ -256,37 +256,55 @@
 			//trace("isDoubleJumpingEnabled",isDoubleJumpingEnabled);
 		}
 		
+		public override function startJumpAnimation():void {
+			AnimationManager.getInstance().updateAnimationState(this, "jump");
+		}
+		
+		public override function endJumpAnimation():void {
+			AnimationManager.getInstance().updateAnimationState(this, "run");
+			trace("end");
+		}
+		
 		public function animationLogic():void {
 			//If running, disable idleing & play run 
-			if (xVelocity != 0 && yVelocity == 0) {
+			trace("xVelocity", xVelocity);
+			trace("yVelocity", yVelocity);
+			trace("isJumping", isJumping);
+			trace("getIdleTime", getIdleTime());
+			if (getIsJumping() == false) {
+				if (xVelocity != 0 && yVelocity == 0) {
 				setIsIdle(false);
 				setIdleTime(0);
 				AnimationManager.getInstance().updateAnimationState(this, "run");
+				trace("run");
+				//if you are not moving and have not already started idleing, then idle
 				
-			//if you are not moving and have not already started idleing, then idle
-			}else if (xVelocity == 0 && yVelocity == 0 && isJumping == false && getIdleTime() == 0) {
-				AnimationManager.getInstance().updateAnimationState(this, "idle");
-				setIsIdle(true);
-			}
-			//If idleing, increment idle timer
-			if (getIsIdle()==true) {
-				setIdleTime((getIdleTime() + 1));
+				}else if (xVelocity == 0 && yVelocity == 0 && isJumping == false && getIdleTime() <= 5) {
+					AnimationManager.getInstance().updateAnimationState(this, "idle");
+					setIsIdle(true);
+					trace("idle")
+				}
+				//If idleing, increment idle timer
+				if (getIsIdle()==true) {
+					setIdleTime((getIdleTime() + 1));
+				}
+				
+				if (getIdleTime() >= getMaxIdleTime()) {
+					//if over max idle time, switch to impatient idle
+					setIdleImpatientTime((getIdleImpatientTime() + 1));
+					if (getIdleImpatientTime() == 1) {
+						//AnimationManager.getInstance();
+						AnimationManager.getInstance().updateAnimationState(this,"idleImpatient");
+					}
+					//if over max idle time, switch to idle
+					if (getIdleImpatientTime() == getMaxIdleTime()) {
+						AnimationManager.getInstance().updateAnimationState(this, "idle");
+						setIdleImpatientTime(0);
+						setIdleTime(0);
+					}
+				}
 			}
 			
-			if (getIdleTime() >= getMaxIdleTime()) {
-				//if over max idle time, switch to impatient idle
-				setIdleImpatientTime((getIdleImpatientTime() + 1));
-				if (getIdleImpatientTime() == 1) {
-					//AnimationManager.getInstance();
-					AnimationManager.getInstance().updateAnimationState(this,"idleImpatient");
-				}
-				//if over max idle time, switch to idle
-				if (getIdleImpatientTime() == getMaxIdleTime()) {
-					AnimationManager.getInstance().updateAnimationState(this, "idle");
-					setIdleImpatientTime(0);
-					setIdleTime(0);
-				}
-			}
 		}
 		
 		public override function onTakeDamage():void {
