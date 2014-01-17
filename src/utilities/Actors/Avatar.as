@@ -34,7 +34,6 @@
 		private var avatarHealth:int = 10;
 		private var additionalYVelocityForCamera:int = 0;
 		private var isTouchingWall:Boolean = false;
-		private var invulnerableDueToDamage:Boolean = false;
 		private var invulnerableTime:int = 0;
 		private var maxInvulnerableTime:int = 60;
 		
@@ -70,15 +69,6 @@
 					AnimationManager.getInstance().updateAnimationState(this, "idle");
 				}
 			}
-		}
-		
-		public function setInvulnerableDueToDamage(newState:Boolean):void {
-			invulnerableDueToDamage = newState;
-			setInvincibilityEnabled(true);
-		}
-		
-		public function getInvulnerableDueToDamage():Boolean {
-			return invulnerableDueToDamage;
 		}
 		
 		public function checkInvulnerableDueToDamage():void {
@@ -314,13 +304,13 @@
 		
 		public override function startJumpAnimation():void {
 			AnimationManager.getInstance().updateAnimationState(this, "jump");
-			tintActor(0x8800FF);
+			//tintActor(0x8800FF);
 		}
 		
 		public override function endJumpAnimation():void {
 			AnimationManager.getInstance().updateAnimationState(this, "run");
 			//trace("end");
-			resetActorTint(0x8800FF);
+			//resetActorTint(0x8800FF);
 		}
 		
 		public function animationLogic():void {
@@ -369,7 +359,6 @@
 		public override function onTakeDamage():void {
 			bounceBackward();
 			setInvulnerableDueToDamage(true);
-			trace("setting state");
 		}
 	}
 }

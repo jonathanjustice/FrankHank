@@ -70,6 +70,8 @@
 		private var hitBoxHeight:Number = 0;
 		private var isInvincible:Boolean = false;
 		private var invincibilityTimer:int = 0;
+		private var invincibilityFlashTimer:int = 0;
+		private var invincibilityFlashMaxTime:int = 0;
 		private var invincibilityMaxTime:int = 120;
 		private var killsOnContact:Boolean = true;
 		private var damagedInvincibilityTimer:int = 0;
@@ -96,6 +98,7 @@
 		public var lerpAmount:Point = new Point();
 		public var lerpMultiplier:Point = new Point();
 		public var lerping:Boolean = false;
+		public  var invulnerableDueToDamage:Boolean = false;
 		
 		public function Actor() {
 			
@@ -689,13 +692,54 @@
 			}
 		}
 		
+		private function pickRandomColor():int {
+			var randomNumber:Number;
+			var colorValue:int;
+			trace("picking color for set tint");
+			for (var i:int = 0; i < 5; i++ ) {
+				randomNumber = Math.random()*1;
+			}
+			trace(randomNumber);
+			if (randomNumber < .2) {
+				colorValue = 0x00FFFF;
+			}else if (randomNumber < .4) {
+				colorValue = 0xDC143C;
+			}else if (randomNumber < .6) {
+				colorValue = 0xADFF2F;
+			}else if (randomNumber < .8) {
+				colorValue = 0xFF8C00;
+			}else if (randomNumber < 1) {
+				colorValue = 0xFF1493;
+			}
+			return colorValue;
+		}
+		
 		public function applyInvincibility():void {
 			if (isInvincible) {
 				invincibilityTimer++;
+				invincibilityFlashTimer++;
+				if (invincibilityFlashTimer >= invincibilityFlashMaxTime) {
+					invincibilityFlashTimer = 0;
+					if (this is Avatar) {
+						if (invulnerableDueToDamage == false) {
+							tintActor(pickRandomColor());
+						}
+					}
+				}
 				if (invincibilityTimer > invincibilityMaxTime) {
+					resetActorTint();
 					setInvincibilityEnabled(false);
 				}
 			}
+		}
+		
+			public function setInvulnerableDueToDamage(newState:Boolean):void {
+			invulnerableDueToDamage = newState;
+			setInvincibilityEnabled(true);
+		}
+		
+		public function getInvulnerableDueToDamage():Boolean {
+			return invulnerableDueToDamage;
 		}
 		
 		public function getIsShootingEnabled():Boolean {
@@ -768,7 +812,8 @@
 			utilities.Mathematics.EasyTint.setTint(this,newTintColor);
 		}
 		
-		public function resetActorTint(newTintColor:int):void {
+		public function resetActorTint():void {
+			trace("resettingTint");
 			utilities.Mathematics.EasyTint.resetTint(this);
 		}
 		

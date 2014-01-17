@@ -13,7 +13,7 @@
 		 
 		 public static function setTint(obj:MovieClip,newTintColor:int):void{
 			var newColor:Color = new Color();
-			newColor.setTint (0x929218, 1);
+			newColor.setTint (newTintColor, .5);
 			obj.transform.colorTransform = newColor;
 		 }
 		 
