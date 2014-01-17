@@ -22,7 +22,9 @@
 	import utilities.Actors.GameBoardPieces.Trigger_ActivateBoss;
 	import utilities.GraphicsElements.SwfParser;
 	import utilities.GraphicsElements.Animation;
+	import utilities.Mathematics.EasyTint;
 	import utilities.Mathematics.MathFormulas;
+	import utilities.Mathematics.*;
 	import utilities.Mathematics.QuadTree;
 	import flash.geom.Point;
 	import utilities.Input.KeyInputManager;
@@ -676,9 +678,9 @@
 		}
 		
 		public function setInvincibilityEnabled(newState:Boolean):void {
-			//invincibilityTimer
 			isInvincible = newState;
 			if (isInvincible == true) {
+				invincibilityTimer = 0;
 				//collisionDamage = collisionDamageInvincible;
 	
 			}else if(isInvincible == false){
@@ -760,6 +762,14 @@
 		
 		public function getActorGraphic():MovieClip {
 			return actorGraphic;
+		}
+		
+		public function tintActor(newTintColor:int):void {
+			utilities.Mathematics.EasyTint.setTint(this,newTintColor);
+		}
+		
+		public function resetActorTint(newTintColor:int):void {
+			utilities.Mathematics.EasyTint.resetTint(this);
 		}
 		
 		public function setMaxGravity(newMax:int):void {

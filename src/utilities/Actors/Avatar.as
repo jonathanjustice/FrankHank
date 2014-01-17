@@ -34,6 +34,9 @@
 		private var avatarHealth:int = 10;
 		private var additionalYVelocityForCamera:int = 0;
 		private var isTouchingWall:Boolean = false;
+		private var invulnerableDueToDamage:Boolean = false;
+		private var invulnerableTime:int = 0;
+		private var maxInvulnerableTime:int = 60;
 		
 		
 		private var filePath:String = "../src/assets/actors/swf_frank.swf";
@@ -65,6 +68,49 @@
 					Game.setGameState("lockCamera");
 					
 					AnimationManager.getInstance().updateAnimationState(this, "idle");
+				}
+			}
+		}
+		
+		public function setInvulnerableDueToDamage(newState:Boolean):void {
+			invulnerableDueToDamage = newState;
+			setInvincibilityEnabled(true);
+		}
+		
+		public function getInvulnerableDueToDamage():Boolean {
+			return invulnerableDueToDamage;
+		}
+		
+		public function checkInvulnerableDueToDamage():void {
+			var alphaIncrement:Number = .2;
+			var timeIncrement:Number = 5;
+			if (invulnerableDueToDamage == true) {
+				invulnerableTime++;
+				
+				if (invulnerableTime < timeIncrement) {
+					this.alpha -= alphaIncrement;
+				}
+				else if (invulnerableTime < timeIncrement*2) {
+					this.alpha += alphaIncrement;
+				}
+				else if (invulnerableTime < timeIncrement*3) {
+					this.alpha -= alphaIncrement;
+				}
+				else if (invulnerableTime < timeIncrement*4) {
+					this.alpha += alphaIncrement;
+				}
+				else if (invulnerableTime < timeIncrement*5) {
+					this.alpha -= alphaIncrement;
+				}
+				else if (invulnerableTime < timeIncrement*6) {
+					this.alpha += alphaIncrement;
+				}
+				
+				if (invulnerableTime >= maxInvulnerableTime) {
+					invulnerableDueToDamage = false;
+					invulnerableTime = 0;
+					this.alpha = 1;
+					setInvincibilityEnabled(false);
 				}
 			}
 		}
@@ -128,6 +174,7 @@
 		public function updateLoop():void {
 			
 			if (getIsSwfLoaded() == true) {
+				checkInvulnerableDueToDamage();
 				//trace("health",health);
 				animationLogic();
 				//setIsFalling(true);
@@ -267,11 +314,13 @@
 		
 		public override function startJumpAnimation():void {
 			AnimationManager.getInstance().updateAnimationState(this, "jump");
+			tintActor(0x8800FF);
 		}
 		
 		public override function endJumpAnimation():void {
 			AnimationManager.getInstance().updateAnimationState(this, "run");
 			//trace("end");
+			resetActorTint(0x8800FF);
 		}
 		
 		public function animationLogic():void {
@@ -319,6 +368,8 @@
 		
 		public override function onTakeDamage():void {
 			bounceBackward();
+			setInvulnerableDueToDamage(true);
+			trace("setting state");
 		}
 	}
 }
