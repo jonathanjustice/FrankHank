@@ -49,9 +49,9 @@
 					assignedGraphic[0].swf_child.startButtons.visible = true;
 					break;
 				case "hitbox_newGame":
-					//trace("clicked btn_newGame");
+					trace("clicked btn_newGame");
 					removeThisScreen();
-					utilities.Engine.Game.startGame("start");
+					utilities.Engine.Game.setGameState("startIntroCutSceneLoad");
 					break;
 				case "hitbox_continue":
 					//trace("clicked btn_continue");

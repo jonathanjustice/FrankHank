@@ -90,6 +90,7 @@
 		private var swf_cutScene_3:String = new String("../src/assets/cutScenes/swf_cutScene_3.swf");
 		private var swf_cutScene_4:String = new String("../src/assets/cutScenes/swf_cutScene_4.swf");
 		private var swf_cutScene_5:String = new String("../src/assets/cutScenes/swf_cutScene_5.swf");
+		private var swf_cutScene_intro:String = new String("../src/assets/cutScenes/swf_cutScene_intro.swf");
 		
 		private var swf_cutScene_level_1_mid:String = new String("../src/assets/cutScenes/swf_cutScene_level_1_mid.swf");
 		//private var swf_cutScene_level_2_mid:String = new String("../src/assets/cutScenes/swf_cutScene_level_2_mid.swf");
@@ -384,6 +385,9 @@
 					break;
 				case "ui_letterBox":
 					filePath = ui_letterBox;
+					break;
+				case "swf_cutScene_intro":
+					filePath = swf_cutScene_intro;
 					break;
 				case "swf_cutScene_1":
 					filePath = swf_cutScene_1;

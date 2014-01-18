@@ -216,6 +216,12 @@
 					break;
 					
 				/* capstone cutScenes */
+				case "startIntroCutSceneLoad":
+					//doshit
+					trace("Game: startIntroCutSceneLoad");
+					disableMasterLoop();
+					CutSceneManager.getInstance().loadCutScene("swf_cutScene_intro");
+					break;
 				case "startCutSceneLoad":
 					//doshit
 					trace("Game: startCutSceneLoad");
@@ -294,6 +300,12 @@
 					createManagersAndControllers();
 					setGameState("startLevelLoad")
 					break;
+				case "introCutScene":
+					//trace("Started Game: From the Start Screen");
+					createManagersAndControllers();
+					setGameState("startLevelLoad")
+					break;
+					
 				case "start":
 					//trace("Started Game: From the Start Screen");
 					createManagersAndControllers();
@@ -358,7 +370,7 @@
 			CheatManager.getInstance();
 		}
 		
-		public function shakeCamers():void {
+		public function shakeCamera():void {
 			trace("camera is shaking");
 		}
 		
