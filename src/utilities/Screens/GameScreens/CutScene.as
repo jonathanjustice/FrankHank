@@ -28,12 +28,12 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			trace("CUTSCENE: assignGraphic begin");
-			this.addChild(graphic);
+			//trace("CUTSCENE: assignGraphic begin");
+			//this.addChild(graphic);
 			assignedGraphic[0] = graphic;
-			trace("assignedGraphic[0]",assignedGraphic[0]);
-			trace("assignedGraphic[0].swf_child",assignedGraphic[0].swf_child);
-			trace("CUTSCENE: assignGraphic complete");
+			//trace("assignedGraphic[0]",assignedGraphic[0]);
+			//trace("assignedGraphic[0].swf_child",assignedGraphic[0].swf_child);
+			//trace("CUTSCENE: assignGraphic complete");
 			setUp();
 			Game.setGameState("cutSceneFullyLoaded");
 		}
