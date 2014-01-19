@@ -216,8 +216,8 @@
 		//usually from SwfParser
 		public function defineNodes(array:Array):void {
 			nodes = array;
-			//trace("defineNodes: this:", this, "nodes: ", nodes);
-			//trace("nodes.length", nodes.length);
+			trace("defineNodes: this:", this, "nodes: ", nodes);
+			trace("nodes.length", nodes.length);
 		}
 		
 		public function getNodes():Array {

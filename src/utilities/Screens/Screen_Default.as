@@ -42,11 +42,6 @@
 			addScreenToUIContainer();
 		}
 		
-		public function setScreenVisibility(newState:Boolean):void {
-			trace("setScreenVisibility---------------------------------------", newState);
-			this.visible = newState;
-		}
-		
 		public function defineScreenGraphics(filePath:String):void {
 			//trace("filePath:",filePath);
 			SwfParser.getInstance().loadScreenSwf(filePath,this);

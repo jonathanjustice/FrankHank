@@ -158,7 +158,7 @@
 					var index:int = 0;
 					index = int(objectToSort.getChildAt(n).name.charAt(5));
 					nodeArray.splice(index, 0, objectToSort.getChildAt(n));
-				//	trace("parsing nodes: index",index);
+					trace("parsing nodes: index",index);
 				}
 			}
 			//Goddam fucking voodoo. There is no reason this should need to be a seperate loop. WTF why doesn't it work the other way?!?!
