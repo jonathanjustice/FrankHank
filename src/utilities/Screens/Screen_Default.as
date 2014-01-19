@@ -47,6 +47,10 @@
 			SwfParser.getInstance().loadScreenSwf(filePath,this);
 		}
 		
+		public function setScreenVisibility(newState:Boolean):void {
+			this.visible = newState;
+		}
+		
 		public function setIsSwfLoaded(loadState:Boolean):void {
 			isSwfLoaded = loadState;
 		}

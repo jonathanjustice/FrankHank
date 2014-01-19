@@ -118,7 +118,7 @@
 					UIManager.getInstance().closeLoadingScreen();
 					enableMasterLoop();
 					setLerpMultiplier(lerpMultiplier_followAvatar, lerpMultiplier_followAvatar);
-					
+					UIManager.getInstance().getLivesScreen().setScreenVisibility(true);
 					break;
 				case "inLevel":
 					//doshit
@@ -223,10 +223,12 @@
 					CutSceneManager.getInstance().loadCutScene("swf_cutScene_intro");
 					break;
 				case "startCutSceneLoad":
+					UIManager.getInstance().getLivesScreen().setScreenVisibility(false);
 					//doshit
 					trace("Game: startCutSceneLoad");
 					disableMasterLoop();
 					CutSceneManager.getInstance().loadSceneBasedOnLevelProgress();
+					
 					break;
 				case "cutSceneCurrentlyLoading":
 					//trace("Game: cutSceneCurrentlyLoading");
