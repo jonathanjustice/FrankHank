@@ -16,6 +16,17 @@
 			defineScreenGraphics(sceneName);
 		}
 		
+		public override function setUp():void {
+			//addDynamicBlocker();
+			addClickHandler();
+			addOverHandler();
+			addDownHandler();
+			addUpHandler();
+			addOutHandler();
+			mouseEnabledHandler();
+			addScreenToUIContainer();
+		}
+		
 		public function assignGraphic(graphic:DisplayObject):void {
 			trace("CUTSCENE: assignGraphic begin");
 			this.addChild(graphic);
