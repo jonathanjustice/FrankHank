@@ -158,7 +158,7 @@
 					var index:int = 0;
 					index = int(objectToSort.getChildAt(n).name.charAt(5));
 					nodeArray.splice(index, 0, objectToSort.getChildAt(n));
-					trace("parsing nodes: index",index);
+					//trace("parsing nodes: index",index);
 				}
 			}
 			//Goddam fucking voodoo. There is no reason this should need to be a seperate loop. WTF why doesn't it work the other way?!?!
@@ -347,9 +347,11 @@
 					filePath = lvl_5;
 					break;
 			}
-			var loader:swfLoader = new swfLoader();
-			loader.beginLoad(this, filePath);
-			loader = null;
+			trace("SwfParser : 1");
+			Main.getBulkLoader().beginLoad(this, filePath);
+			//var loader:swfLoader = new swfLoader();
+			//loader.beginLoad(this, filePath);
+			//loader = null;
 		}
 		
 		
@@ -409,9 +411,16 @@
 					break;
 					
 			}
-			var loader:swfLoader = new swfLoader();
-			loader.beginLoad(swfParent, filePath);
-			loader = null;
+			//var loader:swfLoader = new swfLoader();
+			trace("Main.getBulkLoader().beginLoad(swfParent, filePath);");
+			trace("Main.getBulkLoader()",Main.getBulkLoader());
+			trace("swfParent",swfParent);
+			trace("filePath",filePath);
+			Main.getBulkLoader().beginLoad(swfParent, filePath);
+			//loader.beginLoad(swfParent, filePath);
+			//loader = null;
+			
+			
 		}
 		
 		//format for using movieclips from a MAIN project FLA library

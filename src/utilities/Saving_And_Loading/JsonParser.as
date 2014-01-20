@@ -41,12 +41,12 @@ package utilities.Saving_And_Loading {
 
 		private static function completeHandler(event:Event):void {
 			var loader:URLLoader = URLLoader(event.target);
-			trace("loader", loader);
-			trace("completeHandler: " + loader.data);
+			//trace("loader", loader);
+			//trace("completeHandler: " + loader.data);
 			data = JSON.parse(loader.data);
 			data_mp3 = JSON.parse(loader.data);
-			trace("The answer is " + data.sounds[0].name);
-			trace("The answer is " + data.sounds[0].name+" ; "+data.sounds[0].filePath+" ; "+data.sounds[0].volume);
+			//trace("The answer is " + data.sounds[0].name);
+			//trace("The answer is " + data.sounds[0].name+" ; "+data.sounds[0].filePath+" ; "+data.sounds[0].volume);
 			//All fields from JSON are accessible by theit property names here/
 			//data_mp3 = data as JSON;
 		}

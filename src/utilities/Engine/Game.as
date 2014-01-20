@@ -80,11 +80,11 @@
 		}
 		
 		public function testEvent(e:StateMachineEvent):void {
-			trace("testEvent Fired in Game!")
+			//trace("testEvent Fired in Game!")
 		}
 		
 		public function boot(e:StateMachineEvent):void {
-			trace("boot Fired in Game!")
+			//trace("boot Fired in Game!")
 		}
 		
 		public static function setGameState(newState:String,filePathName:String =""):void {
@@ -129,7 +129,7 @@
 					break;
 					//in engine cutscenes
 				case "activateBoss":
-					trace("do boss stuff son");
+					//trace("do boss stuff son");
 					setLerpMultiplier(lerpMultiplier_cameraLock, lerpMultiplier_cameraLock);
 					//setLerpMultiplier(lerpMultiplier_cameraLock, lerpMultiplier_cameraLock);
 					//everything else is the same, just camera doesn't track
@@ -147,7 +147,7 @@
 					var actorPoint:Point = new Point();
 					actorPoint.x = cameraLockZone.x + cameraLockZone.width/2;
 					actorPoint.y = cameraLockZone.y + cameraLockZone.height / 2;
-					trace("actorPoint",actorPoint)
+					//trace("actorPoint",actorPoint)
 					//actorPoint = cameraLockZone.parent.localToGlobal(actorPoint);
 					AvatarManager.getAvatar().setLerpTarget(actorPoint);
 					AvatarManager.getAvatar().setLerping(true);
@@ -181,14 +181,14 @@
 					//doshit
 					break;
 				case "levelFailed":
-					trace("setGameState: level failed ");
+					//trace("setGameState: level failed ");
 					disableMasterLoop();
 					UIManager.getInstance().removeLivesScreen();
 					LevelManager.getInstance().levelFailed();
 					
 					break;
 				case "gameOver":
-					trace("setGameState: gameOver");
+					//trace("setGameState: gameOver");
 					LevelManager.getInstance().setIsLevelComplete(false);
 					UIManager.getInstance().removeLivesScreen();
 					UIManager.getInstance().openGameOverScreen();
@@ -204,11 +204,11 @@
 				/*  in-level cutscenes  */
 				case "startInGameCutScene":
 					//doshit
-					trace("Game: startInGameCutScene");
-					trace("Game: filePathName",filePathName);
+					//trace("Game: startInGameCutScene");
+					//trace("Game: filePathName",filePathName);
 					disableMasterLoop();
 					CutSceneManager.getInstance().loadInGameCutScene(filePathName);
-					trace("Game: startInGameCutScene");
+					//trace("Game: startInGameCutScene");
 					break;	
 					
 				case "cutSceneCurrentlyLoading_Trigger":
@@ -218,14 +218,15 @@
 				/* capstone cutScenes */
 				case "startIntroCutSceneLoad":
 					//doshit
-					trace("Game: startIntroCutSceneLoad");
+					trace("Game: startIntroCutSceneLoad : 1");
 					disableMasterLoop();
 					CutSceneManager.getInstance().loadCutScene("swf_cutScene_intro");
+					trace("Game: startIntroCutSceneLoad : 2");
 					break;
 				case "startCutSceneLoad":
 					UIManager.getInstance().getLivesScreen().setScreenVisibility(false);
 					//doshit
-					trace("Game: startCutSceneLoad");
+					//trace("Game: startCutSceneLoad");
 					disableMasterLoop();
 					CutSceneManager.getInstance().loadSceneBasedOnLevelProgress();
 					
@@ -249,7 +250,7 @@
 					if (LevelManager.getInstance().getIsLevelComplete() == false) {
 						enableMasterLoop();
 					}else if (LevelManager.getInstance().getIsLevelComplete() == true) {
-						trace("ELSE level is marked as completed");
+						//trace("ELSE level is marked as completed");
 						UIManager.getInstance().openLevelCompleteScreen();	
 					}
 					break;

@@ -125,8 +125,8 @@
 			scene = new utilities.Screens.GameScreens.CutScene(sceneName);
 			currentCutSceneName = sceneName;
 			cutScenes.push(scene);
-			trace("cutScenes", cutScenes);
-			trace("cutScenes[0]", cutScenes[0]);
+			//trace("cutScenes", cutScenes);
+			//trace("cutScenes[0]", cutScenes[0]);
 		}
 		
 		public function deselectActors():void {

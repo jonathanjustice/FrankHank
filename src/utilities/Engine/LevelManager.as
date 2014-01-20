@@ -243,22 +243,25 @@
 		
 		
 		public function testEvent(e:StateMachineEvent):void {
-			trace("testEvent Fired!")
+			//trace("testEvent Fired!")
 		}
 		
 		public function loadLevel():void {
-			addEventListener(StateMachineEvent.TEST_EVENT, testEvent);
-			Main.theStage.dispatchEvent(new StateMachineEvent("testEvent"));
-			Main.theStage.dispatchEvent(new StateMachineEvent("boot"));
-			print("loadLevel : 1");
+			trace("----------loadllevel--------");
+			//addEventListener(StateMachineEvent.TEST_EVENT, testEvent);
+			//Main.theStage.dispatchEvent(new StateMachineEvent("testEvent"));
+			//Main.theStage.dispatchEvent(new StateMachineEvent("boot"));
+			trace("loadLevel : 1");
 			LevelManager._instance.setIsLevelComplete(false);
-			//print("loadLevel");
+			trace("loadLevel : 2");
 			var levelName:String = String(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1 );
 			levelName = "lvl_" + levelName;
 			//print("levelName:" +levelName);
 			level = new utilities.Actors.GameBoardPieces.Level(levelName);
 			levels.push(level);
-			Game.setGameState("levelCurrentlyLoading"); 
+			trace("loadLevel : 3");
+			Game.setGameState("levelCurrentlyLoading");
+			trace("loadLevel : 4");
 		}
 		
 		public function deselectActors():void {

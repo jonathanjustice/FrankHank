@@ -99,6 +99,7 @@
 		public var lerpMultiplier:Point = new Point();
 		public var lerping:Boolean = false;
 		public  var invulnerableDueToDamage:Boolean = false;
+		public var bulkLoader:BulkLoaderSystem;
 		
 		public function Actor() {
 			
@@ -210,14 +211,15 @@
 		//creation & destruction
 		//future: add ability to add things to game engine at particular orders, right now we are at the mercy of the FLA
 		public function addLevelToGameEngine():void {
+			trace("addLevelToGameEngine");
 			utilities.Engine.Game.gameContainer.addChild(this);
 		}
 		
 		//usually from SwfParser
 		public function defineNodes(array:Array):void {
 			nodes = array;
-			trace("defineNodes: this:", this, "nodes: ", nodes);
-			trace("nodes.length", nodes.length);
+			//trace("defineNodes: this:", this, "nodes: ", nodes);
+			//trace("nodes.length", nodes.length);
 		}
 		
 		public function getNodes():Array {
@@ -433,9 +435,12 @@
 		}
 		
 		public function loadActorSwf(filePath:String):void {
-			var loader:swfLoader = new swfLoader();
-			loader.beginLoad(this, filePath);
-			loader = null;
+			
+			Main.getBulkLoader().beginLoad(this, filePath);
+			//bulkLoader.beginLoad(this, filePath);
+			//var loader:swfLoader = new swfLoader();
+			//loader.beginLoad(this, filePath);
+			//loader = null;
 		}
 		
 		public function getiIsGraphicLoaded():Boolean {
@@ -460,7 +465,8 @@
 		//********************NEEDS UPDATE!
 		public function defineLevelGraphics(filePath:String,isLevel:Boolean):void {
 			actorGraphic = SwfParser.getInstance();
-			actorGraphic.loadLevelSwf(filePath,this);
+			actorGraphic.loadLevelSwf(filePath, this);
+			trace("defineLevelGraphics: 1");
 			this.addChild(actorGraphic);
 		}
 		
