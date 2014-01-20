@@ -242,7 +242,7 @@
 		public function addActorToGameEngine(graphic:DisplayObject, array:Array, spliceIndex:int = 0):void {
 			
 			//spliceIndex = array.length;
-			
+			//trace("Actor: addActorToGameEngine()",this);
 			assignedGraphic[0] = graphic;
 			this.addChild(graphic);
 			utilities.Engine.Game.gameContainer.addChild(this);

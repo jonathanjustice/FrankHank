@@ -222,6 +222,7 @@
 							//wall.setType("standard");
 							break;
 						case "avatar":
+							trace("SwfParser Avatar");
 							var avatar:Avatar = new Avatar(tempArray[j].x, tempArray[j].y);
 							break;
 						case "coin":
