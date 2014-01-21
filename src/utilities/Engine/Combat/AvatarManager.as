@@ -223,7 +223,7 @@
 								myAvatar.jumpingEnded();
 								myAvatar.jump();
 								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
-								EffectsManager.getInstance().newEffect_FeedbackTextField(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y,"HANKED!");
+								EffectsManager.getInstance().newEffect_Hanked(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y);
 							//you touch the enemy on anywhere but its top side
 							}else {
 								//you pass through the enemy
@@ -239,7 +239,7 @@
 								myAvatar.jump();
 								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
 								EnemyManager.enemies[j].setIsVulnerable(true);
-								EffectsManager.getInstance().newEffect_FeedbackTextField(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y,"FRANKED!");
+								EffectsManager.getInstance().newEffect_Franked(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y);
 							//if the enemy is NOT vulnerable and the avatar touches the enemy on anything but the top, the avatar takes damage
 							}else {
 								if(EnemyManager.enemies[j].getIsBeingThrown() == false){
@@ -266,7 +266,7 @@
 		}
 		
 		public function createExtraLifeTextFeecbackText():void {
-			EffectsManager.getInstance().newEffect_FeedbackTextField(getAvatar().x + getAvatar().width/2,getAvatar().getPreviousPosition().y,"EXTRA LIFE!");
+			EffectsManager.getInstance().newEffect_ExtraLife(getAvatar().x + getAvatar().width/2,getAvatar().getPreviousPosition().y);
 		}
 		
 		//deprecated

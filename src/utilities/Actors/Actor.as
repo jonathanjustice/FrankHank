@@ -7,6 +7,7 @@
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import utilities.Effects.FeedbackTextField;
+	import utilities.Effects.FeedbackMovieClip;
 	import utilities.Screens.progressBar;
 	import utilities.Engine.Game;
 	import utilities.Engine.Combat.*;
@@ -269,7 +270,6 @@
 			}catch (error:Error ) {
 				//it does not have a hitzone
 			}
-			
 			setPreviousPosition();
 		}
 		
@@ -411,6 +411,8 @@
 					removeActorFromGameEngine(this,EffectsManager.getInstance().getEffects());
 				}else if (this is BossEnemy) {
 					removeActorFromGameEngine(this,EnemyManager.getInstance().getBosses());
+				}else if (this is FeedbackMovieClip) {
+					removeActorFromGameEngine(this,EffectsManager.getInstance().getEffects());
 				}
 			}
 		}

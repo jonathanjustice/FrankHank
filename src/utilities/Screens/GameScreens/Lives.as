@@ -35,8 +35,8 @@
 		}
 		
 		public function updateScreenDisplay():void {
-			//setLivesDisplay();
-			//setCoinsDisplay();
+			setLivesDisplay();
+			setCoinsDisplay();
 		}
 		
 		public function setLivesDisplay():void {
