@@ -53,10 +53,10 @@
 		}
 	
 		public static function updateLoop():void {
-			for each(var myAvatar:Avatar in avatars){
-				var isTouchingWall:Boolean = false;
+			for each(var myAvatar:Avatar in avatars) {
 				var additionalVelocity:int = 0;
 				myAvatar.updateLoop();
+				myAvatar.setIsTouchingWall(false);
 				//collide powersups & avatar
 				for (var a:int = 0; a < PowerupManager.powerups.length; a++) {
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, PowerupManager.powerups[a]) == true) {
@@ -83,22 +83,22 @@
 						}
 					}
 				}
-				//collide with triggers
+				//collide with trigger to trigger moving wall
 				for (var d:int = 0; d < LevelManager.triggers.length; d++) {
 					//trace("triggers here");
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers[d]) == true) {
 						LevelManager.triggers[d].takeDamage(1);
 						LevelManager.triggers[d].checkForDeathFlag();
-						//trace("touched moveable wall trigger");
 					}
 				}
-				//collide with triggers
+				//collide with triggers for endzone
 				for (var e:int = 0; e < LevelManager.triggers_endZones.length; e++) {
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_endZones[e]) == true) {
 						LevelManager.triggers_endZones[e].takeDamage(1);
 						LevelManager.triggers_endZones[e].checkForDeathFlag();
 					}
 				}
+				//collide with trigger for cutscenes
 				for (var f:int = 0; f < LevelManager.triggers_cutScenes.length; f++) {
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_cutScenes[f]) == true) {
 						LevelManager.triggers_cutScenes[f].takeDamage(1);
@@ -106,7 +106,24 @@
 					}
 				}
 				
-				//collide walls & avatar
+				//collide with trigger for cutscenes
+				for (var g:int = 0; g < LevelManager.triggers_cameraLocks.length; g++) {
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_cameraLocks[g]) == true) {
+						LevelManager.triggers_cameraLocks[g].takeDamage(1);
+						LevelManager.triggers_cameraLocks[g].checkForDeathFlag();
+						//trace("tell camera to lock");
+					}
+				}
+				
+				for (var k:int = 0; k < LevelManager.triggers_activateBosses.length; k++) {
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_activateBosses[k]) == true) {
+						LevelManager.triggers_activateBosses[k].takeDamage(1);
+						LevelManager.triggers_activateBosses[k].checkForDeathFlag();
+						//trace("tell boss to activate");
+					}
+				}
+				
+				//collide with a wall that was triggered to move
 				for (var h:int = 0; h < LevelManager.triggerableWalls.length; h++) {
 					if (LevelManager.triggerableWalls[h].getType() == "triggeredWall") {
 						LevelManager.triggerableWalls[h].updateLoop();
@@ -115,8 +132,6 @@
 						switch (LevelManager.triggerableWalls[h].getType()){
 							case "triggeredWall":
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.triggerableWalls[h]) == "top") {
-									additionalVelocity = LevelManager.triggerableWalls[h].getVelocity().y;
-									isTouchingWall = true;
 									myAvatar.jumpingEnded();
 									myAvatar.resetGravity();
 								}
@@ -125,6 +140,8 @@
 					}
 				}
 				//collide walls & avatar
+				var fakePoint:Point = new Point(0, 0);
+				myAvatar.setIsRiding(false,fakePoint);
 				for (var i:int = 0; i < LevelManager.walls.length; i++) {
 					if (LevelManager.walls[i].getType() == "movingWall") {
 						LevelManager.walls[i].updateLoop();
@@ -135,37 +152,33 @@
 								//resolves the collision & returns if this touched the top of the other object
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
 									myAvatar.jumpingEnded();
-									myAvatar.resetGravity();
-									//trace("standard");
+									myAvatar.setIsTouchingWall(true);
 								}
 								break;
 							case "platform":
 								if (utilities.Mathematics.RectangleCollision.testCollisionWithPlatform(myAvatar, LevelManager.walls[i]) == true) {
-									//trace("platform");
 									myAvatar.jumpingEnded();
-									myAvatar.resetGravity();
+									myAvatar.setIsTouchingWall(true);
 								}
 								break;
 							case "movingWall":
-								//trace("movingWall");
-								//trace(LevelManager.walls[i].name);
 								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
-									additionalVelocity = LevelManager.walls[i].getVelocity().y;
-									isTouchingWall = true;
+									var tempWallVelocity:Point = new Point();
+									tempWallVelocity.x = LevelManager.walls[i].getVelocity().x;
+									tempWallVelocity.y = LevelManager.walls[i].getVelocity().y;
+									myAvatar.setIsTouchingWall(true);
 									myAvatar.jumpingEnded();
-									myAvatar.resetGravity();
+									myAvatar.setIsRiding(true,tempWallVelocity); 
 								}
 								break;
 							case "movingPlatform":
-								if (utilities.Mathematics.RectangleCollision.testCollisionWithPlatform(myAvatar, LevelManager.walls[i]) == true) {
-									additionalVelocity = LevelManager.walls[i].getVelocity().y;
-									isTouchingWall = true;
-									//trace("movingPlatform");
+								if (utilities.Mathematics.RectangleCollision.testCollision(myAvatar, LevelManager.walls[i]) == "top") {
+									myAvatar.setIsTouchingWall(true);
 									myAvatar.jumpingEnded();
-									myAvatar.resetGravity();
 									
 								}
 								break;
+							
 						}
 					}
 					//collide bullets  & walls
@@ -207,13 +220,10 @@
 							//you jump on the enemy while it is vulnerable
 							var collisionWithEnemyDirection:String = RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j],false);
 							if(collisionWithEnemyDirection=="top"){
-								trace("vulnerable and not on top");
-								//this is whats causing me to drop in the middle of enemies maybe, because i messed with the function that keeps enemies on platforms?
-								trace("vulnerable and on top");
 								myAvatar.jumpingEnded();
 								myAvatar.jump();
 								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
-								EffectsManager.getInstance().newEffect_FeedbackTextField(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y,"HANKED!");
+								EffectsManager.getInstance().newEffect_Hanked(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y);
 							//you touch the enemy on anywhere but its top side
 							}else {
 								//you pass through the enemy
@@ -229,7 +239,7 @@
 								myAvatar.jump();
 								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
 								EnemyManager.enemies[j].setIsVulnerable(true);
-								EffectsManager.getInstance().newEffect_FeedbackTextField(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y,"FRANKED!");
+								EffectsManager.getInstance().newEffect_Franked(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y);
 							//if the enemy is NOT vulnerable and the avatar touches the enemy on anything but the top, the avatar takes damage
 							}else {
 								if(EnemyManager.enemies[j].getIsBeingThrown() == false){
@@ -255,6 +265,10 @@
 			}
 		}
 		
+		public function createExtraLifeTextFeecbackText():void {
+			EffectsManager.getInstance().newEffect_ExtraLife(getAvatar().x + getAvatar().width/2,getAvatar().getPreviousPosition().y);
+		}
+		
 		//deprecated
 		private static function createAvatar():void {
 			avatar = new utilities.Actors.Avatar(0,0);
@@ -266,7 +280,7 @@
 			return avatars;
 		}
 		
-		public function getAvatar():MovieClip {
+		public static function getAvatar():MovieClip {
 		/*	trace("avatars[0]", avatars[0]);
 			trace("avatars",avatars);
 			trace("avatars.numChildren",avatars.numChildren);*/

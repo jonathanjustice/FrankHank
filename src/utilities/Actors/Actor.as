@@ -7,6 +7,7 @@
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import utilities.Effects.FeedbackTextField;
+	import utilities.Effects.FeedbackMovieClip;
 	import utilities.Screens.progressBar;
 	import utilities.Engine.Game;
 	import utilities.Engine.Combat.*;
@@ -18,9 +19,13 @@
 	import utilities.Actors.GameBoardPieces.Trigger;
 	import utilities.Actors.GameBoardPieces.Trigger_CutScene;
 	import utilities.Actors.GameBoardPieces.Trigger_EndZone;
+	import utilities.Actors.GameBoardPieces.Trigger_CameraLock;
+	import utilities.Actors.GameBoardPieces.Trigger_ActivateBoss;
 	import utilities.GraphicsElements.SwfParser;
 	import utilities.GraphicsElements.Animation;
+	import utilities.Mathematics.EasyTint;
 	import utilities.Mathematics.MathFormulas;
+	import utilities.Mathematics.*;
 	import utilities.Mathematics.QuadTree;
 	import flash.geom.Point;
 	import utilities.Input.KeyInputManager;
@@ -32,7 +37,7 @@
 	public class Actor extends GameObject {
 		public var directionLastFaced:String = "RIGHT";
 		public var attachedArt:MovieClip = new MovieClip;
-		public var hitbox:MovieClip = new MovieClip;
+		public var hitbox:MovieClip = new MovieClip();
 		public var hitzone:MovieClip = new MovieClip;
 		private var nodes:Array = new Array;
 		public var isGraphicLoaded:Boolean = false;
@@ -59,13 +64,15 @@
 		public var maximumHealth:Number = 1;
 		private var gravity:Number = 2;
 		private var originalGravity:Number = 0;
-		private var currentGravity:Number=0;
+		private var currentGravity:Number=1;
 		private var gravityModifier:Number = 2;
 		private var maxGravity:Number = 2;
 		private var hitBoxWidth:Number = 0;
 		private var hitBoxHeight:Number = 0;
 		private var isInvincible:Boolean = false;
 		private var invincibilityTimer:int = 0;
+		private var invincibilityFlashTimer:int = 0;
+		private var invincibilityFlashMaxTime:int = 0;
 		private var invincibilityMaxTime:int = 120;
 		private var killsOnContact:Boolean = true;
 		private var damagedInvincibilityTimer:int = 0;
@@ -81,17 +88,39 @@
 		private var collisionDamageOriginal:Number = 0;
 		private var isAvailableForCollisionWithNonWallActors:Boolean = false;
 		private var isShootingEnabled:Boolean = false;
+		private var isRiding:Boolean = false;
+		private var ridingVelocity:Point = new Point();
 		private var isGravitySystemEnabled:Boolean = true;
 		private var fireProjectileDelay:int = 9999;
 		private var fireProjectileTimer:int = 0;
 		private var behaviorState:String = "idle"
 		private var filePath:String = "";
+		public var lerpTarget:Point = new Point();
+		public var lerpAmount:Point = new Point();
+		public var lerpMultiplier:Point = new Point();
+		public var lerping:Boolean = false;
+		public  var invulnerableDueToDamage:Boolean = false;
+		public var bulkLoader:BulkLoaderSystem;
 		
 		public function Actor() {
 			
 			defineWeaponStats();
 			setAnimationState("idle");
 			//print(this);
+			
+		}
+		
+		public function setIsRiding(newState:Boolean,newRidingVelocity:Point):void {
+			isRiding = newState;
+			ridingVelocity = newRidingVelocity;
+		}
+		
+		public function getIsRiding():Boolean {
+			return isRiding;
+		}
+		
+		public function getRidingVelocity():Point {
+			return ridingVelocity;
 		}
 		
 		public function attachAdditionalArt(artToAttach:MovieClip):void {
@@ -183,13 +212,15 @@
 		//creation & destruction
 		//future: add ability to add things to game engine at particular orders, right now we are at the mercy of the FLA
 		public function addLevelToGameEngine():void {
+			trace("addLevelToGameEngine");
 			utilities.Engine.Game.gameContainer.addChild(this);
 		}
 		
 		//usually from SwfParser
 		public function defineNodes(array:Array):void {
 			nodes = array;
-			//trace("nodes: ",nodes);
+			//trace("defineNodes: this:", this, "nodes: ", nodes);
+			//trace("nodes.length", nodes.length);
 		}
 		
 		public function getNodes():Array {
@@ -212,7 +243,7 @@
 		public function addActorToGameEngine(graphic:DisplayObject, array:Array, spliceIndex:int = 0):void {
 			
 			//spliceIndex = array.length;
-			
+			//trace("Actor: addActorToGameEngine()",this);
 			assignedGraphic[0] = graphic;
 			this.addChild(graphic);
 			utilities.Engine.Game.gameContainer.addChild(this);
@@ -233,13 +264,12 @@
 				if (assignedGraphic[0].swf_child.getChildByName("hitzone") == null) {
 					//trace("it does not have a hitzone");
 				}else {
-					trace("it has a hitzone");
+					//trace("it has a hitzone");
 						hitzone = this.assignedGraphic[0].swf_child.hitzone;
 				}
 			}catch (error:Error ) {
 				//it does not have a hitzone
 			}
-			
 			setPreviousPosition();
 		}
 		
@@ -251,6 +281,41 @@
 			array.splice(index,1);
 			utilities.Engine.Game.gameContainer.removeChild(actor);
 			actor.setTargetToFalse();
+		}
+		
+		public  function setLerpTarget(newTarget:Point ):void {
+			lerpTarget = newTarget;
+			//trace("lerpTarget:", lerpTarget);
+			//trace("this:", this.x, this.y);
+		}
+		
+		public function getLerpTarget():Point {
+			return lerpTarget;
+		}
+		
+		public  function setLerping(newState:Boolean ):void {
+			lerping = newState;
+		}
+		
+		public function getLerping():Boolean {
+			return lerping;
+		}
+		
+		public function lerpToTarget():void {
+			if (lerping) {
+				//trace("lerping",lerping);
+				lerpAmount.x = (this.x - lerpTarget.x) * lerpMultiplier.x;
+				this.x -= lerpAmount.x;
+				lerpAmount.y = (this.y - lerpTarget.y) * lerpMultiplier.y;
+				this.y -= lerpAmount.y;
+				//trace("lerpAmount",lerpAmount);
+			}
+		}
+		
+		
+		public  function setLerpMultiplier(newXMultiplier:Number, newYMultiplier:Number):void {
+			lerpMultiplier.x = newXMultiplier;
+			lerpMultiplier.y = newYMultiplier;
 		}
 		
 		public function takeDamage(amount:Number):void {
@@ -312,7 +377,7 @@
 		//this would be a really nice place to start using Interfaces... hint hint hint
 		public function checkForDeathFlag():void{
 			if (markedForDeletion) {
-				trace("checkForDeathFlag",this);
+				//trace("checkForDeathFlag",this);
 				//delete it
 				if(this is Bullet){
 					removeActorFromGameEngine(this,BulletManager.getInstance().getArray());
@@ -328,13 +393,25 @@
 					removeActorFromGameEngine(this,PowerupManager.getInstance().getArray());
 				}else if(this is Coin){
 					removeActorFromGameEngine(this,LevelManager.getInstance().getCoins());
+				}else if(this is Gem){
+					removeActorFromGameEngine(this,LevelManager.getInstance().getCoins());
 				}else if(this is Trigger){
 					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers());
 				}else if(this is Trigger_CutScene){
 					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers_cutScenes());
 				}else if(this is Trigger_EndZone){
 					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers_endZones());
+				}else if(this is Trigger_CameraLock){
+					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers_cameraLocks());
+				}else if(this is Trigger_ActivateBoss){
+					removeActorFromGameEngine(this,LevelManager.getInstance().getTriggers_activateBosses());
 				}else if (this is FeedbackTextField) {
+					removeActorFromGameEngine(this,EffectsManager.getInstance().getEffects());
+				}else if (this is Trigger) {
+					removeActorFromGameEngine(this,EffectsManager.getInstance().getEffects());
+				}else if (this is BossEnemy) {
+					removeActorFromGameEngine(this,EnemyManager.getInstance().getBosses());
+				}else if (this is FeedbackMovieClip) {
 					removeActorFromGameEngine(this,EffectsManager.getInstance().getEffects());
 				}
 			}
@@ -360,9 +437,12 @@
 		}
 		
 		public function loadActorSwf(filePath:String):void {
-			var loader:swfLoader = new swfLoader();
-			loader.beginLoad(this, filePath);
-			loader = null;
+			
+			Main.getBulkLoader().beginLoad(this, filePath);
+			//bulkLoader.beginLoad(this, filePath);
+			//var loader:swfLoader = new swfLoader();
+			//loader.beginLoad(this, filePath);
+			//loader = null;
 		}
 		
 		public function getiIsGraphicLoaded():Boolean {
@@ -387,7 +467,8 @@
 		//********************NEEDS UPDATE!
 		public function defineLevelGraphics(filePath:String,isLevel:Boolean):void {
 			actorGraphic = SwfParser.getInstance();
-			actorGraphic.loadLevelSwf(filePath,this);
+			actorGraphic.loadLevelSwf(filePath, this);
+			trace("defineLevelGraphics: 1");
 			this.addChild(actorGraphic);
 		}
 		
@@ -582,26 +663,6 @@
 			return hasTarget;
 		}
 		
-		public function get_hitBoxWidth():Number {
-			trace("get_hitBoxWidth",hitBoxWidth);
-			return hitBoxWidth;
-		}
-		
-		public function get_hitBoxHeight():Number {
-			trace("get_hitBoxHeight",hitBoxHeight);
-			return hitBoxHeight;
-		}
-		
-		public function setHitBoxWidth(size:Number):void{
-			hitBoxWidth = size;
-			trace("setHitBoxWidth",size);
-		}
-		
-		public function setHitBoxHeight(size:Number):void{
-			hitBoxHeight = size;
-			trace("hitBoxHeight",size);
-		}
-		
 		//if this actor is tracking a target
 		//force it to no longer track that target
 		public function setTargetToFalse():void{
@@ -628,9 +689,9 @@
 		}
 		
 		public function setInvincibilityEnabled(newState:Boolean):void {
-			//invincibilityTimer
 			isInvincible = newState;
 			if (isInvincible == true) {
+				invincibilityTimer = 0;
 				//collisionDamage = collisionDamageInvincible;
 	
 			}else if(isInvincible == false){
@@ -639,13 +700,54 @@
 			}
 		}
 		
+		private function pickRandomColor():int {
+			var randomNumber:Number;
+			var colorValue:int;
+			trace("picking color for set tint");
+			for (var i:int = 0; i < 5; i++ ) {
+				randomNumber = Math.random()*1;
+			}
+			trace(randomNumber);
+			if (randomNumber < .2) {
+				colorValue = 0x00FFFF;
+			}else if (randomNumber < .4) {
+				colorValue = 0xDC143C;
+			}else if (randomNumber < .6) {
+				colorValue = 0xADFF2F;
+			}else if (randomNumber < .8) {
+				colorValue = 0xFF8C00;
+			}else if (randomNumber < 1) {
+				colorValue = 0xFF1493;
+			}
+			return colorValue;
+		}
+		
 		public function applyInvincibility():void {
 			if (isInvincible) {
 				invincibilityTimer++;
+				invincibilityFlashTimer++;
+				if (invincibilityFlashTimer >= invincibilityFlashMaxTime) {
+					invincibilityFlashTimer = 0;
+					if (this is Avatar) {
+						if (invulnerableDueToDamage == false) {
+							tintActor(pickRandomColor());
+						}
+					}
+				}
 				if (invincibilityTimer > invincibilityMaxTime) {
+					resetActorTint();
 					setInvincibilityEnabled(false);
 				}
 			}
+		}
+		
+			public function setInvulnerableDueToDamage(newState:Boolean):void {
+			invulnerableDueToDamage = newState;
+			setInvincibilityEnabled(true);
+		}
+		
+		public function getInvulnerableDueToDamage():Boolean {
+			return invulnerableDueToDamage;
 		}
 		
 		public function getIsShootingEnabled():Boolean {
@@ -712,6 +814,15 @@
 		
 		public function getActorGraphic():MovieClip {
 			return actorGraphic;
+		}
+		
+		public function tintActor(newTintColor:int):void {
+			utilities.Mathematics.EasyTint.setTint(this,newTintColor);
+		}
+		
+		public function resetActorTint():void {
+			trace("resettingTint");
+			utilities.Mathematics.EasyTint.resetTint(this);
 		}
 		
 		public function setMaxGravity(newMax:int):void {

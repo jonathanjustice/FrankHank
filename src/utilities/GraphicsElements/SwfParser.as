@@ -11,6 +11,7 @@
 	import utilities.Actors.GameBoardPieces.Trigger_CutScene;
 	import utilities.Actors.GameBoardPieces.Trigger_EngineCutScene;
 	import utilities.Actors.GameBoardPieces.Trigger_CameraLock;
+	import utilities.Actors.GameBoardPieces.Trigger_ActivateBoss;
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Actors.GoonEnemy;
 	import utilities.Actors.Coin;
@@ -21,6 +22,7 @@
 	import utilities.Actors.Powerup_invincible;
 	import utilities.Actors.SelectableActor;
 	import utilities.Actors.TankEnemy;
+	import utilities.Actors.BossEnemy;
 	import utilities.Actors.SpiderEnemy;
 	import utilities.Engine.Game;
 	import utilities.Engine.CutSceneManager;
@@ -88,6 +90,7 @@
 		private var swf_cutScene_3:String = new String("../src/assets/cutScenes/swf_cutScene_3.swf");
 		private var swf_cutScene_4:String = new String("../src/assets/cutScenes/swf_cutScene_4.swf");
 		private var swf_cutScene_5:String = new String("../src/assets/cutScenes/swf_cutScene_5.swf");
+		private var swf_cutScene_intro:String = new String("../src/assets/cutScenes/swf_cutScene_intro.swf");
 		
 		private var swf_cutScene_level_1_mid:String = new String("../src/assets/cutScenes/swf_cutScene_level_1_mid.swf");
 		//private var swf_cutScene_level_2_mid:String = new String("../src/assets/cutScenes/swf_cutScene_level_2_mid.swf");
@@ -149,22 +152,20 @@
 			var nodeArray:Array = new Array;
 			for (var n:int = 0; n < objectToSort.numChildren; n++) {
 				var myString:String = "";
+				
 				myString = String(objectToSort.getChildAt(n).name);
 				if (objectToSort.getChildAt(n).name.indexOf("node_") != -1) {	
 					var index:int = 0;
 					index = int(objectToSort.getChildAt(n).name.charAt(5));
 					nodeArray.splice(index, 0, objectToSort.getChildAt(n));
+					//trace("parsing nodes: index",index);
 				}
-				if (objectToSort.getChildAt(n).name == "hitbox") {
-					actor.defineHitbox(objectToSort.hitbox);
-				}
-				if (objectToSort.getChildAt(n).name == "art") {
+			}
+			//Goddam fucking voodoo. There is no reason this should need to be a seperate loop. WTF why doesn't it work the other way?!?!
+			for (var m:int = 0; m < objectToSort.numChildren; m++) {
+				if (objectToSort.getChildAt(m).name == "art") {
 					actor.attachAdditionalArt(objectToSort.art);
 				}
-				
-			}
-			if (objectToSort.contains(objectToSort.hitbox)) {
-				objectToSort.removeChild(objectToSort.hitbox);
 			}
 			
 			
@@ -205,19 +206,23 @@
 							var movingWall:MovingWall = new MovingWall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height, "movingWall");
 							sortNodes(movingWall, tempArray[j]);
 							break;
-						case "trigger_EndZone":
-							var trigger_EndZone:Trigger_EndZone = new Trigger_EndZone(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
+						case "triggerEndZone":
+							var trigger_EndZone:Trigger_EndZone = new Trigger_EndZone(tempArray[j].x, tempArray[j].y, tempArray[j].width, tempArray[j].height);
 							break;
-						case "trigger_CameraLock":
-							var trigger_CameraLock:Trigger_CameraLock = new Trigger_CameraLock(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
+						case "triggerCameraLock":
+							var trigger_CameraLock:Trigger_CameraLock = new Trigger_CameraLock(tempArray[j].x, tempArray[j].y, tempArray[j].width, tempArray[j].height);
 							break;
-						case "trigger_EngineCutScene":
+						case "triggerActivateBoss":
+							var trigger_ActivateBoss:Trigger_ActivateBoss = new Trigger_ActivateBoss(tempArray[j].x, tempArray[j].y, tempArray[j].width, tempArray[j].height);
+							break;
+						case "triggerEngineCutScene":
 							var trigger_EngineCutScene:Trigger_EngineCutScene = new Trigger_EngineCutScene(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height);
 							trigger_EngineCutScene.x = tempArray[j].x;
 							trigger_EngineCutScene.y = tempArray[j].y;
 							//wall.setType("standard");
 							break;
 						case "avatar":
+							trace("SwfParser Avatar");
 							var avatar:Avatar = new Avatar(tempArray[j].x, tempArray[j].y);
 							break;
 						case "coin":
@@ -235,6 +240,9 @@
 						case "tank":
 							var tank:TankEnemy = new TankEnemy(tempArray[j].x,tempArray[j].y);
 							break;
+						case "boss":
+							var boss:BossEnemy = new BossEnemy(tempArray[j].x,tempArray[j].y);
+							break;
 						case "spider":
 							var spider:SpiderEnemy = new SpiderEnemy(tempArray[j].x,tempArray[j].y);
 							break;
@@ -251,13 +259,13 @@
 							var invinviblePowerup:Powerup_invincible = new Powerup_invincible(tempArray[j].x,tempArray[j].y);
 							break;
 					}
-					if (tempArray[j].name.indexOf("trigger_CutScene_") != -1) {
+					if (tempArray[j].name.indexOf("triggerCutScene_") != -1) {
 						var cutSceneName:String = tempArray[j].name;
-						
+						trace("cutSceneName",cutSceneName);
 						//trace(cutSceneName.slice(17, cutSceneName.length)); // output: !!!
 						//get the name after the "cutScene_Trigger_" part
-						cutSceneName = cutSceneName.slice(17, cutSceneName.length);
-						//trace(cutSceneName);
+						cutSceneName = cutSceneName.slice(16, cutSceneName.length);
+						trace("cutSceneName",cutSceneName);
 						var trigger_CutScene_Index:int = tempArray[j].name.charAt(17);
 						//trace("triggerIndex",triggerIndex);
 						var trigger_CutScene:Trigger_CutScene = new Trigger_CutScene(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height,cutSceneName);
@@ -278,7 +286,6 @@
 						var triggeredWall:MovingWall = new MovingWall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height,"triggeredWall",triggeredWallIndex);
 						sortNodes(triggeredWall, tempArray[j]);
 					}
-					
 				}
 			}else{
 				currentParent.addChild(graphic);
@@ -341,9 +348,11 @@
 					filePath = lvl_5;
 					break;
 			}
-			var loader:swfLoader = new swfLoader();
-			loader.beginLoad(this, filePath);
-			loader = null;
+			trace("SwfParser : 1");
+			Main.getBulkLoader().beginLoad(this, filePath);
+			//var loader:swfLoader = new swfLoader();
+			//loader.beginLoad(this, filePath);
+			//loader = null;
 		}
 		
 		
@@ -354,6 +363,7 @@
 			//trace("currentParent",currentParent);
 			isLevel = false;
 			
+			//trace("filePath", filePath);
 			switch(filePath) {
 				case "ui_start":
 					filePath = ui_start;
@@ -379,6 +389,9 @@
 				case "ui_letterBox":
 					filePath = ui_letterBox;
 					break;
+				case "swf_cutScene_intro":
+					filePath = swf_cutScene_intro;
+					break;
 				case "swf_cutScene_1":
 					filePath = swf_cutScene_1;
 					break;
@@ -399,9 +412,16 @@
 					break;
 					
 			}
-			var loader:swfLoader = new swfLoader();
-			loader.beginLoad(swfParent, filePath);
-			loader = null;
+			//var loader:swfLoader = new swfLoader();
+			trace("Main.getBulkLoader().beginLoad(swfParent, filePath);");
+			trace("Main.getBulkLoader()",Main.getBulkLoader());
+			trace("swfParent",swfParent);
+			trace("filePath",filePath);
+			Main.getBulkLoader().beginLoad(swfParent, filePath);
+			//loader.beginLoad(swfParent, filePath);
+			//loader = null;
+			
+			
 		}
 		
 		//format for using movieclips from a MAIN project FLA library

@@ -9,8 +9,17 @@ package utilities.Effects {
 	import flash.display.MovieClip;
 	import flash.display.DisplayObject;
 	import utilities.Engine.EffectsManager;
-
+	
+		
 	public class FeedbackTextField extends Effect {
+		//"../src/assets/fonts/8bitoperator_jve/8bitoperator.ttf"
+		[Embed(source='/../src/assets/fonts/8bitoperator_jve/8bitoperator.ttf', fontName='8bitoperator Regular', advancedAntiAliasing="true", mimeType="application/x-font", unicodeRange='U+0020-U+007E')]
+		private var font_vag:Class;
+
+		private static const THE_TEXT:String = 'Select full screen for\nmaximum viewing';
+		private static const textFormaty:TextFormat = new TextFormat("8bitoperator Regular", 12, 0xff9900);
+		private var theText:TextField;
+		
 		private var lifeTime:int=25;
 		private var time:int = 0;
 		private var fadeTime:int = 10;
@@ -22,16 +31,16 @@ package utilities.Effects {
 				textCopy:String = "FRANKED!", 
 				url:String = "http://www.google.com", 
 				urlTargetWindow:String="_blank",
-				font:String = 'Verdana', 
+				font:String = '8bitoperator Regular', 
 				colorHexCode:String = "0xff9900", 
-				fontSize:int = 16, boldness:Boolean = true, 
-				italics:Boolean = true, 
+				fontSize:int = 16, boldness:Boolean = false, 
+				italics:Boolean = false, 
 				underline:Boolean = false,
 				indent:Object = null, 
 				leading:Object = null) 
 			{
 			
-			var textFormat:TextFormat = new TextFormat();
+			var textFormat:TextFormat = new TextFormat("8bitoperator Regular", 12, 0xff9900);
 			textFormat.url = url;
 			textFormat.target = urlTargetWindow;
 			textFormat.font=font;
@@ -68,15 +77,15 @@ package utilities.Effects {
 		public function setNewTextFormat(
 				url:String = "", 
 				urlTargetWindow:String="_blank",
-				font:String = 'Verdana',
-				colorHexCode:String = "0xff9236",
+				font:String = '8bitoperator Regular',
+				colorHexCode:String = "0xff9900",
 				fontSize:int = 24,
-				boldness:Boolean = true,
-				italics:Boolean = true,
+				boldness:Boolean = false,
+				italics:Boolean = false,
 				indent:Object = null, 
 				leading:Object = null):void
 			{
-			var textFormat:TextFormat = new TextFormat();
+			var textFormat:TextFormat = new TextFormat("8bitoperator Regular", 12, 0xff9900);
 			textFormat.url = url;
 			textFormat.target = urlTargetWindow;
 			textFormat.font=font;

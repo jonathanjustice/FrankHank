@@ -26,17 +26,23 @@
 		private var originalYVelocity:int = 3;
 		private var triggeredWallXVelocity:int = 0;
 		private var triggeredWallYVelocity:int = 20;
+		private var tempWidth:Number = 0;
+		private var tempHeight:Number = 0;
 		 
 		//create a var tween
 		
 		public function MovingWall(newX:int, newY:int, newWidth:Number, newHeight:Number, newWallType:String, newIndex:int = 0) {
+			
+			setType(newWallType);
+			setUp();
+			tempWidth = newWidth;
+			tempHeight = newHeight;
 			this.x = newX;
 			this.y = newY;
-			setType(newWallType);
 			triggerIndex = newIndex;
-			setUp();
 			setNewTarget();
 			defineInitialPoint();
+			
 		}
 		
 		public override function getFilePath():String {
@@ -51,7 +57,8 @@
 			yVelocity = 3;
 			originalXVelocity = xVelocity;
 			originalYVelocity = yVelocity;
-			
+			xVelocity = 0;
+			yVelocity = 0;
 			
 			//this.visible = false;
 			
@@ -73,16 +80,6 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			/*trace("------------------------------");
-			
-			trace("this.scaleX", this.scaleX);
-			trace("this.scaleY", this.scaleY);
-			trace("this.attachedArt.scaleX", this.attachedArt.scaleX);
-			trace("this.attachedArt.scaleY", this.attachedArt.scaleY);
-			
-			trace("------------------------------");*/
-			//this.visible = false;
-			
 			if (wallType == "triggeredWall") {
 				isActive = false;
 				triggerable = true;
@@ -92,9 +89,13 @@
 				originalXVelocity = xVelocity;
 				originalYVelocity = yVelocity;
 				addActorToGameEngine(graphic, LevelManager.triggerableWalls, triggerIndex);
+				addActorToGameEngine(graphic, LevelManager.walls);
 			}else {
 				addActorToGameEngine(graphic, LevelManager.walls);
 			}
+			this.hitbox.width = this.tempWidth;
+			this.hitbox.height = this.tempHeight;
+			this.hitbox.visible = false;
 			//defineGraphicsDefaultSmallRectangle();
 		}
 		
@@ -112,6 +113,7 @@
 		}
 		
 		public function setNewTarget():void {
+			//trace("targetNode before setNewTarget", targetNode);
 			if (nodeSequencing == "forward") {
 				//trace("is FORWARD")
 				//if reached last node switch to decrementing
@@ -121,8 +123,8 @@
 					if (triggerable) {
 						isActive = false;
 					}
-				//	trace("switch to backward and Dec");
-				//	trace("target node:  ", targetNode);
+					//trace("switch to backward and Dec");
+					//trace("target node:  ", targetNode);
 				}
 				//if incrementing, select next node
 				else if (targetNode < this.getNodes().length ) {
@@ -142,8 +144,8 @@
 				//if decrementing, select next node
 				else if (targetNode > 0) {
 					targetNode--;
-				//	trace("backward and Dec");
-				//	trace("target node:  ", targetNode);
+					//trace("backward and Dec");
+					//trace("target node:  ", targetNode);
 				}
 				
 				
@@ -154,6 +156,7 @@
 			trace("yVelocity ", yVelocity);
 			trace(this.y - initialPoint.y);
 			trace(this.getNodes()[targetNode].y);*/
+			//trace("targetNode before setNewTarget", targetNode);
 		}
 		
 		public function moveToNextNode():void {
@@ -165,9 +168,14 @@
 			trace("yVelocity ", yVelocity);
 			trace(this.y - initialPoint.y);
 			trace(this.getNodes()[targetNode].y);
-			
+			d
 			*/
 			if (horizontalMotion != "arrived") {
+				//trace(this.x);
+				//trace(initialPoint.x);
+				//trace("targetNode", targetNode);
+				//trace(this.getNodes());
+				//trace(this.getNodes()[targetNode].x);
 				if (this.x - initialPoint.x < this.getNodes()[targetNode].x) {
 					xVelocity = originalXVelocity;
 				}else if(this.x - initialPoint.x > this.getNodes()[targetNode].x){
@@ -195,16 +203,16 @@
 			*/
 			//if you are close to the targetPoint, align to the targetPoint
 			//trace("X",Math.abs(this.x - initialPoint.x - this.getNodes()[targetNode].x));
-			if (Math.abs(this.x - initialPoint.x - this.getNodes()[targetNode].x) < xVelocity * 1.1) {
+			if (Math.abs(this.x - initialPoint.x - this.getNodes()[targetNode].x) <= xVelocity * 1.1) {
 				horizontalMotion = "arrived";
 				xVelocity = 0;
 				//trace("horizontalMotion arrived");
 			}
 			//trace("FUCK",Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y));
-			if (Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y) < yVelocity * 1.1) {
+			if (Math.abs(this.y - initialPoint.y - this.getNodes()[targetNode].y) <= yVelocity * 1.1) {
 				verticalMotion = "arrived";
 				yVelocity = 0;
-				//trace("verticalMotion arrived");
+			//	trace("verticalMotion arrived");
 			}
 			
 			

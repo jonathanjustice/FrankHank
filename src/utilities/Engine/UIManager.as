@@ -60,11 +60,11 @@
 		
 		public function openLoadingScreen():void {
 			screen_LoadingScreen = new LoadingScreen();
-			trace("UIManager: opening loading screen",screen_LoadingScreen);
+			//trace("UIManager: opening loading screen",screen_LoadingScreen);
 		}
 		
 		public function closeLoadingScreen():void {
-			trace("closing loading screen",screen_LoadingScreen);
+			//trace("closing loading screen",screen_LoadingScreen);
 			screen_LoadingScreen.removeThisScreen();
 			//trace("start");
 		}
@@ -86,6 +86,11 @@
 		
 		public function openLivesScreen():void{
 			screen_Lives = new Lives();
+			//trace("start");
+		}
+		
+		public function getLivesScreen():MovieClip{
+			return screen_Lives;
 			//trace("start");
 		}
 		

@@ -25,6 +25,7 @@
 		private var velocityMultiplier:Number;
 		public var numEnemies:Number=0;
 		public static var enemies:Array;
+		public static var bosses:Array;
 		private static var numnum:Number = 0;
 		private static var _instance:EnemyManager;
 		
@@ -45,6 +46,10 @@
 			return enemies;
 		}
 		
+		public function getBosses():Array{
+			return bosses;
+		}
+		
 		public function getArrayLength():int{
 			return enemies.length;
 		}
@@ -55,7 +60,8 @@
 		
 		public function setUp():void{
 			numnum = 0;
-			enemies =[];
+			enemies = [];
+			bosses =[];
 			placeholderValues();
 			//createNewEnemy();
 		}
@@ -69,11 +75,12 @@
 	
 		//check the enemies for collisions with bullets
 		public static function updateLoop():void{
-
+			//enemies
 			checkForCollisionWithBullets();
 			checkForCollisionWithWall();
 			stayAttachedToAvatar();
-			//FPO_checkForLevelComplete();
+			//bosses
+			updateBosses();
 		}
 		
 		public static function FPO_checkForLevelComplete():void {
@@ -131,6 +138,12 @@
 						}
 					//}
 				}
+			}
+		}
+		
+		public static function updateBosses():void {
+			for each(var boss:MovieClip in bosses) {
+				boss.updateLoop();
 			}
 		}
 		

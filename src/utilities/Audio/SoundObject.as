@@ -23,7 +23,7 @@
 		public function createSound(soundFileLocation:String):void {
 			name = soundFileLocation;
 			soundLoader.beginLoad(this,soundFileLocation);
-			trace("soundFileLocation",soundFileLocation);
+			//trace("soundFileLocation",soundFileLocation);
 			//soundFile.addEventListener(Event.COMPLETE, loadSound);
 		}
 		
@@ -34,7 +34,7 @@
 		*/
 		
 		public function assignSound(newSound:Sound):void {
-			trace("sound", newSound);
+			//trace("sound", newSound);
 			//sound = newSound;
 			sound = newSound;
 			playSound(1,.25);
@@ -50,7 +50,7 @@
 		}
 
 		public function stopSound():void {
-			trace("soundobject: stopSound");
+			//trace("soundobject: stopSound");
 			channel.stop();
 		}
 		
@@ -63,7 +63,7 @@
 		}
 		
 		private function resetSound():void {
-			trace("resetSound");
+			//trace("resetSound");
 			name = null;;
 			channel = null;
 			sound = null;

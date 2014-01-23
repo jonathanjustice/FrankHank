@@ -64,7 +64,7 @@
 		private static function updateTreasureChests():void{
 			for each(var chest:TreasureChest in treasureChests){
 				chest.updateLoop();//controls opening progress & states
-				if(chest.hitTestObject(Game.avatarManager.getAvatar())){
+				if(chest.hitTestObject(AvatarManager.getAvatar())){
 					chest.setHighlightState(true);
 					if(Main.keyInputManager.getSpace()){
 						chest.BeginOpeningChest();

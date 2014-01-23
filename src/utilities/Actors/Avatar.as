@@ -20,7 +20,7 @@
 		private var myAngle:Number=0;
 		private var velocityIncrease:Number = 3;
 		private var maxVelocity:Number = 18;
-		private var velocityDecrease:Number = .8;
+		private var velocityDecrease:Number = .7;
 		private var maxSpeed:Number=100;
 		public var xDiff:Number=0;
 		public var yDiff:Number = 0;
@@ -33,6 +33,9 @@
 		private var delay:int = 15;
 		private var avatarHealth:int = 10;
 		private var additionalYVelocityForCamera:int = 0;
+		private var isTouchingWall:Boolean = false;
+		private var invulnerableTime:int = 0;
+		private var maxInvulnerableTime:int = 60;
 		
 		
 		private var filePath:String = "../src/assets/actors/swf_frank.swf";
@@ -41,10 +44,65 @@
 			this.x = newX,
 			this.y = newY;
 			setUp();
-			trace("-----------AVATAR------------");
-			trace(newX);
-			trace(newY);
-			
+		}
+		
+		public function getIsTouchingWall():Boolean {
+			return isTouchingWall;
+		}
+		
+		public function setIsTouchingWall(newState:Boolean):void {
+			isTouchingWall = newState;
+		}
+		
+		public override function lerpToTarget():void {
+			if (lerping) {
+				AnimationManager.getInstance().updateAnimationState(this, "run");
+				lerpAmount.x = (this.x - lerpTarget.x) * lerpMultiplier.x;
+				this.x -= lerpAmount.x;
+				lerpAmount.y = (this.y - lerpTarget.y) * lerpMultiplier.y;
+				//this.y -= lerpAmount.y;
+				if (Math.abs(lerpAmount.x) < 3) {
+					lerping = false;
+					Game.setGameState("unlockAvatar");
+					Game.setGameState("lockCamera");
+					
+					AnimationManager.getInstance().updateAnimationState(this, "idle");
+				}
+			}
+		}
+		
+		public function checkInvulnerableDueToDamage():void {
+			var alphaIncrement:Number = .2;
+			var timeIncrement:Number = 5;
+			if (invulnerableDueToDamage == true) {
+				invulnerableTime++;
+				
+				if (invulnerableTime < timeIncrement) {
+					this.alpha -= alphaIncrement;
+				}
+				else if (invulnerableTime < timeIncrement*2) {
+					this.alpha += alphaIncrement;
+				}
+				else if (invulnerableTime < timeIncrement*3) {
+					this.alpha -= alphaIncrement;
+				}
+				else if (invulnerableTime < timeIncrement*4) {
+					this.alpha += alphaIncrement;
+				}
+				else if (invulnerableTime < timeIncrement*5) {
+					this.alpha -= alphaIncrement;
+				}
+				else if (invulnerableTime < timeIncrement*6) {
+					this.alpha += alphaIncrement;
+				}
+				
+				if (invulnerableTime >= maxInvulnerableTime) {
+					invulnerableDueToDamage = false;
+					invulnerableTime = 0;
+					this.alpha = 1;
+					setInvincibilityEnabled(false);
+				}
+			}
 		}
 		
 		public function setAdditionalYVelocity(newVel:int):void {
@@ -68,6 +126,7 @@
 		}
 		
 		public function setUp():void {
+			setLerpMultiplier(.05, .05);
 			//print("Avatar.SetUp()");
 			defineGraphics("frank", false);
 			resetHealth();
@@ -103,19 +162,21 @@
 		}
 		
 		public function updateLoop():void {
+			
 			if (getIsSwfLoaded() == true) {
+				checkInvulnerableDueToDamage();
 				//trace("health",health);
 				animationLogic();
 				//setIsFalling(true);
-				getisJumpingFromInputManager();
-				applyVelocities();
+				
+				lerpToTarget();
 				applyGravity(getIsGravitySystemEnabled());
 				
 				setQuadTreeNode();
 				//get key data
 				//getAnglesFromKeyInputManager();
 				//get the velocity
-				getVelocityFromKeyInputManager();
+			
 				//getRotationFromKeyInputManager();
 				//apply the velocities to the avatar
 				
@@ -131,8 +192,14 @@
 				if (getBehaviorState() == "shooting") {
 					
 				}
+				getVelocityFromKeyInputManager();
+				getisJumpingFromInputManager();
+				applyVelocities();
 				punch();
 			}
+			
+			//trace("avatar x",this.x + this.hitbox.x + this.hitbox.width);
+			//trace("avatar y",this.y + this.hitbox.y + this.hitbox.height);
 		}
 		
 		/*public override function Point_Actor_At_Target(target:Point):void{
@@ -154,11 +221,11 @@
 			//verify key press is the right direction before application of velocity
 			//set the direction i should be facing
 			if (KeyInputManager.getLeftArrowKey()==true) {
-				xVelocity += velocityMod * velocityIncrease;
+				xVelocity += (velocityMod * velocityIncrease) * getJumpingInputSpeedModifier();
 				directionLastFaced = "LEFT";
 			}
 			if (KeyInputManager.getRightArrowKey()==true) {
-				xVelocity += velocityMod * velocityIncrease;
+				xVelocity += (velocityMod * velocityIncrease)* getJumpingInputSpeedModifier();
 				directionLastFaced = "RIGHT";
 			}
 			//limit max velocity
@@ -170,10 +237,12 @@
 			}
 			//if you are not pressing a button to run, then you slowdown
 			if (KeyInputManager.getMyVelocityX() == 0) {
-				xVelocity *= velocityDecrease;
-				if (xVelocity <= .5 && xVelocity >= -.5) {
-					xVelocity = 0;
-				}
+				//if(getIsRiding() == false){
+					xVelocity *= velocityDecrease;
+					if (xVelocity <= .5 && xVelocity >= -.5) {
+						xVelocity = 0;
+					}
+				//}
 			}
 				setDirectionToFace(directionLastFaced);
 		}
@@ -190,8 +259,8 @@
 		}
 		
 		public function applyVelocities():void {
-			this.x += xVelocity;
 			this.y += yVelocity;
+			this.x += xVelocity;
 			Main.game.moveGameContainer(this);
 		}
 		
@@ -233,41 +302,63 @@
 			//trace("isDoubleJumpingEnabled",isDoubleJumpingEnabled);
 		}
 		
+		public override function startJumpAnimation():void {
+			AnimationManager.getInstance().updateAnimationState(this, "jump");
+			//tintActor(0x8800FF);
+		}
+		
+		public override function endJumpAnimation():void {
+			AnimationManager.getInstance().updateAnimationState(this, "run");
+			//trace("end");
+			//resetActorTint(0x8800FF);
+		}
+		
 		public function animationLogic():void {
+			//disgusting hack
+			listenForStopFrame();
 			//If running, disable idleing & play run 
-			if (xVelocity != 0 && yVelocity == 0) {
+			if (getIsTouchingWall() == true) {
+				setIsFalling(false);
+				if (xVelocity != 0 && yVelocity == 0) {
 				setIsIdle(false);
 				setIdleTime(0);
 				AnimationManager.getInstance().updateAnimationState(this, "run");
+				//if you are not moving and have not already started idleing, then idle
 				
-			//if you are not moving and have not already started idleing, then idle
-			}else if (xVelocity == 0 && yVelocity == 0 && isJumping == false && getIdleTime() == 0) {
-				AnimationManager.getInstance().updateAnimationState(this, "idle");
-				setIsIdle(true);
-			}
-			//If idleing, increment idle timer
-			if (getIsIdle()==true) {
-				setIdleTime((getIdleTime() + 1));
-			}
-			
-			if (getIdleTime() >= getMaxIdleTime()) {
-				//if over max idle time, switch to impatient idle
-				setIdleImpatientTime((getIdleImpatientTime() + 1));
-				if (getIdleImpatientTime() == 1) {
-					//AnimationManager.getInstance();
-					AnimationManager.getInstance().updateAnimationState(this,"idleImpatient");
-				}
-				//if over max idle time, switch to idle
-				if (getIdleImpatientTime() == getMaxIdleTime()) {
+				}else if (xVelocity == 0 && yVelocity == 0 && getIsFalling() == false && isJumping == false && getIdleTime() <= 5) {
 					AnimationManager.getInstance().updateAnimationState(this, "idle");
-					setIdleImpatientTime(0);
-					setIdleTime(0);
+					setIsIdle(true);
+				}
+				//If idleing, increment idle timer
+				if (getIsIdle()==true) {
+					setIdleTime((getIdleTime() + 1));
+				}
+				
+				if (getIdleTime() >= getMaxIdleTime()) {
+					//if over max idle time, switch to impatient idle
+					setIdleImpatientTime((getIdleImpatientTime() + 1));
+					if (getIdleImpatientTime() == 1) {
+						//AnimationManager.getInstance();
+						AnimationManager.getInstance().updateAnimationState(this,"idleImpatient");
+					}
+					//if over max idle time, switch to idle
+					if (getIdleImpatientTime() == getMaxIdleTime()) {
+						AnimationManager.getInstance().updateAnimationState(this, "idle");
+						setIdleImpatientTime(0);
+						setIdleTime(0);
+					}
+				}
+			}else if (getIsTouchingWall() == false) {
+				if (getIsFalling() == false) {
+					setIsFalling(true);
+					AnimationManager.getInstance().updateAnimationState(this, "fall");
 				}
 			}
 		}
 		
 		public override function onTakeDamage():void {
 			bounceBackward();
+			setInvulnerableDueToDamage(true);
 		}
 	}
 }

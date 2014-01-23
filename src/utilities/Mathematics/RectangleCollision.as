@@ -7,6 +7,9 @@
 */
 package utilities.Mathematics{
 	import flash.display.MovieClip;
+	import utilities.Actors.Avatar;
+	import utilities.Actors.GameBoardPieces.MovingWall;
+	import utilities.Engine.Combat.AvatarManager;
 	public class RectangleCollision{  
 		 public function RectangleCollision(){
 			
@@ -29,16 +32,33 @@ package utilities.Mathematics{
 		 
 		
 		public static function testCollision(movable:MovieClip, stationary:MovieClip,resolveCollisions:Boolean=true):String {
-			var collisionEjectDistance:Number = 1;//don't get stuck in the other rectangle
+			var collisionEjectDistance:Number = .5;//don't get stuck in the other rectangle
 			var collidedWithTop:Boolean = false;
 			var collisionSide:String = "";
-		//	trace("moveable: ", movable);
+			
 			//moveable is above stationary
+			//trace("M", movable);
+			//trace("S", stationary);
+			/*if (movable is Avatar && stationary is MovingWall) {
+				trace("movable & avatar");
+				//trace("moveable: ", movable);
+				if (movable.getPreviousPosition().y + movable.hitbox.height <= stationary.getPreviousPosition().y) {
+					collisionSide = "top";
+					if (resolveCollisions == true) {
+						trace("resolveCollisions: ", resolveCollisions);
+						movable.y = stationary.y - movable.hitbox.height - (collisionEjectDistance - stationary.yVelocity);
+						//movable.y -= stationary.yVelocity;
+						movable.x += stationary.xVelocity *2;
+					}
+				}
+			}*/
+			
 			if (movable.getPreviousPosition().y + movable.hitbox.height <= stationary.getPreviousPosition().y) {
 				collisionSide = "top";
-				if(resolveCollisions == true){
+				if (resolveCollisions == true) {
+					//trace("resolveCollisions: ", resolveCollisions);
 					movable.y = stationary.y - movable.hitbox.height - (collisionEjectDistance - stationary.yVelocity);
-					//movable.y -= stationary.yVelocity;
+					movable.y -= stationary.yVelocity;
 					movable.x += stationary.xVelocity *2;
 				}
 			}

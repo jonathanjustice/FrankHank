@@ -34,6 +34,7 @@
 		public static var uiManager:Object;//empty MC?
 		public static var keyInputManager:Object;
 		public static var mouseInputManager:Object;
+		public static var bulkLoader:BulkLoaderSystem;
 
 		//check to see if the stage exists
 		//usually only necessary if this is on the web or deployed inside another swf
@@ -51,7 +52,8 @@
 		//define the stage for use in other classes
 		//launch the engine
 		//set up a some important managers
-		private function initialSetup():void{
+		private function initialSetup():void {
+			bulkLoader = new BulkLoaderSystem();
 			stage.stageFocusRect = false;
 			theStage = this.stage;
 			UIManager.getInstance();
@@ -60,6 +62,10 @@
 			//openStartScreen();
 			KeyInputManager.getInstance();
 			MouseInputManager.getInstance();
+		}
+		
+		public static function getBulkLoader():BulkLoaderSystem {
+			return bulkLoader;
 		}
 		
 		

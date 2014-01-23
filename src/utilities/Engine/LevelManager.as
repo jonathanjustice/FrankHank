@@ -11,6 +11,7 @@
 	import utilities.Actors.GameBoardPieces.Wall;
 	import utilities.Actors.GameBoardPieces.Terrain;
 	import utilities.dataModels.LevelProgressModel;
+	import utilities.dataModels.ResourceModel;
 	import utilities.Actors.Coin;
 	import utilities.Actors.Loot;
 	import flash.geom.Point;
@@ -28,6 +29,7 @@
 		
 		public static var triggers_cutScenes:Array;
 		public static var triggers_cameraLocks:Array;
+		public static var triggers_activateBosses:Array;
 		public static var arts:Array;
 		public static var coins:Array;
 		public static var savePoints:Array;
@@ -35,6 +37,7 @@
 		private var isLevelFailed:Boolean = false;
 		private static var _instance:LevelManager;
 		private var isLevelActive:Boolean = false;
+		private var cameraLockZone:MovieClip = new MovieClip();
 		
 		//Singleton Design Pattern features
 		public function LevelManager(singletonEnforcer:SingletonEnforcer){
@@ -52,6 +55,7 @@
 			triggers_endZones = [];
 			triggers_cutScenes = [];
 			triggers_cameraLocks = [];
+			triggers_activateBosses = [];
 		}
 		
 		public static function getInstance():LevelManager {
@@ -65,7 +69,7 @@
 			//trace("newIndex", newIndex);
 			//trace(triggerableWalls);
 			//trace(triggerableWalls[newIndex]);
- 			triggerableWalls[newIndex].setIsActive(true);
+   			triggerableWalls[newIndex].setIsActive(true);
 		}
 		
 		
@@ -76,6 +80,18 @@
 		
 		public function getTriggers_cameraLocks():Array{
 			return triggers_cameraLocks;
+		}
+		
+		public function getTriggers_activateBosses():Array{
+			return triggers_activateBosses;
+		}
+		
+		public function setCameraLockZone(newLockZone:MovieClip):void {
+			cameraLockZone = newLockZone;
+		}
+		
+		public function getCameraLockZone():MovieClip {
+			return cameraLockZone;
 		}
 		
 		public function getTriggers_endZones():Array{
@@ -160,7 +176,8 @@
 		}
 		
 		private function levelCompleted():void {
-			trace("levelCompleted");
+			ResourceModel.getInstance().updateSavedDatas();
+			//trace("levelCompleted");
 			clearLevel();
 		//	if (EnemyManager.enemies.length == 0) {
 				LevelProgressModel.getInstance().setCompletedMissionsProgress(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1);
@@ -170,6 +187,7 @@
 		}
 		
 		public function levelFailed():void {
+			ResourceModel.getInstance().updateSavedDatas();
 			Game.setLives(Game.getLives() - 1);
 			clearLevel();
 			if (Game.getLives() >= 0 ) {
@@ -207,10 +225,11 @@
 			AvatarManager.getInstance().destroyArray(AvatarManager.avatars);
 			LevelManager.getInstance().destroyArray(LevelManager.levels);
 			LevelManager.getInstance().destroyArray(LevelManager.walls);
-			LevelManager.getInstance().destroyArray(LevelManager.triggerableWalls);
+			//LevelManager.getInstance().destroyArray(LevelManager.triggerableWalls);
 			LevelManager.getInstance().destroyArray(LevelManager.triggers_endZones);
 			LevelManager.getInstance().destroyArray(LevelManager.triggers_cutScenes);
 			LevelManager.getInstance().destroyArray(LevelManager.triggers_cameraLocks);
+			LevelManager.getInstance().destroyArray(LevelManager.triggers_activateBosses);
 			Game.resetGameContainerCoordinates();
 			Game.setFramesSinceGameStart();
 		}
@@ -224,22 +243,25 @@
 		
 		
 		public function testEvent(e:StateMachineEvent):void {
-			trace("testEvent Fired!")
+			//trace("testEvent Fired!")
 		}
 		
 		public function loadLevel():void {
-			addEventListener(StateMachineEvent.TEST_EVENT, testEvent);
-			Main.theStage.dispatchEvent(new StateMachineEvent("testEvent"));
-			Main.theStage.dispatchEvent(new StateMachineEvent("boot"));
-			print("loadLevel : 1");
+			trace("----------loadllevel--------");
+			//addEventListener(StateMachineEvent.TEST_EVENT, testEvent);
+			//Main.theStage.dispatchEvent(new StateMachineEvent("testEvent"));
+			//Main.theStage.dispatchEvent(new StateMachineEvent("boot"));
+			trace("loadLevel : 1");
 			LevelManager._instance.setIsLevelComplete(false);
-			//print("loadLevel");
+			trace("loadLevel : 2");
 			var levelName:String = String(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1 );
 			levelName = "lvl_" + levelName;
 			//print("levelName:" +levelName);
 			level = new utilities.Actors.GameBoardPieces.Level(levelName);
 			levels.push(level);
-			Game.setGameState("levelCurrentlyLoading"); 
+			trace("loadLevel : 3");
+			Game.setGameState("levelCurrentlyLoading");
+			trace("loadLevel : 4");
 		}
 		
 		public function deselectActors():void {

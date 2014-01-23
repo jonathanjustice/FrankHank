@@ -21,13 +21,16 @@
 	import utilities.Actors.Avatar;
 	import utilities.Mathematics.QuadTree;
 	import utilities.dataModels.LevelProgressModel;
+	import utilities.dataModels.ResourceModel;
 	import utilities.Engine.Combat.AnimationManager;
 	import utilities.Actors.GameBoardPieces.Art;
 	import utilities.customEvents.*;
+	import utilities.Input.KeyInputManager;
 	
 	public class Game extends MovieClip{
 		public static var theGame:Game;
 		public static var lives:int = 3;
+		public static var coins:int = 0;
 		public static var originaLives:int = 3;
 		public static var resourceManager:ResourceManager;
 		public static var powerupManager:PowerupManager;
@@ -52,6 +55,9 @@
 		private static var bg_speed_1:Number = -0.25;
 		private static var bg_speed_2:Number = -0.35;
 		public static var jsonParser:JsonParser;
+		private static var lerpMultiplier:Point = new Point;
+		private static var lerpMultiplier_followAvatar:Number = .35;
+		private static var lerpMultiplier_cameraLock:Number = .05;
 		
 		public var desiredX:Number = 0;
 		public var desiredY:Number = 0;
@@ -74,11 +80,11 @@
 		}
 		
 		public function testEvent(e:StateMachineEvent):void {
-			trace("testEvent Fired in Game!")
+			//trace("testEvent Fired in Game!")
 		}
 		
 		public function boot(e:StateMachineEvent):void {
-			trace("boot Fired in Game!")
+			//trace("boot Fired in Game!")
 		}
 		
 		public static function setGameState(newState:String,filePathName:String =""):void {
@@ -111,11 +117,61 @@
 					UIManager.getInstance().openLivesScreen();
 					UIManager.getInstance().closeLoadingScreen();
 					enableMasterLoop();
-					
+					setLerpMultiplier(lerpMultiplier_followAvatar, lerpMultiplier_followAvatar);
+					UIManager.getInstance().getLivesScreen().setScreenVisibility(true);
 					break;
 				case "inLevel":
 					//doshit
 					break;
+				case "lockCamera":
+					setLerpMultiplier(lerpMultiplier_cameraLock, lerpMultiplier_cameraLock);
+					//everything else is the same, just camera doesn't track
+					break;
+					//in engine cutscenes
+				case "activateBoss":
+					//trace("do boss stuff son");
+					setLerpMultiplier(lerpMultiplier_cameraLock, lerpMultiplier_cameraLock);
+					//setLerpMultiplier(lerpMultiplier_cameraLock, lerpMultiplier_cameraLock);
+					//everything else is the same, just camera doesn't track
+					break;
+					//in engine cutscenes
+					
+					
+					
+					
+					
+				case "lockCameraAndAutomateAvatar":
+					KeyInputManager.setIsKeysEnabled(false);
+					setLerpMultiplier(lerpMultiplier_cameraLock, lerpMultiplier_cameraLock);
+					var cameraLockZone:MovieClip = LevelManager.getInstance().getTriggers_cameraLocks()[0];
+					var actorPoint:Point = new Point();
+					actorPoint.x = cameraLockZone.x + cameraLockZone.width/2;
+					actorPoint.y = cameraLockZone.y + cameraLockZone.height / 2;
+					//trace("actorPoint",actorPoint)
+					//actorPoint = cameraLockZone.parent.localToGlobal(actorPoint);
+					AvatarManager.getAvatar().setLerpTarget(actorPoint);
+					AvatarManager.getAvatar().setLerping(true);
+					//doshit
+					break;
+				case "unlockAvatar":
+					KeyInputManager.setIsKeysEnabled(true);
+					setLerpMultiplier(lerpMultiplier_cameraLock, lerpMultiplier_cameraLock);
+					//var cameraLockZone:MovieClip = LevelManager.getInstance().getTriggers_cameraLocks()[0];
+				//	var actorPoint:Point = new Point();
+					//actorPoint.x = cameraLockZone.x + cameraLockZone.width/2;
+					//actorPoint.y = cameraLockZone.y + cameraLockZone.height / 2;
+					//trace("actorPoint",actorPoint)
+					//actorPoint = cameraLockZone.parent.localToGlobal(actorPoint);
+					//AvatarManager.getAvatar().setLerpTarget(actorPoint);
+					//AvatarManager.getAvatar().setLerping(true);
+					//doshit
+					break;
+					
+					
+					
+					
+					
+					
 				case "levelComplete":
 					LevelManager.getInstance().setIsLevelActive(false);
 					UIManager.getInstance().openLevelCompleteScreen();
@@ -125,14 +181,14 @@
 					//doshit
 					break;
 				case "levelFailed":
-					trace("setGameState: level failed ");
+					//trace("setGameState: level failed ");
 					disableMasterLoop();
 					UIManager.getInstance().removeLivesScreen();
 					LevelManager.getInstance().levelFailed();
 					
 					break;
 				case "gameOver":
-					trace("setGameState: gameOver");
+					//trace("setGameState: gameOver");
 					LevelManager.getInstance().setIsLevelComplete(false);
 					UIManager.getInstance().removeLivesScreen();
 					UIManager.getInstance().openGameOverScreen();
@@ -143,12 +199,13 @@
 					//doshit
 					break;
 					
-				/*  in-engine cutscenes  */
 					
 					
 				/*  in-level cutscenes  */
 				case "startInGameCutScene":
 					//doshit
+					//trace("Game: startInGameCutScene");
+					//trace("Game: filePathName",filePathName);
 					disableMasterLoop();
 					CutSceneManager.getInstance().loadInGameCutScene(filePathName);
 					//trace("Game: startInGameCutScene");
@@ -159,11 +216,20 @@
 					break;
 					
 				/* capstone cutScenes */
-				case "startCutSceneLoad":
+				case "startIntroCutSceneLoad":
 					//doshit
-					trace("Game: startCutSceneLoad");
+					trace("Game: startIntroCutSceneLoad : 1");
+					disableMasterLoop();
+					CutSceneManager.getInstance().loadCutScene("swf_cutScene_intro");
+					trace("Game: startIntroCutSceneLoad : 2");
+					break;
+				case "startCutSceneLoad":
+					UIManager.getInstance().getLivesScreen().setScreenVisibility(false);
+					//doshit
+					//trace("Game: startCutSceneLoad");
 					disableMasterLoop();
 					CutSceneManager.getInstance().loadSceneBasedOnLevelProgress();
+					
 					break;
 				case "cutSceneCurrentlyLoading":
 					//trace("Game: cutSceneCurrentlyLoading");
@@ -184,7 +250,7 @@
 					if (LevelManager.getInstance().getIsLevelComplete() == false) {
 						enableMasterLoop();
 					}else if (LevelManager.getInstance().getIsLevelComplete() == true) {
-						trace("ELSE level is marked as completed");
+						//trace("ELSE level is marked as completed");
 						UIManager.getInstance().openLevelCompleteScreen();	
 					}
 					break;
@@ -237,6 +303,12 @@
 					createManagersAndControllers();
 					setGameState("startLevelLoad")
 					break;
+				case "introCutScene":
+					//trace("Started Game: From the Start Screen");
+					createManagersAndControllers();
+					setGameState("startLevelLoad")
+					break;
+					
 				case "start":
 					//trace("Started Game: From the Start Screen");
 					createManagersAndControllers();
@@ -301,13 +373,26 @@
 			CheatManager.getInstance();
 		}
 		
+		public function shakeCamera():void {
+			trace("camera is shaking");
+		}
+		
 		
 		public function moveGameContainer(actor:MovieClip):void {
 			var cameraBuffer:int = 25;
 			var cameraSpeed:int = 12;
 			var actorPoint:Point = new Point();
-			actorPoint.x = actor.x;
-			actorPoint.y = actor.y;
+			if (getGameState() == "lockCamera" || getGameState() == "lockCameraAndAutomateAvatar") {
+				var cameraLockZone:MovieClip = LevelManager.getInstance().getCameraLockZone();
+				//use the trigger block
+				actorPoint.x = cameraLockZone.x + cameraLockZone.width/2;
+				actorPoint.y = cameraLockZone.y + cameraLockZone.height / 2;
+			}else {
+				//use the player instead
+				actorPoint.x = actor.x;
+				actorPoint.y = actor.y;
+			}
+		
 			actorPoint = actor.parent.localToGlobal(actorPoint);
 			
 			
@@ -342,35 +427,39 @@
 			//lerpToPosition();
 		}
 		
+		public static function setLerpMultiplier(newXMultiplier:Number, newYMultiplier:Number):void {
+			lerpMultiplier.x = newXMultiplier;
+			lerpMultiplier.y = newYMultiplier;
+		}
+		
 		public function lerpY():void {
-			var multiplierY:Number = .35;
 			if(lerping){
-				var lerpAmountY:Number = (cameraWindow.y - desiredY) * multiplierY;
+				var lerpAmountY:Number = (cameraWindow.y - desiredY) * lerpMultiplier.y;
 				gameContainer.y += lerpAmountY;
 			}
 		}
 		
 		public function lerpX():void {
-			var multiplierX:Number = .35;
-			if(lerping){
-				var lerpAmountX:Number = (cameraWindow.x - desiredX) * multiplierX;
+			if (lerping) {
+				var lerpAmountX:Number = (cameraWindow.x - desiredX) * lerpMultiplier.x;
 				gameContainer.x += lerpAmountX;
 				for (var i:int = 0; i < LevelManager.arts.length; i++ ) {
 				//trace(LevelManager.arts[i].getParallaxLevel());
-				switch(LevelManager.arts[i].getParallaxLevel()) {
-					case 0:
-						//art += cameraSpeed;
-						break;
-					case 1:
-						LevelManager.arts[i].x += lerpAmountX * bg_speed_1;
-						break;
-					case 2:
-						LevelManager.arts[i].x += lerpAmountX * bg_speed_2;
-						break;
+					switch(LevelManager.arts[i].getParallaxLevel()) {
+						case 0:
+							//art += cameraSpeed;
+							break;
+						case 1:
+							LevelManager.arts[i].x += lerpAmountX * bg_speed_1;
+							break;
+						case 2:
+							LevelManager.arts[i].x += lerpAmountX * bg_speed_2;
+							break;
+					}
 				}
 			}
-			}
 		}
+		
 		public static function resetGameContainerCoordinates():void {
 			//trace("resetGameContainerCoordinates");
 			gameContainer.x = 0;
@@ -398,6 +487,11 @@
 		
 		public static function getLives():int {
 			return lives;
+		}
+		
+		public static function getCoins():int {
+			coins = ResourceModel.getInstance().getCoins();
+			return coins;
 		}
 		
 		public static function getContinueCode():String {

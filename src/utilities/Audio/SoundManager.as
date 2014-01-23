@@ -17,7 +17,7 @@
 		public function SoundManager(singletonEnforcer:SingletonEnforcer){
 			//createNewSoundObject(filePath);
 			get_sounds_from_JsonParser();
-			trace("filePath",filePath);
+			//trace("filePath",filePath);
 			//stop_a_sound_channel(filePath);
 		}
 		
@@ -25,8 +25,8 @@
 			trace(Main.game);
 			trace(Main.game.getJsonParser());
 			JSON_sounds = Main.game.getJsonParser().getData_mp3();
-			trace("JSON_sounds", JSON_sounds.sounds[0].name);
-			trace("JSON_sounds",JSON_sounds.sounds.mp3_guileTheme);
+			//trace("JSON_sounds", JSON_sounds.sounds[0].name);
+			//trace("JSON_sounds",JSON_sounds.sounds.mp3_guileTheme);
 		}
 		
 		public static function getInstance():SoundManager {
@@ -61,7 +61,7 @@
 			trace("index", index);
 			soundObjects.splice(index, 1);
 			soundObject = null;
-			trace(soundObjects);
+			//trace(soundObjects);
 		}
 	}
 }

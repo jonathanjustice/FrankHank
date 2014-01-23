@@ -58,6 +58,17 @@
 			Main.theStage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
 		}
 		
+		public static function setIsKeysEnabled(newState:Boolean):void {
+			isKeysEnabled = newState;
+			if (isKeysEnabled == false) {
+				setAllKeysToFalse();
+			}
+		}
+		
+		public static function getIsKeysEnabled():Boolean {
+			return isKeysEnabled;
+		}
+		
 		public function keyDownHandler(e:KeyboardEvent):void {
 			//trace(e.keyCode);
 			if(isKeysEnabled == true){
@@ -303,6 +314,31 @@
 		public static function getWKey():Boolean{
 			//trace("space" + Key_space);
 			return Key_W;
+		}
+		
+		public static function setAllKeysToFalse():void {
+			Key_right_2 = false;
+			Key_left_2 = false;
+			Key_up_2 = false;
+			Key_down_2 = false;
+			Key_right = false;
+			Key_left = false;
+			Key_up = false;
+			Key_down = false;
+			Key_space = false;
+			Key_Z = false;
+			Key_X = false;
+			
+			Key_W = false;
+			Key_R = false;
+			Key_rightBracket = false;//we're using right bracket now, because my keyboard is a jerk
+			aimAngle = 90;
+			myAngle=0;
+			myVelocityX=0;
+			myVelocityY=0;
+			myRotation=0;
+			Key_rotRight = false;
+			Key_rotLeft = false;
 		}
 	}
 }
