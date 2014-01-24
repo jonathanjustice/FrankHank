@@ -79,13 +79,15 @@
 			Main.theStage.addEventListener(StateMachineEvent.BOOT, boot);
 		}
 		
+			
 		public function testEvent(e:StateMachineEvent):void {
-			//trace("testEvent Fired in Game!")
+			trace("testEvent Fired in Game!")
 		}
 		
 		public function boot(e:StateMachineEvent):void {
-			//trace("boot Fired in Game!")
+			trace("boot Fired in Game!")
 		}
+		
 		
 		public static function setGameState(newState:String,filePathName:String =""):void {
 			gameState = newState;
@@ -218,10 +220,8 @@
 				/* capstone cutScenes */
 				case "startIntroCutSceneLoad":
 					//doshit
-					trace("Game: startIntroCutSceneLoad : 1");
 					disableMasterLoop();
 					CutSceneManager.getInstance().loadCutScene("swf_cutScene_intro");
-					trace("Game: startIntroCutSceneLoad : 2");
 					break;
 				case "startCutSceneLoad":
 					UIManager.getInstance().getLivesScreen().setScreenVisibility(false);

@@ -222,7 +222,6 @@
 							//wall.setType("standard");
 							break;
 						case "avatar":
-							trace("SwfParser Avatar");
 							var avatar:Avatar = new Avatar(tempArray[j].x, tempArray[j].y);
 							break;
 						case "coin":
@@ -261,11 +260,9 @@
 					}
 					if (tempArray[j].name.indexOf("triggerCutScene_") != -1) {
 						var cutSceneName:String = tempArray[j].name;
-						trace("cutSceneName",cutSceneName);
 						//trace(cutSceneName.slice(17, cutSceneName.length)); // output: !!!
 						//get the name after the "cutScene_Trigger_" part
 						cutSceneName = cutSceneName.slice(16, cutSceneName.length);
-						trace("cutSceneName",cutSceneName);
 						var trigger_CutScene_Index:int = tempArray[j].name.charAt(17);
 						//trace("triggerIndex",triggerIndex);
 						var trigger_CutScene:Trigger_CutScene = new Trigger_CutScene(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height,cutSceneName);
@@ -348,7 +345,6 @@
 					filePath = lvl_5;
 					break;
 			}
-			trace("SwfParser : 1");
 			Main.getBulkLoader().beginLoad(this, filePath);
 			//var loader:swfLoader = new swfLoader();
 			//loader.beginLoad(this, filePath);
@@ -413,10 +409,10 @@
 					
 			}
 			//var loader:swfLoader = new swfLoader();
-			trace("Main.getBulkLoader().beginLoad(swfParent, filePath);");
-			trace("Main.getBulkLoader()",Main.getBulkLoader());
-			trace("swfParent",swfParent);
-			trace("filePath",filePath);
+			//trace("Main.getBulkLoader().beginLoad(swfParent, filePath);");
+			//trace("Main.getBulkLoader()",Main.getBulkLoader());
+			//trace("swfParent",swfParent);
+			//trace("filePath",filePath);
 			Main.getBulkLoader().beginLoad(swfParent, filePath);
 			//loader.beginLoad(swfParent, filePath);
 			//loader = null;

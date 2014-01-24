@@ -212,7 +212,6 @@
 		//creation & destruction
 		//future: add ability to add things to game engine at particular orders, right now we are at the mercy of the FLA
 		public function addLevelToGameEngine():void {
-			trace("addLevelToGameEngine");
 			utilities.Engine.Game.gameContainer.addChild(this);
 		}
 		
@@ -468,7 +467,6 @@
 		public function defineLevelGraphics(filePath:String,isLevel:Boolean):void {
 			actorGraphic = SwfParser.getInstance();
 			actorGraphic.loadLevelSwf(filePath, this);
-			trace("defineLevelGraphics: 1");
 			this.addChild(actorGraphic);
 		}
 		

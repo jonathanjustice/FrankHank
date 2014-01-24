@@ -42,15 +42,7 @@
 		public function setLivesDisplay():void {
 			var livesDisplay:String = "";
 			livesDisplay = "x" + String(Game.getLives());
-			
-			trace("Game.getLives()",Game.getLives());
-			trace("livesDisplay",livesDisplay);
-			trace("assignedGraphic[0]",assignedGraphic[0]);
-			trace("assignedGraphic[0].swf_child",assignedGraphic[0].swf_child);
-			trace("assignedGraphic[0].swf_child.txt_lives",assignedGraphic[0].swf_child.txt_lives);
-			trace("assignedGraphic[0].swf_child.txt_lives.text",assignedGraphic[0].swf_child.txt_lives.text);
 			assignedGraphic[0].swf_child.txt_lives.text = livesDisplay;
-			trace("assignedGraphic[0].swf_child.txt_lives.text",assignedGraphic[0].swf_child.txt_lives.text);
 		}
 		
 		public function setCoinsDisplay():void {

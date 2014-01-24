@@ -30,10 +30,6 @@
 			setUp();
 			this.addChild(graphic);
 			assignedGraphic[0] = graphic;
-			trace("graphic",graphic);
-			trace("assignedGraphic[0]",assignedGraphic[0]);
-			trace("assignedGraphic[0].swf_child",assignedGraphic[0].swf_child);
-			trace("assignedGraphic[0].swf_child.clickToStart",assignedGraphic[0].swf_child.clickToStart);
 			assignedGraphic[0].swf_child.clickToStart.visible = true;
 			assignedGraphic[0].swf_child.startButtons.visible = false;
 			assignedGraphic[0].swf_child.startButtons.btn_continue.stop();

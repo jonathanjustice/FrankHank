@@ -35,13 +35,7 @@
 		
 		//ugh whatever last flash project. no need to do this right
 		public function assignGraphic(graphic:DisplayObject):void {
-			//extract the mo
-			//trace("effects manager : assignGraphic");
 			assignedGraphic[0] = graphic;
-			//trace("assignedGraphic[0].name", assignedGraphic[0].name);
-			//trace("assignedGraphic[0].swf_child.name", assignedGraphic[0].swf_child.name);
-			//trace("assignedGraphic[0].swf_child.name.getChildAt(0).name", assignedGraphic[0].swf_child.getChildAt(0).name);
-			
 			assignedGraphic[0].swf_child.getChildAt(0).gotoAndPlay(1);
 			switch(assignedGraphic[0].swf_child.getChildAt(0).name) {
 				case "franked":
@@ -54,20 +48,9 @@
 					assignedGraphic[3] = graphic;
 					break;
 			}
-			//effectsContainer = graphic;
-			//addActorToGameEngine(graphic, EffectsManager.effects);
-		
-		//	hitbox = this.assignedGraphic[0].swf_child.hitbox;
-		//	hitzone = this.assignedGraphic[0].swf_child.hitzone;
-			//playAnimation("walk");
 		}
 		
 		private function preLoadEffects():void {
-			//trace("EffectsManager: loadEffectsContainer");
-			//trace("Main.getBulkLoader().beginLoad(swfParent, filePath);");
-			//trace("Main.getBulkLoader()",Main.getBulkLoader());
-			//trace("swfParent",effectsContainer);
-			//trace("filePath",filePath);
 			Main.getBulkLoader().beginLoad(this, fp_franked);
 			Main.getBulkLoader().beginLoad(this, fp_hanked);
 			Main.getBulkLoader().beginLoad(this, fp_extraLife);
@@ -78,16 +61,8 @@
 		}
 		
 		public function newEffect_Franked(spawnX:int, spawnY:int):void {
-			
-			//trace("new effect");
-			
-			//trace("new effect:  assignedGraphic[0]", assignedGraphic[1]);
-			//trace("new effect:  assignedGraphic[0].swf_child", assignedGraphic[1].swf_child);
-			//trace("new effect:  assignedGraphic[0].swf_child.franked", assignedGraphic[1].swf_child.franked);
-			//trace("new effect:  assignedGraphic[0].anim_franked", assignedGraphic[0].anim_franked);
 			var newEffect:MovieClip = new MovieClip();
 			newEffect = assignedGraphic[1];
-			//var myDuplicate:MovieClip = duplicateDisplayObject( assignedGraphic[0].anim_franked ) as MovieClip;
 			var feedbackMovieClip:FeedbackMovieClip = new FeedbackMovieClip(spawnX,spawnY,newEffect);
 		}
 		
@@ -104,7 +79,6 @@
 		}
 		
 		public function newEffect_FeedbackTextField(spawnX:int, spawnY:int,effectText:String):void {
-			//trace("new effect");
 			var feedbackTextField:FeedbackTextField = new FeedbackTextField(spawnX,spawnY,effectText);
 		}
 		

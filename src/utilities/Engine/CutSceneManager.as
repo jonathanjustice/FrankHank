@@ -92,10 +92,10 @@
 			
 		}
 		
+		//based on arbitrary scene name passed in
 		public function loadCutScene(newSceneName:String ):void {
 			currentCutSceneName = newSceneName;
 			var sceneName:String = newSceneName;
-			trace("sceneName:---------------------------------------------------------------- ", sceneName );
 			//print(sceneName);
 			loadSceneFromName(sceneName);
 			Game.setGameState("cutSceneCurrentlyLoading"); 
@@ -104,19 +104,14 @@
 		public function loadInGameCutScene(newSceneName:String ):void {
 			currentCutSceneName = newSceneName;
 			var sceneName:String = "swf_cutScene_level_" + newSceneName + "_mid";
-			trace("sceneName:---------------------------------------------------------------- ", sceneName );
-			//print(sceneName);
 			loadSceneFromName(sceneName);
 			Game.setGameState("cutSceneCurrentlyLoading_Trigger"); 
 		}
 		
 		public function loadSceneBasedOnLevelProgress():void {
-			//print("loadScene");
 			var sceneName:String = String(LevelProgressModel.getInstance().getCompletedMissionsProgress());
 			currentCutSceneName = sceneName;
 			sceneName = "swf_cutScene_" + sceneName;
-			//trace("sceneName: ", sceneName);
-			//print(sceneName);
 			loadSceneFromName(sceneName);
 			Game.setGameState("cutSceneCurrentlyLoading"); 
 		}
@@ -125,8 +120,6 @@
 			scene = new utilities.Screens.GameScreens.CutScene(sceneName);
 			currentCutSceneName = sceneName;
 			cutScenes.push(scene);
-			//trace("cutScenes", cutScenes);
-			//trace("cutScenes[0]", cutScenes[0]);
 		}
 		
 		public function deselectActors():void {

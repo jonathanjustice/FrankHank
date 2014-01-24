@@ -247,21 +247,19 @@
 		}
 		
 		public function loadLevel():void {
-			trace("----------loadllevel--------");
 			//addEventListener(StateMachineEvent.TEST_EVENT, testEvent);
-			//Main.theStage.dispatchEvent(new StateMachineEvent("testEvent"));
-			//Main.theStage.dispatchEvent(new StateMachineEvent("boot"));
-			trace("loadLevel : 1");
+			Main.theStage.dispatchEvent(new StateMachineEvent("testEvent"));
+			Main.theStage.dispatchEvent(new StateMachineEvent("boot"));
+			
+			Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","bananas"));
+			
 			LevelManager._instance.setIsLevelComplete(false);
-			trace("loadLevel : 2");
 			var levelName:String = String(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1 );
 			levelName = "lvl_" + levelName;
 			//print("levelName:" +levelName);
 			level = new utilities.Actors.GameBoardPieces.Level(levelName);
 			levels.push(level);
-			trace("loadLevel : 3");
 			Game.setGameState("levelCurrentlyLoading");
-			trace("loadLevel : 4");
 		}
 		
 		public function deselectActors():void {
