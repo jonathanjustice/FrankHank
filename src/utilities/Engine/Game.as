@@ -98,6 +98,8 @@
 				case "startScreen":
 					UIManager.openStartScreen();
 					resetGameValues();
+					trace("start sceeensdfsdf");
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","START_SCREEN_SONG"));
 					break;
 				case "continueCodeScreen":
 					UIManager.openContinueCodeScreen();
@@ -178,6 +180,8 @@
 					LevelManager.getInstance().setIsLevelActive(false);
 					UIManager.getInstance().openLevelCompleteScreen();
 					LevelManager.getInstance().setIsLevelComplete(false);
+					
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","SONG_LEVEL_COMPLETE"));
 					break;
 				case "died":
 					//doshit
@@ -195,10 +199,12 @@
 					UIManager.getInstance().removeLivesScreen();
 					UIManager.getInstance().openGameOverScreen();
 					LevelManager.getInstance().setIsLevelComplete(true);
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","SONG_GAMEOVER"));
 				
 					break;
 				case "gameWon":
 					//doshit
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","SONG_GAMEWON"));
 					break;
 					
 					

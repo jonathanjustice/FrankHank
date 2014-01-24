@@ -251,7 +251,7 @@
 			Main.theStage.dispatchEvent(new StateMachineEvent("testEvent"));
 			Main.theStage.dispatchEvent(new StateMachineEvent("boot"));
 			
-			Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","bananas"));
+			//Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","bananas"));
 			
 			LevelManager._instance.setIsLevelComplete(false);
 			var levelName:String = String(LevelProgressModel.getInstance().getCompletedMissionsProgress() + 1 );
