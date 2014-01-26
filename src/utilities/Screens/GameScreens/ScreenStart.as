@@ -6,6 +6,7 @@
 	import utilities.Screens.Screen_Dynamic_Blocker;
 	import utilities.Engine.Game;
 	import flash.display.DisplayObject;
+	import utilities.customEvents.*;
 	public class ScreenStart extends utilities.Screens.Screen_Default{
 		private var myScreen:MovieClip;
 		
@@ -45,16 +46,18 @@
 					break;
 				case "hitbox_clickToStart":
 					//trace("clicked hitbox_clickToStart");
+					
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","INVINCIBLE_POWERUP_ACQUIRED"));
 					assignedGraphic[0].swf_child.clickToStart.visible = false;
 					assignedGraphic[0].swf_child.startButtons.visible = true;
 					break;
 				case "hitbox_newGame":
-					trace("clicked btn_newGame");
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","START_SCREEN_NEWGAME_BUTTON_PRESSED"));
 					removeThisScreen();
 					utilities.Engine.Game.setGameState("startIntroCutSceneLoad");
 					break;
 				case "hitbox_continue":
-					//trace("clicked btn_continue");
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","START_SCREEN_CONTINUE_BUTTON_PRESSED"));
 					removeThisScreen();
 					utilities.Engine.Game.setGameState("continueCodeScreen");
 					//do continue-y stuff

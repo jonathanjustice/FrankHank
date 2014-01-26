@@ -406,7 +406,6 @@
 				case "swf_cutScene_level_1_mid":
 					filePath = swf_cutScene_level_1_mid;
 					break;
-					
 			}
 			//var loader:swfLoader = new swfLoader();
 			//trace("Main.getBulkLoader().beginLoad(swfParent, filePath);");

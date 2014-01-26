@@ -6,6 +6,7 @@
 	import utilities.Screens.GameScreens.CutScene
 	import utilities.Actors.GameBoardPieces.Level;
 	import flash.events.Event;
+	import utilities.customEvents.*;
 	
 	import utilities.dataModels.LevelProgressModel;
 	import flash.geom.Point;
@@ -62,6 +63,7 @@
 			if(isSceneActive == true){
 				cutScenes[0].addEventListener(Event.ENTER_FRAME, playCutScene);
 				cutScenes[0].assignedGraphic[0].swf_child.play();
+				playMusicBasedOnSceneName(currentCutSceneName);
 			}
 		}
 		
@@ -120,6 +122,32 @@
 			scene = new utilities.Screens.GameScreens.CutScene(sceneName);
 			currentCutSceneName = sceneName;
 			cutScenes.push(scene);
+		}
+		
+		private function playMusicBasedOnSceneName(sceneName:String):void {
+			switch(sceneName) {
+				case "swf_cutScene_intro":
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","CUTSCENE_SONG_1"));
+					break;
+				case "swf_cutScene_1":
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","CUTSCENE_SONG_2"));
+					break;
+				case "swf_cutScene_2":
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","CUTSCENE_SONG_2"));
+					break;
+				case "swf_cutScene_3":
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","CUTSCENE_SONG_2"));
+					break;
+				case "swf_cutScene_4":
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","CUTSCENE_SONG_2"));
+					break;
+				case "swf_cutScene_5":
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","CUTSCENE_SONG_2"));
+					break;
+				case "swf_cutScene_level_1_mid":
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","CUTSCENE_SONG_2"));
+					break;
+			}
 		}
 		
 		public function deselectActors():void {

@@ -4,6 +4,7 @@
 	import utilities.Input.KeyInputManager;
 	import utilities.Engine.Combat.AnimationManager;
 	import flash.utils.getTimer;
+	import utilities.customEvents.*;
 	public class JumpingActor extends SelectableActor{
 		
 		//private var gameContainer;
@@ -61,7 +62,7 @@
 			}
 		}
 		
-		public function jump():void {
+		public function jump(jumpingOffEnemy:Boolean = false):void {
 			startJumpAnimation();
 			jumpingInputSpeedModifier = .5;
 			setIdleTime(0);
@@ -69,9 +70,13 @@
 			setIsIdle(false);
 			currentJumpCount++;
 			if (currentJumpCount == 1) {
+				
 				//AnimationManager().updateAnimationState(this,"jump");
 			}else if (currentJumpCount == 2) {
 				//AnimationManager().updateAnimationState(this,"jumpDouble");
+			}
+			if (!jumpingOffEnemy) {
+				Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","FRANK_JUMP"));
 			}
 			yVelocity = 0;
 			resetGravity();

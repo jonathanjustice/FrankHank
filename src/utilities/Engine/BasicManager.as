@@ -5,6 +5,7 @@ package utilities.Engine{
 	import utilities.Actors.SelectableActor;
 	import flash.geom.Point;
 	import utilities.objects.GameObject;
+	import utilities.customEvents.*;
 	public class BasicManager extends GameObject {
 		private static var newSelectedItems:Array = new Array();
 		

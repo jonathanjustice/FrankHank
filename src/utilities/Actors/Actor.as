@@ -34,6 +34,7 @@
 	import utilities.Engine.LevelManager;
 	import utilities.objects.GameObject;
 	import utilities.Saving_And_Loading.swfLoader;
+	import utilities.customEvents.*;
 	public class Actor extends GameObject {
 		public var directionLastFaced:String = "RIGHT";
 		public var attachedArt:MovieClip = new MovieClip;
@@ -337,10 +338,12 @@
 				if (this is Avatar) {
 					if (Game.getLives() > 0) {
 						//trace("checkForDamage levelFailed");
+						Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","FRANK_DIED"));
 						Game.setGameState("levelFailed");
 					}else if(Game.getLives() <= 0){
 						//trace("checkForDamage: gameOver");
 						Game.setGameState("gameOver");
+						Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","SONG_GAMEOVER"));
 					}
 					
 				}else{

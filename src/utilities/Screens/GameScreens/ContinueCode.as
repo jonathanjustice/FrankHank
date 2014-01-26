@@ -7,6 +7,7 @@
 	import utilities.Engine.Game;
 	import flash.display.DisplayObject;
 	import flash.text.*;
+	import utilities.customEvents.*;
 	public class ContinueCode extends utilities.Screens.Screen_Default{
 		private var myScreen:MovieClip;
 		private var filePath:String = "../src/assets/ui/swf_continueCode.swf";
@@ -78,6 +79,7 @@
 		private function updateUserInputCode():void {
 			userInputCode = assignedGraphic[0].swf_child.txt_input_1.text + assignedGraphic[0].swf_child.txt_input_2.text + assignedGraphic[0].swf_child.txt_input_3.text + assignedGraphic[0].swf_child.txt_input_4.text;
 			trace("userInputCode", userInputCode);
+			Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","CONTINUE_SCREEN_CODE_KEY_PRESS"));
 			}
 		
 		private function setContinueCodeDisplay():void {
@@ -96,9 +98,11 @@
 				case "hitbox_back":
 					removeThisScreen();
 					utilities.Engine.Game.setGameState("startScreen");
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","CONTINUE_SCREEN_BACK_BUTTON_PRESSED"));
 					break;
 				case "hitbox_continue":
 					removeThisScreen();
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","CONTINUE_SCREEN_CONTINUE_BUTTON_PRESSED"));
 					//utilities.Engine.Game.setGameState("startLevelLoad");
 					utilities.Engine.Game.startGame("start");
 					break;

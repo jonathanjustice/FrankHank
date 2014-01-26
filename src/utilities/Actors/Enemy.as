@@ -6,6 +6,8 @@
 	import flash.utils.getTimer;
 	import utilities.Engine.LevelManager;
 	import flash.display.DisplayObject;
+	import utilities.customEvents.*;
+	import utilities.customEvents.*;
 	public class Enemy extends SelectableActor{
 		
 		//private var gameContainer;
@@ -55,7 +57,16 @@
 			//setPreviousPosition();
 		}
 		
+		public override function onTakeDamage():void {
+			if (this.health <= 0) {
+				Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","KILL_ENEMY"));
+			}else {
+				Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","TANK_HIT_ONCE"));
+			}
+		}
+		
 		public function beThrown(directionToBeThrownIn:String):void {
+			Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","THROW_TANK"));
 			trace("directionToBeThrownIn",directionToBeThrownIn);
 			if (directionToBeThrownIn == "LEFT") {
 				xVelocity = -25;

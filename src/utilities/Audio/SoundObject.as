@@ -35,7 +35,7 @@
 		
 		public function assignSound(newSound:Sound):void {
 			//trace("sound", newSound);
-			//sound = newSound;
+			sound = newSound;
 			sound = newSound;
 			playSound(1,.25);
 		}
@@ -55,7 +55,7 @@
 		}
 		
 		private function sound_completed($evt:Event):void{
-			trace("sound completed");
+			//trace("sound completed");
 			channel.stop();
 			//do some logic here
 			channel.removeEventListener(Event.SOUND_COMPLETE, sound_completed);

@@ -214,14 +214,15 @@
 							if (KeyInputManager.getUpKey() == true) {
 								EnemyManager.enemies[j].setAttachToAvatar(true);
 								EnemyManager.enemies[j].setRechargePause(true);
-								EnemyManager.enemies[j].setThrowable(false)
+								EnemyManager.enemies[j].setThrowable(false);
+								//Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","ENEMY_PICKED_UP"));
 							}
 							
 							//you jump on the enemy while it is vulnerable
 							var collisionWithEnemyDirection:String = RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j],false);
 							if(collisionWithEnemyDirection=="top"){
 								myAvatar.jumpingEnded();
-								myAvatar.jump();
+								myAvatar.jump(true);
 								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
 								EffectsManager.getInstance().newEffect_Hanked(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y);
 							//you touch the enemy on anywhere but its top side
@@ -236,17 +237,20 @@
 							collisionDirection = utilities.Mathematics.RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j],false);
 							if (collisionDirection=="top") {
 								myAvatar.jumpingEnded();
-								myAvatar.jump();
+								myAvatar.jump(true);
 								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
 								EnemyManager.enemies[j].setIsVulnerable(true);
 								EffectsManager.getInstance().newEffect_Franked(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y);
 							//if the enemy is NOT vulnerable and the avatar touches the enemy on anything but the top, the avatar takes damage
 							}else {
 								if(EnemyManager.enemies[j].getIsBeingThrown() == false){
-									EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
 									myAvatar.setBounceDirection(collisionDirection);
 									//if you are invincible, this will cause the enemy to take damage, otherwise it will do nothing
-									myAvatar.takeDamage(EnemyManager.enemies[j].getCollisionDamage() );
+									if (myAvatar.getIsInvincible() == true) {
+										EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
+									}else if (myAvatar.getIsInvincible() == false) {
+										myAvatar.takeDamage(EnemyManager.enemies[j].getCollisionDamage());
+									}
 								}
 							}
 						}

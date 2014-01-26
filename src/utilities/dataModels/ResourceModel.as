@@ -5,6 +5,7 @@ package utilities.dataModels {
 	import utilities.dataModels.LevelProgressModel;
 	import utilities.Engine.Combat.AvatarManager;
 	import utilities.Engine.Game;
+	import utilities.customEvents.*;
 	public class ResourceModel {
 		private var coins:int = 0;
 		private var coinsRequiredForExtraLife:int = 63;
@@ -62,6 +63,7 @@ package utilities.dataModels {
 			if (coins >= coinsRequiredForExtraLife) {
 				//add Extra Life
 				Game.setLives(Game.getLives() + 1);
+				Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","EXTRA_LIFE"));
 				//play feedback animation thing
 				AvatarManager.getInstance().createExtraLifeTextFeecbackText();
 				coins -= coinsRequiredForExtraLife;

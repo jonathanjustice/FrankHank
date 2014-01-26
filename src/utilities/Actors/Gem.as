@@ -5,6 +5,10 @@
 	import flash.utils.getTimer;
 	import utilities.Engine.LevelManager;
 	import flash.display.DisplayObject;
+	import utilities.customEvents.*;
+	import utilities.dataModels.LevelProgressModel;
+	import utilities.dataModels.ResourceModel;
+	import utilities.Engine.UIManager;
 	public class Gem extends Loot{
 		
 		//private var gameContainer;
@@ -49,7 +53,12 @@
 			//checkForDeathFlag();
 			//setPreviousPosition();
 		}
-	
+		
+		public override function onTakeDamage():void {
+			ResourceModel.getInstance().addCoins(getMoneyValue());
+			UIManager.getInstance().getLivesScreen().updateScreenDisplay();
+			Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","COLLECT_GEM"));	
+		}
 		
 		public function collidedWithAvatar():void {
 			

@@ -77,6 +77,8 @@
 			jsonParser = new JsonParser();
 			Main.theStage.addEventListener(StateMachineEvent.TEST_EVENT, testEvent);
 			Main.theStage.addEventListener(StateMachineEvent.BOOT, boot);
+			
+			//SoundManager.getInstance();
 		}
 		
 			
@@ -98,7 +100,7 @@
 				case "startScreen":
 					UIManager.openStartScreen();
 					resetGameValues();
-					trace("start sceeensdfsdf");
+					SoundManager.getInstance();
 					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","START_SCREEN_SONG"));
 					break;
 				case "continueCodeScreen":
@@ -123,6 +125,8 @@
 					enableMasterLoop();
 					setLerpMultiplier(lerpMultiplier_followAvatar, lerpMultiplier_followAvatar);
 					UIManager.getInstance().getLivesScreen().setScreenVisibility(true);
+					//start level here
+					playMusicBasedOnLevelProgress();
 					break;
 				case "inLevel":
 					//doshit
@@ -274,6 +278,28 @@
 			}
 		}
 		
+		public static function playMusicBasedOnLevelProgress():void {
+			trace("playMusicBasedOnLevelProgress");
+			trace("LevelProgressModel.getInstance().getCompletedMissionsProgress()",LevelProgressModel.getInstance().getCompletedMissionsProgress());
+			switch(LevelProgressModel.getInstance().getCompletedMissionsProgress()+1) {
+				case 1:
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START", "SONG_BG_1"));
+					break;
+				case 2:
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START", "SONG_BG_2"));
+					break;
+				case 3:
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START", "SONG_BG_2"));
+					break;
+				case 4:
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START", "SONG_BG_2"));
+					break;
+				case 5:
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START", "SONG_BG_2"));
+					break;
+			}
+		}
+		
 		public static function getGameState():String {
 			return gameState;
 		}
@@ -362,6 +388,7 @@
 		}
 		
 		private static function createManagersAndControllers():void {
+			SoundManager.getInstance();
 			LevelProgressModel.getInstance();
 			PowerupManager.getInstance();
 			AnimationManager.getInstance();
@@ -373,7 +400,6 @@
 			EnemyManager.getInstance();
 			CombatManager.getInstance();
 			LootManager.getInstance();
-			SoundManager.getInstance();
 			SaveDataManager.getInstance();
 			AnimationManager.getInstance();
 			CheatManager.getInstance();

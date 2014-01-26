@@ -5,6 +5,10 @@
 	import flash.utils.getTimer;
 	import flash.display.DisplayObject;
 	import utilities.Engine.LevelManager;
+	import utilities.customEvents.*;
+	import utilities.dataModels.LevelProgressModel;
+	import utilities.dataModels.ResourceModel;
+	import utilities.Engine.UIManager;
 	public class Coin extends Loot{
 		
 		//private var gameContainer;
@@ -27,6 +31,13 @@
 			health = 1;
 			setMoneyValue(1);
 		}
+		
+		public override function onTakeDamage():void {
+			ResourceModel.getInstance().addCoins(getMoneyValue());
+			UIManager.getInstance().getLivesScreen().updateScreenDisplay();
+			Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","COLLECT_COIN"));	
+		}
+		
 		
 		public override function getFilePath():String {
 			return filePath;

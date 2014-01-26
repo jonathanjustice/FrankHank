@@ -6,6 +6,7 @@
 	import utilities.Engine.*;
 	import utilities.Engine.UIManager; import utilities.GraphicsElements.SwfParser;
 	import utilities.objects.GameObject;
+	import utilities.customEvents.*;
 	public class Screen_Default extends GameObject{
 		private var blocker:Screen_Dynamic_Blocker;
 		private var myScreen:MovieClip;//or replace with swf eventually

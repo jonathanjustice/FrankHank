@@ -10,6 +10,7 @@
 	import flash.geom.Point;
 	import flash.display.Sprite;
 	import flash.text.*;
+	import utilities.customEvents.*;
 	import utilities.Engine.Combat.AnimationManager;
 	import utilities.Engine.Combat.AvatarManager;
 	import flash.display.DisplayObject;
@@ -288,13 +289,17 @@
 			switch(type) {
 				case "shoot":
 					setIsShootingEnabled(true);
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","SHOOT_POWERUP_ACQUIRED"));
 					break;
 				case "invincible":
 					setKillsOnContact(true);
 					setInvincibilityEnabled(true);
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","INVINCIBLE_POWERUP_ACQUIRED"));
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","SONG_INVINCIBLE"));
 					break;
 				case "doubleJump":
 					setIsGravitySystemEnabled(true);
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","DOUBLEJUMP_POWERUP_ACQUIRED"));
 					break;
 			}
 			//trace("isShootingEnabled",isShootingEnabled);
@@ -358,6 +363,8 @@
 		
 		public override function onTakeDamage():void {
 			bounceBackward();
+			
+			Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","FRANK_DAMAGED"));
 			setInvulnerableDueToDamage(true);
 		}
 	}

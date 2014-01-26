@@ -32,7 +32,7 @@ package utilities.Saving_And_Loading{
 			soundToLoad.addEventListener(ProgressEvent.PROGRESS, loadProgressHandler); 
 			soundToLoad.addEventListener(Event.COMPLETE, loadCompleteHandler); 
 			soundToLoad.addEventListener(IOErrorEvent.IO_ERROR, errorHandler); 
-			var req:URLRequest = new URLRequest("sound/bigSound.mp3"); 
+			var req:URLRequest = new URLRequest(filePath); 
 			soundToLoad.load(req); 
 		}
 		
@@ -48,7 +48,6 @@ package utilities.Saving_And_Loading{
 			soundToLoad.removeEventListener(ProgressEvent.PROGRESS, loadProgressHandler); 
 			soundToLoad.removeEventListener(Event.COMPLETE, loadCompleteHandler); 
 			soundToLoad.removeEventListener(IOErrorEvent.IO_ERROR, errorHandler); 
-			soundToLoad.close();
 			 try {
                     soundToLoad.close();
                 }

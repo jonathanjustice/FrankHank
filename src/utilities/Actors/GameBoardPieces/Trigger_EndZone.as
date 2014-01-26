@@ -3,6 +3,7 @@
 	import utilities.Actors.SelectableActor;
 	import flash.display.DisplayObject;
 	import utilities.Engine.LevelManager;
+	import utilities.customEvents.*;
 	public class Trigger_EndZone extends SelectableActor{
 		private var isBulletBlocker:Boolean = false;
 		private var filePath:String = "../src/assets/actors/swf_wall.swf";
@@ -46,6 +47,7 @@
 			//overriden by each individual class
 			//used for feedback mostly
 			LevelManager.getInstance().setIsLevelComplete(true);
+			Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","SONG_LEVEL_COMPLETE"));
 				
 		}
 		
