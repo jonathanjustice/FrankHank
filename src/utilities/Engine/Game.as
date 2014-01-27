@@ -83,11 +83,11 @@
 		
 			
 		public function testEvent(e:StateMachineEvent):void {
-			trace("testEvent Fired in Game!")
+			//trace("testEvent Fired in Game!")
 		}
 		
 		public function boot(e:StateMachineEvent):void {
-			trace("boot Fired in Game!")
+			//trace("boot Fired in Game!")
 		}
 		
 		

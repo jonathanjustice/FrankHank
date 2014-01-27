@@ -227,14 +227,16 @@
 								EffectsManager.getInstance().newEffect_Hanked(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y);
 							//you touch the enemy on anywhere but its top side
 							}else {
-								//you pass through the enemy
+								if (myAvatar.getIsInvincible() == true) {
+									EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
+								}
 							}
 						}else{
 							//resolves the collision & returns if this touched the top of the other object
 							
 							//if the avatar is on top of the enemy and the enemy is not in the vulnerable state, then damage it and bounce the avatar
 							var collisionDirection:String = "";
-							collisionDirection = utilities.Mathematics.RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j],false);
+							collisionDirection = utilities.Mathematics.RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j], false);
 							if (collisionDirection=="top") {
 								myAvatar.jumpingEnded();
 								myAvatar.jump(true);
@@ -243,8 +245,14 @@
 								EffectsManager.getInstance().newEffect_Franked(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y);
 							//if the enemy is NOT vulnerable and the avatar touches the enemy on anything but the top, the avatar takes damage
 							}else {
-								if(EnemyManager.enemies[j].getIsBeingThrown() == false){
-									myAvatar.setBounceDirection(collisionDirection);
+								if (EnemyManager.enemies[j].getIsBeingThrown() == false) {
+									var bounceDirection:String = "";
+									if (myAvatar.x < EnemyManager.enemies[j].x) {
+										bounceDirection = "left";
+									}else {
+										bounceDirection = "right";
+									}
+									myAvatar.setBounceDirection(bounceDirection);
 									//if you are invincible, this will cause the enemy to take damage, otherwise it will do nothing
 									if (myAvatar.getIsInvincible() == true) {
 										EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());

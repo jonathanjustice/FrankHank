@@ -39,6 +39,8 @@
 		public function assignGraphic(graphic:DisplayObject):void {
 			addActorToGameEngine(graphic, EnemyManager.enemies);
 			//playAnimation("walk");
+			hitbox.visible = false;
+			hitbox.alpha = 0;
 		}
 		
 		public override function updateLoop():void {

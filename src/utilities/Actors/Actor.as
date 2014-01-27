@@ -232,7 +232,7 @@
 			//trace("-------------------------------------hitbox",hitbox);
 			hitbox = newHitbox as MovieClip;
 			//trace("------------------------------------------------------hitbox",hitbox);
-			hitbox.visible = true;
+			//hitbox.visible = true;
 		}
 		
 		public function getHitbox():MovieClip {
@@ -704,11 +704,9 @@
 		private function pickRandomColor():int {
 			var randomNumber:Number;
 			var colorValue:int;
-			trace("picking color for set tint");
 			for (var i:int = 0; i < 5; i++ ) {
 				randomNumber = Math.random()*1;
 			}
-			trace(randomNumber);
 			if (randomNumber < .2) {
 				colorValue = 0x00FFFF;
 			}else if (randomNumber < .4) {

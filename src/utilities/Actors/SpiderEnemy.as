@@ -37,7 +37,8 @@
 		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			addActorToGameEngine(graphic,EnemyManager.enemies);
+			addActorToGameEngine(graphic, EnemyManager.enemies);
+			hitbox.visible = false;
 		}
 		
 		public override function updateLoop():void {

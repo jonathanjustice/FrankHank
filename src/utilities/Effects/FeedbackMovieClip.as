@@ -36,23 +36,15 @@ package utilities.Effects {
 		public function assignGraphic(graphic:DisplayObject):void {
 		
 			addActorToGameEngine(graphic, EffectsManager.effects);
-			
-			trace("FBMC:  assignedGraphic[0]", assignedGraphic[0]);
-			trace("FBMC:  assignedGraphic[0].name", assignedGraphic[0].name);
-			trace("FBMC:  assignedGraphic[0].getChildAt(0).name", assignedGraphic[0].getChildAt(0).name);
-			
-			
-			
-			
-			
-			trace("234234234234234234234234234");
-			
-			
-			trace("FBMC gotoAndPlay:  assignedGraphic[0].name", assignedGraphic[0].name);
-			trace("FBMC gotoAndPlay:  assignedGraphic[0].getChildAt(0).name", assignedGraphic[0].getChildAt(0).name);
-			trace("FBMC gotoAndPlay:  assignedGraphic[0].getChildAt(0).getChildAt(0).name", assignedGraphic[0].getChildAt(0).getChildAt(0).name);
-			trace("FBMC gotoAndPlay:  assignedGraphic[0].getChildAt(0).getChildAt(0).getChildAt(0).name", assignedGraphic[0].getChildAt(0).getChildAt(0).getChildAt(0).name);
-			assignedGraphic[0].getChildAt(0).getChildAt(0).getChildAt(0).gotoAndPlay(1);
+			 try{
+				assignedGraphic[0].getChildAt(0).getChildAt(0).getChildAt(0).gotoAndPlay(1);
+            }catch (e : Error){
+              /*  trace("whatever");
+				trace("FBMC gotoAndPlay:  assignedGraphic[0].name", assignedGraphic[0].name);
+				trace("FBMC gotoAndPlay:  assignedGraphic[0].getChildAt(0).name", assignedGraphic[0].getChildAt(0).name);
+				trace("FBMC gotoAndPlay:  assignedGraphic[0].getChildAt(0).getChildAt(0).name", assignedGraphic[0].getChildAt(0).getChildAt(0).name);
+				trace("FBMC gotoAndPlay:  assignedGraphic[0].getChildAt(0).getChildAt(0).getChildAt(0).name", assignedGraphic[0].getChildAt(0).getChildAt(0).getChildAt(0).name);*/
+            }
 			//trace("FBMC:  assignedGraphic[0].swf_child", assignedGraphic[0].swf_child);
 			//trace("FBMC:  assignedGraphic[0].swf_child.getChildAt(0).name", assignedGraphic[0].swf_child.getChildAt(0).name);
 		//	hitbox = this.assignedGraphic[0].swf_child.hitbox;
@@ -70,14 +62,15 @@ package utilities.Effects {
 		public override function listenForStopFrame():void {
 			//trace("listen");
 			//this is madness
-			/*trace("FBMC listenForStopFrame:  assignedGraphic[0]", assignedGraphic[0]);
-			trace("FBMC listenForStopFrame:  assignedGraphic[0].name", assignedGraphic[0].name);
-			trace("FBMC listenForStopFrame:  assignedGraphic[0].getChildAt(0).name", assignedGraphic[0].getChildAt(0).name);
-			trace("FBMC listenForStopFrame:  assignedGraphic[0].getChildAt(0).getChildAt(0).name", assignedGraphic[0].getChildAt(0).getChildAt(0).name);
-			trace("FBMC listenForStopFrame:  assignedGraphic[0].getChildAt(0).getChildAt(0).getChildAt(0).name", assignedGraphic[0].getChildAt(0).getChildAt(0).getChildAt(0).name);
-		*/
-			if (assignedGraphic[0].getChildAt(0).getChildAt(0).getChildAt(0).currentLabel == "stop") {
-				//trace("found stop label ");
+			 try {
+				if (assignedGraphic[0].getChildAt(0).getChildAt(0).getChildAt(0).currentLabel == "stop") {
+					//trace("found stop label ");
+					assignedGraphic[0].getChildAt(0).stop();
+					isListening = false;
+					markDeathFlag();
+				}
+			}catch (e : Error) {
+				//trace("whatever, stop label not found");
 				assignedGraphic[0].getChildAt(0).stop();
 				isListening = false;
 				markDeathFlag();
