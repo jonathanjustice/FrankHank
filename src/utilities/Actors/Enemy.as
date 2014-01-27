@@ -47,6 +47,14 @@
 			//trace(get_availableForTargeting());
 		}
 		
+		public function forceHitBoxVisibilityToFalse():void {
+			trace("forceHitBoxVisibilityToFalse");
+			this.hitbox.alpha = 0;
+			this.hitbox.visible = false;
+			trace("hitbox",hitbox);
+			//this.visible = false;
+		}
+		
 		public function updateLoop():void{
 			//setQuadTreeNode();
 			applyVector();

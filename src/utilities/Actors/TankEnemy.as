@@ -52,7 +52,7 @@
 			checkForDeathFlag();
 			rechargeHealth();
 			listenForStopFrame();
-			
+			forceHitBoxVisibilityToFalse();
 		}
 		
 		public override function applyVector():void {
