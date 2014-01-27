@@ -254,9 +254,10 @@
 									}
 									myAvatar.setBounceDirection(bounceDirection);
 									//if you are invincible, this will cause the enemy to take damage, otherwise it will do nothing
-									if (myAvatar.getIsInvincible() == true) {
+									if (myAvatar.getIsInvincible() == true && myAvatar.getInvulnerableDueToDamage() == false) {
+										trace("sdfsdfsdfsdfsdf");
 										EnemyManager.enemies[j].takeDamage(myAvatar.getCollisionDamage());
-									}else if (myAvatar.getIsInvincible() == false) {
+									}else if (myAvatar.getIsInvincible() == false  ) {
 										myAvatar.takeDamage(EnemyManager.enemies[j].getCollisionDamage());
 									}
 								}

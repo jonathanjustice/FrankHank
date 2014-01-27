@@ -6,6 +6,7 @@
 	import utilities.Screens.Screen_Dynamic_Blocker;
 	import utilities.Engine.Game;
 	import flash.display.DisplayObject;
+	import utilities.Engine.Combat.AvatarManager;
 	public class Lives extends utilities.Screens.Screen_Default{
 		private var myScreen:MovieClip;
 		private var filePath:String = "../src/assets/ui/swf_lives.swf";
@@ -37,6 +38,7 @@
 		public function updateScreenDisplay():void {
 			setLivesDisplay();
 			setCoinsDisplay();
+			setHealthDisplay();
 		}
 		
 		public function setLivesDisplay():void {
@@ -49,6 +51,12 @@
 			var coinsDisplay:String = "";
 			coinsDisplay = "x" + String(Game.getCoins());
 			assignedGraphic[0].swf_child.txt_coins.text = coinsDisplay;
+		}
+		
+		public function setHealthDisplay():void {
+			var healthAmount:int = AvatarManager.getAvatar().getHealth();
+			trace("healthAmount");
+			assignedGraphic[0].swf_child.healthBar.gotoAndStop(healthAmount);
 		}
 		
 		public override function clickHandler(event:MouseEvent):void{

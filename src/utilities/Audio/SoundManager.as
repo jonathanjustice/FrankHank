@@ -128,7 +128,7 @@
 	
 		public function startSound(event:SoundEvent):void {
 			var myResult:String = event.result;
-			//trace(myResult);
+			trace(myResult);
 			switch(event.result) {
 				case "START_SCREEN_SONG":
 					filePath = START_SCREEN_SONG;

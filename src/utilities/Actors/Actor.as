@@ -820,7 +820,7 @@
 		}
 		
 		public function resetActorTint():void {
-			trace("resettingTint");
+			//trace("resettingTint");
 			utilities.Mathematics.EasyTint.resetTint(this);
 		}
 		

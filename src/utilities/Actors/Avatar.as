@@ -14,6 +14,7 @@
 	import utilities.Engine.Combat.AnimationManager;
 	import utilities.Engine.Combat.AvatarManager;
 	import flash.display.DisplayObject;
+	import utilities.Engine.UIManager;
 
 	public class Avatar extends JumpingActor{
 		//private var mySprite:Sprite = new Sprite();
@@ -31,8 +32,8 @@
 		private var shootingDelay:int = 30
 		private var shootingTimer:int = 0;
 		private var currentDelay:int = 0;
-		private var delay:int = 15;
-		private var avatarHealth:int = 10;
+		private var delay:int = 13
+		private var avatarHealth:int = 3;
 		private var additionalYVelocityForCamera:int = 0;
 		private var isTouchingWall:Boolean = false;
 		private var invulnerableTime:int = 0;
@@ -116,6 +117,10 @@
 		
 		public function resetHealth():void {
 			health = avatarHealth;
+		}
+		
+		public function getHealth():int {
+			return health;
 		}
 		
 		public override function getFilePath():String {
@@ -361,10 +366,11 @@
 			}
 		}
 		
+		
 		public override function onTakeDamage():void {
 			bounceBackward();
-			
-			Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","FRANK_DAMAGED"));
+			UIManager.getInstance().getLivesScreen().updateScreenDisplay();
+			Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","FRANK_DAMAGED"));	
 			setInvulnerableDueToDamage(true);
 		}
 	}
