@@ -3,7 +3,7 @@ import flash.events.Event;
 	public class SoundEvent extends Event {
 		public static const SOUND_START:String = "SOUND_START";
 		public static const SOUND_STOP:String = "SOUND_STOP";
-		public static const SOUND_FADE_OUT:String = "SOUND_STOP";
+		public static const SOUND_FADE_OUT:String = "SOUND_FADE_OUT";
 		
 		// this is the object you want to pass through your event.
 		public var result:String;

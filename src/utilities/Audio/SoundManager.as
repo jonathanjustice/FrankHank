@@ -12,7 +12,7 @@
 		
 		private static var JSON_sounds:Object;
 		public static var soundObjects:Array = new Array();
-		/*
+		
 		private var START_SCREEN_SONG:String = "sound/START_SCREEN_SONG.mp3";
 		private var SONG_BG_1:String = "sound/SONG_BG_1.mp3";
 		private var SONG_BG_2:String = "sound/SONG_BG_2.mp3";
@@ -48,44 +48,9 @@
 		private var LAZER_BOUNCE:String = "sound/LAZER_BOUNCE.mp3";
 		private var LAZER_BOSS_DAMAGED:String = "sound/LAZER_BOSS_DAMAGED.mp3";
 		private var LAZER_BOSS_DESTROYED:String = "sound/LAZER_BOSS_DESTROYED.mp3";
-		*/
+		
 		//sdfsdfsdf
 		
-		private var START_SCREEN_SONG:String = "sound/debug.mp3";
-		private var SONG_BG_1:String = "sound/SONG_INVINCIBLE.mp3";
-		private var SONG_BG_2:String = "sound/SONG_INVINCIBLE.mp3";
-		private var CUTSCENE_SONG_1:String = "sound/debug.mp3";
-		private var CUTSCENE_SONG_2:String = "sound/debug.mp3";
-		private var SONG_GAMEOVER:String = "sound/debug.mp3";
-		private var SONG_GAMEWON:String = "sound/debug.mp3";
-		private var SONG_LEVEL_COMPLETE:String = "sound/debug.mp3";
-		private var SONG_INVINCIBLE:String = "sound/SONG_INVINCIBLE.mp3";
-		
-		
-		private var SHOOT_POWERUP_ACQUIRED:String = "sound/SHOOT_POWERUP_ACQUIRED.mp3";
-		private var INVINCIBLE_POWERUP_ACQUIRED:String = "sound/INVINCIBLE_POWERUP_ACQUIRED.mp3";
-		private var DOUBLEJUMP_POWERUP_ACQUIRED:String = "sound/DOUBLEJUMP_POWERUP_ACQUIRED.mp3";
-		
-		private var START_SCREEN_START_BUTTON_PRESSED:String = "sound/debug.mp3";
-		private var START_SCREEN_NEWGAME_BUTTON_PRESSED:String = "sound/debug.mp3";
-		private var START_SCREEN_CONTINUE_BUTTON_PRESSED:String = "sound/debug.mp3";
-		private var CONTINUE_SCREEN_BACK_BUTTON_PRESSED:String = "sound/debug.mp3";
-		private var CONTINUE_SCREEN_CONTINUE_BUTTON_PRESSED:String = "sound/debug.mp3";
-		private var CONTINUE_SCREEN_CODE_KEY_PRESS:String = "sound/debug.mp3";
-		private var FRANK_JUMP:String = "sound/debug.mp3";
-		private var TANK_HIT_ONCE:String = "sound/debug.mp3";
-		private var THROW_TANK:String = "sound/debug.mp3";
-		private var KILL_ENEMY:String = "sound/debug.mp3";
-		private var COLLECT_COIN:String = "sound/debug.mp3";
-		private var COLLECT_GEM:String = "sound/debug.mp3";
-		private var EXTRA_LIFE:String = "sound/debug.mp3";
-		private var FRANK_DIED:String = "sound/debug.mp3";
-		private var FRANK_DAMAGED:String = "sound/debug.mp3";
-		private var LAZER_CHARGE:String = "sound/debug.mp3";
-		private var LAZER_FIRE:String = "sound/debug.mp3";
-		private var LAZER_BOUNCE:String = "sound/debug.mp3";
-		private var LAZER_BOSS_DAMAGED:String = "sound/debug.mp3";
-		private var LAZER_BOSS_DESTROYED:String = "sound/debug.mp3";
 		
 		
 		
@@ -211,11 +176,11 @@
 				
 				
 			}
-			createNewSoundObject(filePath);
+			createNewSoundObject(filePath,myResult);
 		}
 		
-		public function createNewSoundObject(file_path:String):void {
-			var newSoundObject:SoundObject = new SoundObject(filePath);
+		public function createNewSoundObject(file_path:String,soundID:String):void {
+			var newSoundObject:SoundObject = new SoundObject(filePath,soundID);
 			soundObjects.push(newSoundObject);
 		}
 		

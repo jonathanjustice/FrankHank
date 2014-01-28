@@ -119,6 +119,7 @@
 		}
 		
 		public function loadSceneFromName(sceneName:String):void {
+			Main.theStage.dispatchEvent(new SoundEvent("SOUND_FADE_OUT","ALL"));
 			scene = new utilities.Screens.GameScreens.CutScene(sceneName);
 			currentCutSceneName = sceneName;
 			cutScenes.push(scene);

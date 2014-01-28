@@ -736,6 +736,7 @@
 				if (invincibilityTimer > invincibilityMaxTime) {
 					resetActorTint();
 					setInvincibilityEnabled(false);
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_FADE_OUT","SONG_INVINCIBLE"));
 				}
 			}
 		}

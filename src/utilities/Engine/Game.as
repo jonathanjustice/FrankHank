@@ -118,6 +118,8 @@
 					//trace("levelCurrentlyLoading");
 					break;
 				case "levelFullyLoaded":
+					
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_FADE_OUT","ALL"));
 					//trace("levelFullyLoaded");
 					LevelManager.getInstance().setIsLevelActive(true);
 					UIManager.getInstance().openLivesScreen();
@@ -181,6 +183,8 @@
 					
 					
 				case "levelComplete":
+					
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_FADE_OUT","ALL"));
 					LevelManager.getInstance().setIsLevelActive(false);
 					UIManager.getInstance().openLevelCompleteScreen();
 					LevelManager.getInstance().setIsLevelComplete(false);
@@ -192,6 +196,7 @@
 					break;
 				case "levelFailed":
 					//trace("setGameState: level failed ");
+					
 					disableMasterLoop();
 					UIManager.getInstance().removeLivesScreen();
 					LevelManager.getInstance().levelFailed();

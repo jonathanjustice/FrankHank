@@ -47,7 +47,7 @@
 				case "hitbox_clickToStart":
 					//trace("clicked hitbox_clickToStart");
 					
-					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","INVINCIBLE_POWERUP_ACQUIRED"));
+					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","START_SCREEN_START_BUTTON_PRESSED"));
 					assignedGraphic[0].swf_child.clickToStart.visible = false;
 					assignedGraphic[0].swf_child.startButtons.visible = true;
 					break;

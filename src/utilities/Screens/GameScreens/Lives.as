@@ -7,6 +7,7 @@
 	import utilities.Engine.Game;
 	import flash.display.DisplayObject;
 	import utilities.Engine.Combat.AvatarManager;
+	import utilities.customEvents.*;
 	public class Lives extends utilities.Screens.Screen_Default{
 		private var myScreen:MovieClip;
 		private var filePath:String = "../src/assets/ui/swf_lives.swf";
@@ -39,6 +40,7 @@
 			setLivesDisplay();
 			setCoinsDisplay();
 			setHealthDisplay();
+			
 		}
 		
 		public function setLivesDisplay():void {
