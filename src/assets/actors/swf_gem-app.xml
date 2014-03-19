@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<application xmlns="http://ns.adobe.com/air/application/1.5">
+<application xmlns="http://ns.adobe.com/air/application/2.6">
 
   <id>com.adobe.example.MAIN-AIR</id>
 
-  <version>1.0</version>
+  
 
   <filename>swf_gem</filename>
 
@@ -19,9 +19,17 @@
 
   
 
+
+
+  
+
 <!-- To localize the description, use the following format for the description element.<description><text xml:lang="en">English App description goes here</text><text xml:lang="fr">French App description goes here</text><text xml:lang="ja">Japanese App description goes here</text></description>-->
 
   <name>swf_gem</name>
+
+  
+
+
 
   
 
@@ -54,5 +62,8 @@
 
 
 
+
+
+  <versionNumber>1.0</versionNumber>
 
 </application>
