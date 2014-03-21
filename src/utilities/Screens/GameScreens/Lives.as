@@ -19,8 +19,9 @@
 			setUp();
 			this.addChild(graphic);
 			assignedGraphic[0] = graphic;
-			//Game.setGameState("cutSceneFullyLoaded");
-			updateScreenDisplay();
+			assignedGraphic[0].swf_child.healthBar.gotoAndStop(3);
+		//	Game.setGameState("cutSceneFullyLoaded");
+			//updateScreenDisplay();
 		}
 		
 		public override function getFilePath():String {
@@ -45,12 +46,7 @@
 		
 		public function setLivesDisplay():void {
 			var livesDisplay:String = "";
-			trace("livesDisplay",livesDisplay);
-			trace("String(Game.getLives()",String(Game.getLives()));
-			trace("assignedGraphic[0]",assignedGraphic[0]);
-			trace("assignedGraphic[0].swf_child",assignedGraphic[0].swf_child);
-			trace("assignedGraphic[0].swf_child.txt_lives",assignedGraphic[0].swf_child.txt_lives);
-			trace("assignedGraphic[0].swf_child.txt_lives.text",assignedGraphic[0].swf_child.txt_lives.text);
+			trace("lives assignedGraphic[0]",assignedGraphic[0]);
 			livesDisplay = "x" + String(Game.getLives());
 			assignedGraphic[0].swf_child.txt_lives.text = livesDisplay;
 			trace("livesDisplay",livesDisplay);
@@ -58,6 +54,7 @@
 		
 		public function setCoinsDisplay():void {
 			var coinsDisplay:String = "";
+			trace("coins assignedGraphic[0]",assignedGraphic[0]);
 			coinsDisplay = "x" + String(Game.getCoins());
 			assignedGraphic[0].swf_child.txt_coins.text = coinsDisplay;
 		}

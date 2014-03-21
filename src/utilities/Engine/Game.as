@@ -78,6 +78,7 @@
 			Main.theStage.addEventListener(StateMachineEvent.TEST_EVENT, testEvent);
 			Main.theStage.addEventListener(StateMachineEvent.BOOT, boot);
 			
+			
 			//SoundManager.getInstance();
 		}
 		
@@ -121,8 +122,9 @@
 					
 					Main.theStage.dispatchEvent(new SoundEvent("SOUND_FADE_OUT","ALL"));
 					//trace("levelFullyLoaded");
+					//UIManager.getInstance().openLivesScreen();
+					UIManager.getInstance().getLivesScreen().setScreenVisibility(true);
 					LevelManager.getInstance().setIsLevelActive(true);
-					UIManager.getInstance().openLivesScreen();
 					UIManager.getInstance().closeLoadingScreen();
 					enableMasterLoop();
 					setLerpMultiplier(lerpMultiplier_followAvatar, lerpMultiplier_followAvatar);
@@ -184,11 +186,11 @@
 					
 				case "levelComplete":
 					
+					UIManager.getInstance().getLivesScreen().setScreenVisibility(false);
 					Main.theStage.dispatchEvent(new SoundEvent("SOUND_FADE_OUT","ALL"));
 					LevelManager.getInstance().setIsLevelActive(false);
 					UIManager.getInstance().openLevelCompleteScreen();
 					LevelManager.getInstance().setIsLevelComplete(false);
-					UIManager.getInstance().removeLivesScreen();
 					
 					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","SONG_LEVEL_COMPLETE"));
 					break;
@@ -199,14 +201,14 @@
 					//trace("setGameState: level failed ");
 					
 					disableMasterLoop();
-					UIManager.getInstance().removeLivesScreen();
+					UIManager.getInstance().getLivesScreen().setScreenVisibility(false);
 					LevelManager.getInstance().levelFailed();
 					
 					break;
 				case "gameOver":
 					//trace("setGameState: gameOver");
 					LevelManager.getInstance().setIsLevelComplete(false);
-					UIManager.getInstance().removeLivesScreen();
+					UIManager.getInstance().getLivesScreen().setScreenVisibility(false);
 					UIManager.getInstance().openGameOverScreen();
 					LevelManager.getInstance().setIsLevelComplete(true);
 					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","SONG_GAMEOVER"));
@@ -409,6 +411,8 @@
 			SaveDataManager.getInstance();
 			AnimationManager.getInstance();
 			CheatManager.getInstance();
+			UIManager.getInstance().openLivesScreen();
+			UIManager.getInstance().getLivesScreen().setScreenVisibility(false);
 		}
 		
 		public function shakeCamera():void {
