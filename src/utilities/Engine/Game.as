@@ -188,6 +188,7 @@
 					LevelManager.getInstance().setIsLevelActive(false);
 					UIManager.getInstance().openLevelCompleteScreen();
 					LevelManager.getInstance().setIsLevelComplete(false);
+					UIManager.getInstance().removeLivesScreen();
 					
 					Main.theStage.dispatchEvent(new SoundEvent("SOUND_START","SONG_LEVEL_COMPLETE"));
 					break;

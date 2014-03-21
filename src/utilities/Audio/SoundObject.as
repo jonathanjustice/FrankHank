@@ -24,7 +24,7 @@
 		public function SoundObject(soundFileLocation:String,newID:String):void {
 			
 			soundID = newID;
-			trace("soundID   :::   ",soundID);
+			//trace("soundID   :::   ",soundID);
 			createSound(soundFileLocation);
 			//requestSounds();
 		}
@@ -36,9 +36,9 @@
 		public function endSoundWithFadeOut(event:SoundEvent):void {
 			var myResult:String = event.result;
 			//trace(myResult);
-			trace("soundID   -----   ",soundID);
-			trace("***********SOUND FADE OUT");
-			trace("***********isSoundActive",isSoundActive);
+		//	trace("soundID   -----   ",soundID);
+		//	trace("***********SOUND FADE OUT");
+		//	trace("***********isSoundActive",isSoundActive);
 			if (isSoundActive == true) {
 				if (myResult == soundID || myResult == "ALL") {
 					addEventListener(Event.ENTER_FRAME, fadeSoundOunt);	
@@ -60,10 +60,10 @@
 		private function fadeSoundOunt(e:Event):void {
 			soundVolume -= soundFadeSpeed;
 			var volume_sound_transform:SoundTransform = new SoundTransform(soundVolume, 0);
-			trace("volume_sound_transform", volume_sound_transform);
-			trace("channel.soundTransform", channel.soundTransform);
-			trace("channel",channel)
-			trace("channel.soundTransform = volume_sound_transform;",channel.soundTransform = volume_sound_transform)
+		//	trace("volume_sound_transform", volume_sound_transform);
+		//	trace("channel.soundTransform", channel.soundTransform);
+		//	trace("channel",channel)
+		//	trace("channel.soundTransform = volume_sound_transform;",channel.soundTransform = volume_sound_transform)
             channel.soundTransform = volume_sound_transform;
 			if (soundVolume <= 0) {
 				removeEventListener(Event.ENTER_FRAME, fadeSoundOunt);
@@ -94,7 +94,7 @@
 			Main.theStage.addEventListener(SoundEvent.SOUND_STOP, endSoundWithoutFadeOut);
 			Main.theStage.addEventListener(SoundEvent.SOUND_FADE_OUT, endSoundWithFadeOut);
 			isSoundActive = true;
-			trace("new SOUND CHANNEL 1");
+		//	trace("new SOUND CHANNEL 1");
 		}
 		
 		
