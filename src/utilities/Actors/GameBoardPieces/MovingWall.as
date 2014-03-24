@@ -89,7 +89,7 @@
 				originalXVelocity = xVelocity;
 				originalYVelocity = yVelocity;
 				addActorToGameEngine(graphic, LevelManager.triggerableWalls, triggerIndex);
-				addActorToGameEngine(graphic, LevelManager.walls);
+				//addActorToGameEngine(graphic, LevelManager.walls);
 			}else {
 				addActorToGameEngine(graphic, LevelManager.walls);
 			}

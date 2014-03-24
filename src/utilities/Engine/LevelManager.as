@@ -226,7 +226,8 @@
 			AvatarManager.getInstance().destroyArray(AvatarManager.avatars);
 			LevelManager.getInstance().destroyArray(LevelManager.levels);
 			LevelManager.getInstance().destroyArray(LevelManager.walls);
-			//LevelManager.getInstance().destroyArray(LevelManager.triggerableWalls);
+			trace(LevelManager.getInstance().destroyArray(LevelManager.triggerableWalls));
+			LevelManager.getInstance().destroyArray(LevelManager.triggerableWalls);
 			LevelManager.getInstance().destroyArray(LevelManager.triggers_endZones);
 			LevelManager.getInstance().destroyArray(LevelManager.triggers_cutScenes);
 			LevelManager.getInstance().destroyArray(LevelManager.triggers_cameraLocks);
