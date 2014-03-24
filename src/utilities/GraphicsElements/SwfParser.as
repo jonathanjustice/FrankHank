@@ -240,7 +240,7 @@
 							var tank:TankEnemy = new TankEnemy(tempArray[j].x,tempArray[j].y);
 							break;
 						case "boss":
-						//	var boss:BossEnemy = new BossEnemy(tempArray[j].x,tempArray[j].y);
+							var boss:BossEnemy = new BossEnemy(tempArray[j].x,tempArray[j].y);
 							break;
 						case "spider":
 							var spider:SpiderEnemy = new SpiderEnemy(tempArray[j].x,tempArray[j].y);

@@ -119,7 +119,11 @@
 					if (utilities.Mathematics.RectangleCollision.simpleIntersection(myAvatar, LevelManager.triggers_activateBosses[k]) == true) {
 						LevelManager.triggers_activateBosses[k].takeDamage(1);
 						LevelManager.triggers_activateBosses[k].checkForDeathFlag();
-						//trace("tell boss to activate");
+						trace("tell boss to activate");
+						trace("EnemyManager.bosses",EnemyManager.bosses);
+						trace("EnemyManager.bosses[0]",EnemyManager.bosses[0]);
+						EnemyManager.bosses[0].activateBoss();
+						
 					}
 				}
 				

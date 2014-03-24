@@ -216,6 +216,7 @@
 			LootManager.getInstance().destroyArray(LootManager.lootDrops);
 			LootManager.getInstance().destroyArray(LootManager.treasureChests);
 			EnemyManager.getInstance().destroyArray(EnemyManager.enemies);
+			EnemyManager.getInstance().destroyArray(EnemyManager.bosses);
 			LevelManager.getInstance().destroyArray(LevelManager.arts);
 			LevelManager.getInstance().destroyArray(LevelManager.coins);
 			LevelManager.getInstance().destroyArray(LevelManager.savePoints);

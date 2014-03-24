@@ -434,6 +434,7 @@
 		private function animationStateController():void {
 			setAnimationState("idle");
 		}
+		
 		public function defineGraphics(filePath:String="", isLevel:Boolean=false):void {
 			loadActorSwf(getFilePath());
 		}

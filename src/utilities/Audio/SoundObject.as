@@ -90,10 +90,10 @@
 			channel = new SoundChannel();
 			trace("channel",channel);
 			sound = newSound;
-			playSound(1, .25);
-			Main.theStage.addEventListener(SoundEvent.SOUND_STOP, endSoundWithoutFadeOut);
-			Main.theStage.addEventListener(SoundEvent.SOUND_FADE_OUT, endSoundWithFadeOut);
-			isSoundActive = true;
+			//playSound(1, .25);
+			//Main.theStage.addEventListener(SoundEvent.SOUND_STOP, endSoundWithoutFadeOut);
+			//Main.theStage.addEventListener(SoundEvent.SOUND_FADE_OUT, endSoundWithFadeOut);
+			//isSoundActive = true;
 		//	trace("new SOUND CHANNEL 1");
 		}
 		
