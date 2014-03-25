@@ -245,7 +245,7 @@
 			//spliceIndex = array.length;
 			//trace("Actor: addActorToGameEngine()",this);
 			assignedGraphic[0] = graphic;
-			this.addChild(graphic);
+			this.addChild(assignedGraphic[0]);
 			utilities.Engine.Game.gameContainer.addChild(this);
 			setIsSwfLoaded(true);
 			array.splice(spliceIndex, 0, this);
@@ -271,6 +271,7 @@
 				//it does not have a hitzone
 			}
 			setPreviousPosition();
+			//trace("adding actor",this.parent);
 		}
 		
 		public function removeActorFromGameEngine(actor:MovieClip, array:Array):void {
@@ -278,8 +279,11 @@
 			//trace("array",array);
 			actor.availableForTargeting=false;
 			var index:int = array.indexOf(actor);
-			array.splice(index,1);
-			utilities.Engine.Game.gameContainer.removeChild(actor);
+			array.splice(index, 1);
+			if (this.parent != null) {
+				//trace("this.parent",this.parent);
+				utilities.Engine.Game.gameContainer.removeChild(actor);
+			}
 			actor.setTargetToFalse();
 		}
 		
@@ -382,7 +386,15 @@
 				//trace("checkForDeathFlag",this);
 				//delete it
 				if(this is Bullet){
-					removeActorFromGameEngine(this,BulletManager.getInstance().getArray());
+					removeActorFromGameEngine(this, BulletManager.getInstance().getArray());
+					
+				}else if (this is BossBullet) {
+					trace("attempting to remove boss Bullet-----------this: ", this);
+					trace("attempting to remove boss Bullet from parent-----------this.parent: ", this.parent);
+					trace("BulletManager",BulletManager);
+					trace("BulletManager.getInstance()",BulletManager.getInstance());
+					trace("BulletManager.getInstance().getBossBullets()",BulletManager.getInstance().getBossBullets());
+					removeActorFromGameEngine(this, BulletManager.getInstance().getBossBullets());
 				}else if(this is Enemy){
 					//delete it
 					removeActorFromGameEngine(this,EnemyManager.getInstance().getArray());

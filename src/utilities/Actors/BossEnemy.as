@@ -1,10 +1,12 @@
 ﻿package utilities.Actors{
 	import flash.display.MovieClip;
+	import flash.geom.Point;
 	import utilities.Engine.Game;
 	import utilities.Mathematics.MathFormulas;
 	import utilities.Input.KeyInputManager;
 	import flash.utils.getTimer;
 	import utilities.Engine.Combat.EnemyManager;
+	import utilities.Engine.Combat.BulletManager;
 	import flash.display.DisplayObject;
 	public class BossEnemy extends Enemy{
 		
@@ -16,7 +18,7 @@
 		private var lifeSpan:Number = 2;//3 seconds
 		private var isGravitySystemEnabled:Boolean = false;
 		private var isActivated:Boolean = false;
-		private var fireDelay:int = 120;
+		private var fireDelay:int = 75;
 		private var fireDelayTimer:int = 0;
 		private var activeMode:String = "idle";
 		private var shotsFired:int = 0;
@@ -94,12 +96,18 @@
 				}*/
 				if (assignedGraphic[0].swf_child.anim.gunZero.currentLabel == "fireShot") {
 					trace("gunZero fire!");
+					BulletManager.createNewBossBullet(0);
+					assignedGraphic[0].swf_child.anim.gunZero.gotoAndStop(1);
 				}
 				if (assignedGraphic[0].swf_child.anim.gunOne.currentLabel == "fireShot") {
 					trace("gunOne fire!");
+					BulletManager.createNewBossBullet(1);
+					assignedGraphic[0].swf_child.anim.gunOne.gotoAndStop(1);
 				}
 				if (assignedGraphic[0].swf_child.anim.gunTwo.currentLabel == "fireShot") {
 					trace("gunTwo fire!");
+					BulletManager.createNewBossBullet(2);
+					assignedGraphic[0].swf_child.anim.gunTwo.gotoAndStop(1);
 				}
 		}
 		
@@ -138,6 +146,14 @@
 			trace("Boss activated");
 			activeMode = "activate";
 			assignedGraphic[0].swf_child.gotoAndPlay("activate");
+		}
+		
+		public function getBossLocation():Point {
+			var bossPoint:Point = new Point();
+			bossPoint.x = this.x;
+			bossPoint.y = this.y;
+			return bossPoint;
+			
 		}
 		
 		public function listenForBeginAttack():void {

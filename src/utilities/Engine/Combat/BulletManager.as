@@ -15,6 +15,7 @@ package utilities.Engine.Combat{
 	import utilities.Actors.Actor;
 	import utilities.Actors.Avatar;
 	import utilities.Actors.Bullet;
+	import utilities.Actors.BossBullet;
 	import utilities.Engine.Game;
 	import flash.display.MovieClip;
 	import flash.geom.Point;
@@ -24,6 +25,7 @@ package utilities.Engine.Combat{
 		
 		public static var bullets:Array;
 		public static var enemyBullets:Array;
+		public static var bossBullets:Array;
 		private var gameTimer:Timer = new Timer(0,0);
 		private static var currentDelay:int = 0;
 		private static var delay:int = 10;
@@ -44,6 +46,8 @@ package utilities.Engine.Combat{
 		public function setUp():void{
 			gameTimer.addEventListener(TimerEvent.TIMER, timerHandler);
 			bullets =[];
+			enemyBullets =[];
+			bossBullets =[];
 		}
 		
 		private function timerHandler(e:TimerEvent):void{
@@ -56,7 +60,10 @@ package utilities.Engine.Combat{
 				bullet.updateLoop();
 			}
 			for each(var enemyBullet:Bullet in enemyBullets){
-				bullet.updateLoop();
+				enemyBullet.updateLoop();
+			}
+			for each(var bossBullet:BossBullet in bossBullets){
+				bossBullet.updateLoop();
 			}
 			//
 			/*trace("1",AvatarManager);
@@ -84,13 +91,19 @@ package utilities.Engine.Combat{
 		}
 		
 		public static function createEnemyBullet():void {
-			var newBullet:Bullet = new Bullet()
+			var newBullet:Bullet = new Bullet();
 			bullets.push(newBullet);
 		}
 		
 		public static function createNewBullet():void{
-			var newBullet:Bullet = new Bullet()
+			var newBullet:Bullet = new Bullet();
 			bullets.push(newBullet);
+		}
+		
+		public static function createNewBossBullet(spawnNode:int):void{
+			var newBullet:BossBullet = new BossBullet();
+			newBullet.assignSpawnPoint(spawnNode);
+			bossBullets.push(newBullet);
 		}
 		
 		/*THIS SHOULD BE FURTHER ABSTRACTED*/
@@ -108,6 +121,10 @@ package utilities.Engine.Combat{
 		
 		public function getArray():Array{
 			return bullets;
+		}
+		
+		public function getBossBullets():Array{
+			return bossBullets;
 		}
 		
 		public function testFunction():void{

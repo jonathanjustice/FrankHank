@@ -22,6 +22,7 @@
 		public static var level:MovieClip;
 		public static var levels:Array;
 		public static var walls:Array;
+		public static var bossWalls:Array;
 		
 		public static var triggerableWalls:Array;
 		public static var triggers:Array;
@@ -45,6 +46,7 @@
 		}
 		
 		public function setUp():void {
+			bossWalls = [];
 			walls = [];
 			levels = [];
 			arts = [];
@@ -106,6 +108,10 @@
 			return walls;
 		}
 		
+		public function getBossWalls():Array{
+			return bossWalls;
+		}
+		
 		public function getTriggerableWalls():Array {
 			return triggerableWalls;
 		}
@@ -140,6 +146,9 @@
 			}
 			for each(var wall:MovieClip in walls){
 				wall.updateLoop();
+			}
+			for each(var bossWall:MovieClip in bossWalls){
+				bossWall.updateLoop();
 			}
 			/*for each(var savePoint:SavePoint in savePoints){
 				savePoint.updateLoop();
@@ -223,10 +232,12 @@
 			LevelManager.getInstance().destroyArray(LevelManager.triggers);
 			PowerupManager.getInstance().destroyArray(PowerupManager.powerups);
 			BulletManager.getInstance().destroyArray(BulletManager.bullets);
+			BulletManager.getInstance().destroyArray(BulletManager.bossBullets);
 			AvatarManager.getInstance().destroyArray(AvatarManager.avatars);
 			LevelManager.getInstance().destroyArray(LevelManager.levels);
 			LevelManager.getInstance().destroyArray(LevelManager.walls);
-			trace(LevelManager.getInstance().destroyArray(LevelManager.triggerableWalls));
+			LevelManager.getInstance().destroyArray(LevelManager.bossWalls);
+			//trace(LevelManager.getInstance().destroyArray(LevelManager.triggerableWalls));
 			LevelManager.getInstance().destroyArray(LevelManager.triggerableWalls);
 			LevelManager.getInstance().destroyArray(LevelManager.triggers_endZones);
 			LevelManager.getInstance().destroyArray(LevelManager.triggers_cutScenes);

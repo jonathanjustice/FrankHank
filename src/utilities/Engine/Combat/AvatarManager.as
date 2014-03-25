@@ -1,6 +1,8 @@
 ﻿package utilities.Engine.Combat{
 	import flash.display.MovieClip;
 	import utilities.Actors.Bullet;
+	import utilities.Actors.BossBullet;
+	import utilities.Actors.GameBoardPieces.BossWall;
 	import utilities.dataModels.LevelProgressModel;
 	import utilities.Effects.Effect;
 	import utilities.Engine.BasicManager;
@@ -53,6 +55,32 @@
 		}
 	
 		public static function updateLoop():void {
+			//trace(LevelManager.bossWalls);
+			//trace(BulletManager.bossBullets);
+			for each(var bossWall:BossWall in LevelManager.bossWalls) {
+				for each(var bossBullet:BossBullet in BulletManager.bossBullets) {
+					if (utilities.Mathematics.RectangleCollision.simpleIntersection(bossBullet, bossWall) == true) {
+						trace("boss bullet touched boss wall");
+						var bossBulletCollisionSide:String = utilities.Mathematics.RectangleCollision.testCollision(bossBullet, bossWall);
+						if (bossBulletCollisionSide == "top") {
+							bossBullet.reverseVelecityY();
+						}
+						if (bossBulletCollisionSide == "bottom") {
+							
+							bossBullet.reverseVelecityY();
+						}
+						if (bossBulletCollisionSide == "left") {
+							
+							bossBullet.reverseVelecityX();
+						}
+						if (bossBulletCollisionSide == "right") {
+							
+							bossBullet.reverseVelecityX();
+						}
+					}
+				}
+			}
+			
 			for each(var myAvatar:Avatar in avatars) {
 				var additionalVelocity:int = 0;
 				myAvatar.updateLoop();
@@ -208,6 +236,7 @@
 						}
 					}
 				}
+				
 				//collide enemies & avatar
 				for (var j:int = 0; j < EnemyManager.enemies.length; j++) {
 					//checks for collision between hitboxes

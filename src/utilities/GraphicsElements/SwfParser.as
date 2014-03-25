@@ -13,6 +13,7 @@
 	import utilities.Actors.GameBoardPieces.Trigger_CameraLock;
 	import utilities.Actors.GameBoardPieces.Trigger_ActivateBoss;
 	import utilities.Actors.GameBoardPieces.Wall;
+	import utilities.Actors.GameBoardPieces.BossWall;
 	import utilities.Actors.GoonEnemy;
 	import utilities.Actors.Coin;
 	import utilities.Actors.SavePoint;
@@ -198,6 +199,9 @@
 							break;
 						case "wall":
 							var wall:Wall = new Wall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height, "standard");
+							break;
+						case "bossWall":
+							var bossWall:BossWall = new BossWall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height, "standard");
 							break;
 						case "platform":
 							var platform:Wall = new Wall(tempArray[j].x,tempArray[j].y,tempArray[j].width,tempArray[j].height, "platform");
