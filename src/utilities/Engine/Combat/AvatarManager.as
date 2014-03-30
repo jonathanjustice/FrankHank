@@ -57,29 +57,7 @@
 		public static function updateLoop():void {
 			//trace(LevelManager.bossWalls);
 			//trace(BulletManager.bossBullets);
-			for each(var bossWall:BossWall in LevelManager.bossWalls) {
-				for each(var bossBullet:BossBullet in BulletManager.bossBullets) {
-					if (utilities.Mathematics.RectangleCollision.simpleIntersection(bossBullet, bossWall) == true) {
-						trace("boss bullet touched boss wall");
-						var bossBulletCollisionSide:String = utilities.Mathematics.RectangleCollision.testCollision(bossBullet, bossWall);
-						if (bossBulletCollisionSide == "top") {
-							bossBullet.reverseVelecityY();
-						}
-						if (bossBulletCollisionSide == "bottom") {
-							
-							bossBullet.reverseVelecityY();
-						}
-						if (bossBulletCollisionSide == "left") {
-							
-							bossBullet.reverseVelecityX();
-						}
-						if (bossBulletCollisionSide == "right") {
-							
-							bossBullet.reverseVelecityX();
-						}
-					}
-				}
-			}
+			
 			
 			for each(var myAvatar:Avatar in avatars) {
 				var additionalVelocity:int = 0;
@@ -214,7 +192,7 @@
 						}
 					}
 					//collide bullets  & walls
-					for each(var bullet:Bullet in BulletManager.bullets) {
+					/*for each(var bullet:Bullet in BulletManager.bullets) {
 						if (utilities.Mathematics.RectangleCollision.simpleIntersection(bullet, LevelManager.walls[i]) == true) {
 							var collisionSide:String = utilities.Mathematics.RectangleCollision.testCollision(bullet, LevelManager.walls[i]);
 							if (collisionSide == "top") {
@@ -234,7 +212,7 @@
 								bullet.reverseVelecityX();
 							}
 						}
-					}
+					}*/
 				}
 				
 				//collide enemies & avatar
@@ -270,12 +248,16 @@
 							//if the avatar is on top of the enemy and the enemy is not in the vulnerable state, then damage it and bounce the avatar
 							var collisionDirection:String = "";
 							collisionDirection = utilities.Mathematics.RectangleCollision.testCollision(myAvatar, EnemyManager.enemies[j], false);
-							if (collisionDirection=="top") {
-								myAvatar.jumpingEnded();
-								myAvatar.jump(true);
-								EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
-								EnemyManager.enemies[j].setIsVulnerable(true);
-								EffectsManager.getInstance().newEffect_Franked(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y);
+							if (collisionDirection == "top") {
+								if (EnemyManager.enemies[j] is BossBullet) {
+									//disgusting hack
+								}else {
+									myAvatar.jumpingEnded();
+									myAvatar.jump(true);
+									EnemyManager.enemies[j].takeDamage(myAvatar.getJumpDamage());
+									EnemyManager.enemies[j].setIsVulnerable(true);
+									EffectsManager.getInstance().newEffect_Franked(myAvatar.x + myAvatar.width/2,myAvatar.getPreviousPosition().y);
+								}
 							//if the enemy is NOT vulnerable and the avatar touches the enemy on anything but the top, the avatar takes damage
 							}else {
 								if (EnemyManager.enemies[j].getIsBeingThrown() == false) {

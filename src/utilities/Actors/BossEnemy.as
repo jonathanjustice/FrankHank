@@ -32,7 +32,6 @@
 		
 		private var filePath:String = "../src/assets/actors/swf_boss.swf";
 		public function BossEnemy(newX:int, newY:int) {
-			trace("new boss activated");
 			this.x = newX;
 			this.y = newY;
 			xVelocity = 5;
@@ -90,10 +89,6 @@
 		}
 		
 		public function listenForFireShot():void {
-				/*trace("assignedGraphic[0].swf_child.anim.numChildren", assignedGraphic[0].swf_child.anim.numChildren);
-				for (var i:int = 0; i < assignedGraphic[0].swf_child.anim.numChildren; i++ ) {
-					trace(assignedGraphic[0].swf_child.anim.getChildAt(i).name);
-				}*/
 				if (assignedGraphic[0].swf_child.anim.gunZero.currentLabel == "fireShot") {
 					trace("gunZero fire!");
 					BulletManager.createNewBossBullet(0);
@@ -116,19 +111,19 @@
 			var randomLazer:int = Math.random() * 3;
 			if (randomLazer == 0) {
 				assignedGraphic[0].swf_child.anim.gunZero.gotoAndPlay(1);
-				trace("gunZero charge!");
+				//trace("gunZero charge!");
 			}
 			if (randomLazer == 1) {
 				assignedGraphic[0].swf_child.anim.gunOne.gotoAndPlay(1);
-				trace("gunOne charge!");
+				//trace("gunOne charge!");
 			}
 			if (randomLazer == 2) {
 				assignedGraphic[0].swf_child.anim.gunTwo.gotoAndPlay(1);
-				trace("gunTwo charge!");
+				//trace("gunTwo charge!");
 			}
 			if (randomLazer == 3) {
 				assignedGraphic[0].swf_child.anim.gunOne.gotoAndPlay(1);
-				trace("gunOne charge!");
+				//trace("gunOne charge!");
 			}
 			//make laster play animation
 			
@@ -143,7 +138,7 @@
 		}
 		
 		public function activateBoss():void {
-			trace("Boss activated");
+			//trace("Boss activated");
 			activeMode = "activate";
 			assignedGraphic[0].swf_child.gotoAndPlay("activate");
 		}
@@ -159,7 +154,7 @@
 		public function listenForBeginAttack():void {
 			//trace("listen");
 			if (assignedGraphic[0].swf_child.currentLabel == "beginAttack") {
-				trace("current label was beginAttack");
+				//trace("current label was beginAttack");
 				assignedGraphic[0].swf_child.anim.stop();
 				setMode("attack");
 			}

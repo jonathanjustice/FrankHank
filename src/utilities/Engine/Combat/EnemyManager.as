@@ -1,6 +1,7 @@
 ﻿package utilities.Engine.Combat{
 	
 	import utilities.Actors.Actor;
+	import utilities.Actors.BossBullet;
 	import utilities.Actors.SpiderEnemy;
 	import utilities.Engine.DefaultManager;
 	import flash.display.MovieClip;
@@ -77,6 +78,7 @@
 		public static function updateLoop():void{
 			//enemies
 			checkForCollisionWithBullets();
+			checkForCollisionWithTriggeredWall();
 			checkForCollisionWithWall();
 			stayAttachedToAvatar();
 			//bosses
@@ -147,32 +149,65 @@
 			}
 		}
 		
+		public static function checkForCollisionWithTriggeredWall():void {
+			for each(var enemy:MovieClip in enemies) {
+				if (enemy is BossBullet) {
+					for(var i:int = 0; i<LevelManager.triggerableWalls.length;i++){
+						if (utilities.Mathematics.RectangleCollision.simpleIntersection(enemy, LevelManager.triggerableWalls[i]) == true) {
+							//resolves the collision & returns if this touched the top of the other object
+							var collisionSide:String = RectangleCollision.testCollision(enemy, LevelManager.triggerableWalls[i]);
+							if (collisionSide == "left" || collisionSide == "right") {
+								enemy.reverseVelecityX();
+							}else if (collisionSide == "bottom"){
+								enemy.setYVel(2);
+							}else if (collisionSide == "top"){
+								enemy.reverseVelecityY();
+							}
+						}
+					}
+				}
+			}
+		}
+		
 		public static function checkForCollisionWithWall():void {
 			for each(var enemy:MovieClip in enemies) {
-				enemy.setNumberOfWallsBeingTouched(-enemy.getNumberOfWallsBeingTouched());
-				for(var i:int = 0; i<LevelManager.walls.length;i++){
-					if (utilities.Mathematics.RectangleCollision.simpleIntersection(enemy, LevelManager.walls[i]) == true) {
-						//resolves the collision & returns if this touched the top of the other object
-						var collisionSide:String = RectangleCollision.testCollision(enemy, LevelManager.walls[i]);
-						if (collisionSide == "left" || collisionSide == "right") {
-							enemy.reverseVelecityX();
-							enemy.resetGravity();
+				enemy.setNumberOfWallsBeingTouched( -enemy.getNumberOfWallsBeingTouched());
+				for (var i:int = 0; i < LevelManager.walls.length; i++) {
+					if (enemy is BossBullet) {
+						if (utilities.Mathematics.RectangleCollision.simpleIntersection(enemy, LevelManager.walls[i]) == true) {
+							var collideSide:String = RectangleCollision.testCollision(enemy, LevelManager.walls[i]);
+							//trace(collideSide);
+							if (collideSide == "left" || collideSide == "right") {
+								enemy.reverseVelecityX();
+							}else if (collideSide == "bottom"){
+								enemy.setYVel(2);
+							}else if (collideSide == "top"){
+								enemy.reverseVelecityY();
+							}
 						}
-						if (collisionSide == "top") {
-							enemy.setIsBeingThrown(false);
-							enemy.setNumberOfWallsBeingTouched(1);
-							enemy.resetGravity();
-							if (enemy is TankEnemy || enemy is SpiderEnemy) {
-								//if a tank enemy reaches the end of a platform, make it turn around instead of falling off 
-								if (RectangleCollision.isRectangleOnTopAndTryingToExceedBoundsOfLowerRectangle(enemy, LevelManager.walls[i]) && enemy.getNumberOfWallsBeingTouched() == 1) {
-									if (enemy.x > LevelManager.walls[i].x) {
-										enemy.xVelocity = Math.abs(enemy.xVelocity) * -1;
+					}else{
+						if (utilities.Mathematics.RectangleCollision.simpleIntersection(enemy, LevelManager.walls[i]) == true) {
+							//resolves the collision & returns if this touched the top of the other object
+							var collisionSide:String = RectangleCollision.testCollision(enemy, LevelManager.walls[i]);
+							if (collisionSide == "left" || collisionSide == "right") {
+								enemy.reverseVelecityX();
+								enemy.resetGravity();
+							}else if (collisionSide == "top") {
+								enemy.setIsBeingThrown(false);
+								enemy.setNumberOfWallsBeingTouched(1);
+								enemy.resetGravity();
+								if (enemy is TankEnemy || enemy is SpiderEnemy) {
+									//if a tank enemy reaches the end of a platform, make it turn around instead of falling off 
+									if (RectangleCollision.isRectangleOnTopAndTryingToExceedBoundsOfLowerRectangle(enemy, LevelManager.walls[i]) && enemy.getNumberOfWallsBeingTouched() == 1) {
+										if (enemy.x > LevelManager.walls[i].x) {
+											enemy.xVelocity = Math.abs(enemy.xVelocity) * -1;
+										}
+										if (enemy.x < LevelManager.walls[i].x) {
+											enemy.xVelocity = Math.abs(enemy.xVelocity);
+										}
+										enemy.x = enemy.getPreviousPosition().x;
+										enemy.x += enemy.xVelocity * 2;
 									}
-									if (enemy.x < LevelManager.walls[i].x) {
-										enemy.xVelocity = Math.abs(enemy.xVelocity);
-									}
-									enemy.x = enemy.getPreviousPosition().x;
-									enemy.x += enemy.xVelocity * 2;
 								}
 							}
 						}
@@ -181,6 +216,8 @@
 				enemy.setPreviousPosition();
 			}
 		}
+		
+		
 		
 		public function deselectActors():void {
 			//trace("enenmyManager: deselectActors");

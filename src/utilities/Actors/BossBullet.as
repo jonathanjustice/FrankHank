@@ -17,7 +17,7 @@ package utilities.Actors{
 	import utilities.Input.KeyInputManager;
 
 	import utilities.Mathematics.MathFormulas;
-	public class BossBullet extends Actor{
+	public class BossBullet extends SelectableActor{
 		
 		//private var gameContainer;
 		private var speed:Number=10;
@@ -35,7 +35,12 @@ package utilities.Actors{
 		public var bounceTime:int = 0;
 		public var maxBounceTime:int = 8;
 		public var isActive:Boolean = false;
+		public var throwable:Boolean = false;
+		public var isVulnerable:Boolean = false;
+		public var isBeingThrown:Boolean = false;
+		private var isAttachedToAvatar:Boolean = false;
 		public var spawnNode:int = 0;
+		private var numberOfWallsBeingTouched:int = 0;
 		
 		//public var xDiff:Number=0;
 		//public var yDiff:Number=0;
@@ -44,9 +49,48 @@ package utilities.Actors{
 			setUp();
 			setMaxGravity(0);
 		}
+		public function setThrowable(newState:Boolean):void {
+			//throwable = newState;
+		}
+		
+		public function setIsBeingThrown(newState:Boolean):void {
+		//isBeingThrown = newState;
+		}
+		
+		public function getIsBeingThrown():Boolean {
+			return isBeingThrown;
+		}
+		
+		public function getThrowable():Boolean {
+			return throwable;
+		}
+		
+		public function getIsAttachedToAvatar():Boolean {
+			return isAttachedToAvatar;
+		}
+		
+		public function setAttachToAvatar(newState:Boolean):void {
+			//isAttachedToAvatar = newState;
+		}
+		
+		public function collidedWithAvatar():void {
+			
+		}
+		
+		public function getIsVulnerable():Boolean {
+			return isVulnerable;
+		}
+		
+		public function setNumberOfWallsBeingTouched(amount:int):void {
+			numberOfWallsBeingTouched += amount;
+		}
+		
+		public function getNumberOfWallsBeingTouched():int {
+			return numberOfWallsBeingTouched;
+		}
 		
 		public function assignGraphic(graphic:DisplayObject):void {
-			addActorToGameEngine(graphic, BulletManager.bossBullets);
+			addActorToGameEngine(graphic, EnemyManager.enemies);
 			//setBossBulletLocationAndVector();
 		}
 		
@@ -67,7 +111,6 @@ package utilities.Actors{
 				bossBulletSpawnPoint.y = (EnemyManager.getInstance().getBosses()[0].y + EnemyManager.getInstance().getBosses()[0].assignedGraphic[0].swf_child.anim.bulletSpawnOne.y+64);
 				xVelocity = 0;
 				yVelocity = 2;
-			
 				}
 			if (newSpawnPoint == 2) {
 				bossBulletSpawnPoint.x = (EnemyManager.getInstance().getBosses()[0].x + EnemyManager.getInstance().getBosses()[0].assignedGraphic[0].swf_child.anim.bulletSpawnTwo.x);
@@ -95,12 +138,11 @@ package utilities.Actors{
 				setSpawnPoint(spawnNode);
 				isActive = true;
 			}else{
-				setPreviousPosition();
 				applyVector();
 				//doStuffToBulletOverTime();
 				checkForLeaveBounday();
 				checkForLifespanExpired();
-				checkForDeathFlag();
+				//checkForDeathFlag();
 				//trace(target);
 			}
 			
@@ -160,13 +202,26 @@ package utilities.Actors{
         }
 		
 		
+		public function setXVel(newVel:Number):void {
+			xVelocity = newVel
+			//this.x += xVelocity;
+		}
+		
+		public function setYVel(newVel:Number):void {
+			yVelocity = newVel
+			//this.y += yVelocity;
+		}
+		
+		
+		
 		public function reverseVelecityX():void {
-			
-			this.xVelocity *= -1;
+			xVelocity *= -1;
+			this.x += xVelocity*1;
 		}
 		
 		public function reverseVelecityY():void {
-			this.yVelocity *= -1;
+			yVelocity *= -1;
+			//this.y += yVelocity *1;
 		}
 	}
 }

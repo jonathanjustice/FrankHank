@@ -274,19 +274,6 @@
 			//trace("adding actor",this.parent);
 		}
 		
-		public function removeActorFromGameEngine(actor:MovieClip, array:Array):void {
-			//trace("actor",actor);
-			//trace("array",array);
-			actor.availableForTargeting=false;
-			var index:int = array.indexOf(actor);
-			array.splice(index, 1);
-			if (this.parent != null) {
-				//trace("this.parent",this.parent);
-				utilities.Engine.Game.gameContainer.removeChild(actor);
-			}
-			actor.setTargetToFalse();
-		}
-		
 		public  function setLerpTarget(newTarget:Point ):void {
 			lerpTarget = newTarget;
 			//trace("lerpTarget:", lerpTarget);
@@ -378,6 +365,20 @@
 			availableForTargeting = false;//prevent null reference errors
 		}
 		
+		
+		public function removeActorFromGameEngine(actor:MovieClip, array:Array):void {
+			//trace("actor",actor);
+			//trace("array",array);
+			actor.availableForTargeting=false;
+			var index:int = array.indexOf(actor);
+			array.splice(index, 1);
+			if (this.parent != null) {
+				//trace("this.parent",this.parent);
+				utilities.Engine.Game.gameContainer.removeChild(actor);
+			}
+			actor.setTargetToFalse();
+		}
+		
 		//this is kinda bad, could be more abstract. I don't think i should have to make a billion cases for each and every item in the game
 		//determine what needs to be deleted and then delete it
 		//this would be a really nice place to start using Interfaces... hint hint hint
@@ -389,11 +390,11 @@
 					removeActorFromGameEngine(this, BulletManager.getInstance().getArray());
 					
 				}else if (this is BossBullet) {
-					trace("attempting to remove boss Bullet-----------this: ", this);
-					trace("attempting to remove boss Bullet from parent-----------this.parent: ", this.parent);
-					trace("BulletManager",BulletManager);
-					trace("BulletManager.getInstance()",BulletManager.getInstance());
-					trace("BulletManager.getInstance().getBossBullets()",BulletManager.getInstance().getBossBullets());
+					//trace("attempting to remove boss Bullet-----------this: ", this);
+					//trace("attempting to remove boss Bullet from parent-----------this.parent: ", this.parent);
+					//trace("BulletManager",BulletManager);
+					//trace("BulletManager.getInstance()",BulletManager.getInstance());
+					//trace("BulletManager.getInstance().getBossBullets()",BulletManager.getInstance().getBossBullets());
 					removeActorFromGameEngine(this, BulletManager.getInstance().getBossBullets());
 				}else if(this is Enemy){
 					//delete it

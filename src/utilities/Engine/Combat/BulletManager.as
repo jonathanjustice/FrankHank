@@ -69,11 +69,12 @@ package utilities.Engine.Combat{
 			/*trace("1",AvatarManager);
 			trace("2",AvatarManager.avatars);
 			trace("3",AvatarManager.avatars[0]);
-			trace("4",AvatarManager.avatars[0].getIsShootingEnabled());
+			trace("4",AvatarManager.avatars[0].getIsShootingEnabled());*/
+			/*
 			if ( AvatarManager.avatars[0].getIsShootingEnabled()==true) {
 				if_shooting_create_a_new_bullet();
-			}*/
-			
+			}
+			*/
 		}
 		
 		public static function if_shooting_create_a_new_bullet():void {
