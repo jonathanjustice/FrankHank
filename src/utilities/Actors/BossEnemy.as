@@ -48,8 +48,14 @@
 		
 		public function assignGraphic(graphic:DisplayObject):void {
 			addActorToGameEngine(graphic, EnemyManager.bosses);
+			
 			//playAnimation("walk");
 			setMode("idle")
+			this.hitbox.alpha = 0;
+			this.hitbox.visible = false;
+			assignedGraphic[0].swf_child.anim.bulletSpawnZero.visible = false;
+			assignedGraphic[0].swf_child.anim.bulletSpawnOne.visible = false;
+			assignedGraphic[0].swf_child.anim.bulletSpawnTwo.visible = false;
 		}
 		
 		public override function updateLoop():void {
